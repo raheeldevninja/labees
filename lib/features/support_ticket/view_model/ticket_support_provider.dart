@@ -3,6 +3,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:labees/core/util/utils.dart';
 import 'package:labees/features/support_ticket/model/create_ticket_response.dart';
 import 'package:labees/features/support_ticket/model/ticket_support_data.dart';
+import 'package:labees/features/support_ticket/model/ticket_support_list_response.dart';
 import 'package:labees/features/support_ticket/ticket_support_service/ticket_support_service.dart';
 
 
@@ -13,6 +14,8 @@ class TicketSupportProvider extends ChangeNotifier {
   bool get getIsLoading => isLoading;
 
   CreateTicketResponse ? createTicketResponse;
+  TicketSupportResponse? ticketSupportResponse;
+  List<TicketSupportListResponse>? ticketSupportLists = [];
 
   createTicketSupport(BuildContext context, TicketSupportData ticketSupportData) async {
     EasyLoading.show(status: 'loading...');
@@ -31,6 +34,26 @@ class TicketSupportProvider extends ChangeNotifier {
     hideLoading();
     notifyListeners();
   }
+
+
+  Future<void> getTicketSupportList() async {
+
+    EasyLoading.show(status: 'loading...');
+    showLoading();
+
+    ticketSupportResponse = await TicketSupportService.getTicketSupportList();
+
+    if (ticketSupportResponse!.success!) {
+      ticketSupportLists = ticketSupportResponse!.data!;
+    } else {
+      Utils.toast(ticketSupportResponse!.message!);
+    }
+
+    EasyLoading.dismiss();
+    hideLoading();
+  }
+
+
 
 
 

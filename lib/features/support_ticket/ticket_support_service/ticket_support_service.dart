@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:labees/core/util/apis.dart';
 import 'package:labees/features/support_ticket/model/create_ticket_response.dart';
 import 'package:labees/features/support_ticket/model/ticket_support_data.dart';
+import 'package:labees/features/support_ticket/model/ticket_support_list_response.dart';
 
 
 class TicketSupportService {
@@ -68,5 +69,67 @@ class TicketSupportService {
     }
   }
 
+
+  static Future<TicketSupportResponse> getTicketSupportList() async {
+
+    TicketSupportResponse ticketSupportResponse = TicketSupportResponse();
+    String url = '${APIs.baseURL}${APIs.ticketSupportList}';
+
+    try {
+
+      print('url: $url');
+
+      var response = await http.get(
+          Uri.parse(url),
+          headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ${APIs.token}'
+          }
+      );
+
+      print('Response status: ${response.statusCode}');
+      print('ticket support list response: ${response.body}');
+
+      var result = jsonDecode(response.body);
+
+
+      if (response.statusCode == 200) {
+
+        List<TicketSupportListResponse> ticketSupportList = (result as List)
+            .map((data) => TicketSupportListResponse.fromJson(data))
+            .toList();
+
+        ticketSupportResponse.data = ticketSupportList;
+
+        ticketSupportResponse.success = true;
+        ticketSupportResponse.message = 'Success';
+
+        return ticketSupportResponse;
+      }
+      else if (response.statusCode == 401) {
+
+        return TicketSupportResponse(success: false, message: result['errors'][0]['message']);
+      }
+      else if (response.statusCode == 500) {
+        return TicketSupportResponse(success: false, message: 'Server Error');
+      }
+      else {
+        return TicketSupportResponse(success: false, message: 'Something went wrong !');
+      }
+    }
+    on SocketException {
+      return TicketSupportResponse(success: false, message: 'Not connect to internet !');
+    }
+    on TimeoutException catch (_) {
+      return TicketSupportResponse(success: false, message: 'Request timeout');
+    }
+    on FormatException catch (_) {
+      return TicketSupportResponse(success: false, message: 'Bad response format');
+    }
+    finally {
+      EasyLoading.dismiss();
+    }
+  }
 
 }

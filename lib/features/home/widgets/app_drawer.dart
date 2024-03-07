@@ -11,6 +11,7 @@ import 'package:labees/features/my_bag/view_model/cart_provider.dart';
 import 'package:labees/features/notifications/notifications_screen.dart';
 import 'package:labees/features/seller/seller_home_screen.dart';
 import 'package:labees/features/settings/settings_screen.dart';
+import 'package:labees/features/support_ticket/support_ticket_lists_screen.dart';
 import 'package:labees/features/support_ticket/support_ticket_screen.dart';
 import 'package:labees/features/wishlist/wishlist_screen.dart';
 import 'package:provider/provider.dart';
@@ -199,7 +200,7 @@ class AppDrawer extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const SupportTicketScreen(),
+                  builder: (context) => const TicketSupportListsScreen(),
                 ),
               );
 

@@ -285,6 +285,8 @@
     "billingLabel": "الفواتير",
     "shippingLabel": "شحن",
     "enterSubject": "الرجاء إدخال الموضوع",
-    "enterDescription": "الرجاء إدخال الوصف"
+    "enterDescription": "الرجاء إدخال الوصف",
+    "supportTicketsTitle": "تذاكر الدعم الفني",
+    "submitTicketBtnText": "إرسال تذكرة جديدة"
 
 }

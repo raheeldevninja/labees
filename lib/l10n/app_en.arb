@@ -287,6 +287,8 @@
     "billingLabel": "Billing",
     "shippingLabel": "Shipping",
     "enterSubject": "Please enter subject",
-    "enterDescription": "Please enter description"
+    "enterDescription": "Please enter description",
+    "supportTicketsTitle": "Support Tickets",
+    "submitTicketBtnText": "Submit a new Ticket"
 
 }
