@@ -240,7 +240,6 @@ class HomeProvider extends ChangeNotifier {
     childsList = cl;
 
     if(cl!.isNotEmpty) {
-
       print('adding first child: ${child.id}');
 
       childsList!.firstWhere((element) => element.name == child.name, orElse: () {

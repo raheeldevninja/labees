@@ -19,6 +19,7 @@ import 'package:labees/features/my_bag/view_model/cart_provider.dart';
 import 'package:labees/features/seller/view_model/seller_registration_provider.dart';
 import 'package:labees/features/settings/view_model/settings_provider.dart';
 import 'package:labees/features/splash/splash_screen.dart';
+import 'package:labees/features/support_ticket/view_model/ticket_support_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
@@ -135,6 +136,7 @@ void main() async {
           ChangeNotifierProvider(create: (context) => LocaleProvider()),
           ChangeNotifierProvider(create: (context) => SellerRegistrationProvider()),
           ChangeNotifierProvider(create: (context) => SettingsProvider()),
+          ChangeNotifierProvider(create: (context) => TicketSupportProvider()),
         ],
         child: const MyApp()
     ),

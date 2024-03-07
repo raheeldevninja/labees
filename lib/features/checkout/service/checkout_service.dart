@@ -10,6 +10,7 @@ import 'package:labees/core/models/address_data.dart';
 import 'package:labees/core/models/all_addresses.dart';
 import 'package:labees/core/models/cities_data.dart';
 import 'package:labees/core/models/countries_data.dart';
+import 'package:labees/core/models/default_address_response.dart';
 import 'package:labees/core/models/delete_address_response.dart';
 import 'package:labees/core/models/notifications_response.dart';
 import 'package:labees/core/models/place_order_model.dart';
@@ -318,6 +319,64 @@ class CheckoutService {
     }
     on FormatException catch (e) {
       return AllAddresses(success: false, message: 'Bad response format');
+    }
+    finally {
+      EasyLoading.dismiss();
+    }
+  }
+
+
+  static Future<DefaultAddressResponse> updateDefaultAddress(int id) async {
+
+    DefaultAddressResponse defaultAddressResponse;
+
+    String url = APIs.baseURL+APIs.updateDefaultAddress;
+
+    try {
+
+      print('update default address url: $url');
+      print('body: $id');
+
+      var response = await http.post(
+          Uri.parse(url),
+          body: jsonEncode({'id': id}),
+          headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ${APIs.token}',
+          }
+      );
+
+      print('Response status: ${response.statusCode}');
+      print('update default address response: ${response.body}');
+
+      var result = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        defaultAddressResponse = DefaultAddressResponse.fromJson(result);
+        defaultAddressResponse.status = true;
+        defaultAddressResponse.message = 'Success';
+        return defaultAddressResponse;
+      }
+      else if (response.statusCode == 401) {
+
+        return DefaultAddressResponse(status: false, message: result['errors'][0]['message']);
+      }
+      else if (response.statusCode == 500) {
+        return DefaultAddressResponse(status: false, message: 'Server Error');
+      }
+      else {
+        return DefaultAddressResponse(status: false, message: 'Something went wrong !');
+      }
+    }
+    on SocketException {
+      return DefaultAddressResponse(status: false, message: 'Not connect to internet !');
+    }
+    on TimeoutException catch (e) {
+      return DefaultAddressResponse(status: false, message: 'Request timeout');
+    }
+    on FormatException catch (e) {
+      return DefaultAddressResponse(status: false, message: 'Bad response format');
     }
     finally {
       EasyLoading.dismiss();

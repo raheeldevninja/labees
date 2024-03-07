@@ -281,6 +281,10 @@
     "typeLabel": "يكتب",
     "priorityLabel": "أولوية",
     "submitTicketBtnText": "قدم التذكرة",
-    "deliveryVATLabel": "ضريبة القيمة المضافة على التسليم"
+    "deliveryVATLabel": "ضريبة القيمة المضافة على التسليم",
+    "billingLabel": "الفواتير",
+    "shippingLabel": "شحن",
+    "enterSubject": "الرجاء إدخال الموضوع",
+    "enterDescription": "الرجاء إدخال الوصف"
 
 }

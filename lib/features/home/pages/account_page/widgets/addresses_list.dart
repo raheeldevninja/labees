@@ -67,7 +67,7 @@ class AddressesList extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      myAddresses[index].addressType!,
+                      '${myAddresses[index].addressType!} ${l10n.addressLabel} (${myAddresses[index].isBilling == 1 ? l10n.billingLabel : l10n.shippingLabel})',
                       style: const TextStyle(
                         fontSize: 14,
                         fontFamily: 'Libre Baskerville',
@@ -211,8 +211,8 @@ class AddressesList extends StatelessWidget {
                     //default address
                     !isDefault ? InkWell(
                       onTap: () async {
-                        //todo: call api to set default address
-                        //await checkoutProvider.getAllAddresses();
+                        await checkoutProvider.updateDefaultAddress(myAddresses[index].id!);
+                        await checkoutProvider.getAllAddresses();
                       },
                       child: Container(
                         padding: const EdgeInsets.all(8),

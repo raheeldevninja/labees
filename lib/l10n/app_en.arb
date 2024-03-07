@@ -282,6 +282,11 @@
     "typeLabel": "Type",
     "priorityLabel": "Priority",
     "submitTicketBtnText": "Submit Ticket",
-    "deliveryVATLabel": "Delivery VAT"
+    "deliveryVATLabel": "Delivery VAT",
+
+    "billingLabel": "Billing",
+    "shippingLabel": "Shipping",
+    "enterSubject": "Please enter subject",
+    "enterDescription": "Please enter description"
 
 }

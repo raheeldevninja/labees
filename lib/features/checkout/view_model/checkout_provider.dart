@@ -5,6 +5,7 @@ import 'package:labees/core/models/address_data.dart';
 import 'package:labees/core/models/all_addresses.dart';
 import 'package:labees/core/models/cities_data.dart';
 import 'package:labees/core/models/countries_data.dart';
+import 'package:labees/core/models/default_address_response.dart';
 import 'package:labees/core/models/delete_address_response.dart';
 import 'package:labees/core/models/notifications_response.dart';
 import 'package:labees/core/models/place_order_model.dart';
@@ -29,6 +30,8 @@ class CheckoutProvider extends ChangeNotifier {
   AllAddresses? allAddresses;
   PlaceOrderResponse? placeOrderResponse;
   DeleteAddressResponse? deleteAddressResponse;
+  DefaultAddressResponse? defaultAddressResponse;
+
 
   late List<AddressData> addressData;
 
@@ -148,6 +151,23 @@ class CheckoutProvider extends ChangeNotifier {
     }
 
     //EasyLoading.dismiss();
+    hideLoading();
+    notifyListeners();
+  }
+
+  Future<void> updateDefaultAddress(int id) async {
+
+    EasyLoading.show(status: 'loading...');
+    showLoading();
+    defaultAddressResponse = await CheckoutService.updateDefaultAddress(id);
+
+    if (defaultAddressResponse!.status!) {
+
+    } else {
+      Utils.toast(defaultAddressResponse!.message!);
+    }
+
+    EasyLoading.dismiss();
     hideLoading();
     notifyListeners();
   }

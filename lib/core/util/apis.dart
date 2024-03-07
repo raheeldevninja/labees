@@ -51,6 +51,8 @@ class APIs {
   static const String faqs = 'faq';
   static const String footerSettings = 'config/footer-settings';
   static const String pageDetails = 'config/page-details';
+  static const String updateDefaultAddress = 'customer/address/change-default';
+  static const String createTicketSupport = 'customer/support-ticket/create';
 
 
 

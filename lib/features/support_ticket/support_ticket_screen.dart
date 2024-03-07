@@ -3,7 +3,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:labees/core/app/app_colors.dart';
 import 'package:labees/core/ui/simple_button.dart';
 import 'package:labees/core/ui/widgets.dart';
-import 'package:labees/features/settings/view_model/settings_provider.dart';
+import 'package:labees/features/support_ticket/model/ticket_support_data.dart';
+import 'package:labees/features/support_ticket/view_model/ticket_support_provider.dart';
 import 'package:provider/provider.dart';
 
 /*
@@ -21,6 +22,7 @@ class SupportTicketScreen extends StatefulWidget {
 
 class _SupportTicketScreenState extends State<SupportTicketScreen> {
 
+  final _formKey = GlobalKey<FormState>();
   final _subjectController = TextEditingController();
   final _descriptionController = TextEditingController();
 
@@ -60,12 +62,15 @@ class _SupportTicketScreenState extends State<SupportTicketScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     final l10n = AppLocalizations.of(context)!;
-    final settingsProvider = Provider.of<SettingsProvider>(context);
+    final ticketSupportProvider = Provider.of<TicketSupportProvider>(context);
 
 
     return Scaffold(
+
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
         backgroundColor: Colors.white,
         leading: IconButton(
           onPressed: () {
@@ -77,193 +82,222 @@ class _SupportTicketScreenState extends State<SupportTicketScreen> {
         title: Text(l10n.supportTicket,
             style: const TextStyle(color: AppColors.primaryColor)),
       ),
-      body: settingsProvider.getIsLoading ? const SizedBox() :
-      ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-        children: [
+      body: Form(
+        key: _formKey,
+        child: ListView(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          children: [
 
-          Text(
-            l10n.submitTicket,
-            style: const TextStyle(
-              fontSize: 18,
-              fontFamily: 'Libre Baskerville',
+            Text(
+              l10n.submitTicket,
+              style: const TextStyle(
+                fontSize: 18,
+                fontFamily: 'Libre Baskerville',
+              ),
             ),
-          ),
 
-          const SizedBox(height: 40),
+            const SizedBox(height: 40),
 
 
-          Widgets.labels('${l10n.subjectLabel} '),
-          const SizedBox(
-            height: 10,
-          ),
+            Widgets.labels('${l10n.subjectLabel} '),
+            const SizedBox(
+              height: 10,
+            ),
 
-          Focus(
-            onFocusChange: (hasFocus) {
-              setState(() {});
-            },
-            child: TextFormField(
-              focusNode: _subjectFocus,
-              controller: _subjectController,
-              maxLines: 1,
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: _subjectFocus.hasFocus
-                    ? Colors.white
-                    : Colors.grey.withOpacity(0.1),
-                contentPadding:
-                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20),
-                hintText: l10n.subjectHint,
-                hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(25.0),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide:
-                  BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
-                  borderRadius: BorderRadius.circular(25.0),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide:
-                  const BorderSide(color: AppColors.primaryColor, width: 1.0),
-                  borderRadius: BorderRadius.circular(25.0),
+            Focus(
+              onFocusChange: (hasFocus) {
+                setState(() {});
+              },
+              child: TextFormField(
+                focusNode: _subjectFocus,
+                controller: _subjectController,
+                maxLines: 1,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return l10n.enterSubject;
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: _subjectFocus.hasFocus
+                      ? Colors.white
+                      : Colors.grey.withOpacity(0.1),
+                  contentPadding:
+                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20),
+                  hintText: l10n.subjectHint,
+                  hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide:
+                    BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide:
+                    const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
                 ),
               ),
             ),
-          ),
 
-          const SizedBox(height: 20),
+            const SizedBox(height: 20),
 
-          Widgets.labels('${l10n.typeLabel} '),
-          const SizedBox(
-            height: 10,
-          ),
-
-          ///type drop down
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            decoration: BoxDecoration(
-              color: Colors.grey.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(25.0),
+            Widgets.labels('${l10n.typeLabel} '),
+            const SizedBox(
+              height: 10,
             ),
-            child: DropdownButton<String>(
-              isExpanded: true,
-              underline: const SizedBox(),
-              icon: const Icon(Icons.keyboard_arrow_down),
-              iconSize: 24,
-              elevation: 16,
-              style: const TextStyle(color: Colors.black),
-              value: selectedType,
-              onChanged: (String? newValue) {
-                setState(() {
-                  selectedType = newValue!;
-                });
+
+            ///type drop down
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              decoration: BoxDecoration(
+                color: Colors.grey.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(25.0),
+              ),
+              child: DropdownButton<String>(
+                isExpanded: true,
+                underline: const SizedBox(),
+                icon: const Icon(Icons.keyboard_arrow_down),
+                iconSize: 24,
+                elevation: 16,
+                style: const TextStyle(color: Colors.black),
+                value: selectedType,
+                onChanged: (String? newValue) {
+                  setState(() {
+                    selectedType = newValue!;
+                  });
+                },
+                items: types.map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              ),
+            ),
+
+
+            const SizedBox(height: 20),
+
+            Widgets.labels('${l10n.priorityLabel} '),
+            const SizedBox(
+              height: 10,
+            ),
+
+            ///priority drop down
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              decoration: BoxDecoration(
+                color: Colors.grey.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(25.0),
+              ),
+              child: DropdownButton<String>(
+                isExpanded: true,
+                underline: const SizedBox(),
+                icon: const Icon(Icons.keyboard_arrow_down),
+                iconSize: 24,
+                elevation: 16,
+                style: const TextStyle(color: Colors.black),
+                value: selectedPriority,
+                onChanged: (String? newValue) {
+                  setState(() {
+                    selectedPriority = newValue!;
+                  });
+                },
+                items: priority.map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              ),
+            ),
+
+
+            const SizedBox(height: 20),
+
+            Widgets.labels('${l10n.issueDescLabel} '),
+            const SizedBox(
+              height: 10,
+            ),
+
+            Focus(
+              onFocusChange: (hasFocus) {
+                setState(() {});
               },
-              items: types.map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-            ),
-          ),
-
-
-          const SizedBox(height: 20),
-
-          Widgets.labels('${l10n.priorityLabel} '),
-          const SizedBox(
-            height: 10,
-          ),
-
-          ///priority drop down
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            decoration: BoxDecoration(
-              color: Colors.grey.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(25.0),
-            ),
-            child: DropdownButton<String>(
-              isExpanded: true,
-              underline: const SizedBox(),
-              icon: const Icon(Icons.keyboard_arrow_down),
-              iconSize: 24,
-              elevation: 16,
-              style: const TextStyle(color: Colors.black),
-              value: selectedPriority,
-              onChanged: (String? newValue) {
-                setState(() {
-                  selectedPriority = newValue!;
-                });
-              },
-              items: priority.map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-            ),
-          ),
-
-
-          const SizedBox(height: 20),
-
-          Widgets.labels('${l10n.issueDescLabel} '),
-          const SizedBox(
-            height: 10,
-          ),
-
-          Focus(
-            onFocusChange: (hasFocus) {
-              setState(() {});
-            },
-            child: TextFormField(
-              focusNode: _descriptionFocus,
-              controller: _descriptionController,
-              maxLines: 5,
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: _subjectFocus.hasFocus
-                    ? Colors.white
-                    : Colors.grey.withOpacity(0.1),
-                contentPadding:
-                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20),
-                hintText: l10n.issueDescHint,
-                hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(25.0),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide:
-                  BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
-                  borderRadius: BorderRadius.circular(25.0),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide:
-                  const BorderSide(color: AppColors.primaryColor, width: 1.0),
-                  borderRadius: BorderRadius.circular(25.0),
+              child: TextFormField(
+                focusNode: _descriptionFocus,
+                controller: _descriptionController,
+                maxLines: 5,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return l10n.enterDescription;
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: _subjectFocus.hasFocus
+                      ? Colors.white
+                      : Colors.grey.withOpacity(0.1),
+                  contentPadding:
+                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20),
+                  hintText: l10n.issueDescHint,
+                  hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide:
+                    BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide:
+                    const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
                 ),
               ),
             ),
-          ),
 
-          const SizedBox(height: 40),
+            const SizedBox(height: 40),
 
-          ///submit ticket button
-          SizedBox(
-            width: double.maxFinite,
-            height: 50,
-            child: SimpleButton(
-              text: l10n.submitTicketBtnText,
-              callback: () async {
+            ///submit ticket button
+            SizedBox(
+              width: double.maxFinite,
+              height: 50,
+              child: SimpleButton(
+                text: l10n.submitTicketBtnText,
+                callback: () async {
 
-              },
+                  if (_formKey.currentState!.validate()) {
+
+                      //create ticket support
+                      TicketSupportData ticketSupportData = TicketSupportData(
+                        subject: _subjectController.text.trim(),
+                        type: selectedType,
+                        priority: selectedPriority,
+                        description: _descriptionController.text.trim(),
+                      );
+
+                      await ticketSupportProvider.createTicketSupport(context, ticketSupportData);
+
+                  }
+
+
+                },
+              ),
             ),
-          ),
 
-          const SizedBox(height: 40),
+            const SizedBox(height: 40),
 
-        ],
+          ],
+        ),
       ),
     );
   }
