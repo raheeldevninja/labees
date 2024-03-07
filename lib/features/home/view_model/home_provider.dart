@@ -25,7 +25,7 @@ class HomeProvider extends ChangeNotifier {
   bool isLoading = false;
   late MainCategories mainCategories;
   late DashboardData dashboardData;
-  late List<GetWishlist> getWishlistData;
+  List<GetWishlist>? getWishlistData;
 
   late NewArrivalProducts newArrivalProducts;
   NewArrivalProducts get getNewArrivalProducts => newArrivalProducts;
@@ -45,9 +45,97 @@ class HomeProvider extends ChangeNotifier {
 
 
 
+  /**select filter lists**/
+
+
+  List<SubCategories> selectedSubCategories = [];
+  List<Brand> selectedBrands = [];
+
+  List<AttributeValues> selectedSizeAttributes = [];
+  List<AttributeValues> selectedColorAttributes = [];
+  List<Tag> selectedTags = [];
+  List<AttributeValues> selectedUkSizeAttributes = [];
+
+  String selectedMinPrice = '';
+  String selectedMaxPrice = '';
+
+  addRemoveSelectedSubCategories(SubCategories subCategory) {
+
+    for(int i=0; i<selectedSubCategories.length; i++) {
+      if(selectedSubCategories[i].id == subCategory.id) {
+        selectedSubCategories.removeAt(i);
+        return;
+      }
+    }
+
+    selectedSubCategories.add(subCategory);
+
+    notifyListeners();
+  }
+
+  addRemoveSelectedBrands(Brand brand) {
+
+    for(int i=0; i<selectedBrands.length; i++) {
+      if(selectedBrands[i].id == brand.id) {
+        selectedBrands.removeAt(i);
+        return;
+      }
+    }
+
+    selectedBrands.add(brand);
+
+    notifyListeners();
+  }
+
+  addRemoveSelectedTags(Tag tag) {
+
+    for(int i=0; i<selectedTags.length; i++) {
+      if(selectedTags[i].id == tag.id) {
+        selectedTags.removeAt(i);
+        return;
+      }
+    }
+
+    selectedTags.add(tag);
+
+    notifyListeners();
+  }
+
+  addRemoveSelectedSizeAttributes(AttributeValues sizeAttribute) {
+
+    for(int i=0; i<selectedSizeAttributes.length; i++) {
+      if(selectedSizeAttributes[i].id == sizeAttribute.id) {
+        selectedSizeAttributes.removeAt(i);
+        return;
+      }
+    }
+
+    selectedSizeAttributes.add(sizeAttribute);
+
+    notifyListeners();
+  }
+
+  setSelectedMinPrice(String minPrice) {
+    selectedMinPrice = minPrice;
+    notifyListeners();
+  }
+
+  setSelectedMaxPrice(String maxPrice) {
+    selectedMaxPrice = maxPrice;
+    notifyListeners();
+  }
+
+
+  /**select filter lists**/
+
+
+
+
 
   setSelectedCategoryIndex(int index) {
     selectedCategoryIndex = index;
+    categoryChildren![index] = categoryChildren![index].copyWith(isSelected: !categoryChildren![index].isSelected!);
+
     notifyListeners();
   }
 
@@ -100,8 +188,37 @@ class HomeProvider extends ChangeNotifier {
   int? colorIndex;
   int? sizeIndex;
 
+  int mainCategoryId = 1;
+
+  String selectedColor = '';
+  String selectSize = '';
+
+  void setSelectedColor(String color) {
+    selectedColor = color;
+    notifyListeners();
+  }
+
+  String get getSelectedColor => selectedColor;
+
+  void setSelectedSize(String size) {
+    selectSize = size;
+    notifyListeners();
+  }
+
+  String get getSelectedSize => selectSize;
+
   List<SubCategories>? get getSubCategories => subCategories;
   List<Brand>? get getBrands => brandsList;
+
+  List<Tag>? get getTags => tags;
+
+  void setMainCategoryId(int id) {
+    mainCategoryId = id;
+    notifyListeners();
+  }
+
+  int get getMainCategoryId => mainCategoryId;
+
 
   setCategoryChildren(List<CategoryChild> categoryChild) {
     categoryChildren = categoryChild;
@@ -116,8 +233,28 @@ class HomeProvider extends ChangeNotifier {
   String? get getMainCategory => mainCategory;
 
 
-  setChildList(List<Childes>? cl) {
+  setChildList(List<Childes>? cl, int parentId, String mainCategoryName) {
+
+    final child = Childes(id: parentId, name: 'All $mainCategoryName', isSelected: false);
+
     childsList = cl;
+
+    if(cl!.isNotEmpty) {
+
+      print('adding first child: ${child.id}');
+
+      childsList!.firstWhere((element) => element.name == child.name, orElse: () {
+        childsList!.insert(0, child);
+
+        notifyListeners();
+        return child;
+      });
+
+    }
+    else {
+      childsList!.add(child);
+    }
+
     notifyListeners();
   }
 
@@ -177,6 +314,7 @@ class HomeProvider extends ChangeNotifier {
         List<AttributeValues>? sizeAttributes,
         List<AttributeValues>? colorAttributes,
         List<AttributeValues>? ukSizeAttributes,
+        List<Tag>? tags,
         bool showShimmer = true,
       }) async {
       //{FilterData? filterData}) async {
@@ -195,6 +333,7 @@ class HomeProvider extends ChangeNotifier {
         sizeAttributes: sizeAttributes,
         colorAttributes: colorAttributes,
         ukSizeAttributes: ukSizeAttributes,
+        tags: tags
     );
 
 
@@ -206,6 +345,9 @@ class HomeProvider extends ChangeNotifier {
       brandsList = productModel!.brands;
       tags = productModel!.tags;
       attributes = productModel!.attributes;
+
+
+      print('tags length: ${tags!.length}');
 
     }
     else {
@@ -225,13 +367,22 @@ class HomeProvider extends ChangeNotifier {
     //EasyLoading.show(status: 'loading...');
     showLoading();
 
-    productDetails = await HomeService.getProductDetails(lang, slug);
+    try {
 
-    if (productDetails!.success!) {
+      productDetails = await HomeService.getProductDetails(lang, slug);
+
+      if (productDetails!.success!) {
+
+      }
+      else {
+        Utils.toast(productDetails!.message!);
+      }
+
 
     }
-    else {
-      Utils.toast(productDetails!.message!);
+    catch(e) {
+      print('error: $e');
+      print('error message: ${e.toString()}');
     }
 
     //EasyLoading.dismiss();
@@ -252,7 +403,7 @@ class HomeProvider extends ChangeNotifier {
       //Utils.toast(addWishListResponse!.message!);
     }
     else {
-      //Utils.toast(addWishListResponse!.message!);
+      Utils.toast(addWishListResponse!.message!);
     }
 
     //hideLoading();
@@ -288,26 +439,25 @@ class HomeProvider extends ChangeNotifier {
 
     if (allWishlistProducts.success!) {
       getWishlistData = allWishlistProducts.wishlistProducts!;
+      notifyListeners();
     }
     else {
       Utils.toast(allWishlistProducts.message!);
+      Navigator.pop(context);
     }
 
 
-      hideLoading();
-
-
-    notifyListeners();
+    hideLoading();
   }
 
 
   int getColorIndex() {
 
-    if(productDetails == null || productDetails!.choiceOptions == null || productDetails!.choiceOptions!.isEmpty) return -1;
+    if(productDetails == null || productDetails!.product!.choiceOptions == null || productDetails!.product!.choiceOptions!.isEmpty) return -1;
 
-    for(int i=0; i< productDetails!.choiceOptions!.length; i++) {
+    for(int i=0; i< productDetails!.product!.choiceOptions!.length; i++) {
 
-      if(productDetails!.choiceOptions![i].title == 'Color') {
+      if(productDetails!.product!.choiceOptions![i].title == 'Color') {
         return i;
       }
 
@@ -318,11 +468,11 @@ class HomeProvider extends ChangeNotifier {
 
   int getSizeIndex() {
 
-    if(productDetails == null || productDetails!.choiceOptions == null || productDetails!.choiceOptions!.isEmpty) return -1;
+    if(productDetails == null || productDetails!.product!.choiceOptions == null || productDetails!.product!.choiceOptions!.isEmpty) return -1;
 
-    for(int i=0; i< productDetails!.choiceOptions!.length; i++) {
+    for(int i=0; i< productDetails!.product!.choiceOptions!.length; i++) {
 
-      if(productDetails!.choiceOptions![i].title == 'Size') {
+      if(productDetails!.product!.choiceOptions![i].title == 'Size') {
         return i;
       }
 
@@ -352,6 +502,18 @@ class HomeProvider extends ChangeNotifier {
       }
     }
 
+
+    selectedBrands = [];
+    selectedSubCategories = [];
+    selectedTags = [];
+    selectedSizeAttributes = [];
+    selectedColorAttributes = [];
+    selectedUkSizeAttributes = [];
+
+    selectedMinPrice = '';
+    selectedMaxPrice = '';
+
+
     notifyListeners();
   }
 
@@ -364,6 +526,35 @@ class HomeProvider extends ChangeNotifier {
   List<Products> get getSearchedProducts => products!;
 
 
+  //toggle subcategories
+  void toggleSubCategories(int index) {
+    subCategories![index] = subCategories![index].copyWith(isSelected: !subCategories![index].isSelected);
+
+    notifyListeners();
+  }
+
+  //toggle brands
+  void toggleBrands(int index) {
+    //brandsList![index].isSelected = !brandsList![index].isSelected;
+    brandsList![index] = brandsList![index].copyWith(isSelected: !brandsList![index].isSelected);
+    notifyListeners();
+  }
+
+  //toggle tags
+  void toggleTags(int index) {
+    //tags![index].isSelected = !tags![index].isSelected;
+    tags![index] = tags![index].copyWith(isSelected: !tags![index].isSelected);
+    notifyListeners();
+  }
+
+
+  //toggle colors, sizes
+  void toggleAttribute(int i, int j) {
+    //attributes![i].attributeValues![j].isSelected = !attributes![i].attributeValues![j].isSelected;
+    attributes![i].attributeValues![j] = attributes![i].attributeValues![j].copyWith(isSelected: !attributes![i].attributeValues![j].isSelected);
+    notifyListeners();
+  }
+
   showLoading() {
     isLoading = true;
     notifyListeners();
@@ -374,5 +565,8 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  refresh() {
+    notifyListeners();
+  }
 
 }

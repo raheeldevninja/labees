@@ -51,7 +51,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
     final checkoutProvider = context.watch<CheckoutProvider>();
     final cartProvider = context.watch<CartProvider>();
 

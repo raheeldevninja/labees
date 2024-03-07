@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:labees/core/app/app_colors.dart';
 import 'package:labees/core/images/images.dart';
-import 'package:labees/core/models/brand.dart';
-import 'package:labees/core/models/category.dart';
 import 'package:labees/core/models/product_color.dart';
 import 'package:labees/core/models/product_size.dart';
 import 'package:labees/core/ui/product_item.dart';
 import 'package:labees/core/util/apis.dart';
 import 'package:labees/features/home/models/attribute_detail.dart';
+import 'package:labees/features/home/models/brand.dart';
+import 'package:labees/features/home/models/product_model.dart';
+import 'package:labees/features/home/models/tag.dart';
 import 'package:labees/features/home/view_model/home_provider.dart';
 import 'package:labees/features/home/widgets/app_drawer.dart';
 import 'package:labees/features/my_bag/my_bag_screen.dart';
@@ -32,9 +33,11 @@ class ProductsScreen extends StatefulWidget {
   const ProductsScreen({
     Key? key,
     required this.id,
+    required this.title,
   }) : super(key: key);
 
   final int id;
+  final String title;
 
   @override
   State<ProductsScreen> createState() => _ProductsScreenState();
@@ -43,6 +46,9 @@ class ProductsScreen extends StatefulWidget {
 class _ProductsScreenState extends State<ProductsScreen> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _searchController = TextEditingController();
+
+  final _minAmountController = TextEditingController();
+  final _maxAmountController = TextEditingController();
 
   //List<Product> products = [];
   List<Category> categories = [];
@@ -54,114 +60,29 @@ class _ProductsScreenState extends State<ProductsScreen> {
 
   List<ProductColor> colorsList = [];
 
+  String sortValue = 'Newest';
+
   @override
   void initState() {
     super.initState();
 
-    /*_initWishList();
-    _initCategories();
-    _initBrands();
-    _initColorsList();
-    _initSizes();*/
-
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final homeProvider = Provider.of<HomeProvider>(context, listen: false);
-      await homeProvider.getProducts(context,
-          AppLocalizations.of(context).localeName, widget.id, 10, 1, 'newest');
+
+      await homeProvider.getProducts(context, AppLocalizations.of(context)!.localeName, widget.id, 10, 1, 'newest');
       //await homeProvider.getProducts(context, 1, 10, 1, 'newest');
+
+
+
+
+
     });
   }
 
-  /*_initWishList() {
-    products.add(
-      Product(
-          productBrand: 'Versace',
-          productName: 'T-shirt',
-          price: 5500,
-          productImage:
-              'https://labees.mydomain101.net/storage/app/public/product/thumbnail/2023-07-14-64b11bfec27c5.png'),
-    );
-
-    products.add(
-      Product(
-          productBrand: 'Versace',
-          productName: 'T-shirt',
-          price: 5500,
-          productImage:
-              'https://labees.mydomain101.net/storage/app/public/product/thumbnail/2023-07-14-64b11bfec27c5.png'),
-    );
-
-    products.add(
-      Product(
-          productBrand: 'Versace',
-          productName: 'T-shirt',
-          price: 5500,
-          productImage:
-              'https://labees.mydomain101.net/storage/app/public/product/thumbnail/2023-07-14-64b11bfec27c5.png'),
-    );
-
-    products.add(
-      Product(
-          productBrand: 'Versace',
-          productName: 'T-shirt',
-          price: 5500,
-          productImage:
-              'https://labees.mydomain101.net/storage/app/public/product/thumbnail/2023-07-14-64b11bfec27c5.png'),
-    );
-
-    products.add(
-      Product(
-          productBrand: 'Versace',
-          productName: 'T-shirt',
-          price: 5500,
-          productImage:
-              'https://labees.mydomain101.net/storage/app/public/product/thumbnail/2023-07-14-64b11bfec27c5.png'),
-    );
-  }
-
-  _initCategories() {
-    categories.add(Category(name: 'Dresses', isSelected: true));
-    categories.add(Category(name: 'Coats & Jackets'));
-    categories.add(Category(name: 'Tops'));
-    categories.add(Category(name: 'Trousers', isSelected: true));
-    categories.add(Category(name: 'Jeans'));
-    categories.add(Category(name: 'Skirts'));
-    categories.add(Category(name: 'Shoes', isSelected: true));
-    categories.add(Category(name: 'Bags'));
-  }
-
-  _initBrands() {
-    brands.add(Brand(name: 'Versace', isSelected: true));
-    brands.add(Brand(name: 'Gucci'));
-    brands.add(Brand(name: 'Chanel'));
-    brands.add(Brand(name: 'Dior'));
-  }
-
-  _initSizes() {
-    sizes.add(ProductSizes(size: 'S', isSelected: true));
-    sizes.add(ProductSizes(size: 'M'));
-    sizes.add(ProductSizes(size: 'L'));
-    sizes.add(ProductSizes(size: 'XL'));
-    sizes.add(ProductSizes(size: 'XXL'));
-  }
-
-  _initColorsList() {
-    colorsList.add(ProductColor(color: Colors.red));
-    colorsList.add(ProductColor(color: Colors.blue));
-    colorsList.add(ProductColor(color: Colors.green));
-    colorsList.add(ProductColor(color: Colors.yellow));
-    colorsList.add(ProductColor(color: Colors.purple));
-    colorsList.add(ProductColor(color: Colors.orange));
-    colorsList.add(ProductColor(color: Colors.pink));
-    colorsList.add(ProductColor(color: Colors.brown));
-    colorsList.add(ProductColor(color: Colors.grey));
-    colorsList.add(ProductColor(color: Colors.black));
-    colorsList.add(ProductColor(color: Colors.white));
-  }*/
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     final homeProvider = Provider.of<HomeProvider>(context);
     final cartProvider = Provider.of<CartProvider>(context);
@@ -278,10 +199,284 @@ class _ProductsScreenState extends State<ProductsScreen> {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8),
-            child: Text(l10n.newInHeading,
-                style: const TextStyle(
-                    fontSize: 18, color: AppColors.primaryColor)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(widget.title,
+                    style: const TextStyle(
+                        fontSize: 18, color: AppColors.primaryColor)),
+
+                //drop down
+                DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                    value: sortValue,
+                    icon: const Icon(Icons.arrow_drop_down),
+                    iconSize: 24,
+                    elevation: 16,
+                    style: const TextStyle(color: AppColors.primaryColor),
+                    onChanged: (String? newValue) {
+
+                      setState(() {
+                        sortValue = newValue!;
+                      });
+
+                      String sValue = sortValue.toLowerCase().replaceAll(' ', '_');
+                      print('sort value: $sValue');
+
+                      homeProvider.getProducts(context, AppLocalizations.of(context)!.localeName, widget.id, 10, 1, sValue);
+
+                    },
+                    items: <String>['Newest', 'Lowest Price', 'Highest Price']
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value, style: const TextStyle(fontSize: 14)),
+                      );
+                    }).toList(),
+                  ),
+                ),
+
+              ],
+            ),
           ),
+
+          const SizedBox(
+            height: 10,
+          ),
+
+          //selected filters chips
+          if (homeProvider.selectedSubCategories.isNotEmpty ||
+              homeProvider.selectedBrands.isNotEmpty ||
+              homeProvider.selectedTags.isNotEmpty ||
+              homeProvider.selectedSizeAttributes.isNotEmpty ||
+              homeProvider.selectedMinPrice.isNotEmpty ||
+              homeProvider.selectedMaxPrice.isNotEmpty) ...[
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: Wrap(
+                spacing: 10,
+                runSpacing: 10,
+                children: [
+                  for (int i = 0;
+                      i < homeProvider.selectedSubCategories.length;
+                      i++)
+                    Chip(
+                      backgroundColor: Colors.grey.withOpacity(0.3),
+                      label: Text(homeProvider.selectedSubCategories[i].name!),
+                      onDeleted: () async {
+
+                        homeProvider.subCategories!.firstWhere((element) => element.id == homeProvider.selectedSubCategories[i].id).isSelected = false;
+                        homeProvider.selectedSubCategories.removeAt(i);
+
+                        String sValue = sortValue.toLowerCase().replaceAll(' ', '_');
+
+                        await homeProvider.getProducts(
+                          context,
+                          AppLocalizations.of(context)!.localeName,
+                          widget.id,
+                          10,
+                          1,
+                          sValue,
+                          minAmount: _minAmountController.text.trim(),
+                          maxAmount: _maxAmountController.text.trim(),
+                          subCategoriesList: homeProvider.subCategories,
+                          brands: homeProvider.brandsList,
+                          sizeAttributes: homeProvider.selectedSizeAttributes,
+                          colorAttributes: homeProvider.selectedColorAttributes,
+                          ukSizeAttributes: homeProvider.selectedUkSizeAttributes,
+                          tags: homeProvider.selectedTags,
+                        );
+
+                      },
+                    ),
+                  for (int i = 0; i < homeProvider.selectedBrands.length; i++)
+                    Chip(
+                      backgroundColor: Colors.grey.withOpacity(0.3),
+                      label: Text(homeProvider.selectedBrands[i].name!),
+                      onDeleted: () async {
+
+                        homeProvider.brandsList!.firstWhere((element) => element.id == homeProvider.selectedBrands[i].id).isSelected = false;
+                        homeProvider.selectedBrands.removeAt(i);
+
+                        String sValue = sortValue.toLowerCase().replaceAll(' ', '_');
+
+                        await homeProvider.getProducts(
+                          context,
+                          AppLocalizations.of(context)!.localeName,
+                          widget.id,
+                          10,
+                          1,
+                          sValue,
+                          minAmount: _minAmountController.text.trim(),
+                          maxAmount: _maxAmountController.text.trim(),
+                          subCategoriesList: homeProvider.subCategories,
+                          brands: homeProvider.brandsList,
+                          sizeAttributes: homeProvider.selectedSizeAttributes,
+                          colorAttributes: homeProvider.selectedColorAttributes,
+                          ukSizeAttributes: homeProvider.selectedUkSizeAttributes,
+                          tags: homeProvider.selectedTags,
+                        );
+
+
+                      },
+                    ),
+                  for (int i = 0; i < homeProvider.selectedTags.length; i++)
+                    Chip(
+                      backgroundColor: Colors.grey.withOpacity(0.3),
+                      label: Text(homeProvider.selectedTags[i].name!),
+                      onDeleted: () async {
+
+                        homeProvider.tags!.firstWhere((element) => element.id == homeProvider.selectedTags[i].id).isSelected = false;
+                        homeProvider.selectedTags.removeAt(i);
+
+                        String sValue = sortValue.toLowerCase().replaceAll(' ', '_');
+
+                        await homeProvider.getProducts(
+                          context,
+                          AppLocalizations.of(context)!.localeName,
+                          widget.id,
+                          10,
+                          1,
+                          sValue,
+                          minAmount: _minAmountController.text.trim(),
+                          maxAmount: _maxAmountController.text.trim(),
+                          subCategoriesList: homeProvider.subCategories,
+                          brands: homeProvider.brandsList,
+                          sizeAttributes: homeProvider.selectedSizeAttributes,
+                          colorAttributes: homeProvider.selectedColorAttributes,
+                          ukSizeAttributes: homeProvider.selectedUkSizeAttributes,
+                          tags: homeProvider.selectedTags,
+                        );
+
+
+                      },
+                    ),
+                  for (int i = 0;
+                      i < homeProvider.selectedSizeAttributes.length;
+                      i++)
+                    Chip(
+                      backgroundColor: Colors.grey.withOpacity(0.3),
+                      label: Text(homeProvider.selectedSizeAttributes[i].name!),
+                      onDeleted: () async {
+
+                        homeProvider.attributes!.forEach((element) {
+                          if(element.name == 'Size') {
+                            element.attributeValues!.forEach((element) {
+                              if(element.id == homeProvider.selectedSizeAttributes[i].id) {
+                                element.isSelected = false;
+                              }
+                            });
+                          }
+                          if(element.name == 'UK Size') {
+                            element.attributeValues!.forEach((element) {
+                              if(element.id == homeProvider.selectedSizeAttributes[i].id) {
+                                element.isSelected = false;
+                              }
+                            });
+                          }
+                          if(element.name == 'Color') {
+                            element.attributeValues!.forEach((element) {
+                              if(element.id == homeProvider.selectedSizeAttributes[i].id) {
+                                element.isSelected = false;
+                              }
+                            });
+                          }
+
+                        });
+
+
+                        homeProvider.selectedSizeAttributes.removeAt(i);
+
+                        String sValue = sortValue.toLowerCase().replaceAll(' ', '_');
+
+                        await homeProvider.getProducts(
+                          context,
+                          AppLocalizations.of(context)!.localeName,
+                          widget.id,
+                          10,
+                          1,
+                          sValue,
+                          minAmount: _minAmountController.text.trim(),
+                          maxAmount: _maxAmountController.text.trim(),
+                          subCategoriesList: homeProvider.subCategories,
+                          brands: homeProvider.brandsList,
+                          sizeAttributes: homeProvider.selectedSizeAttributes,
+                          colorAttributes: homeProvider.selectedColorAttributes,
+                          ukSizeAttributes: homeProvider.selectedUkSizeAttributes,
+                          tags: homeProvider.selectedTags,
+                        );
+
+
+
+                      },
+                  ),
+                  if (homeProvider.selectedMinPrice.isNotEmpty)
+                    Chip(
+                      backgroundColor: Colors.grey.withOpacity(0.3),
+                      label: Text(homeProvider.selectedMinPrice),
+                      onDeleted: () async {
+                        homeProvider.setSelectedMinPrice('');
+
+                        String sValue = sortValue.toLowerCase().replaceAll(' ', '_');
+
+                        await homeProvider.getProducts(
+                          context,
+                          AppLocalizations.of(context)!.localeName,
+                          widget.id,
+                          10,
+                          1,
+                          sValue,
+                          minAmount: _minAmountController.text.trim(),
+                          maxAmount: _maxAmountController.text.trim(),
+                          subCategoriesList: homeProvider.subCategories,
+                          brands: homeProvider.brandsList,
+                          sizeAttributes: homeProvider.selectedSizeAttributes,
+                          colorAttributes: homeProvider.selectedColorAttributes,
+                          ukSizeAttributes: homeProvider.selectedUkSizeAttributes,
+                          tags: homeProvider.selectedTags,
+                        );
+
+                      },
+                    ),
+                  if (homeProvider.selectedMaxPrice.isNotEmpty)
+                    Chip(
+                      backgroundColor: Colors.grey.withOpacity(0.3),
+                      label: Text(homeProvider.selectedMaxPrice),
+                      onDeleted: () async {
+
+                        homeProvider.setSelectedMaxPrice('');
+
+                        String sValue = sortValue.toLowerCase().replaceAll(' ', '_');
+
+                        await homeProvider.getProducts(
+                          context,
+                          AppLocalizations.of(context)!.localeName,
+                          widget.id,
+                          10,
+                          1,
+                          sValue,
+                          minAmount: _minAmountController.text.trim(),
+                          maxAmount: _maxAmountController.text.trim(),
+                          subCategoriesList: homeProvider.subCategories,
+                          brands: homeProvider.brandsList,
+                          sizeAttributes: homeProvider.selectedSizeAttributes,
+                          colorAttributes: homeProvider.selectedColorAttributes,
+                          ukSizeAttributes: homeProvider.selectedUkSizeAttributes,
+                          tags: homeProvider.selectedTags,
+                        );
+
+
+                      },
+                    ),
+                ],
+              ),
+            ),
+          ],
+
+          const SizedBox(
+            height: 10,
+          ),
+
           Expanded(
             child: homeProvider.getIsLoading
                 ? GridView.builder(
@@ -353,7 +548,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
                           //final product = products[index];
                           final product = homeProvider.products![index];
 
-                          print('wishlist in all products ${product.wishlist}');
 
                           return InkWell(
                             onTap: () {
@@ -380,11 +574,16 @@ class _ProductsScreenState extends State<ProductsScreen> {
 
                                   ///add to wishlist
                                   await homeProvider.addToWishList(
-                                      context, AppLocalizations.of(context).localeName, product.id!);
+                                      context, AppLocalizations.of(context)!.localeName, product.id!);
                                 }
 
+
+                                String sValue = sortValue.toLowerCase().replaceAll(' ', '_');
+                                print('sort value: $sValue');
+
+
                                 await homeProvider.getProducts(context,
-                                    AppLocalizations.of(context).localeName, widget.id, 10, 1, 'newest', showShimmer: false);
+                                    AppLocalizations.of(context)!.localeName, widget.id, 10, 1, sValue, showShimmer: false);
 
 
                               },
@@ -402,6 +601,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
+
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
             topLeft: Radius.circular(24.0), topRight: Radius.circular(24.0)),
@@ -413,25 +613,169 @@ class _ProductsScreenState extends State<ProductsScreen> {
             builder: (BuildContext context, StateSetter setState) {
           return FractionallySizedBox(
             heightFactor: 0.75,
-            child: Padding(
-              padding: const EdgeInsets.all(24),
-              child: ListView(
-                children: [
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    '${l10n.filterBy}: ',
-                    style: const TextStyle(
-                        fontSize: 16,
-                        color: AppColors.primaryColor,
-                        fontWeight: FontWeight.w400),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  //rounded corner border container
-                  /*InkWell(
+            child: FilterBottomSheet(
+              id: widget.id,
+              sortValue: sortValue,
+            ),
+          );
+        });
+      },
+    );
+  }
+}
+
+class FilterBottomSheet extends StatefulWidget {
+  const FilterBottomSheet({
+    required this.id,
+    required this.sortValue,
+    super.key});
+
+  final int id;
+  final String sortValue;
+
+  @override
+  State<FilterBottomSheet> createState() => _FilterBottomSheetState();
+}
+
+class _FilterBottomSheetState extends State<FilterBottomSheet> {
+
+
+  var _minAmountController = TextEditingController();
+  var _maxAmountController = TextEditingController();
+
+
+  List<SubCategories> subCategories = [];
+  List<Brand> brands = [];
+
+  List<AttributeValues> sizeAttributes = [];
+  List<AttributeValues> colorAttributes = [];
+  List<Tag> tags = [];
+  List<AttributeValues> ukSizeAttributes = [];
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final homeProvider = Provider.of<HomeProvider>(context, listen: false);
+
+
+      for(int i=0; i<homeProvider.selectedSubCategories.length; i++) {
+        homeProvider.getSubCategories!.forEach((element) {
+          if(element.id == homeProvider.selectedSubCategories[i].id) {
+            element.isSelected = true;
+          }
+        });
+      }
+
+      for(int i=0; i<homeProvider.selectedBrands.length; i++) {
+        homeProvider.getBrands!.forEach((element) {
+          if(element.id == homeProvider.selectedBrands[i].id) {
+            element.isSelected = true;
+          }
+        });
+      }
+
+
+      for(int i=0; i<homeProvider.selectedTags.length; i++) {
+        homeProvider.getTags!.forEach((element) {
+          if(element.id == homeProvider.selectedTags[i].id) {
+            element.isSelected = true;
+          }
+        });
+      }
+
+      for(int i=0; i<homeProvider.selectedSizeAttributes.length; i++) {
+        homeProvider.attributes!.forEach((element) {
+          if(element.name == 'Size') {
+            element.attributeValues!.forEach((element) {
+              if(element.id == homeProvider.selectedSizeAttributes[i].id) {
+                element.isSelected = true;
+              }
+            });
+          }
+          if(element.name == 'UK Size') {
+            element.attributeValues!.forEach((element) {
+              if(element.id == homeProvider.selectedSizeAttributes[i].id) {
+                element.isSelected = true;
+              }
+            });
+          }
+          if(element.name == 'Color') {
+            element.attributeValues!.forEach((element) {
+              if(element.id == homeProvider.selectedSizeAttributes[i].id) {
+                element.isSelected = true;
+              }
+            });
+          }
+        });
+
+
+        _minAmountController.text = homeProvider.selectedMinPrice;
+        _maxAmountController.text = homeProvider.selectedMaxPrice;
+
+      }
+
+
+      setState(() {
+
+      });
+
+
+    });
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+    final l10n = AppLocalizations.of(context)!;
+    final homeProvider = Provider.of<HomeProvider>(context);
+
+    print('tags: ${homeProvider.getTags!.isEmpty}');
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      child: ListView(
+        children: [
+
+          Row(
+            children: [
+
+              SvgPicture.asset(
+                Images.filterIcon,
+                color: AppColors.primaryColor,
+              ),
+
+              const SizedBox(width: 8,),
+
+              Text(
+                '${l10n.filters}: ',
+                style: const TextStyle(
+                    fontSize: 16,
+                    color: AppColors.primaryColor,
+                    fontWeight: FontWeight.w400),
+              ),
+
+              const Expanded(child: SizedBox()),
+
+
+              InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: const Icon(Icons.close, color: AppColors.primaryColor),
+              ),
+
+            ],
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          //rounded corner border container
+          /*InkWell(
                     onTap: () {
                       setState(() {
                         _isPriorityDeliverySelected =
@@ -460,79 +804,90 @@ class _ProductsScreenState extends State<ProductsScreen> {
                       ),
                     ),
                   ),*/
-                  const SizedBox(
-                    height: 30,
-                  ),
+          const SizedBox(
+            height: 30,
+          ),
 
-                  if (homeProvider.getSubCategories!.isNotEmpty) ...[
-                    Text(
-                      l10n.categoryLabel,
-                      style: const TextStyle(
-                          fontSize: 16,
-                          color: AppColors.primaryColor,
-                          fontWeight: FontWeight.w400),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Wrap(
-                      spacing: 10,
-                      runSpacing: 10,
-                      children: [
-                        for (int i = 0;
-                            i < homeProvider.getSubCategories!.length;
-                            i++)
-                          InkWell(
-                            borderRadius: BorderRadius.circular(8.0),
-                            onTap: () {
-                              setState(() {
+          if (homeProvider.getSubCategories!.isNotEmpty) ...[
+
+            Text(
+              l10n.categoryLabel,
+              style: const TextStyle(
+                  fontSize: 16,
+                  color: AppColors.primaryColor,
+                  fontWeight: FontWeight.w400),
+            ),
+
+            const SizedBox(
+              height: 10,
+            ),
+
+            Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              children: [
+                for (int i = 0;
+                i < homeProvider.getSubCategories!.length;
+                i++)
+                  InkWell(
+                    borderRadius: BorderRadius.circular(8.0),
+                    onTap: () {
+                      /*setState(() {
                                 homeProvider.getSubCategories![i].isSelected =
                                     !homeProvider
                                         .getSubCategories![i].isSelected;
-                              });
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.all(8.0),
-                              decoration: BoxDecoration(
-                                color: homeProvider
-                                        .getSubCategories![i].isSelected
-                                    ? AppColors.selectedOption.withOpacity(0.3)
-                                    : Colors.white,
-                                borderRadius: BorderRadius.circular(8.0),
-                                border: Border.all(
-                                  color: AppColors.borderColor,
-                                  width: 1,
-                                ),
-                              ),
-                              child: Text(
-                                homeProvider.getSubCategories![i].name!,
-                                style: const TextStyle(
-                                    fontFamily: 'Montserrat',
-                                    fontSize: 14,
-                                    color: AppColors.blackColor),
-                              ),
-                            ),
-                          ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                  ],
+                              });*/
 
-                  if (homeProvider.getBrands!.isNotEmpty) ...[
-                    Text(
-                      l10n.filterBrands,
-                      style: const TextStyle(
-                          fontSize: 16,
-                          color: AppColors.primaryColor,
-                          fontWeight: FontWeight.w400),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
 
-                    /*Wrap(
+                      //toggle sub category
+                      homeProvider.toggleSubCategories(i);
+
+                      homeProvider.addRemoveSelectedSubCategories(homeProvider.getSubCategories![i]);
+
+
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        color: homeProvider
+                            .getSubCategories![i].isSelected
+                            ? AppColors.selectedOption.withOpacity(0.3)
+                            : Colors.white,
+                        borderRadius: BorderRadius.circular(8.0),
+                        border: Border.all(
+                          color: AppColors.borderColor,
+                          width: 1,
+                        ),
+                      ),
+                      child: Text(
+                        homeProvider.getSubCategories![i].name!,
+                        style: const TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 14,
+                            color: AppColors.blackColor),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+          ],
+
+          if (homeProvider.getBrands!.isNotEmpty) ...[
+            Text(
+              l10n.filterBrands,
+              style: const TextStyle(
+                  fontSize: 16,
+                  color: AppColors.primaryColor,
+                  fontWeight: FontWeight.w400),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+
+            /*Wrap(
                     spacing: 10,
                     runSpacing: 10,
                     children: [
@@ -569,383 +924,489 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     ],
                   ),*/
 
-                    Wrap(
-                      spacing: 10,
-                      runSpacing: 10,
-                      children: [
-                        for (int i = 0;
-                            i < homeProvider.getBrands!.length;
-                            i++) ...[
-                          InkWell(
-                            borderRadius: BorderRadius.circular(8.0),
-                            onTap: () {
-                              setState(() {
+            Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              children: [
+                for (int i = 0;
+                i < homeProvider.getBrands!.length;
+                i++) ...[
+                  InkWell(
+                    borderRadius: BorderRadius.circular(8.0),
+                    onTap: () {
+                      /*setState(() {
                                 homeProvider.getBrands![i].isSelected =
                                     !homeProvider.getBrands![i].isSelected;
-                              });
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.all(8.0),
-                              decoration: BoxDecoration(
-                                color: homeProvider.getBrands![i].isSelected
-                                    ? AppColors.selectedOption.withOpacity(0.3)
-                                    : Colors.white,
-                                borderRadius: BorderRadius.circular(8.0),
-                                border: Border.all(
-                                  color: AppColors.borderColor,
-                                  width: 1,
-                                ),
-                              ),
-                              child: Text(
-                                homeProvider.getBrands![i].name!,
-                                style: const TextStyle(
-                                    fontFamily: 'Montserrat',
-                                    fontSize: 14,
-                                    color: AppColors.blackColor),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                  ],
+                              });*/
 
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        l10n.priceLabel,
-                        style: const TextStyle(
-                            fontSize: 16,
-                            color: AppColors.primaryColor,
-                            fontWeight: FontWeight.w400),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(8.0),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8.0),
-                          border: Border.all(
-                            color: AppColors.borderColor.withOpacity(0.5),
-                            width: 1,
-                          ),
-                        ),
-                        child: Text(
-                          'Sar ${_values.end.round()}',
-                          style: const TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontSize: 14,
-                              color: AppColors.blackColor),
-                        ),
-                      ),
-                    ],
-                  ),
+                      homeProvider.toggleBrands(i);
+                      homeProvider.addRemoveSelectedBrands(homeProvider.getBrands![i]);
 
-                  SfRangeSlider(
-                    min: 0.0,
-                    max: 10000.0,
-                    values: _values,
-                    interval: 100,
-                    stepSize: 100,
-                    showTicks: false,
-                    showLabels: false,
-                    enableTooltip: false,
-                    showDividers: false,
-                    minorTicksPerInterval: 100,
-                    onChanged: (SfRangeValues values) {
-                      setState(() {
-                        _values = values;
-                      });
                     },
-                  ),
-
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        //start range and end range
-                        Expanded(
-                          child: Text(
-                            'Sar ${_values.start.round()}',
-                            style: const TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontSize: 14,
-                                color: AppColors.blackColor),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                          child: Text(
-                            'Sar ${_values.end.round()}',
-                            style: const TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontSize: 14,
-                                color: AppColors.blackColor),
-                            textAlign: TextAlign.end,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-
-                  for (int i = 0; i < homeProvider.attributes!.length; i++) ...[
-                    Text(
-                      homeProvider.attributes![i].name!,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: AppColors.primaryColor,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Wrap(
-                      direction: Axis.horizontal,
-                      spacing: 10,
-                      runSpacing: 10,
-                      children: [
-                        for (int j = 0;
-                            j <
-                                homeProvider
-                                    .attributes![i].attributeValues!.length;
-                            j++)
-                          InkWell(
-                            borderRadius: BorderRadius.circular(30.0),
-                            onTap: () {
-                              setState(() {
-                                homeProvider.attributes![i].attributeValues![j]
-                                        .isSelected =
-                                    !homeProvider.attributes![i]
-                                        .attributeValues![j].isSelected;
-                              });
-                            },
-                            child: Container(
-                              padding:
-                                  homeProvider.attributes![i].name != 'Color'
-                                      ? const EdgeInsets.all(8.0)
-                                      : const EdgeInsets.all(1.0),
-                              decoration: homeProvider.attributes![i].name !=
-                                      'Color'
-                                  ? BoxDecoration(
-                                      color: homeProvider.attributes![i]
-                                              .attributeValues![j].isSelected
-                                          ? AppColors.selectedOption
-                                              .withOpacity(0.3)
-                                          : Colors.white,
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      border: Border.all(
-                                        color: AppColors.borderColor,
-                                        width: 1,
-                                      ),
-                                    )
-                                  : BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      border: Border.all(
-                                        color: homeProvider.attributes![i]
-                                                .attributeValues![j].isSelected
-                                            ? AppColors.blackColor
-                                            : Colors.transparent,
-                                        width: 1,
-                                      ),
-                                    ),
-                              child: homeProvider.attributes![i].name == 'Color'
-                                  ? ClipRRect(
-                                      borderRadius: BorderRadius.circular(60.0),
-                                      child: SvgPicture.network(
-                                        '${APIs.imageBaseURL}${APIs.attributeValue}${homeProvider.attributes![i].attributeValues![j].image!}',
-                                        width: 30,
-                                        height: 30,
-                                      ),
-                                    )
-                                  : Text(
-                                      homeProvider.attributes![i]
-                                          .attributeValues![j].name!,
-                                      style: const TextStyle(
-                                          fontFamily: 'Montserrat',
-                                          fontSize: 14,
-                                          color: AppColors.blackColor),
-                                    ),
-                            ),
-                          ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                  ],
-                  const SizedBox(
-                    height: 30,
-                  ),
-
-                  SizedBox(
-                    width: double.maxFinite,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        Navigator.pop(context);
-
-                        print('min amount: ${_values.start.round()}');
-                        print('max amount: ${_values.end.round()}');
-
-                        final homeProvider =
-                            Provider.of<HomeProvider>(context, listen: false);
-
-                        List<AttributeValues> sizeAttributes = [];
-                        List<AttributeValues> colorAttributes = [];
-                        List<AttributeValues> ukSizeAttributes = [];
-
-                        //get selected size attributes
-                        for (int i = 0;
-                            i < homeProvider.attributes!.length;
-                            i++) {
-                          if (homeProvider.attributes![i].name == 'Size') {
-                            for (int j = 0;
-                                j <
-                                    homeProvider
-                                        .attributes![i].attributeValues!.length;
-                                j++) {
-                              if (homeProvider.attributes![i]
-                                  .attributeValues![j].isSelected) {
-                                sizeAttributes.add(homeProvider
-                                    .attributes![i].attributeValues![j]);
-                              }
-                            }
-                          }
-                        }
-
-                        //get selected color attributes
-                        for (int i = 0;
-                            i < homeProvider.attributes!.length;
-                            i++) {
-                          if (homeProvider.attributes![i].name == 'Color') {
-                            for (int j = 0;
-                                j <
-                                    homeProvider
-                                        .attributes![i].attributeValues!.length;
-                                j++) {
-                              if (homeProvider.attributes![i]
-                                  .attributeValues![j].isSelected) {
-                                colorAttributes.add(homeProvider
-                                    .attributes![i].attributeValues![j]);
-                              }
-                            }
-                          }
-                        }
-
-                        //get selected uk size attributes
-                        for (int i = 0;
-                            i < homeProvider.attributes!.length;
-                            i++) {
-                          if (homeProvider.attributes![i].name == 'UK Size') {
-                            for (int j = 0;
-                                j <
-                                    homeProvider
-                                        .attributes![i].attributeValues!.length;
-                                j++) {
-                              if (homeProvider.attributes![i]
-                                  .attributeValues![j].isSelected) {
-                                ukSizeAttributes.add(homeProvider
-                                    .attributes![i].attributeValues![j]);
-                              }
-                            }
-                          }
-                        }
-
-                        await homeProvider.getProducts(
-                          context,
-                          AppLocalizations.of(context).localeName,
-                          widget.id,
-                          10,
-                          1,
-                          'newest',
-                          minAmount: _values.start.round().toString(),
-                          maxAmount: _values.end.round().toString(),
-                          subCategoriesList: homeProvider.subCategories,
-                          brands: homeProvider.brandsList,
-                          sizeAttributes: sizeAttributes,
-                          colorAttributes: colorAttributes,
-                          ukSizeAttributes: ukSizeAttributes,
-                        );
-
-                        /*await homeProvider.getProducts(
-                            context, 1, 10, 1, 'newest',
-                          filterData: filterData
-                        );*/
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primaryColor,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(60.0),
+                    child: Container(
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        color: homeProvider.getBrands![i].isSelected
+                            ? AppColors.selectedOption.withOpacity(0.3)
+                            : Colors.white,
+                        borderRadius: BorderRadius.circular(8.0),
+                        border: Border.all(
+                          color: AppColors.borderColor,
+                          width: 1,
                         ),
                       ),
                       child: Text(
-                        l10n.filterBtnText,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-
-                  SizedBox(
-                    width: double.maxFinite,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        Navigator.pop(context);
-
-                        _values = const SfRangeValues(0.0, 10000.0);
-
-                        final homeProvider =
-                            Provider.of<HomeProvider>(context, listen: false);
-
-                        homeProvider.clearFilters();
-
-                        await homeProvider.getProducts(
-                            context,
-                            AppLocalizations.of(context).localeName,
-                            widget.id,
-                            10,
-                            1,
-                            'newest');
-                      },
-                      style: ElevatedButton.styleFrom(
-                        side: const BorderSide(
-                          width: 1.0,
-                          color: AppColors.primaryColor,
-                        ),
-                        backgroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(60.0),
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            l10n.clearFilterBtnText,
-                            style:
-                                const TextStyle(color: AppColors.primaryColor),
-                          ),
-                        ],
+                        homeProvider.getBrands![i].name!,
+                        style: const TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 14,
+                            color: AppColors.blackColor),
                       ),
                     ),
                   ),
                 ],
+              ],
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+          ],
+
+          //tags
+
+          if (homeProvider.getTags!.isNotEmpty) ...[
+            Text(
+              l10n.tags,
+              style: const TextStyle(
+                  fontSize: 16,
+                  color: AppColors.primaryColor,
+                  fontWeight: FontWeight.w400),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              children: [
+                for (int i = 0; i < homeProvider.getTags!.length; i++)
+                  InkWell(
+                    borderRadius: BorderRadius.circular(8.0),
+                    onTap: () {
+                      /*setState(() {
+                                homeProvider.getTags![i].isSelected =
+                                    !homeProvider.getTags![i].isSelected;
+                              });*/
+
+                      homeProvider.toggleTags(i);
+
+                      homeProvider.addRemoveSelectedTags(homeProvider.getTags![i]);
+
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        color: homeProvider.getTags![i].isSelected
+                            ? AppColors.selectedOption.withOpacity(0.3)
+                            : Colors.white,
+                        borderRadius: BorderRadius.circular(8.0),
+                        border: Border.all(
+                          color: AppColors.borderColor,
+                          width: 1,
+                        ),
+                      ),
+                      child: Text(
+                        homeProvider.getTags![i].name!,
+                        style: const TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 14,
+                            color: AppColors.blackColor),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+          ],
+
+          const SizedBox(
+            height: 20,
+          ),
+
+          //min amount text field
+          const Text(
+            'Min Amount',
+            style: TextStyle(
+                fontSize: 16,
+                color: AppColors.primaryColor,
+                fontWeight: FontWeight.w400),
+          ),
+
+          const SizedBox(
+            height: 10,
+          ),
+
+          TextFormField(
+            controller: _minAmountController,
+            onChanged: (value) {
+              homeProvider.setSelectedMinPrice(value);
+            },
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+              filled: true,
+              prefixIcon: const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text('Sar '),
+              ),
+              prefixIconConstraints: const BoxConstraints(minWidth: 0, minHeight: 0),
+              prefixStyle: const TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontSize: 14,
+                  color: AppColors.blackColor),
+              fillColor: Colors.white,
+              contentPadding: const EdgeInsets.all(12.0),
+              hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.grey, width: 1.0),
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                borderRadius: BorderRadius.circular(8.0),
               ),
             ),
-          );
-        });
-      },
+          ),
+
+          const SizedBox(
+            height: 10,
+          ),
+
+          //max amount text field
+          const Text(
+            'Max Amount',
+            style: TextStyle(
+                fontSize: 16,
+                color: AppColors.primaryColor,
+                fontWeight: FontWeight.w400),
+          ),
+
+          const SizedBox(
+            height: 10,
+          ),
+
+          TextFormField(
+            controller: _maxAmountController,
+            onChanged: (value) {
+              homeProvider.setSelectedMaxPrice(value);
+            },
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+              filled: true,
+              prefixIcon: const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text('Sar '),
+              ),
+              prefixIconConstraints: const BoxConstraints(minWidth: 0, minHeight: 0),
+              prefixStyle: const TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontSize: 14,
+                  color: AppColors.blackColor),
+              fillColor: Colors.white,
+              contentPadding: const EdgeInsets.all(12.0),
+              hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.grey, width: 1.0),
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+            ),
+          ),
+
+          const SizedBox(
+            height: 30,
+          ),
+
+          for (int i = 0; i < homeProvider.attributes!.length; i++) ...[
+            Text(
+              homeProvider.attributes![i].name!,
+              style: const TextStyle(
+                fontSize: 16,
+                color: AppColors.primaryColor,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Wrap(
+              direction: Axis.horizontal,
+              spacing: 10,
+              runSpacing: 10,
+              children: [
+                for (int j = 0;
+                j <
+                    homeProvider
+                        .attributes![i].attributeValues!.length;
+                j++)
+                  InkWell(
+                    borderRadius: BorderRadius.circular(30.0),
+                    onTap: () {
+                      /*setState(() {
+                                homeProvider.attributes![i].attributeValues![j]
+                                        .isSelected =
+                                    !homeProvider.attributes![i]
+                                        .attributeValues![j].isSelected;
+                              });*/
+
+
+                      homeProvider.toggleAttribute(i, j);
+
+                      homeProvider.addRemoveSelectedSizeAttributes(homeProvider.attributes![i].attributeValues![j]);
+
+                    },
+                    child: Container(
+                      padding:
+                      homeProvider.attributes![i].name != 'Color'
+                          ? const EdgeInsets.all(8.0)
+                          : const EdgeInsets.all(1.0),
+                      decoration: homeProvider.attributes![i].name !=
+                          'Color'
+                          ? BoxDecoration(
+                        color: homeProvider.attributes![i]
+                            .attributeValues![j].isSelected
+                            ? AppColors.selectedOption
+                            .withOpacity(0.3)
+                            : Colors.white,
+                        borderRadius: BorderRadius.circular(8.0),
+                        border: Border.all(
+                          color: AppColors.borderColor,
+                          width: 1,
+                        ),
+                      )
+                          : BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: homeProvider.attributes![i]
+                              .attributeValues![j].isSelected
+                              ? AppColors.blackColor
+                              : Colors.transparent,
+                          width: 1,
+                        ),
+                      ),
+                      child: homeProvider.attributes![i].name == 'Color'
+                          ? ClipRRect(
+                        borderRadius: BorderRadius.circular(60.0),
+                        child: SvgPicture.network(
+                          '${APIs.imageBaseURL}${APIs.attributeValue}${homeProvider.attributes![i].attributeValues![j].image!}',
+                          width: 30,
+                          height: 30,
+                        ),
+                      )
+                          : Text(
+                        homeProvider.attributes![i]
+                            .attributeValues![j].name!,
+                        style: const TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 14,
+                            color: AppColors.blackColor),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+          ],
+          const SizedBox(
+            height: 30,
+          ),
+
+          SizedBox(
+            width: double.maxFinite,
+            height: 50,
+            child: ElevatedButton(
+              onPressed: () async {
+                Navigator.pop(context);
+
+                final homeProvider = Provider.of<HomeProvider>(context, listen: false);
+
+                // List<AttributeValues> sizeAttributes = [];
+                // List<AttributeValues> colorAttributes = [];
+                // List<Tag> tags = [];
+                // List<AttributeValues> ukSizeAttributes = [];
+
+                sizeAttributes = [];
+                colorAttributes = [];
+                tags = [];
+                ukSizeAttributes = [];
+
+                //get selected size attributes
+                for (int i = 0; i < homeProvider.attributes!.length; i++) {
+
+                  if (homeProvider.attributes![i].name == 'Size') {
+                    for (int j = 0; j < homeProvider.attributes![i].attributeValues!.length; j++) {
+
+                      if (homeProvider.attributes![i].attributeValues![j].isSelected) {
+                        sizeAttributes.add(homeProvider.attributes![i].attributeValues![j]);
+                      }
+
+                    }
+
+                  }
+
+                }
+
+                //get selected color attributes
+                for (int i = 0;
+                i < homeProvider.attributes!.length;
+                i++) {
+                  if (homeProvider.attributes![i].name == 'Color') {
+                    for (int j = 0;
+                    j <
+                        homeProvider
+                            .attributes![i].attributeValues!.length;
+                    j++) {
+                      if (homeProvider.attributes![i]
+                          .attributeValues![j].isSelected) {
+                        colorAttributes.add(homeProvider
+                            .attributes![i].attributeValues![j]);
+                      }
+                    }
+                  }
+                }
+
+                //get selected uk size attributes
+                for (int i = 0;
+                i < homeProvider.attributes!.length;
+                i++) {
+                  if (homeProvider.attributes![i].name == 'UK Size') {
+                    for (int j = 0;
+                    j <
+                        homeProvider
+                            .attributes![i].attributeValues!.length;
+                    j++) {
+                      if (homeProvider.attributes![i]
+                          .attributeValues![j].isSelected) {
+                        ukSizeAttributes.add(homeProvider
+                            .attributes![i].attributeValues![j]);
+                      }
+                    }
+                  }
+                }
+
+                //tags
+                for (int i = 0; i < homeProvider.getTags!.length; i++) {
+                  if (homeProvider.getTags![i].isSelected) {
+                    tags.add(homeProvider.getTags![i]);
+                  }
+                }
+
+
+                String sValue = widget.sortValue.toLowerCase().replaceAll(' ', '_');
+
+
+                await homeProvider.getProducts(
+                  context,
+                  AppLocalizations.of(context)!.localeName,
+                  widget.id,
+                  10,
+                  1,
+                  sValue,
+                  //minAmount: _values.start.round().toString(),
+                  minAmount: _minAmountController.text.trim(),
+                  //maxAmount: _values.end.round().toString(),
+                  maxAmount: _maxAmountController.text.trim(),
+                  subCategoriesList: homeProvider.subCategories,
+                  brands: homeProvider.brandsList,
+                  sizeAttributes: sizeAttributes,
+                  colorAttributes: colorAttributes,
+                  ukSizeAttributes: ukSizeAttributes,
+                  tags: tags,
+                );
+
+                /*await homeProvider.getProducts(
+                            context, 1, 10, 1, 'newest',
+                          filterData: filterData
+                        );*/
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.primaryColor,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(60.0),
+                ),
+              ),
+              child: Text(
+                l10n.filterBtnText,
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 10),
+
+          SizedBox(
+            width: double.maxFinite,
+            height: 50,
+            child: ElevatedButton(
+              onPressed: () async {
+                Navigator.pop(context);
+
+                _minAmountController.clear();
+                _maxAmountController.clear();
+
+
+                final homeProvider =
+                Provider.of<HomeProvider>(context, listen: false);
+
+                homeProvider.clearFilters();
+
+                String sValue = widget.sortValue.toLowerCase().replaceAll(' ', '_');
+
+                await homeProvider.getProducts(
+                    context,
+                    AppLocalizations.of(context)!.localeName,
+                    widget.id,
+                    10,
+                    1,
+                    sValue);
+              },
+              style: ElevatedButton.styleFrom(
+                side: const BorderSide(
+                  width: 1.0,
+                  color: AppColors.primaryColor,
+                ),
+                backgroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(60.0),
+                ),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    l10n.clearFilterBtnText,
+                    style:
+                    const TextStyle(color: AppColors.primaryColor),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
+

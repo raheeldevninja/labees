@@ -6,6 +6,7 @@ import 'package:labees/core/images/images.dart';
 import 'package:labees/core/models/orders_response.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:labees/core/util/utils.dart';
+import 'package:labees/features/home/pages/account_page/account_tabs/orders/track_order_screen.dart';
 import 'package:labees/features/home/pages/account_page/account_tabs/view_model/order_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -29,7 +30,7 @@ class OrderCostDetailsAndStatus extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
     final orderProvider = context.watch<OrderProvider>();
 
     return Column(
@@ -92,16 +93,33 @@ class OrderCostDetailsAndStatus extends StatelessWidget {
 
         ],
 
-        ///vat
+        ///vat percentage
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '${l10n.vatLabel}: ${orderData.vat} %',
+              '${l10n.vatLabel}: ${orderData.vatPerc} %',
               style: const TextStyle(fontFamily: 'Montserrat', fontSize: 14),
             ),
             Text(
-              '${orderData.summary!.subtotal! * (orderData.vat! / 100)} Sar ',
+              '${(orderData.summary!.subtotal! * (orderData.vatPerc! / 100)).toStringAsFixed(2)} Sar ',
+              style: const TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600),
+            ),
+          ],
+        ),
+
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              l10n.deliveryVATLabel,
+              style: const TextStyle(fontFamily: 'Montserrat', fontSize: 14),
+            ),
+            Text(
+              '${orderData.shippingVAT!.toStringAsFixed(2)} Sar ',
               style: const TextStyle(
                   fontFamily: 'Montserrat',
                   fontSize: 18,
@@ -121,7 +139,7 @@ class OrderCostDetailsAndStatus extends StatelessWidget {
               style: const TextStyle(fontFamily: 'Montserrat', fontSize: 14),
             ),
             Text(
-              '${(orderData.summary!.subtotal! + orderData.summary!.totalShippingCost! + (orderData.summary!.subtotal! * orderData.vat! / 100)) - orderData.summary!.totalDiscountOnProduct! } Sar ',
+              '${((orderData.summary!.subtotal! + orderData.summary!.totalShippingCost! + (orderData.summary!.subtotal! * orderData.vatPerc! / 100) + orderData.shippingVAT!) - orderData.summary!.totalDiscountOnProduct!).toStringAsFixed(2) } Sar ',
               style: const TextStyle(
                   fontFamily: 'Montserrat',
                   fontSize: 18,
@@ -167,7 +185,20 @@ class OrderCostDetailsAndStatus extends StatelessWidget {
             SizedBox(
               height: 35,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+
+                  ///navigate to track order screen
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TrackOrderScreen(
+                        orderData: orderData,
+                      ),
+                    ),
+                  );
+
+
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primaryColor,
                   foregroundColor: Colors.white,
@@ -198,6 +229,8 @@ class OrderCostDetailsAndStatus extends StatelessWidget {
             ),
           ],
         ),
+
+
 
         ///review
         Row(
@@ -232,7 +265,7 @@ class OrderCostDetailsAndStatus extends StatelessWidget {
 
   //rating and comment dialog
   void _showRatingAndCommentDialog(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
     final orderProvider = Provider.of<OrderProvider>(context, listen: false);
 
     double ratingValue = 0.0;

@@ -22,12 +22,20 @@ class MostWantedBannerItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       width: 140,
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: bgColor,
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            bgColor.withOpacity(0.5),
+            bgColor,
+          ],
+        ),
         borderRadius: const BorderRadius.all(
           Radius.circular(16),
         ),

@@ -8,8 +8,9 @@ class Brand {
   String? updatedAt;
 
   bool isSelected = false;
-  Brand(
-      {this.id,
+
+  Brand({
+        this.id,
         this.name,
         this.image,
         this.homeStatus,
@@ -18,6 +19,29 @@ class Brand {
         this.updatedAt,
         this.isSelected = false,
       });
+
+
+  Brand copyWith({
+    int? id,
+    String? name,
+    String? image,
+    int? homeStatus,
+    int? status,
+    String? createdAt,
+    String? updatedAt,
+    bool? isSelected,
+  }) {
+    return Brand(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      image: image ?? this.image,
+      homeStatus: homeStatus ?? this.homeStatus,
+      status: status ?? this.status,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isSelected: isSelected ?? this.isSelected,
+    );
+  }
 
   Brand.fromJson(Map<String, dynamic> json) {
     id = json['id'];

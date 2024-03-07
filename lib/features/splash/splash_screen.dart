@@ -4,6 +4,7 @@ import 'package:labees/core/images/images.dart';
 import 'package:labees/core/util/shared_pref.dart';
 import 'package:labees/features/chooese_language/chooese_language_screen.dart';
 import 'package:labees/features/home/home_screen.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 
 /*
@@ -47,6 +48,18 @@ class _SplashScreenState extends State<SplashScreen>
     _controller.forward();
 
     _navigateToChooseLangScreen();
+
+
+    _requestNotificationsPermission();
+  }
+
+  _requestNotificationsPermission() async {
+
+
+    PermissionStatus status = await Permission.notification.status;
+    if (!status.isGranted) {
+      Permission.notification.request();
+    }
   }
 
   @override

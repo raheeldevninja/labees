@@ -2,8 +2,8 @@ class Reviews {
   int? id;
   int? productId;
   int? customerId;
-  Null? deliveryManId;
-  Null? orderId;
+  String? deliveryManId;
+  String? orderId;
   String? comment;
   String? attachment;
   int? rating;
@@ -43,7 +43,7 @@ class Reviews {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     customer = json['customer'] != null
-        ? new Customer.fromJson(json['customer'])
+        ? Customer.fromJson(json['customer'])
         : null;
   }
 
@@ -77,22 +77,22 @@ class Customer {
   String? phone;
   String? image;
   String? email;
-  Null? emailVerifiedAt;
+  String? emailVerifiedAt;
   String? createdAt;
   String? updatedAt;
-  Null? streetAddress;
-  Null? country;
-  Null? city;
-  Null? zip;
-  Null? houseNo;
-  Null? apartmentNo;
-  Null? cmFirebaseToken;
+  String? streetAddress;
+  String? country;
+  String? city;
+  String? zip;
+  String? houseNo;
+  String? apartmentNo;
+  String? cmFirebaseToken;
   int? isActive;
-  Null? paymentCardLastFour;
-  Null? paymentCardBrand;
-  Null? paymentCardFawryToken;
-  Null? loginMedium;
-  Null? socialId;
+  String? paymentCardLastFour;
+  String? paymentCardBrand;
+  String? paymentCardFawryToken;
+  String? loginMedium;
+  String? socialId;
   int? isPhoneVerified;
   String? temporaryToken;
   int? isEmailVerified;
@@ -166,7 +166,7 @@ class Customer {
     isPhoneVerified = json['is_phone_verified'];
     temporaryToken = json['temporary_token'];
     isEmailVerified = json['is_email_verified'];
-    walletBalance = json['wallet_balance'];
+    walletBalance = json['wallet_balance']?.toDouble() ?? 0.0;
     loyaltyPoint = json['loyalty_point'];
     lastSeen = json['last_seen'];
     customerGroup = json['customer_group'];

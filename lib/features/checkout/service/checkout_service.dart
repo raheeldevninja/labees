@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -10,6 +11,7 @@ import 'package:labees/core/models/all_addresses.dart';
 import 'package:labees/core/models/cities_data.dart';
 import 'package:labees/core/models/countries_data.dart';
 import 'package:labees/core/models/delete_address_response.dart';
+import 'package:labees/core/models/notifications_response.dart';
 import 'package:labees/core/models/place_order_model.dart';
 import 'package:labees/core/models/place_order_response.dart';
 import 'package:labees/core/models/update_address_response.dart';
@@ -141,8 +143,6 @@ class CheckoutService {
       EasyLoading.dismiss();
     }
   }
-
-
 
   static Future<AddAddressResponse> addAddress(AddressModel addressModel) async {
 
@@ -346,7 +346,7 @@ class CheckoutService {
       );
 
       print('Response status: ${response.statusCode}');
-      print('place order response: ${response.body}');
+      log('place order response: ${response.body}');
 
       var result = jsonDecode(response.body);
 
@@ -447,5 +447,69 @@ class CheckoutService {
       EasyLoading.dismiss();
     }
   }
+
+  static Future<NotificationsResponse> getNotifications() async {
+
+    NotificationsResponse notificationsResponse = NotificationsResponse();
+    String url = '${APIs.baseURL}${APIs.notifications}';
+
+    try {
+
+      print('url: $url');
+
+      var response = await http.get(
+          Uri.parse(url),
+          headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ${APIs.token}'
+          }
+      );
+
+      print('Response status: ${response.statusCode}');
+      print('notifications response: ${response.body}');
+
+      var result = jsonDecode(response.body);
+
+
+      if (response.statusCode == 200) {
+
+        List<Notifications> notifications = (result as List)
+            .map((data) => Notifications.fromJson(data))
+            .toList();
+
+        notificationsResponse.notifications = notifications;
+
+        notificationsResponse.success = true;
+        notificationsResponse.message = 'Success';
+
+        return notificationsResponse;
+      }
+      else if (response.statusCode == 401) {
+
+        return NotificationsResponse(success: false, message: result['errors'][0]['message']);
+      }
+      else if (response.statusCode == 500) {
+        return NotificationsResponse(success: false, message: 'Server Error');
+      }
+      else {
+        return NotificationsResponse(success: false, message: 'Something went wrong !');
+      }
+    }
+    on SocketException {
+      return NotificationsResponse(success: false, message: 'Not connect to internet !');
+    }
+    on TimeoutException catch (e) {
+      return NotificationsResponse(success: false, message: 'Request timeout');
+    }
+    on FormatException catch (e) {
+      return NotificationsResponse(success: false, message: 'Bad response format');
+    }
+    finally {
+      EasyLoading.dismiss();
+    }
+  }
+
+
 
 }

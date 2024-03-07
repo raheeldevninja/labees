@@ -53,13 +53,16 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   @override
   Widget build(BuildContext context) {
 
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         shadowColor: Colors.transparent,
         backgroundColor: Colors.white,
-        leading: IconButton(
+        surfaceTintColor: Colors.transparent,
+
+          leading: IconButton(
           onPressed: () {
 
             if(Utils.currentPage >= 1) {

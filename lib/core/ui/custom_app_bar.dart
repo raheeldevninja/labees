@@ -34,7 +34,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
   Widget build(BuildContext context) {
 
     final cartProvider = Provider.of<CartProvider>(context);
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
 
     return AppBar(

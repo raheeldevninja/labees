@@ -47,6 +47,8 @@ class AuthProvider extends ChangeNotifier {
 
     loginResponse = await AuthService.login(email, password);
 
+    print('login success: ${loginResponse.success}');
+
     if (loginResponse.success!) {
 
       isLoggedIn = true;

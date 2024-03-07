@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
 import 'package:labees/core/models/account_data.dart';
 import 'package:labees/core/models/news_letter_response.dart';
 import 'package:labees/core/models/update_account_response.dart';
+import 'package:labees/core/models/update_newsletter_response.dart';
 import 'package:labees/core/util/apis.dart';
 import 'package:labees/features/home/pages/account_page/model/account_settings_response.dart';
 import 'package:labees/features/home/pages/account_page/model/convert_currency_response.dart';
@@ -89,7 +91,8 @@ class AccountService {
   static Future<NewsLetterResponse> newsLetter(String email) async {
 
     NewsLetterResponse newsLetterResponse;
-    String url = APIs.baseURL+APIs.newsletter;
+    //String url = APIs.baseURL+APIs.newsletter;
+    String url = APIs.baseURL+APIs.updateNewsLetter;
 
     try {
 
@@ -138,6 +141,67 @@ class AccountService {
       EasyLoading.dismiss();
     }
   }
+
+
+  static Future<UpdateNewsletterResponse> updateNewsletter(int status) async {
+
+    UpdateNewsletterResponse updateNewsletterResponse;
+    String url = APIs.baseURL+APIs.updateNewsLetter;
+
+    try {
+
+      print('url: $url');
+
+      var body = {
+        'newsletter': status,
+      };
+
+      var response = await http.post(
+          Uri.parse(url),
+          body: jsonEncode(body),
+          headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ${APIs.token}'
+          }
+      );
+
+      print('Response status: ${response.statusCode}');
+      print('update newsletter response: ${response.body}');
+
+      var result = jsonDecode(response.body);
+
+
+      if (response.statusCode == 200) {
+        updateNewsletterResponse = UpdateNewsletterResponse.fromJson(result);
+        updateNewsletterResponse.status = true;
+        return updateNewsletterResponse;
+      }
+      else if (response.statusCode == 401) {
+
+        return UpdateNewsletterResponse(status: false, message: result['errors'][0]['message']);
+      }
+      else if (response.statusCode == 500) {
+        return UpdateNewsletterResponse(status: false, message: 'Server Error');
+      }
+      else {
+        return UpdateNewsletterResponse(status: false, message: 'Something went wrong !');
+      }
+    }
+    on SocketException {
+      return UpdateNewsletterResponse(status: false, message: 'Not connect to internet !');
+    }
+    on TimeoutException catch (e) {
+      return UpdateNewsletterResponse(status: false, message: 'Request timeout');
+    }
+    on FormatException catch (e) {
+      return UpdateNewsletterResponse(status: false, message: 'Bad response format');
+    }
+    finally {
+      EasyLoading.dismiss();
+    }
+  }
+
 
   static Future<WalletResponse> getWalletList(int limit, int offset) async {
 
@@ -216,7 +280,7 @@ class AccountService {
       );
 
       print('Response status: ${response.statusCode}');
-      print('my points response: ${response.body}');
+      log('my points response: ${response.body}');
 
       var result = jsonDecode(response.body);
 

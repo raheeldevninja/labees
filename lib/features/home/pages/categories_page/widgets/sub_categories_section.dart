@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:labees/core/app/app_colors.dart';
+import 'package:labees/core/util/apis.dart';
 import 'package:labees/features/home/view_model/home_provider.dart';
 import 'package:labees/features/products/products_screen.dart';
 import 'package:provider/provider.dart';
@@ -23,12 +25,12 @@ class SubCategoriesSection extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        //color: Colors.white,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(
+        /*border: Border.all(
           color: AppColors.lightGrey.withOpacity(0.2),
           width: 1,
-        ),
+        ),*/
       ),
       child: ListView.builder(
         controller: ScrollController(),
@@ -37,15 +39,24 @@ class SubCategoriesSection extends StatelessWidget {
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
+
+          print('SubCategoriesSection: ${homeProvider.childsList![index].name} ${homeProvider.childsList![index].id}');
+
           return ListTile(
             visualDensity:
             const VisualDensity(vertical: -4),
             onTap: () {
 
+              //int? id = index == 0 ? homeProvider.childsList![index].parentId : homeProvider.childsList![index].id!;
+              int? id = homeProvider.childsList![index].id!;
+
+              print('SubCategoriesSection: ${homeProvider.childsList![index].name} $id');
+
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ProductsScreen(id: homeProvider.childsList![index].id!),
+                  builder: (context) => ProductsScreen(id: homeProvider.childsList![index].id!, title: homeProvider.childsList![index].name!),
+                  //builder: (context) => ProductsScreen(id: id!, title: homeProvider.childsList![index].name!),
                 ),
               );
 
@@ -60,6 +71,11 @@ class SubCategoriesSection extends StatelessWidget {
                     ? AppColors.primaryColor
                     : AppColors.lightGrey,
               ),
+            ),
+            trailing:
+            SvgPicture.network(
+                '${APIs.imageBaseURL}${APIs.categoryImages}${homeProvider
+                    .childsList![index].icon ?? ''}'
             ),
 
           );

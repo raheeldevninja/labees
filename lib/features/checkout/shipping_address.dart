@@ -35,6 +35,10 @@ class _ShippingAddressState extends State<ShippingAddress> {
   final _addressController = TextEditingController();
   final _postalCodeController = TextEditingController();
 
+  final _countrySearchController = TextEditingController();
+  final _citySearchController = TextEditingController();
+
+
   final _contactPersonNameFocus = FocusNode();
   final _emailFocus = FocusNode();
   final _phoneFocus = FocusNode();
@@ -104,7 +108,7 @@ class _ShippingAddressState extends State<ShippingAddress> {
   @override
   Widget build(BuildContext context) {
 
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
     final checkoutProvider = context.watch<CheckoutProvider>();
 
     return Padding(
@@ -623,23 +627,27 @@ class _ShippingAddressState extends State<ShippingAddress> {
               ),
 
               ///hide form button
-              Row(
-                mainAxisAlignment: l10n.localeName == 'en' ? MainAxisAlignment.start : MainAxisAlignment.end,
-                children: [
-                  TextButton(
-                    onPressed: () {
 
-                      _clearForm();
+              if(checkoutProvider.allAddresses!.addresses == null || checkoutProvider.allAddresses!.addresses!.isEmpty) ...[
+                Row(
+                  mainAxisAlignment: l10n.localeName == 'en' ? MainAxisAlignment.start : MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      onPressed: () {
 
-                      setState(() {
-                        showAddressForm = false;
-                      });
+                        _clearForm();
 
-                    },
-                    child: const Text('Hide Form'),
-                  ),
-                ],
-              ),
+                        setState(() {
+                          showAddressForm = false;
+                        });
+
+                      },
+                      child: const Text('Hide Form'),
+                    ),
+                  ],
+                ),
+              ],
+
 
 
             ],
@@ -681,7 +689,7 @@ class _ShippingAddressState extends State<ShippingAddress> {
 
                       await checkoutProvider.addAddress(context, addressModel);
 
-                      //set billing address id
+                      //set shipping address id
                       checkoutProvider.setShippingAddressId(checkoutProvider.addAddressResponse!.addressId);
 
                       await checkoutProvider.getAllAddresses();
@@ -698,7 +706,7 @@ class _ShippingAddressState extends State<ShippingAddress> {
                       return;
                     }
 
-                    checkoutProvider.setBillingAddressId(selectedAddressId!);
+                    checkoutProvider.setShippingAddressId(selectedAddressId!);
                     print('shipping addr id: $selectedAddressId');
 
                     Utils.pageController.nextPage(duration: const Duration(milliseconds: 400), curve: Curves.easeIn);
@@ -753,6 +761,35 @@ class _ShippingAddressState extends State<ShippingAddress> {
                 style: const TextStyle(fontSize: 18),
               ),
               const SizedBox(height: 16.0),
+
+              TextFormField(
+                controller: _citySearchController,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  contentPadding: const EdgeInsets.all(12.0),
+                  hintText: 'Search for a city',
+                  hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.grey, width: 1.0),
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide:
+                    const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                ),
+                onChanged: (value) {
+                  checkoutProvider.searchCity(value);
+                },
+              ),
+
+              const SizedBox(height: 16.0),
+
               Expanded(
                 child: ListView.builder(
                   shrinkWrap: true,
@@ -801,6 +838,35 @@ class _ShippingAddressState extends State<ShippingAddress> {
                 style: const TextStyle(fontSize: 18),
               ),
               const SizedBox(height: 16.0),
+
+              TextFormField(
+                controller: _countrySearchController,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  contentPadding: const EdgeInsets.all(12.0),
+                  hintText: 'Search for a country',
+                  hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.grey, width: 1.0),
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide:
+                    const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                ),
+                onChanged: (value) {
+                  checkoutProvider.searchCountry(value);
+                },
+              ),
+
+              const SizedBox(height: 16.0),
+
               Expanded(
                 child: ListView.builder(
                   shrinkWrap: true,
@@ -884,7 +950,12 @@ class _ShippingAddressState extends State<ShippingAddress> {
                           selectedAddress =
                           '${checkoutProvider.allAddresses!.addresses![index].phone!}, '
                               '${checkoutProvider.allAddresses!.addresses![index].contactPersonName!}, ${checkoutProvider.allAddresses!.addresses![index].zip!}';
+
+                          showAddressForm = false;
                         });
+
+                        _clearForm();
+
 
                         // Handle city selection
                         Navigator.pop(context); // Close the bottom sheet
@@ -928,6 +999,9 @@ class _ShippingAddressState extends State<ShippingAddress> {
     _phoneController.dispose();
     _addressController.dispose();
     _postalCodeController.dispose();
+
+    _countrySearchController.dispose();
+    _citySearchController.dispose();
 
     _contactPersonNameFocus.dispose();
     _emailFocus.dispose();

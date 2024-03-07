@@ -59,6 +59,7 @@ class PlaceOrderModel {
       'coupon_discount': couponDiscount,
       'vat': vat,
       'vat_perc': vatPrice,
+      'shipping_vat': 2.5,
     };
   }
 

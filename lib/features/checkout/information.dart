@@ -10,8 +10,6 @@ import 'package:labees/features/home/models/address_data.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
-
 /*
 *  Date 24 - Dec-2023
 *  Author: Raheel Khan- Abaska Technologies
@@ -26,7 +24,6 @@ class Information extends StatefulWidget {
 }
 
 class _InformationState extends State<Information> {
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final _contactPersonNameController = TextEditingController();
@@ -35,11 +32,18 @@ class _InformationState extends State<Information> {
   final _addressController = TextEditingController();
   final _postalCodeController = TextEditingController();
 
+  final _countrySearchController = TextEditingController();
+  final _citySearchController = TextEditingController();
+
+
   final _contactPersonNameFocus = FocusNode();
   final _emailFocus = FocusNode();
   final _phoneFocus = FocusNode();
   final _addressFocus = FocusNode();
   final _postalCodeFocus = FocusNode();
+
+
+
 
   CountriesData? selectedCountry;
 
@@ -66,42 +70,37 @@ class _InformationState extends State<Information> {
     'Others',
   ];
 
-
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      final checkoutProvider =
+          Provider.of<CheckoutProvider>(context, listen: false);
 
-      final checkoutProvider = Provider.of<CheckoutProvider>(context, listen: false);
-
-      if(checkoutProvider.allAddresses != null && checkoutProvider.allAddresses!.addresses != null &&
+      if (checkoutProvider.allAddresses != null &&
+          checkoutProvider.allAddresses!.addresses != null &&
           checkoutProvider.checkAddressesHaveBillingAddress()) {
+        int billingAddressIndex =
+            checkoutProvider.getFirstBillingAddressIndex();
 
-        int billingAddressIndex = checkoutProvider.getFirstBillingAddressIndex();
-
-        if(billingAddressIndex != -1) {
+        if (billingAddressIndex != -1) {
           setState(() {
             selectedAddressId = checkoutProvider
                 .allAddresses!.addresses![billingAddressIndex].id;
 
             selectedAddress =
-            '${checkoutProvider.allAddresses!.addresses![billingAddressIndex].phone!}, '
+                '${checkoutProvider.allAddresses!.addresses![billingAddressIndex].phone!}, '
                 '${checkoutProvider.allAddresses!.addresses![billingAddressIndex].contactPersonName!}, ${checkoutProvider.allAddresses!.addresses![billingAddressIndex].zip!}';
           });
         }
-
-
       }
-
-
     });
-
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
     final checkoutProvider = context.watch<CheckoutProvider>();
 
     return Padding(
@@ -131,8 +130,6 @@ class _InformationState extends State<Information> {
               const SizedBox(
                 height: 10,
               ),
-
-
               InkWell(
                 borderRadius: BorderRadius.circular(32.0),
                 onTap: () {
@@ -332,7 +329,8 @@ class _InformationState extends State<Information> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Widgets.labels('${l10n.countryLabel} ', isRequired: true),
+                        Widgets.labels('${l10n.countryLabel} ',
+                            isRequired: true),
                         const SizedBox(
                           height: 10,
                         ),
@@ -496,7 +494,8 @@ class _InformationState extends State<Information> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Widgets.labels('${l10n.postalCodeLabel} ', isRequired: true),
+                        Widgets.labels('${l10n.postalCodeLabel} ',
+                            isRequired: true),
                         const SizedBox(
                           height: 10,
                         ),
@@ -628,26 +627,28 @@ class _InformationState extends State<Information> {
                 ),
               ),
 
-
               ///hide form button
-              Row(
-                mainAxisAlignment: l10n.localeName == 'en' ? MainAxisAlignment.start : MainAxisAlignment.end,
-                children: [
-                  TextButton(
-                    onPressed: () {
 
-                      _clearForm();
+              if (checkoutProvider.allAddresses!.addresses == null ||
+                  checkoutProvider.allAddresses!.addresses!.isEmpty) ...[
+                Row(
+                  mainAxisAlignment: l10n.localeName == 'en'
+                      ? MainAxisAlignment.start
+                      : MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        _clearForm();
 
-                      setState(() {
-                        showAddressForm = false;
-                      });
-
-                    },
-                    child: const Text('Hide Form'),
-                  ),
-                ],
-              ),
-
+                        setState(() {
+                          showAddressForm = false;
+                        });
+                      },
+                      child: const Text('Hide Form'),
+                    ),
+                  ],
+                ),
+              ],
             ],
 
             const SizedBox(
@@ -751,6 +752,35 @@ class _InformationState extends State<Information> {
                 l10n.selectCity,
                 style: const TextStyle(fontSize: 18),
               ),
+
+              const SizedBox(height: 16.0),
+
+              TextFormField(
+                controller: _citySearchController,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  contentPadding: const EdgeInsets.all(12.0),
+                  hintText: 'Search for a city',
+                  hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.grey, width: 1.0),
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide:
+                    const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                ),
+                onChanged: (value) {
+                  checkoutProvider.searchCity(value);
+                },
+              ),
+
               const SizedBox(height: 16.0),
               Expanded(
                 child: ListView.builder(
@@ -799,6 +829,35 @@ class _InformationState extends State<Information> {
                 l10n.selectCountry,
                 style: const TextStyle(fontSize: 18),
               ),
+
+              const SizedBox(height: 16.0),
+
+              TextFormField(
+                controller: _countrySearchController,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  contentPadding: const EdgeInsets.all(12.0),
+                  hintText: 'Search for a country',
+                  hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.grey, width: 1.0),
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide:
+                    const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                ),
+                onChanged: (value) {
+                  checkoutProvider.searchCountry(value);
+                },
+              ),
+
               const SizedBox(height: 16.0),
               Expanded(
                 child: ListView.builder(
@@ -880,7 +939,11 @@ class _InformationState extends State<Information> {
                           selectedAddress =
                               '${checkoutProvider.allAddresses!.addresses![index].phone!}, '
                               '${checkoutProvider.allAddresses!.addresses![index].contactPersonName!}, ${checkoutProvider.allAddresses!.addresses![index].zip!}';
+
+                          showAddressForm = false;
                         });
+
+                        _clearForm();
 
                         // Handle city selection
                         Navigator.pop(context); // Close the bottom sheet
@@ -897,7 +960,6 @@ class _InformationState extends State<Information> {
   }
 
   _clearForm() {
-
     _contactPersonNameController.clear();
     _emailController.clear();
     _phoneController.clear();
@@ -910,7 +972,6 @@ class _InformationState extends State<Information> {
     selectedAddressType = null;
 
     selectedState = null;
-
   }
 
   @override
@@ -922,6 +983,10 @@ class _InformationState extends State<Information> {
     _phoneController.dispose();
     _addressController.dispose();
     _postalCodeController.dispose();
+
+    _countrySearchController.dispose();
+    _citySearchController.dispose();
+
 
     _contactPersonNameFocus.dispose();
     _emailFocus.dispose();

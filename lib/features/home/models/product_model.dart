@@ -223,6 +223,39 @@ class SubCategories {
         this.isSelected = false,
       });
 
+  //copyWith
+  SubCategories copyWith({
+    int? id,
+    String? name,
+    String? slug,
+    String? icon,
+    int? parentId,
+    int? position,
+    String? createdAt,
+    String? updatedAt,
+    int? homeStatus,
+    int? topCategory,
+    int? status,
+    int? priority,
+    bool? isSelected,
+  }) {
+    return SubCategories(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      slug: slug ?? this.slug,
+      icon: icon ?? this.icon,
+      parentId: parentId ?? this.parentId,
+      position: position ?? this.position,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      homeStatus: homeStatus ?? this.homeStatus,
+      topCategory: topCategory ?? this.topCategory,
+      status: status ?? this.status,
+      priority: priority ?? this.priority,
+      isSelected: isSelected ?? this.isSelected,
+    );
+  }
+
   SubCategories.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];

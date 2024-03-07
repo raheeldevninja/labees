@@ -28,6 +28,8 @@ class _LoginWidgetState extends State<LoginWidget> {
   final _emailPhoneFocus = FocusNode();
   final _passwordFocus = FocusNode();
 
+  bool obscureText = true;
+
   //testing email 1:
   //john.doe@gmail.com
 
@@ -42,7 +44,7 @@ class _LoginWidgetState extends State<LoginWidget> {
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
 
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return Expanded(
       child: Form(
@@ -142,10 +144,21 @@ class _LoginWidgetState extends State<LoginWidget> {
               child: TextFormField(
                 focusNode: _passwordFocus,
                 controller: _passwordController,
-                obscureText: true,
+                obscureText: obscureText,
                 maxLines: 1,
                 decoration: InputDecoration(
                   filled: true,
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        obscureText = !obscureText;
+                      });
+                    },
+                    icon: Icon(
+                      obscureText ? Icons.visibility : Icons.visibility_off,
+                      color: Colors.grey,
+                    ),
+                  ),
                   fillColor: _passwordFocus.hasFocus ? Colors.white : Colors.grey.withOpacity(0.1),
                   contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20),
                   hintText: l10n.passwordHint,

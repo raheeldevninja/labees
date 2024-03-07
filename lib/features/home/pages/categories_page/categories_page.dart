@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:labees/core/app/app_colors.dart';
+import 'package:labees/core/enums/main_categories.dart';
 import 'package:labees/core/images/images.dart';
 import 'package:labees/core/models/category.dart';
 import 'package:labees/core/models/product_color.dart';
 import 'package:labees/core/models/product_size.dart';
 import 'package:labees/core/models/sub_category.dart';
+import 'package:labees/core/util/utils.dart';
 import 'package:labees/features/home/models/brand.dart';
-import 'package:labees/features/home/pages/categories_page/widgets/brands_section.dart';
-import 'package:labees/features/home/pages/categories_page/widgets/category_children_section.dart';
-import 'package:labees/features/home/pages/categories_page/widgets/main_categories_row.dart';
-import 'package:labees/features/home/pages/categories_page/widgets/sub_categories_section.dart';
+import 'package:labees/features/home/pages/categories_page/widgets/category_children_section_backup.dart';
 import 'package:labees/features/home/view_model/home_provider.dart';
 import 'package:labees/features/home/widgets/app_drawer.dart';
 import 'package:labees/features/my_bag/my_bag_screen.dart';
@@ -21,13 +20,11 @@ import 'package:provider/provider.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 /*
 *  Date 20 - September-2023
 *  Author: Raheel Khan- Abaska Technologies
 *  Description: Categories Page
 */
-
 
 class CategoriesPage extends StatefulWidget {
   const CategoriesPage({Key? key}) : super(key: key);
@@ -47,6 +44,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
 
   List<ProductColor> colorsList = [];
 
+  int mainCategoryIndex = 0;
+
   @override
   void initState() {
     super.initState();
@@ -54,18 +53,13 @@ class _CategoriesPageState extends State<CategoriesPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final homeProvider = Provider.of<HomeProvider>(context, listen: false);
 
-      homeProvider.setMainCategory(
-          homeProvider.categories![0].name!);
+      homeProvider.setMainCategory(homeProvider.categories![0].name!);
 
-      homeProvider.setChildList(homeProvider
-          .getCategoryChildren![0].childes!);
+      homeProvider.setChildList(homeProvider.getCategoryChildren![0].childes!, homeProvider.getCategoryChildren![0].parentId!, homeProvider.getCategoryChildren![0].name!);
 
       homeProvider.getCategoryChildren![0] =
-          homeProvider.getCategoryChildren![0]
-              .copyWith(isSelected: true);
-
+          homeProvider.getCategoryChildren![0].copyWith(isSelected: true);
     });
-
   }
 
   @override
@@ -73,7 +67,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
     final homeProvider = Provider.of<HomeProvider>(context);
     final cartProvider = Provider.of<CartProvider>(context);
 
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     if (homeProvider.categories == null) {
       return const Center(
@@ -87,7 +81,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
         preferredSize: const Size.fromHeight(60.0),
         child: AppBar(
           shadowColor: Colors.transparent,
-          backgroundColor: AppColors.secondaryColor,
+          backgroundColor: AppColors.primaryColor,
           leading: IconButton(
             onPressed: () {
               _scaffoldKey.currentState!.openDrawer();
@@ -96,7 +90,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
               Images.menu,
               width: 24,
               height: 24,
-              color: AppColors.primaryColor,
+              color: Colors.white,
             ),
           ),
           title: SizedBox(
@@ -145,7 +139,6 @@ class _CategoriesPageState extends State<CategoriesPage> {
             ),
           ),
           actions: [
-
             IconButton(
               onPressed: () {
                 Navigator.push(
@@ -154,7 +147,6 @@ class _CategoriesPageState extends State<CategoriesPage> {
                     builder: (context) => const MyBagScreen(),
                   ),
                 );
-
               },
               icon: badges.Badge(
                 badgeContent: Text(
@@ -163,7 +155,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                 ),
                 child: SvgPicture.asset(
                   Images.cartIcon,
-                  color: AppColors.primaryColor,
+                  color: Colors.white,
                   width: 24,
                   height: 24,
                 ),
@@ -186,71 +178,189 @@ class _CategoriesPageState extends State<CategoriesPage> {
               },
               icon: SvgPicture.asset(
                 Images.notificationsIcon,
-                color: AppColors.primaryColor,
+                color: Colors.white,
               ),
             ),
           ],
         ),
       ),
       drawer: const AppDrawer(),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              l10n.allCategories,
-              style: const TextStyle(
-                fontSize: 24,
-                fontFamily: 'Libre Baskerville',
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ///header tabs
+          Container(
+            color: AppColors.primaryColor,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Container(
+              width: double.maxFinite,
+              height: 32,
+              decoration: const BoxDecoration(
+                color: AppColors.primaryColor,
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Expanded(
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-
-                  ///left section
-                  const CategoryChildrenSection(),
-
-                  const SizedBox(width: 4),
-
-                  ///right section
                   Expanded(
-                    child: ListView(
-                      children: [
+                    child: InkWell(
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(30),
+                      ),
+                      onTap: () {
+                        setState(() {
+                          Utils.mainCategories = MainCategories.men;
+                          mainCategoryIndex = 0;
+                        });
 
-                        ///main categories row
-                        const MainCategoriesRow(),
+                        homeProvider.setMainCategoryId(homeProvider
+                            .getMainCategoriesList.categories![0].id!);
 
-                        ///sub categories section
-                        const SubCategoriesSection(),
-
-                        const SizedBox(
-                          height: 16,
+                        homeProvider.setCategoryChildren(
+                            homeProvider.categories![0].childes!);
+                      },
+                      child: Container(
+                        height: 60,
+                        decoration: BoxDecoration(
+                          color: Utils.mainCategories == MainCategories.men
+                              ? Colors.white
+                              : AppColors.primaryColor,
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(30),
+                          ),
                         ),
-
-                        ///brands section
-                        BrandsSection(
-                          //selectedCategoryIndex: _selectedCategoryIndex,
-                          selectedCategoryIndex: homeProvider.getSelectedCategoryIndex,
+                        alignment: Alignment.center,
+                        child: Text(
+                          homeProvider.categories![0].name!,
+                          style: TextStyle(
+                              color: Utils.mainCategories == MainCategories.men
+                                  ? AppColors.primaryColor
+                                  : Colors.white),
                         ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: InkWell(
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(30),
+                      ),
+                      onTap: () {
+                        setState(() {
+                          Utils.mainCategories = MainCategories.women;
+                          mainCategoryIndex = 1;
+                        });
 
-                      ],
+                        homeProvider.setMainCategoryId(homeProvider
+                            .getMainCategoriesList.categories![1].id!);
+
+                        homeProvider.setCategoryChildren(
+                            homeProvider.categories![1].childes!);
+                      },
+                      child: Container(
+                        height: 60,
+                        decoration: BoxDecoration(
+                          color: Utils.mainCategories == MainCategories.women
+                              ? Colors.white
+                              : AppColors.primaryColor,
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(30),
+                          ),
+                        ),
+                        alignment: Alignment.center,
+                        child: Text(
+                          homeProvider.categories![1].name!,
+                          style: TextStyle(
+                              color:
+                                  Utils.mainCategories == MainCategories.women
+                                      ? AppColors.primaryColor
+                                      : Colors.white),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: InkWell(
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(30),
+                      ),
+                      onTap: () {
+                        setState(() {
+                          Utils.mainCategories = MainCategories.kids;
+                          mainCategoryIndex = 2;
+                        });
+
+                        homeProvider.setMainCategoryId(homeProvider
+                            .getMainCategoriesList.categories![2].id!);
+
+                        homeProvider.setCategoryChildren(
+                          homeProvider.categories![2].childes!,
+                        );
+                      },
+                      child: Container(
+                        height: 60,
+                        decoration: BoxDecoration(
+                          color: Utils.mainCategories == MainCategories.kids
+                              ? Colors.white
+                              : AppColors.primaryColor,
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(30),
+                          ),
+                        ),
+                        alignment: Alignment.center,
+                        child: Text(
+                          homeProvider.categories![2].name!,
+                          style: TextStyle(
+                              color: Utils.mainCategories == MainCategories.kids
+                                  ? AppColors.primaryColor
+                                  : Colors.white),
+                        ),
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: RefreshIndicator(
+                onRefresh: () async {
+                  await homeProvider.getMainCategories(
+                      context, AppLocalizations.of(context)!.localeName);
+
+                  homeProvider.setMainCategory(homeProvider.categories![mainCategoryIndex].name!);
+
+                  homeProvider.setCategoryChildren(
+                    homeProvider.categories![mainCategoryIndex].childes!,
+                  );
+
+                },
+                child: Column(
+                  //shrinkWrap: true,
+                  //padding: const EdgeInsets.all(16.0),
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      l10n.allCategories,
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontFamily: 'Libre Baskerville',
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Expanded(child: CategoryChildrenSectionBackup()),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
-
 
   @override
   void dispose() {
@@ -259,5 +369,3 @@ class _CategoriesPageState extends State<CategoriesPage> {
     _searchController.dispose();
   }
 }
-
-

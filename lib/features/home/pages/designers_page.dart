@@ -190,17 +190,19 @@ class _DesignersPageState extends State<DesignersPage> {
   @override
   Widget build(BuildContext context) {
 
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
     final cartProvider = Provider.of<CartProvider>(context);
 
     return Scaffold(
       key: _scaffoldKey,
+      backgroundColor: Colors.white,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60.0),
         child: AppBar(
           shadowColor: Colors.transparent,
-          backgroundColor: AppColors.secondaryColor,
-          leading: IconButton(
+          backgroundColor: Colors.white,
+          surfaceTintColor: Colors.transparent,
+            leading: IconButton(
             onPressed: () {
               _scaffoldKey.currentState!.openDrawer();
             },

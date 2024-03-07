@@ -24,7 +24,7 @@ class ProductDescription extends StatelessWidget {
 
     final homeProvider = Provider.of<HomeProvider>(context);
 
-    String htmlString = homeProvider.productDetails!.details ?? '';
+    String htmlString = homeProvider.productDetails!.product!.fabric ?? '';
 
     // Parse HTML
     final document = htmlParser.parse(htmlString);

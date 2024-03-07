@@ -39,7 +39,7 @@ class _MainCategoriesRowState extends State<MainCategoriesRow> {
 
               ///set sub sub childs
               homeProvider.setChildList(homeProvider
-                  .getCategoryChildren![0].childes!);
+                  .getCategoryChildren![0].childes!, homeProvider.getCategoryChildren![0].parentId!, homeProvider.getCategoryChildren![0].name!);
 
 
               for (int i = 0;
@@ -84,7 +84,7 @@ class _MainCategoriesRowState extends State<MainCategoriesRow> {
 
               ///set sub-sub-childs
               homeProvider.setChildList(homeProvider
-                  .getCategoryChildren![0].childes!);
+                  .getCategoryChildren![0].childes!, homeProvider.getCategoryChildren![0].parentId!, homeProvider.getCategoryChildren![0].name!);
 
 
 
@@ -129,7 +129,7 @@ class _MainCategoriesRowState extends State<MainCategoriesRow> {
 
               ///set sub sub childs
               homeProvider.setChildList(homeProvider
-                  .getCategoryChildren![0].childes!);
+                  .getCategoryChildren![0].childes!,  homeProvider.getCategoryChildren![0].parentId!, homeProvider.getCategoryChildren![0].name!);
 
 
               for (int i = 0;

@@ -47,6 +47,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
 
 
   final _countrySearchController = TextEditingController();
+  final _citySearchController = TextEditingController();
 
   CountriesData? selectedCountry;
   String? selectedCountryCode;
@@ -159,7 +160,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
         _contactPersonNameController.text = widget.addressData!.contactPersonName!;
         _postalCodeController.text = widget.addressData!.zip!;
         _addressController.text = widget.addressData!.address!;
-        selectedAddressType = widget.addressData!.addressType!;
+        selectedAddressType = widget.addressData!.addressType!.substring(0, 1).toUpperCase() + widget.addressData!.addressType!.substring(1);
         selectedCountryCode = widget.addressData!.phoneCode!;
         _phoneController.text = widget.addressData!.phone!;
 
@@ -183,6 +184,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
         navigateToCountry('Saudi Arabia');
         await checkoutProvider.getCities(194);
 
+        selectedAddressType = addressTypes[0];
+
         selectedCountryCode = checkoutProvider.countriesData.firstWhere((element) => element.id == 194).phoneCode;
         selectedCountry = checkoutProvider.countriesData.firstWhere((element) => element.id == 194);
 
@@ -197,7 +200,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   @override
   Widget build(BuildContext context) {
 
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
     final checkoutProvider = Provider.of<CheckoutProvider>(context);
 
     return Scaffold(
@@ -658,9 +661,20 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                   width: double.maxFinite,
                   height: 50,
                   child: SimpleButton(
-                    text: l10n.addAddress,
+                    text: isEdit! ? l10n.updateAddress : l10n.addAddress,
                     callback: () async {
                       if (_formKey.currentState!.validate()) {
+
+
+                        if(selectedCountry == null) {
+                          Fluttertoast.showToast(msg: l10n.pleaseSelectCountry);
+                          return;
+                        }
+
+                        if(selectedCity == null) {
+                          Fluttertoast.showToast(msg: l10n.pleaseSelectCity);
+                          return;
+                        }
 
                         AddressModel addressModel = AddressModel(
                           contactPersonName: _contactPersonNameController.text.trim(),
@@ -691,6 +705,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                         }
 
                       }
+
+
                     },
                   ),
 
@@ -729,6 +745,35 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                 l10n.selectCity,
                 style: const TextStyle(fontSize: 18),
               ),
+              const SizedBox(height: 16.0),
+
+
+              TextFormField(
+                controller: _citySearchController,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  contentPadding: const EdgeInsets.all(12.0),
+                  hintText: 'Search for a city',
+                  hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.grey, width: 1.0),
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide:
+                    const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                ),
+                onChanged: (value) {
+                  checkoutProvider.searchCity(value);
+                },
+              ),
+
               const SizedBox(height: 16.0),
 
               Expanded(
@@ -791,7 +836,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                   const SizedBox(height: 16.0),
 
 
-                  /*TextFormField(
+                  TextFormField(
                     controller: _countrySearchController,
                     decoration: InputDecoration(
                       filled: true,
@@ -817,7 +862,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     },
                   ),
 
-                  const SizedBox(height: 16.0),*/
+                  const SizedBox(height: 16.0),
 
                   Expanded(
                     child: ListView.builder(
@@ -869,6 +914,15 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
     _phoneController.dispose();
     _addressController.dispose();
     _postalCodeController.dispose();
+
+    _contactPersonNameFocus.dispose();
+    _emailFocus.dispose();
+    _phoneFocus.dispose();
+    _addressFocus.dispose();
+    _postalCodeFocus.dispose();
+
+    _countrySearchController.dispose();
+    _citySearchController.dispose();
   }
 
 }

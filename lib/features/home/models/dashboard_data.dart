@@ -74,9 +74,13 @@ class NewArrivalProducts {
 class MostWantedBanners {
   int? id;
   String? photo;
+  String? photoAr;
   String? title;
   String? subTitle;
   String? bannerType;
+  int? featuredBannerSize;
+  String? featuredBannerColor;
+  int? featuredBannerTextColor;
   int? published;
   String? createdAt;
   String? updatedAt;
@@ -88,23 +92,31 @@ class MostWantedBanners {
   MostWantedBanners(
       {this.id,
         this.photo,
+        this.photoAr,
         this.title,
         this.subTitle,
         this.bannerType,
+        this.featuredBannerSize,
+        this.featuredBannerColor,
+        this.featuredBannerTextColor,
         this.published,
         this.createdAt,
         this.updatedAt,
         this.urlType,
         this.url,
         this.resourceType,
-        this.resourceId,});
+        this.resourceId});
 
   MostWantedBanners.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     photo = json['photo'];
+    photoAr = json['photo_ar'];
     title = json['title'];
     subTitle = json['sub_title'];
     bannerType = json['banner_type'];
+    featuredBannerSize = json['featured_banner_size'];
+    featuredBannerColor = json['featured_banner_color'];
+    featuredBannerTextColor = json['featured_banner_text_color'];
     published = json['published'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
@@ -112,15 +124,20 @@ class MostWantedBanners {
     url = json['url'];
     resourceType = json['resource_type'];
     resourceId = json['resource_id'];
+
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['photo'] = this.photo;
+    data['photo_ar'] = this.photoAr;
     data['title'] = this.title;
     data['sub_title'] = this.subTitle;
     data['banner_type'] = this.bannerType;
+    data['featured_banner_size'] = this.featuredBannerSize;
+    data['featured_banner_color'] = this.featuredBannerColor;
+    data['featured_banner_text_color'] = this.featuredBannerTextColor;
     data['published'] = this.published;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;

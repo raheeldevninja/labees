@@ -2,10 +2,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:labees/core/app/app_colors.dart';
-import 'package:labees/core/enums/main_categories.dart';
 import 'package:labees/core/images/images.dart';
 import 'package:labees/core/ui/home_shimmer.dart';
-import 'package:labees/core/util/utils.dart';
 import 'package:labees/features/home/pages/home_page/widgets/category_carousel_item.dart';
 import 'package:labees/features/home/pages/home_page/widgets/most_wanted_section.dart';
 import 'package:labees/features/home/pages/home_page/widgets/new_arrivals_section.dart';
@@ -50,7 +48,7 @@ class _HomePageState extends State<HomePage> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final homeProvider = Provider.of<HomeProvider>(context, listen: false);
       await homeProvider.getMainCategories(
-          context, AppLocalizations.of(context).localeName);
+          context, AppLocalizations.of(context)!.localeName);
 
       if (homeProvider.getMainCategoriesList.categories != null) {
         int categoryId =
@@ -58,7 +56,7 @@ class _HomePageState extends State<HomePage> {
 
         if (mounted) {
           await homeProvider.getDashboardData(context, true,
-              AppLocalizations.of(context).localeName, categoryId, 'all');
+              AppLocalizations.of(context)!.localeName, categoryId, 'all');
         }
       }
     });
@@ -82,7 +80,7 @@ class _HomePageState extends State<HomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ProductsScreen(id: item.id!),
+                    builder: (context) => ProductsScreen(id: item.id!, title: item.name!),
                   ),
                 );
               },
@@ -94,19 +92,41 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
+        backgroundColor: AppColors.primaryColor,
         shadowColor: Colors.transparent,
-        leading: IconButton(
-          onPressed: () {
-            _scaffoldKey.currentState!.openDrawer();
-          },
-          icon: SvgPicture.asset(
-            Images.menu,
-            width: 24,
-            height: 24,
-            color: Colors.white,
-          ),
+        leadingWidth: 100,
+        leading: Row(
+          children: [
+            IconButton(
+              onPressed: () {
+                _scaffoldKey.currentState!.openDrawer();
+              },
+              icon: SvgPicture.asset(
+                Images.menu,
+                width: 24,
+                height: 24,
+                color: Colors.white,
+              ),
+            ),
+            IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SearchScreen(),
+                  ),
+                );
+              },
+              icon: SvgPicture.asset(
+                Images.searchIcon,
+                color: Colors.white,
+
+              ),
+            ),
+          ],
         ),
-        title: SizedBox(
+        title:
+        /*SizedBox(
           height: 40,
           child: InkWell(
             onTap: () {
@@ -149,7 +169,12 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
+        ),*/
+        SvgPicture.asset(
+          Images.labeesAppbar,
+          color: Colors.white,
         ),
+        centerTitle: true,
         actions: [
           IconButton(
             onPressed: () {
@@ -199,273 +224,302 @@ class _HomePageState extends State<HomePage> {
           ? const HomeShimmer()
           : (homeProvider.categories == null)
               ? const SizedBox.shrink()
-              : Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+              : RefreshIndicator(
+                onRefresh: () async {
 
-                    ///header section
-                    Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        Container(
-                          width: double.maxFinite,
-                          color: AppColors.primaryColor,
-                          child: Column(
-                            children: [
-                              //tabs
-                              Container(
-                                width: double.maxFinite,
-                                height: 32,
-                                margin: const EdgeInsets.all(24),
-                                decoration: BoxDecoration(
-                                  color: AppColors.primaryColor,
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(30),
-                                  ),
-                                  border: Border.all(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: InkWell(
-                                        borderRadius: const BorderRadius.all(
-                                          Radius.circular(30),
-                                        ),
-                                        onTap: () {
-                                          setState(() {
-                                            Utils.mainCategories = MainCategories.men;
-                                          });
+                  final homeProvider = Provider.of<HomeProvider>(context, listen: false);
+                  await homeProvider.getMainCategories(
+                  context, AppLocalizations.of(context)!.localeName);
 
-                                          homeProvider.setCategoryChildren(
-                                              homeProvider
-                                                  .categories![0].childes!);
-                                        },
-                                        child: Container(
-                                          height: 60,
-                                          decoration: BoxDecoration(
-                                            color: Utils.mainCategories ==
-                                                    MainCategories.men
-                                                ? Colors.white
-                                                : AppColors.primaryColor,
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                              Radius.circular(30),
-                                            ),
-                                          ),
-                                          alignment: Alignment.center,
-                                          child: Text(
-                                            homeProvider.categories![0].name!,
-                                            style: TextStyle(
-                                                color: Utils.mainCategories ==
-                                                        MainCategories.men
-                                                    ? AppColors.primaryColor
-                                                    : Colors.white),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: InkWell(
-                                        borderRadius: const BorderRadius.all(
-                                          Radius.circular(30),
-                                        ),
-                                        onTap: () {
-                                          setState(() {
-                                            Utils.mainCategories =
-                                                MainCategories.women;
-                                          });
+                  if (homeProvider.getMainCategoriesList.categories != null) {
+                    int categoryId =
+                    homeProvider.getMainCategoriesList.categories!.first.id!;
 
-                                          homeProvider.setCategoryChildren(
-                                              homeProvider
-                                                  .categories![1].childes!);
-                                        },
-                                        child: Container(
-                                          height: 60,
-                                          decoration: BoxDecoration(
-                                            color: Utils.mainCategories ==
-                                                    MainCategories.women
-                                                ? Colors.white
-                                                : AppColors.primaryColor,
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                              Radius.circular(30),
-                                            ),
-                                          ),
-                                          alignment: Alignment.center,
-                                          child: Text(
-                                            homeProvider.categories![1].name!,
-                                            style: TextStyle(
-                                                color: Utils.mainCategories ==
-                                                        MainCategories.women
-                                                    ? AppColors.primaryColor
-                                                    : Colors.white),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: InkWell(
-                                        borderRadius: const BorderRadius.all(
-                                          Radius.circular(30),
-                                        ),
-                                        onTap: () {
-                                          setState(() {
-                                            Utils.mainCategories =
-                                                MainCategories.kids;
-                                          });
+                    if (mounted) {
+                      await homeProvider.getDashboardData(context, true,
+                          AppLocalizations
+                              .of(context)!
+                              .localeName, categoryId, 'all');
+                    }
+                  }
 
-                                          homeProvider.setCategoryChildren(
-                                              homeProvider
-                                                  .categories![2].childes!);
-                                        },
-                                        child: Container(
-                                          height: 60,
-                                          decoration: BoxDecoration(
-                                            color: Utils.mainCategories ==
-                                                    MainCategories.kids
-                                                ? Colors.white
-                                                : AppColors.primaryColor,
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                              Radius.circular(30),
-                                            ),
-                                          ),
-                                          alignment: Alignment.center,
-                                          child: Text(
-                                            homeProvider.categories![2].name!,
-                                            style: TextStyle(
-                                                color: Utils.mainCategories ==
-                                                        MainCategories.kids
-                                                    ? AppColors.primaryColor
-                                                    : Colors.white),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
 
-                              Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(24, 4, 24, 60),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      l10n.categories,
-                                      style: const TextStyle(
-                                          fontFamily: 'Libre Baskerville',
-                                          fontSize: 18,
-                                          color: Colors.white),
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        Utils.controller.jumpToTab(1);
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          l10n.seeAll,
-                                          style: const TextStyle(
-                                            fontFamily: 'Montserrat',
-                                            fontSize: 14,
-                                            color: Colors.white,
-                                            decoration:
-                                                TextDecoration.underline,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
+                },
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+
+                      ///header section
+                      Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          Container(
+                            width: double.maxFinite,
+                            color: AppColors.primaryColor,
+                            child: Column(
+                              children: [
+                                //tabs
+                                // Container(
+                                //   width: double.maxFinite,
+                                //   height: 32,
+                                //   margin: const EdgeInsets.all(24),
+                                //   decoration: BoxDecoration(
+                                //     color: AppColors.primaryColor,
+                                //     borderRadius: const BorderRadius.all(
+                                //       Radius.circular(30),
+                                //     ),
+                                //     border: Border.all(
+                                //       color: Colors.white,
+                                //     ),
+                                //   ),
+                                //   child: Row(
+                                //     children: [
+                                //       Expanded(
+                                //         child: InkWell(
+                                //           borderRadius: const BorderRadius.all(
+                                //             Radius.circular(30),
+                                //           ),
+                                //           onTap: () {
+                                //             setState(() {
+                                //               Utils.mainCategories = MainCategories.men;
+                                //             });
+                                //
+                                //             homeProvider.setMainCategoryId(homeProvider.getMainCategoriesList.categories![0].id!);
+                                //
+                                //             homeProvider.setCategoryChildren(
+                                //                 homeProvider
+                                //                     .categories![0].childes!);
+                                //           },
+                                //           child: Container(
+                                //             height: 60,
+                                //             decoration: BoxDecoration(
+                                //               color: Utils.mainCategories ==
+                                //                       MainCategories.men
+                                //                   ? Colors.white
+                                //                   : AppColors.primaryColor,
+                                //               borderRadius:
+                                //                   const BorderRadius.all(
+                                //                 Radius.circular(30),
+                                //               ),
+                                //             ),
+                                //             alignment: Alignment.center,
+                                //             child: Text(
+                                //               homeProvider.categories![0].name!,
+                                //               style: TextStyle(
+                                //                   color: Utils.mainCategories ==
+                                //                           MainCategories.men
+                                //                       ? AppColors.primaryColor
+                                //                       : Colors.white),
+                                //             ),
+                                //           ),
+                                //         ),
+                                //       ),
+                                //       Expanded(
+                                //         child: InkWell(
+                                //           borderRadius: const BorderRadius.all(
+                                //             Radius.circular(30),
+                                //           ),
+                                //           onTap: () {
+                                //             setState(() {
+                                //               Utils.mainCategories =
+                                //                   MainCategories.women;
+                                //             });
+                                //
+                                //             homeProvider.setMainCategoryId(homeProvider.getMainCategoriesList.categories![1].id!);
+                                //
+                                //             homeProvider.setCategoryChildren(
+                                //                 homeProvider
+                                //                     .categories![1].childes!);
+                                //           },
+                                //           child: Container(
+                                //             height: 60,
+                                //             decoration: BoxDecoration(
+                                //               color: Utils.mainCategories ==
+                                //                       MainCategories.women
+                                //                   ? Colors.white
+                                //                   : AppColors.primaryColor,
+                                //               borderRadius:
+                                //                   const BorderRadius.all(
+                                //                 Radius.circular(30),
+                                //               ),
+                                //             ),
+                                //             alignment: Alignment.center,
+                                //             child: Text(
+                                //               homeProvider.categories![1].name!,
+                                //               style: TextStyle(
+                                //                   color: Utils.mainCategories ==
+                                //                           MainCategories.women
+                                //                       ? AppColors.primaryColor
+                                //                       : Colors.white),
+                                //             ),
+                                //           ),
+                                //         ),
+                                //       ),
+                                //       Expanded(
+                                //         child: InkWell(
+                                //           borderRadius: const BorderRadius.all(
+                                //             Radius.circular(30),
+                                //           ),
+                                //           onTap: () {
+                                //             setState(() {
+                                //               Utils.mainCategories =
+                                //                   MainCategories.kids;
+                                //             });
+                                //
+                                //             homeProvider.setMainCategoryId(homeProvider.getMainCategoriesList.categories![2].id!);
+                                //
+                                //
+                                //             homeProvider.setCategoryChildren(
+                                //                 homeProvider
+                                //                     .categories![2].childes!);
+                                //           },
+                                //           child: Container(
+                                //             height: 60,
+                                //             decoration: BoxDecoration(
+                                //               color: Utils.mainCategories ==
+                                //                       MainCategories.kids
+                                //                   ? Colors.white
+                                //                   : AppColors.primaryColor,
+                                //               borderRadius:
+                                //                   const BorderRadius.all(
+                                //                 Radius.circular(30),
+                                //               ),
+                                //             ),
+                                //             alignment: Alignment.center,
+                                //             child: Text(
+                                //               homeProvider.categories![2].name!,
+                                //               style: TextStyle(
+                                //                   color: Utils.mainCategories ==
+                                //                           MainCategories.kids
+                                //                       ? AppColors.primaryColor
+                                //                       : Colors.white),
+                                //             ),
+                                //           ),
+                                //         ),
+                                //       ),
+                                //     ],
+                                //   ),
+                                // ),
+
+                                // Padding(
+                                //   padding:
+                                //       const EdgeInsets.fromLTRB(24, 4, 24, 10),
+                                //   child: Row(
+                                //     mainAxisAlignment:
+                                //         MainAxisAlignment.spaceBetween,
+                                //     children: [
+                                //       Text(
+                                //         l10n.categories,
+                                //         style: const TextStyle(
+                                //             fontFamily: 'Libre Baskerville',
+                                //             fontSize: 18,
+                                //             color: Colors.white),
+                                //       ),
+                                //       InkWell(
+                                //         onTap: () {
+                                //           Utils.controller.jumpToTab(1);
+                                //         },
+                                //         child: Padding(
+                                //           padding: const EdgeInsets.all(8.0),
+                                //           child: Text(
+                                //             l10n.seeAll,
+                                //             style: const TextStyle(
+                                //               fontFamily: 'Montserrat',
+                                //               fontSize: 14,
+                                //               color: Colors.white,
+                                //               decoration:
+                                //                   TextDecoration.underline,
+                                //             ),
+                                //           ),
+                                //         ),
+                                //       ),
+                                //     ],
+                                //   ),
+                                // ),
+                              ],
+                            ),
                           ),
-                        ),
 
-                        ///categories slider with left and right arrow buttons
-                        Positioned(
-                          left: 0,
-                          right: 0,
-                          bottom: -60,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              IconButton(
-                                padding: EdgeInsets.zero,
-                                onPressed: () {
-                                  _controller.previousPage(
-                                      duration: const Duration(
-                                    milliseconds: 200,
-                                  ));
-                                },
-                                icon: Icon(
-                                  l10n.localeName == 'en'
-                                      ? Icons.keyboard_arrow_left_rounded
-                                      : Icons.keyboard_arrow_right_rounded,
-                                  //Icons.keyboard_arrow_left_rounded,
-                                  size: 32,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              Expanded(
-                                child: CarouselSlider(
-                                  items: imageSliders,
-                                  carouselController: _controller,
-                                  options: CarouselOptions(
-                                      enlargeCenterPage: false,
-                                      height: 110,
-                                      viewportFraction: 0.34),
-                                ),
-                              ),
-                              IconButton(
-                                padding: EdgeInsets.zero,
-                                onPressed: () {
-                                  _controller.nextPage(
-                                      duration: const Duration(
-                                    milliseconds: 200,
-                                  ));
-                                },
-                                icon: Icon(
-                                  l10n.localeName == 'en'
-                                      ? Icons.keyboard_arrow_right_rounded
-                                      : Icons.keyboard_arrow_left_rounded,
-                                  size: 32,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    const SizedBox(
-                      height: 60,
-                    ),
-
-
-                    Expanded(
-                      child: ListView(
-                        shrinkWrap: true,
-                        padding: const EdgeInsets.all(10.0),
-                        children: const [
-
-                          MostWantedSection(),
-                          SizedBox(height: 20),
-                          ShopNowBanner(),
-                          SizedBox(height: 20),
-                          NewArrivalsSection(),
-
+                          ///categories slider with left and right arrow buttons
+                          // Positioned(
+                          //   left: 0,
+                          //   right: 0,
+                          //   bottom: -60,
+                          //   child: Row(
+                          //     crossAxisAlignment: CrossAxisAlignment.start,
+                          //     children: [
+                          //       IconButton(
+                          //         padding: EdgeInsets.zero,
+                          //         onPressed: () {
+                          //           _controller.previousPage(
+                          //               duration: const Duration(
+                          //             milliseconds: 200,
+                          //           ));
+                          //         },
+                          //         icon: Icon(
+                          //           l10n.localeName == 'en'
+                          //               ? Icons.keyboard_arrow_left_rounded
+                          //               : Icons.keyboard_arrow_right_rounded,
+                          //           //Icons.keyboard_arrow_left_rounded,
+                          //           size: 32,
+                          //           color: Colors.white,
+                          //         ),
+                          //       ),
+                          //       Expanded(
+                          //         child: CarouselSlider(
+                          //           items: imageSliders,
+                          //           carouselController: _controller,
+                          //           options: CarouselOptions(
+                          //               enlargeCenterPage: false,
+                          //               height: 110,
+                          //               viewportFraction: 0.34),
+                          //         ),
+                          //       ),
+                          //       IconButton(
+                          //         padding: EdgeInsets.zero,
+                          //         onPressed: () {
+                          //           _controller.nextPage(
+                          //               duration: const Duration(
+                          //             milliseconds: 200,
+                          //           ));
+                          //         },
+                          //         icon: Icon(
+                          //           l10n.localeName == 'en'
+                          //               ? Icons.keyboard_arrow_right_rounded
+                          //               : Icons.keyboard_arrow_left_rounded,
+                          //           size: 32,
+                          //           color: Colors.white,
+                          //         ),
+                          //       ),
+                          //     ],
+                          //   ),
+                          // ),
                         ],
                       ),
-                    ),
-                  ],
-                ),
+
+                      /*const SizedBox(
+                        height: 60,
+                      ),*/
+
+
+                      Expanded(
+                        child: ListView(
+                          shrinkWrap: true,
+                          padding: const EdgeInsets.all(10.0),
+                          children: const [
+
+                            ShopNowBanner(),
+                            SizedBox(height: 20),
+                            MostWantedSection(),
+                            SizedBox(height: 20),
+                            NewArrivalsSection(),
+
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+              ),
     );
   }
 

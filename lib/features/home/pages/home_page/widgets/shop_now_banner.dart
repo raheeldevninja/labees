@@ -20,20 +20,23 @@ class ShopNowBanner extends StatelessWidget {
     return Stack(
       children: [
         Container(
+
           width: double.maxFinite,
-          height: 200,
+          height: 150,
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(
               Radius.circular(16),
             ),
           ),
           child: ClipRRect(
+
             borderRadius: const BorderRadius.all(
               Radius.circular(16),
             ),
             child: CachedNetworkImage(
+              fit: BoxFit.cover,
               imageUrl:
-              "https://labees.mydomain101.net/storage/app/public/category/2023-08-29-64eda114079b4.jpg",
+              "https://labees.boedelipos.ch/storage/app/public/banner/2023-07-13-64afb66b05dd2.png",
               placeholder: (context, url) =>
               const CupertinoActivityIndicator(),
               errorWidget: (context, url, error) =>
@@ -43,7 +46,7 @@ class ShopNowBanner extends StatelessWidget {
         ),
         Positioned(
           left: 20,
-          bottom: 20,
+          bottom: 40,
           child: InkWell(
             onTap: () {
               Utils.controller.jumpToTab(1);
@@ -59,9 +62,9 @@ class ShopNowBanner extends StatelessWidget {
                 ),
               ),
               alignment: Alignment.center,
-              child: Row(
+              child: const Row(
                 mainAxisSize: MainAxisSize.min,
-                children: const [
+                children: [
                   Text(
                     'Shop Now',
                     style: TextStyle(color: Colors.white),

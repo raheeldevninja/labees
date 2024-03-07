@@ -4,6 +4,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:labees/core/view_model/locale_provider.dart';
 import 'package:labees/features/home/view_model/home_provider.dart';
 import 'package:labees/features/settings/contact_us_screen.dart';
+import 'package:labees/features/settings/static_page_details_screen.dart';
+import 'package:labees/features/settings/view_model/settings_provider.dart';
 import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -17,11 +19,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool _isEnglishLangSelected = true;
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+
+      final settingsProvider = context.read<SettingsProvider>();
+      await settingsProvider.getFooterSettings();
+
+    });
+
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
     final localeProvider = context.watch<LocaleProvider>();
 
     final homeProvider = context.read<HomeProvider>();
+    final settingsProvider = context.watch<SettingsProvider>();
 
     _isEnglishLangSelected = l10n.localeName == 'en' ? true : false;
 
@@ -38,7 +55,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         title: Text(l10n.settingsTitle,
             style: const TextStyle(color: AppColors.primaryColor)),
       ),
-      body: Padding(
+      body: settingsProvider.getIsLoading ? const SizedBox() : Padding(
         padding: const EdgeInsets.all(24.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -198,6 +215,54 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         fontWeight: FontWeight.w300)),
               ],
             ),
+
+            const SizedBox(
+              height: 16,
+            ),
+
+            //listview for footer settings
+            Expanded(
+              child: ListView.builder(
+                itemCount: settingsProvider.footerSettingsResponse.pages!.length,
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    onTap: () {
+
+                      print('footer settings: ${settingsProvider.footerSettingsResponse.pages![index].slug}');
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => StaticPageDetailsScreen(slug: settingsProvider.footerSettingsResponse.pages![index].slug!),
+                        ),
+                      );
+
+
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 12.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(settingsProvider.footerSettingsResponse.pages![index].name!,
+                              style: const TextStyle(
+                                  color: AppColors.primaryColor,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500)),
+                          const Icon(
+                            Icons.arrow_forward_ios,
+                            color: AppColors.primaryColor,
+                            size: 18,
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+
+
           ],
         ),
       ),

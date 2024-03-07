@@ -72,7 +72,8 @@ class _HomeScreenState extends State<HomeScreen> {
       // Default is Colors.white.
       handleAndroidBackButtonPress: true,
       // Default is true.
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
+
       // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
       stateManagement: true,
       // Default is true.
@@ -110,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
 
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return [
 

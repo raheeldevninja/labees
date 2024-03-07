@@ -9,7 +9,8 @@ class APIs {
 
   static String token = '';
 
-  static const String baseURL = 'https://labees.boedelipos.ch/api/v1/';
+  //static const String baseURL = 'https://labees.boedelipos.ch/api/v1/';
+  static const String baseURL = 'https://labeesnew.boedelipos.ch/api/v1/';
   static const String login = 'auth/login';
   static const String register = 'auth/register';
   static const String mainCategories = 'categories';
@@ -31,6 +32,7 @@ class APIs {
   static const String getOrders = 'customer/order/list';
   static const String cancelOrders = 'order/cancel-order';
   static const String newsletter = 'add-subscription';
+  static const String updateNewsLetter = 'customer/update-newsletter';
   static const String sellerRegister = 'seller/register';
   static const String contactUs = 'contact-store';
   static const String companySettings = 'config/company-settings';
@@ -45,11 +47,16 @@ class APIs {
   static const String verifyOTP = 'auth/verify-otp';
   static const String resetPassword = 'auth/reset-password';
   static const String addReview = 'products/reviews/submit';
+  static const String notifications = 'notifications';
+  static const String faqs = 'faq';
+  static const String footerSettings = 'config/footer-settings';
+  static const String pageDetails = 'config/page-details';
 
 
 
   //images
-  static const String imageBaseURL = 'https://labees.boedelipos.ch/storage/app/public/';
+  //static const String imageBaseURL = 'https://labees.boedelipos.ch/storage/app/public/';
+  static const String imageBaseURL = 'https://labeesnew.boedelipos.ch/storage/app/public/';
   static const String categoryImages = 'category/';
   static const String bannerImages = 'banner/';
   static const String productThumbnailImages = 'product/thumbnail/';

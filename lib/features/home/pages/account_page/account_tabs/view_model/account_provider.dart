@@ -3,6 +3,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:labees/core/models/account_data.dart';
 import 'package:labees/core/models/news_letter_response.dart';
 import 'package:labees/core/models/update_account_response.dart';
+import 'package:labees/core/models/update_newsletter_response.dart';
 import 'package:labees/core/util/shared_pref.dart';
 import 'package:labees/core/util/utils.dart';
 import 'package:labees/features/home/pages/account_page/account_tabs/service/account_service.dart';
@@ -24,8 +25,9 @@ class AccountProvider extends ChangeNotifier {
 
   late UpdateAccountResponse updateAccountResponse;
   late NewsLetterResponse newsLetterResponse;
+  UpdateNewsletterResponse? updateNewsletterResponse;
   late WalletResponse walletResponse;
-  late MyPointsResponse myPointsResponse;
+  MyPointsResponse? myPointsResponse;
   late AccountSettingsResponse accountSettingsResponse;
   late ConvertToCurrencyResponse convertToCurrencyResponse;
 
@@ -62,6 +64,7 @@ class AccountProvider extends ChangeNotifier {
 
     if (newsLetterResponse.status!) {
 
+
     }
     else {
       Utils.toast(newsLetterResponse.message!);
@@ -73,12 +76,35 @@ class AccountProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> updateNewsletter(BuildContext context, int status) async {
+
+    EasyLoading.show(status: 'loading...');
+    showLoading();
+
+    updateNewsletterResponse = await AccountService.updateNewsletter(status);
+
+    if (updateNewsletterResponse!.status!) {
+
+      await SharedPref.saveUser(updateNewsletterResponse!.user!);
+
+    }
+    else {
+      Utils.toast(updateNewsletterResponse!.message!);
+    }
+
+
+    EasyLoading.dismiss();
+    hideLoading();
+  }
+
 
   getWalletList(BuildContext context, int limit, int offset)  async {
 
     showLoading();
 
     walletResponse = await AccountService.getWalletList(limit, offset);
+
+    print('statusss ${walletResponse.status}');
 
     if (walletResponse.status!) {
 
@@ -88,27 +114,26 @@ class AccountProvider extends ChangeNotifier {
     }
 
     hideLoading();
-    notifyListeners();
   }
 
-  getMyPoints(BuildContext context, int limit, int offset)  async {
+  Future<void> getMyPoints(BuildContext context, int limit, int offset) async {
 
     showLoading();
 
     myPointsResponse = await AccountService.getMyPoints(limit, offset);
 
-    if (myPointsResponse.status!) {
+    if (myPointsResponse!.status!) {
 
     }
     else {
-      Utils.toast(myPointsResponse.message!);
+      Utils.toast(myPointsResponse!.message!);
     }
 
     hideLoading();
     notifyListeners();
   }
 
-  getAccountSettings(BuildContext context)  async {
+  Future<void> getAccountSettings(BuildContext context)  async {
 
     showLoading();
 

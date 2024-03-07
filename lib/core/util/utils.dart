@@ -32,7 +32,11 @@ class Utils {
     Colors.deepPurple,
     Colors.orange,
     Colors.pink,
+    Colors.blue,
+    Colors.green,
   ];
+
+
 
   static MainCategories mainCategories = MainCategories.men;
 
@@ -58,6 +62,17 @@ class Utils {
   //cancel order dialog
   static void showCancelOrderDialog(BuildContext context, int orderId, AppLocalizations l10n, OrderProvider orderProvider,
       TextEditingController reasonController) {
+
+    List<String> cancellationReasonsList = [
+      'Found a better price',
+      'No need anymore',
+      'Ordered by mistake',
+      'Delay in delivery',
+      'Other',
+    ];
+
+    String selectedReason = '';
+
     showDialog(
       context: context,
       builder: (context) {
@@ -116,7 +131,7 @@ class Utils {
               Widgets.labels('${l10n.reasonLabel} '),
               const SizedBox(height: 8,),
 
-              TextFormField(
+              /*TextFormField(
                 controller: reasonController,
                 maxLines: 5,
                 decoration: InputDecoration(
@@ -138,8 +153,40 @@ class Utils {
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                 ),
-              ),
+              ),*/
 
+
+              //cancellation reason drop down
+              DropdownButtonFormField<String>(
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: AppColors.lightGrey.withOpacity(0.1),
+                  contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20),
+                  hintText: 'Select reason',
+                  hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.transparent, width: 1.0),
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide:
+                    const BorderSide(width: 1.0),
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                ),
+                items: cancellationReasonsList.map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                onChanged: (String? value) {
+                  selectedReason = value!;
+                },
+              ),
 
             ],
           ),
@@ -153,7 +200,9 @@ class Utils {
 
                   //final orderProvider = Provider.of<OrderProvider>(context, listen: false);
 
-                  if(reasonController.text.isEmpty) {
+                  print('selectedReason: $selectedReason');
+
+                  if(selectedReason.isEmpty) {
 
                     Utils.toast(l10n.enterCancellationReason);
                     return;
@@ -162,17 +211,11 @@ class Utils {
                   await orderProvider.cancelOrder(
                     context,
                     orderId,
-                    reasonController.text.trim(),
+                    selectedReason,
                   );
 
-
-                  //if(mounted) {
-                    await orderProvider.getOrders(context, 'all', 10, 1);
-                  //}
-
-                  //if(mounted) {
-                    Navigator.pop(context);
-                  //}
+                  await orderProvider.getOrders(context, 'all', 10, 1);
+                  Navigator.pop(context);
 
                 },
                 style: ElevatedButton.styleFrom(

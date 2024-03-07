@@ -5,11 +5,13 @@ import 'package:labees/core/images/images.dart';
 import 'package:labees/core/util/shared_pref.dart';
 import 'package:labees/core/util/utils.dart';
 import 'package:labees/features/auth/view_model/auth_provider.dart';
+import 'package:labees/features/faqs/faqs_screen.dart';
 import 'package:labees/features/my_bag/my_bag_screen.dart';
 import 'package:labees/features/my_bag/view_model/cart_provider.dart';
 import 'package:labees/features/notifications/notifications_screen.dart';
 import 'package:labees/features/seller/seller_home_screen.dart';
 import 'package:labees/features/settings/settings_screen.dart';
+import 'package:labees/features/support_ticket/support_ticket_screen.dart';
 import 'package:labees/features/wishlist/wishlist_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -22,9 +24,10 @@ class AppDrawer extends StatelessWidget {
     final authProvider = Provider.of<AuthProvider>(context);
     final loginStatus = authProvider.isLoggedIn;
 
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return Drawer(
+      backgroundColor: Colors.white,
       // Add a ListView to the drawer. This ensures the user can scroll
       // through the options in the drawer if there isn't enough vertical
       // space to fit everything.
@@ -171,6 +174,37 @@ class AppDrawer extends StatelessWidget {
             },
           ),
 
+
+          _buildNavDrawerItem(
+            l10n.faq,
+            Images.faqIcon,
+                () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const FAQScreen(),
+                ),
+              );
+
+            },
+          ),
+
+          ///ticket support
+          _buildNavDrawerItem(
+            l10n.supportTicket,
+            Images.supportTicketIcon,
+                () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SupportTicketScreen(),
+                ),
+              );
+
+            },
+          ),
 
           ListTile(
             leading: Container(

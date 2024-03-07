@@ -99,7 +99,7 @@ class OrderData {
   String? cancelReason;
   String? paymentMethod;
   String? transactionRef;
-  int? orderAmount;
+  double? orderAmount;
   String? adminCommission;
   String? isPause;
   String? cause;
@@ -107,7 +107,7 @@ class OrderData {
   String? createdAt;
   String? updatedAt;
   int? discountAmount;
-  Null? discountType;
+  String? discountType;
   String? couponCode;
   String? couponDiscountBearer;
   int? shippingMethodId;
@@ -119,7 +119,7 @@ class OrderData {
   BillingAddressData? shippingAddressData;
   Null? deliveryManId;
   int? deliverymanCharge;
-  Null? expectedDeliveryDate;
+  String? expectedDeliveryDate;
   String? orderNote;
   int? billingAddress;
   BillingAddressData? billingAddressData;
@@ -136,6 +136,7 @@ class OrderData {
   int? partiallyPaidAmount;
   int? vat;
   int? vatPerc;
+  double? shippingVAT;
   List<Details>? details;
   Summary? summary;
   Null? deliveryMan;
@@ -186,6 +187,7 @@ class OrderData {
         this.partiallyPaidAmount,
         this.vat,
         this.vatPerc,
+        this.shippingVAT,
         this.details,
         this.summary,
         this.deliveryMan});
@@ -199,7 +201,7 @@ class OrderData {
     cancelReason = json['cancel_reason'];
     paymentMethod = json['payment_method'];
     transactionRef = json['transaction_ref'];
-    orderAmount = json['order_amount'];
+    orderAmount = json['order_amount']?.toDouble() ?? 0.0;
     adminCommission = json['admin_commission'];
     isPause = json['is_pause'];
     cause = json['cause'];
@@ -241,6 +243,7 @@ class OrderData {
     partiallyPaidAmount = json['partially_paid_amount'];
     vat = json['vat'];
     vatPerc = json['vat_perc'];
+    shippingVAT = json['shipping_vat']?.toDouble() ?? 0.0;
     if (json['details'] != null) {
       details = <Details>[];
       json['details'].forEach((v) {
@@ -302,6 +305,7 @@ class OrderData {
     data['partially_paid_amount'] = this.partiallyPaidAmount;
     data['vat'] = this.vat;
     data['vat_perc'] = this.vatPerc;
+    data['shipping_vat'] = this.shippingVAT;
     if (this.details != null) {
       data['details'] = this.details!.map((v) => v.toJson()).toList();
     }

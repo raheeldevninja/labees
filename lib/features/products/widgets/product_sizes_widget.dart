@@ -19,7 +19,7 @@ class ProductSizesWidget extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final homeProvider = Provider.of<HomeProvider>(context);
-    String htmlString = homeProvider.productDetails!.sizes ?? '';
+    String htmlString = homeProvider.productDetails!.product!.sizes ?? '';
 
     // Parse HTML
     final document = htmlParser.parse(htmlString);

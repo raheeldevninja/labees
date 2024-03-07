@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:labees/core/app/app_colors.dart';
 import 'package:labees/features/home/models/choice_option.dart';
+import 'package:labees/features/home/view_model/home_provider.dart';
+import 'package:provider/provider.dart';
 
 
 /*
@@ -26,6 +28,8 @@ class _SizeOptionsState extends State<SizeOptions> {
   @override
   Widget build(BuildContext context) {
 
+    final homeProvider = Provider.of<HomeProvider>(context);
+
     return Wrap(
       direction: Axis.horizontal,
       children: [
@@ -46,6 +50,10 @@ class _SizeOptionsState extends State<SizeOptions> {
                   widget.choiceOptions.options![j].isSelected = false;
                 }
               }
+
+              homeProvider.setSelectedSize(widget.choiceOptions.options![i].name!);
+
+              print('Selected Size: ${homeProvider.getSelectedSize}');
 
               setState(() {});
             },

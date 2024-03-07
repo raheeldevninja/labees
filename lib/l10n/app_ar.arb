@@ -16,6 +16,8 @@
     "login": "تسجيل الدخول",
     "logout": "تسجيل خروج",
     "noNotifications": "لا إشعارات",
+    "faq": "الأسئلة الشائعة",
+    "privacy_policy": "سياسة الخصوصية",
 
     "welcome": "مرحباً",
     "loginToContinue": "تسجيل الدخول للمتابعة",
@@ -29,6 +31,7 @@
     "appVersion": "نسخة التطبيق",
     "allCategories": "جميع الفئات",
     "brands": "العلامات التجارية",
+    "tags": "العلامات",
     "designers": "المصممين",
     "register": "يسجل",
     "registerBtnText": "يسجل",
@@ -77,6 +80,7 @@
     "addressLabel": "عنوان",
     "phoneLabel": "هاتف",
     "addAddress": "اضف عنوان",
+    "updateAddress": "تحديث العنوان",
     "contactPersonName": "اسم شخص الاتصال",
     "contactPersonNameHint": "أدخل اسم جهة الاتصال",
     "countryLabel": "دولة",
@@ -92,6 +96,7 @@
     "pleaseEnterPostalCode": "الرجاء إدخال الرمز البريدي",
     "citiesNotFound": "لم يتم العثور على المدن",
     "pleaseSelectCountry": "الرجاء تحديد البلد أولا",
+    "pleaseSelectCity": "الرجاء اختيار المدينة",
     "pleaseEnterContactPersonName": "الرجاء إدخال اسم جهة الاتصال",
 
 
@@ -102,8 +107,8 @@
     "cancelOrderBtnText": "الغاء الطلب",
     "trackOrderBtnText": "أتبع طلبك",
     "totalLabel": "المجموع",
-    "subTotalLabel": "المجموع الفرعي",
-    "shippingLabel": "شحن",
+    "subTotalLabel": "قيمة العناصر",
+    "shippingLabel": "رسوم التوصيل",
     "vatLabel": "ضريبة القيمة المضافة",
     "orderIdLabel": "رقم التعريف الخاص بالطلب",
     "noOrdersFound": "لم يتم العثور على أية طلبات",
@@ -130,9 +135,9 @@
     "workingDaysTo": "أيام العمل ل",
     "shippingFrom": "الشحن من",
     "productCode": "كود المنتج",
-    "productDescriptionTab": "وصف المنتج",
+    "productDescriptionTab": "قماش",
     "sizesTab": "الأحجام",
-    "customerReviewsTab": "آراء العملاء",
+    "customerReviewsTab": "رعاية",
     "similarProductsLabel": "منتجات مماثلة",
     "writeReviewLabel": "أكتب مراجعة",
     "writeReviewHint": "أكتب مراجعة",
@@ -147,7 +152,7 @@
     "orderSummary": "ملخص الطلب",
     "applyBtnText": "يتقدم",
     "couponCode": "رمز الكوبون",
-    "coupon": "قسيمة",
+    "coupon": "خصم على العناصر",
     "vatInclusive": "شاملة ضريبة القيمة المضافة",
 
     "checkoutTitle": "الدفع",
@@ -193,7 +198,8 @@
     "newInHeading": "الجديد في",
     "noProducts": "لا توجد منتجات",
 
-    "filterBy": "مصنف بواسطة",
+    "filters": "المرشحات",
+
     "filterBrands": "العلامات التجارية",
     "categoryLabel": "فئة",
     "filterBtnText": "منقي",
@@ -254,6 +260,27 @@
 
     "otpVerificationHeading": "التحقق من OTP",
     "enterFourDigitCode": "أدخل الرمز المكون من 4 أرقام المرسل إلى رقم هاتفك. ستنتهي صلاحية الرمز خلال 60 ثانية.",
-    "setNewPasswordBtnText": "تعيين كلمة مرور جديدة"
+    "setNewPasswordBtnText": "تعيين كلمة مرور جديدة",
+
+    "orderLabel": "طلب",
+    "trackOrderTitle": "ترتيب المسار",
+    "paymentStatus": "حالة السداد",
+    "firstStep": "الخطوة الأولى",
+    "secondStep": "الخطوة الثانية",
+    "thirdStep": "خطوة ثالثة",
+    "forthStep": "الخطوة الرابعة",
+    "estimatedDelivery": "التوصيل المتوقع",
+    "setAsDefaultBtnText": "تعيين كافتراضي",
+    "supportTicket": "بطاقة الدعم",
+    "submitTicket": "تقديم تذكرة جديدة",
+
+    "subjectLabel": "موضوع",
+    "enterYourSubjHint": "أدخل الموضوع الخاص بك",
+    "issueDescLabel": "وصف مشكلتك",
+    "issueDescHint": "يرجى وصف مشكلتك",
+    "typeLabel": "يكتب",
+    "priorityLabel": "أولوية",
+    "submitTicketBtnText": "قدم التذكرة",
+    "deliveryVATLabel": "ضريبة القيمة المضافة على التسليم"
 
 }

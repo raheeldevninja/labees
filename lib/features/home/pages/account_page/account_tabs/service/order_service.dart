@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
@@ -155,7 +156,7 @@ class OrderService {
       );
 
       print('Response status: ${response.statusCode}');
-      print('add rewview response: ${response.body}');
+      log('add rewview response: ${response.body}');
 
       var result = jsonDecode(response.body);
 

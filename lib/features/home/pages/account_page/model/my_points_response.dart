@@ -21,7 +21,7 @@ class MyPointsResponse {
   MyPointsResponse.fromJson(Map<String, dynamic> json) {
     limit = json['limit'];
     offset = json['offset'];
-    totalLoyaltyPoint = json['total_loyalty_point'];
+    totalLoyaltyPoint = json['total_loyalty_point'] ?? 0;
     totalLoyalty = json['total_loyalty'];
     if (json['loyalty_point_list'] != null) {
       loyaltyPointList = <LoyaltyPointList>[];

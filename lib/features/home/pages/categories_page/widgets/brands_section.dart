@@ -23,7 +23,7 @@ class BrandsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
     final homeProvider = Provider.of<HomeProvider>(context);
 
     return Column(
@@ -73,7 +73,11 @@ class BrandsSection extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (context) => ProductsScreen(id: homeProvider
                         .getCategoryChildren![selectedCategoryIndex]
-                        .brands![brandIndex].id!),
+                        .brands![brandIndex].id!,
+                      title: homeProvider
+                          .getCategoryChildren![selectedCategoryIndex]
+                          .brands![brandIndex].name!
+                    ),
                   ),
                 );
 

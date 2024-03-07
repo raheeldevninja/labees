@@ -33,76 +33,81 @@ class _MyAddressTabState extends State<MyAddressTab> {
   @override
   Widget build(BuildContext context) {
 
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
     final checkoutProvider = Provider.of<CheckoutProvider>(context);
 
     if(checkoutProvider.allAddresses == null) {
       checkoutProvider.getAllAddresses();
     }
 
-    return ListView(
-      shrinkWrap: true,
-      padding: const EdgeInsets.all(16),
-      children: [
-        Text(
-          l10n.myAddresses,
-          style: const TextStyle(
-            fontSize: 18,
-            fontFamily: 'Libre Baskerville',
+    return RefreshIndicator(
+      onRefresh: () async {
+        await checkoutProvider.getAllAddresses();
+      },
+      child: ListView(
+        shrinkWrap: true,
+        padding: const EdgeInsets.all(16),
+        children: [
+          Text(
+            l10n.myAddresses,
+            style: const TextStyle(
+              fontSize: 18,
+              fontFamily: 'Libre Baskerville',
+            ),
           ),
-        ),
-        const SizedBox(
-          height: 16,
-        ),
-        checkoutProvider.allAddresses != null && checkoutProvider.allAddresses!.addresses!.isEmpty
-            ? const NoAddressWidget()
-            : AddressesList(myAddresses: checkoutProvider.allAddresses!.addresses!),
+          const SizedBox(
+            height: 16,
+          ),
+          checkoutProvider.allAddresses != null && checkoutProvider.allAddresses!.addresses!.isEmpty
+              ? const NoAddressWidget()
+              : AddressesList(myAddresses: checkoutProvider.allAddresses!.addresses!),
 
-        const SizedBox(height: 40,),
+          const SizedBox(height: 40,),
 
-        InkWell(
-          onTap: () {
+          InkWell(
+            onTap: () {
 
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const AddAddressScreen(),
-              ),
-            );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AddAddressScreen(),
+                ),
+              );
 
-          },
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                width: 80,
-                height: 80,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    width: 2,
-                    color: AppColors.primaryColor,
+            },
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 80,
+                  height: 80,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      width: 2,
+                      color: AppColors.primaryColor,
+                    ),
+                  ),
+                  alignment: Alignment.center,
+                  child: SvgPicture.asset(
+                    Images.addIcon,
                   ),
                 ),
-                alignment: Alignment.center,
-                child: SvgPicture.asset(
-                  Images.addIcon,
+                const SizedBox(
+                  height: 10,
                 ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                l10n.addNewAddress,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontFamily: 'Montserrat',
+                Text(
+                  l10n.addNewAddress,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontFamily: 'Montserrat',
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

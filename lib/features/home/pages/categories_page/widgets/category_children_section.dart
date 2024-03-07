@@ -41,20 +41,20 @@ class CategoryChildrenSection extends StatelessWidget {
                       homeProvider.getCategoryChildren![i]
                           .copyWith(isSelected: false);
                 }
-                homeProvider.getCategoryChildren![index] =
-                    homeProvider.getCategoryChildren![index]
-                        .copyWith(isSelected: true);
+                // homeProvider.getCategoryChildren![index] =
+                //     homeProvider.getCategoryChildren![index]
+                //         .copyWith(isSelected: !homeProvider.getCategoryChildren![index].isSelected!);
 
                 //set sub sub childs
                 homeProvider.setChildList(homeProvider
-                    .getCategoryChildren![index].childes!);
+                    .getCategoryChildren![index].childes!, homeProvider.getCategoryChildren![0].parentId!, homeProvider.getCategoryChildren![index].name!);
 
 
                 homeProvider.setSelectedCategoryIndex(index);
 
               },
-              child: CategoryChildren(categoryChild:  homeProvider.getCategoryChildren![index] =
-              homeProvider.getCategoryChildren![index],),
+              child: CategoryChildren(categoryChild:
+              homeProvider.getCategoryChildren![index], index: index,),
             );
           },
         ),

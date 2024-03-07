@@ -6,6 +6,7 @@ import 'package:labees/core/models/all_addresses.dart';
 import 'package:labees/core/models/cities_data.dart';
 import 'package:labees/core/models/countries_data.dart';
 import 'package:labees/core/models/delete_address_response.dart';
+import 'package:labees/core/models/notifications_response.dart';
 import 'package:labees/core/models/place_order_model.dart';
 import 'package:labees/core/models/place_order_response.dart';
 import 'package:labees/core/models/update_address_response.dart';
@@ -36,6 +37,9 @@ class CheckoutProvider extends ChangeNotifier {
 
   int? billingAddressId;
   int? shippingAddressId;
+
+  NotificationsResponse? notificationsResponse;
+  late List<Notifications> notifications;
 
   int? get getBillingAddressId => billingAddressId;
 
@@ -230,19 +234,16 @@ class CheckoutProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  searchCountry(String query) {
-    List<CountriesData> searchList = [];
-    //searchList.addAll(countriesData);
+  List<CountriesData> originalCountriesData = [];
 
+  void searchCountry(String query) {
+    if (originalCountriesData.isEmpty) {
+      originalCountriesData = countriesData.toList();
+    }
 
-    //copy countriesData to searchList
-    searchList = countriesData;
-
-
-    print('searchList: ${searchList.length}');
     if (query.isNotEmpty) {
       List<CountriesData> listData = [];
-      searchList.forEach((item) {
+      originalCountriesData.forEach((item) {
         if (item.name!.toLowerCase().contains(query.toLowerCase())) {
           listData.add(item);
         }
@@ -250,11 +251,53 @@ class CheckoutProvider extends ChangeNotifier {
       countriesData.clear();
       countriesData.addAll(listData);
     } else {
-      //countriesData.clear();
-      //countriesData.addAll(searchList);
-      countriesData = searchList ;
+      countriesData.clear();
+      countriesData.addAll(originalCountriesData); // Restore original data when query is empty
     }
     notifyListeners();
+  }
+
+
+  List<CitiesData> originalCitiesData = [];
+
+  void searchCity(String query) {
+    if (originalCitiesData.isEmpty) {
+      originalCitiesData = cities!.data!.toList();
+    }
+
+    if (query.isNotEmpty) {
+      List<CitiesData> listData = [];
+      originalCitiesData.forEach((item) {
+        if (item.name!.toLowerCase().contains(query.toLowerCase())) {
+          listData.add(item);
+        }
+      });
+      citiesData.clear();
+      citiesData.addAll(listData);
+    } else {
+      cities!.data!.clear();
+      cities!.data!.addAll(originalCitiesData); // Restore original data when query is empty
+    }
+    notifyListeners();
+  }
+
+
+
+  Future<void> getNotifications() async {
+
+    EasyLoading.show(status: 'loading...');
+    showLoading();
+
+    notificationsResponse = await CheckoutService.getNotifications();
+
+    if (notificationsResponse!.success) {
+      notifications = notificationsResponse!.notifications!;
+    } else {
+      Utils.toast(notificationsResponse!.message!);
+    }
+
+    EasyLoading.dismiss();
+    hideLoading();
   }
 
 

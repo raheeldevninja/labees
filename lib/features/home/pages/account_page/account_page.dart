@@ -48,7 +48,7 @@ class _AccountPageState extends State<AccountPage> with SingleTickerProviderStat
   @override
   Widget build(BuildContext context) {
 
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
     final authProvider = Provider.of<AuthProvider>(context);
 
     return Scaffold(

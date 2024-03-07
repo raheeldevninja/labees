@@ -78,6 +78,26 @@ class AttributeValues {
         this.isSelected = false
       });
 
+  AttributeValues copyWith({
+    int? id,
+    int? attributeId,
+    String? name,
+    String? image,
+    String? createdAt,
+    String? updatedAt,
+    bool? isSelected,
+  }) {
+    return AttributeValues(
+      id: id ?? this.id,
+      attributeId: attributeId ?? this.attributeId,
+      name: name ?? this.name,
+      image: image ?? this.image,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isSelected: isSelected ?? this.isSelected,
+    );
+  }
+
   AttributeValues.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     attributeId = json['attribute_id'];

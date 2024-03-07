@@ -19,11 +19,13 @@ class ProductItem extends StatefulWidget {
     Key? key,
     required this.product,
     this.isWishlistProduct = false,
+    this.isSearchProduct = false,
     required this.addRemoveToWishlist,
   }) : super(key: key);
 
   final Products product;
   final bool isWishlistProduct;
+  final bool isSearchProduct;
 
   final VoidCallback addRemoveToWishlist;
 
@@ -34,8 +36,10 @@ class ProductItem extends StatefulWidget {
 class _ProductItemState extends State<ProductItem> {
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
     final homeProvider = Provider.of<HomeProvider>(context);
+
+    final tagName = widget.product.tagDetails!.isNotEmpty ? widget.product.tagDetails?.first.name! : '';
 
     return Column(
       children: [
@@ -65,7 +69,7 @@ class _ProductItemState extends State<ProductItem> {
                 ),
               ),
             ),
-            Positioned(
+            widget.isSearchProduct ? const SizedBox() : Positioned(
               right: 4,
               top: 0,
               child: !widget.isWishlistProduct
@@ -92,8 +96,20 @@ class _ProductItemState extends State<ProductItem> {
                             .removeFromWishlist(widget.product.id!);
 
                         if(mounted) {
-                          await homeProvider.getWishlist(context, AppLocalizations.of(context).localeName);
+                          await homeProvider.getWishlist(context, AppLocalizations.of(context)!.localeName);
                         }
+
+                        print('called dashbaord data: ${homeProvider.getMainCategoryId}');
+
+                        await homeProvider.getDashboardData(
+                          context,
+                          true,
+                          l10n.localeName,
+                          homeProvider.getMainCategoryId,
+                          'all',
+                        );
+
+
 
 
                       },
@@ -118,16 +134,16 @@ class _ProductItemState extends State<ProductItem> {
             Positioned(
               left: 12,
               top: 16,
-              child: Container(
+              child: tagName!.isEmpty ? const SizedBox() : Container(
                 padding:
                     const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: const BorderRadius.all(Radius.circular(30)),
                     border: Border.all(width: 1, color: Colors.grey)),
-                child: const Text(
-                  'New Season',
-                  style: TextStyle(fontSize: 10),
+                child: Text(
+                  tagName ?? '',
+                  style: const TextStyle(fontSize: 10),
                 ),
               ),
             ),

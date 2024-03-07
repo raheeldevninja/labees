@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:labees/core/app/app_colors.dart';
 import 'package:labees/core/util/apis.dart';
 import 'package:labees/features/home/models/category_child.dart';
+import 'package:labees/features/home/pages/categories_page/widgets/sub_categories_section.dart';
+import 'package:provider/provider.dart';
+
+import '../../../view_model/home_provider.dart';
 
 /*
 *  Date 20 - September-2023
@@ -14,15 +18,115 @@ class CategoryChildren extends StatelessWidget {
   const CategoryChildren({
     super.key,
     required this.categoryChild,
+    required this.index,
   });
 
   final CategoryChild categoryChild;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
 
+    print('categoryChild seleted: ${categoryChild.name} ${categoryChild.isSelected!}');
 
-    return Container(
+    final homeProvider = Provider.of<HomeProvider>(context);
+
+    /*return Container(
+      width: double.maxFinite,
+
+      padding: const EdgeInsets.all(8),
+      margin: const EdgeInsets.all(4),
+      alignment: Alignment.center,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+
+              Text(
+                categoryChild.name!,
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: AppColors.primaryColor,
+                  fontFamily: 'Montserrat',
+                ),
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              const Icon(Icons.keyboard_arrow_down, color: AppColors.lightGrey),
+
+              const Expanded(child: SizedBox()),
+
+              CachedNetworkImage(
+                imageUrl:
+                '${APIs.imageBaseURL}${APIs.categoryImages}${categoryChild.icon!}',
+                width: 40,
+                height: 40,
+                color: AppColors.primaryColor,
+                fit: BoxFit.cover,
+              ),
+
+
+            ],
+          ),
+
+          //sub-sub categories
+
+          categoryChild.isSelected!
+              ?
+          const SubCategoriesSection() : const SizedBox(),
+
+        ],
+      ),
+    );*/
+
+
+
+    return ExpansionTile(
+      onExpansionChanged: (value) {
+
+        homeProvider.getCategoryChildren![index] = homeProvider.getCategoryChildren![index].copyWith(isSelected: value);
+
+        print('CategoryChildrenSectionBackup: ${homeProvider.getCategoryChildren![index].name} ${homeProvider.getCategoryChildren![index].id!}');
+
+        //set sub sub childs
+        homeProvider.setChildList(homeProvider.getCategoryChildren![index].childes!,  homeProvider.getCategoryChildren![index].parentId!, homeProvider.getCategoryChildren![index].name!);
+
+        //homeProvider.setSelectedCategoryIndex(index);
+      },
+      title: Row(
+        children: [
+          Text(
+            categoryChild.name!,
+            style: const TextStyle(
+              fontSize: 12,
+              color: AppColors.primaryColor,
+              fontFamily: 'Montserrat',
+            ),
+            textAlign: TextAlign.center,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+          const Icon(Icons.keyboard_arrow_down, color: AppColors.lightGrey),
+        ],
+      ),
+      trailing: CachedNetworkImage(
+        imageUrl:
+        '${APIs.imageBaseURL}${APIs.categoryImages}${categoryChild.icon!}',
+        width: 40,
+        height: 40,
+        fit: BoxFit.cover,
+      ),
+      children: [
+
+        categoryChild.isSelected!
+            ?
+        const SubCategoriesSection() : const SizedBox(),
+      ],
+    );
+
+    /*return Container(
       height: 100,
       padding: const EdgeInsets.all(8),
       margin: const EdgeInsets.all(4),
@@ -67,6 +171,6 @@ class CategoryChildren extends StatelessWidget {
           ),
         ],
       ),
-    );
+    );*/
   }
 }

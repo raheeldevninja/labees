@@ -173,7 +173,7 @@ class CartProvider extends ChangeNotifier {
       couponDiscount = (applyCouponResponse!.data!.coupon!.discount! / 100) * subTotal;
     }
     else {
-      couponDiscount = applyCouponResponse!.data!.coupon!.discount!.toDouble();
+      couponDiscount = applyCouponResponse!.data!.coupon!.discount?.toDouble() ?? 0.0;
     }
 
     notifyListeners();
@@ -185,7 +185,7 @@ class CartProvider extends ChangeNotifier {
       return;
     }
 
-    couponDiscount = applyCouponResponse!.data!.couponDiscount!.toDouble();
+    couponDiscount = applyCouponResponse!.data!.couponDiscount?.toDouble() ?? 0.0;
     notifyListeners();
 
   }

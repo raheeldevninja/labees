@@ -28,7 +28,7 @@ class _WriteReviewState extends State<WriteReview> {
   @override
   Widget build(BuildContext context) {
 
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
     final homeProvider = Provider.of<HomeProvider>(context);
 
     return Column(
@@ -49,12 +49,13 @@ class _WriteReviewState extends State<WriteReview> {
 
 
         ListView.builder(
-          itemCount: homeProvider.productDetails!.reviews!.length,
+          //itemCount: homeProvider.productDetails!.reviews!.length,
+          itemCount: homeProvider.productDetails!.product!.reviewsList!.length,
             physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
             itemBuilder: (context, index) {
 
-            final rating = homeProvider.productDetails!.reviews![index];
+            final rating = homeProvider.productDetails!.product!.reviewsList![index];
 
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,9 +71,10 @@ class _WriteReviewState extends State<WriteReview> {
                   Row(
                     children: [
                       RatingBar.builder(
-                        initialRating: rating.rating!.toDouble(),
+                        initialRating: rating.rating?.toDouble() ?? 0.0,
                         minRating: 1,
                         itemSize: 20,
+                        ignoreGestures: true,
                         direction: Axis.horizontal,
                         allowHalfRating: true,
                         itemCount: 5,
@@ -88,7 +90,7 @@ class _WriteReviewState extends State<WriteReview> {
                         },
                       ),
                       const SizedBox(width: 16),
-                      Text('${rating.rating!.toDouble()} ${l10n.ratingLabel}'),
+                      Text('${rating.rating?.toDouble() ?? 0.0} ${l10n.ratingLabel}'),
                     ],
                   ),
                   const SizedBox(height: 8),

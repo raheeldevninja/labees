@@ -27,7 +27,7 @@ class _NewArrivalsSectionState extends State<NewArrivalsSection> {
   @override
   Widget build(BuildContext context) {
 
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
     final homeProvider = Provider.of<HomeProvider>(context);
 
     return Column(
@@ -91,20 +91,20 @@ class _NewArrivalsSectionState extends State<NewArrivalsSection> {
 
                       ///add to wishlist
                       await homeProvider.addToWishList(
-                          context, AppLocalizations.of(context).localeName, product.id!);
+                          context, AppLocalizations.of(context)!.localeName, product.id!);
                     }
 
 
-                    if (homeProvider.getMainCategoriesList.categories != null) {
-                      int categoryId =
-                      homeProvider.getMainCategoriesList.categories!.first.id!;
 
-                      if(mounted) {
-                        await homeProvider.getDashboardData(context, false,
-                            AppLocalizations.of(context).localeName, categoryId, 'all');
-                      }
+                    int categoryId =
+                    homeProvider.getMainCategoriesList.categories!.first.id!;
 
+                    if(mounted) {
+                      await homeProvider.getDashboardData(context, false,
+                          AppLocalizations.of(context)!.localeName, categoryId, 'all');
                     }
+
+
 
                   },
                 ),

@@ -46,7 +46,7 @@ class _MyBagScreenState extends State<MyBagScreen> {
   @override
   Widget build(BuildContext context) {
 
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     final authProvider = Provider.of<AuthProvider>(context);
     final cartProvider = Provider.of<CartProvider>(context);
@@ -55,6 +55,7 @@ class _MyBagScreenState extends State<MyBagScreen> {
         ? Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.white,
+              surfaceTintColor: Colors.transparent,
               leading: IconButton(
                 onPressed: () {
                   Navigator.pop(context);
@@ -165,13 +166,13 @@ class _MyBagScreenState extends State<MyBagScreen> {
 
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: AppColors.primaryColor,
+                        backgroundColor: AppColors.primaryColor,
                         padding: const EdgeInsets.symmetric(horizontal: 32),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
                       ),
-                      child: Text(l10n.checkoutBtnText),
+                      child: Text(l10n.checkoutBtnText, style: const TextStyle(color: Colors.white),),
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -217,7 +218,7 @@ class _MyBagItemState extends State<MyBagItem> {
   @override
   Widget build(BuildContext context) {
 
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return Container(
       decoration: const BoxDecoration(
@@ -373,7 +374,7 @@ class _CartProductItemState extends State<CartProductItem> {
   @override
   Widget build(BuildContext context) {
 
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return Container(
       decoration: const BoxDecoration(

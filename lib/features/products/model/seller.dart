@@ -17,13 +17,13 @@ class Seller {
   String? accountNo;
   String? holderName;
   String? authToken;
-  Null? salesCommissionPercentage;
-  Null? gst;
-  Null? cmFirebaseToken;
+  String? salesCommissionPercentage;
+  String? gst;
+  String? cmFirebaseToken;
   int? posStatus;
   int? adminId;
-  Null? sellerRoleId;
-  Null? parentId;
+  String? sellerRoleId;
+  String? parentId;
   Shop? shop;
 
   Seller(

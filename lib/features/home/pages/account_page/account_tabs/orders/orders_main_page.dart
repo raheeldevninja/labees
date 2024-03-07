@@ -38,7 +38,7 @@ class _OrdersMainPageState extends State<OrdersMainPage> {
   @override
   Widget build(BuildContext context) {
 
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return Expanded(
       child: Column(
@@ -64,6 +64,7 @@ class _OrdersMainPageState extends State<OrdersMainPage> {
 
                     },
                     style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.all(0),
                       //backgroundColor: orderStatus == OrderStatus.all ? AppColors.primaryColor : Colors.white,
                       backgroundColor: currentPage == 0 ? AppColors.primaryColor : Colors.white,
                       foregroundColor: Colors.white,
@@ -102,6 +103,7 @@ class _OrdersMainPageState extends State<OrdersMainPage> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: currentPage == 1 ? AppColors.primaryColor : Colors.white,
                       foregroundColor: Colors.white,
+                      padding: const EdgeInsets.all(0),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(60.0),
                       ),
@@ -134,6 +136,7 @@ class _OrdersMainPageState extends State<OrdersMainPage> {
 
                     },
                     style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.all(0),
                       backgroundColor: currentPage == 2 ? AppColors.primaryColor : Colors.white,
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(

@@ -69,164 +69,282 @@ class _WalletTabState extends State<WalletTab> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
     final accountProvider = context.watch<AccountProvider>();
 
-    return accountProvider.getLoading ? const WalletPointShimmer() : ListView(
-      padding: const EdgeInsets.all(16),
-      children: [
-        Text(
-          l10n.myWalletHeading,
-          style: const TextStyle(
-            fontSize: 18,
-            fontFamily: 'Libre Baskerville',
-          ),
-        ),
-        const SizedBox(
-          height: 16,
-        ),
-
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return accountProvider.getLoading ? const WalletPointShimmer() : RefreshIndicator(
+      onRefresh: () async {
+        await accountProvider.getWalletList(context, 10, 1);
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              l10n.balanceHeading,
+              l10n.myWalletHeading,
               style: const TextStyle(
                 fontSize: 18,
                 fontFamily: 'Libre Baskerville',
               ),
             ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                const Text(
-                  'SAR',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontFamily: 'Montserrat',
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  accountProvider.walletResponse.totalWalletBalance!.toStringAsFixed(2),
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Montserrat',
-                  ),
-                ),
-              ],
+
+
+            ///balance value
+            // const SizedBox(
+            //   height: 16,
+            // ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     Text(
+            //       l10n.balanceHeading,
+            //       style: const TextStyle(
+            //         fontSize: 18,
+            //         fontFamily: 'Libre Baskerville',
+            //       ),
+            //     ),
+            //     Row(
+            //       mainAxisSize: MainAxisSize.min,
+            //       crossAxisAlignment: CrossAxisAlignment.end,
+            //       children: [
+            //         const Text(
+            //           'SAR',
+            //           style: TextStyle(
+            //             fontSize: 12,
+            //             fontFamily: 'Montserrat',
+            //           ),
+            //         ),
+            //         const SizedBox(width: 8),
+            //         Text(
+            //           accountProvider.walletResponse.totalWalletBalance?.toStringAsFixed(2) ?? '0.00',
+            //           style: const TextStyle(
+            //             fontSize: 18,
+            //             fontWeight: FontWeight.bold,
+            //             fontFamily: 'Montserrat',
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //   ],
+            // ),
+
+            const SizedBox(
+              height: 20,
+            ),
+
+            Text(
+              l10n.transactionsLabel,
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                fontFamily: 'Montserrat',
+              ),
+            ),
+
+            const SizedBox(
+              height: 20,
+            ),
+
+            //transactions listview.builder,
+            Expanded(
+              child: ListView.builder(
+                itemCount:
+                    accountProvider.walletResponse.walletTransactioList!.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  //return WalletItem(transaction: transactions[index]);
+
+                  final transaction =
+                      accountProvider.walletResponse.walletTransactioList![index];
+                  transaction.transactionType = transaction.transactionType!
+                      .split('_')
+                      .map((e) => e[0].toUpperCase() + e.substring(1))
+                      .join(' ');
+
+                  final date = DateTime.parse(transaction.createdAt!);
+                  final formattedDate =
+                      '${Utils.monthNumToName(date.month)} ${date.day}, ${date.year}';
+
+                  // return Padding(
+                  //   padding: const EdgeInsets.all(8.0),
+                  //   child: Row(
+                  //     children: [
+                  //       Expanded(
+                  //           flex: 2,
+                  //           child: Text(
+                  //             transaction.transactionType!,
+                  //             style: const TextStyle(color: Colors.black),
+                  //             textAlign: TextAlign.left,
+                  //           )),
+                  //       Expanded(
+                  //           child: Text(
+                  //         'SAR ${transaction.credit!.toString()}',
+                  //         style: const TextStyle(color: Colors.black),
+                  //         textAlign: TextAlign.center,
+                  //       )),
+                  //       Expanded(
+                  //           child: Text(
+                  //         'SAR ${transaction.debit!.toString()}',
+                  //         style: const TextStyle(color: Colors.black),
+                  //         textAlign: TextAlign.center,
+                  //       )),
+                  //       Expanded(
+                  //           flex: 2,
+                  //           child: Text(
+                  //             formattedDate,
+                  //             style: const TextStyle(color: Colors.black),
+                  //             textAlign: TextAlign.center,
+                  //           )),
+                  //     ],
+                  //   ),
+                  // );
+
+                  return Container(
+                    padding: const EdgeInsets.all(8.0),
+                    margin: const EdgeInsets.symmetric(vertical: 8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color: AppColors.lightGrey,
+                        width: 1,
+                      ),
+                    ),
+                    child: Column(
+                      children: [
+                        //first row
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        'Date: ',
+                                        style:
+                                        TextStyle(color: Colors.black),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      Text(
+                                        formattedDate,
+                                        style: const TextStyle(
+                                            color: Colors.black),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 4),
+                                  const Text(
+                                    'Loyalty Point ',
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        color: AppColors.primaryColor,
+                                        fontWeight: FontWeight.w500),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Balance',
+                                  style: TextStyle(color: Colors.black),
+                                  textAlign: TextAlign.center,
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  '${transaction.balance} SAR',
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      color: AppColors.primaryColor,
+                                      fontWeight: FontWeight.w500),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 6.0, vertical: 6),
+                          child: Divider(
+                            color: AppColors.lightGrey.withOpacity(0.2),
+                          ),
+                        ),
+
+                        Padding(
+                          padding:
+                          const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Row(
+                                  children: [
+                                    const Expanded(
+                                      child: Text(
+                                        'Credit: ',
+                                        style:
+                                        TextStyle(color: Colors.black),
+                                        textAlign: TextAlign.start,
+                                      ),
+                                    ),
+                                    Text(
+                                      transaction.credit!
+                                          .toStringAsFixed(2),
+                                      style: const TextStyle(
+                                          color: Colors.black),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                width: 1,
+                                height: 20,
+                                color: AppColors.lightGrey.withOpacity(0.8),
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 16),
+                              ),
+                              Expanded(
+                                child: Row(
+                                  children: [
+                                    const Expanded(
+                                      child: Text(
+                                        'Debit: ',
+                                        style:
+                                        TextStyle(color: Colors.black),
+                                        textAlign: TextAlign.start,
+                                      ),
+                                    ),
+                                    Text(
+                                      transaction.debit!
+                                          .toStringAsFixed(2),
+                                      style: const TextStyle(
+                                          color: Colors.black),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+
+                },
+              ),
             ),
           ],
         ),
-
-        const SizedBox(
-          height: 20,
-        ),
-
-        Text(
-          l10n.transactionsLabel,
-          style: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-            fontFamily: 'Montserrat',
-          ),
-        ),
-
-        const SizedBox(
-          height: 20,
-        ),
-
-        ///wallets list header
-        Container(
-          height: 50,
-          color: AppColors.primaryColor,
-          child: Row(
-            children: [
-              Expanded(
-                  child: Text(
-                    l10n.tranTypeLabel,
-                style: const TextStyle(color: Colors.white),
-                textAlign: TextAlign.center,
-              )),
-              Expanded(
-                  child: Text(
-                    l10n.creditLabel,
-                style: const TextStyle(color: Colors.white),
-                textAlign: TextAlign.center,
-              )),
-              Expanded(
-                  child: Text(
-                    l10n.debitLabel,
-                style: const TextStyle(color: Colors.white),
-                textAlign: TextAlign.center,
-              )),
-              Expanded(
-                  child: Text(
-                    l10n.dateLabel,
-                style: const TextStyle(color: Colors.white),
-                textAlign: TextAlign.center,
-              )),
-            ],
-          ),
-        ),
-
-        //transactions listview.builder,
-        ListView.builder(
-          itemCount:
-              accountProvider.walletResponse.walletTransactioList!.length,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            //return WalletItem(transaction: transactions[index]);
-
-            final transaction =
-                accountProvider.walletResponse.walletTransactioList![index];
-            transaction.transactionType = transaction.transactionType!
-                .split('_')
-                .map((e) => e[0].toUpperCase() + e.substring(1))
-                .join(' ');
-
-            final date = DateTime.parse(transaction.createdAt!);
-            final formattedDate =
-                '${Utils.monthNumToName(date.month)} ${date.day}, ${date.year}';
-
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Expanded(
-                      flex: 2,
-                      child: Text(
-                        transaction.transactionType!,
-                        style: const TextStyle(color: Colors.black),
-                        textAlign: TextAlign.left,
-                      )),
-                  Expanded(
-                      child: Text(
-                    'SAR ${transaction.credit!.toString()}',
-                    style: const TextStyle(color: Colors.black),
-                    textAlign: TextAlign.center,
-                  )),
-                  Expanded(
-                      child: Text(
-                    'SAR ${transaction.debit!.toString()}',
-                    style: const TextStyle(color: Colors.black),
-                    textAlign: TextAlign.center,
-                  )),
-                  Expanded(
-                      flex: 2,
-                      child: Text(
-                        formattedDate,
-                        style: const TextStyle(color: Colors.black),
-                        textAlign: TextAlign.center,
-                      )),
-                ],
-              ),
-            );
-          },
-        ),
-      ],
+      ),
     );
   }
 }

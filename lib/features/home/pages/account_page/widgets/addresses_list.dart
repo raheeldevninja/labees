@@ -27,14 +27,18 @@ class AddressesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
     final checkoutProvider = Provider.of<CheckoutProvider>(context);
+
 
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: myAddresses.length,
       itemBuilder: (context, index) {
+
+        final isDefault = myAddresses[index].isDefault == 1;
+
         return Container(
           margin: const EdgeInsets.all(8),
           padding: const EdgeInsets.all(16),
@@ -43,8 +47,8 @@ class AddressesList extends StatelessWidget {
               Radius.circular(8),
             ),
             border: Border.all(
-              width: 1,
-              color: AppColors.borderColor,
+              width: isDefault ? 2 : 1,
+              color: isDefault ? AppColors.primaryColor : AppColors.borderColor,
             ),
           ),
           child: Row(
@@ -80,7 +84,7 @@ class AddressesList extends StatelessWidget {
                         Text(
                           '${l10n.addressLabel}: ',
                           style: const TextStyle(
-                            fontSize: 10,
+                            fontSize: 12,
                             fontFamily: 'Libre Baskerville',
                             fontWeight: FontWeight.w700,
                           ),
@@ -89,7 +93,7 @@ class AddressesList extends StatelessWidget {
                           child: Text(
                             myAddresses[index].address!,
                             style: const TextStyle(
-                              fontSize: 10,
+                              fontSize: 12,
                               fontFamily: 'Libre Baskerville',
                             ),
                           ),
@@ -107,7 +111,7 @@ class AddressesList extends StatelessWidget {
                         Text(
                           '${l10n.phoneLabel}: ',
                           style: const TextStyle(
-                            fontSize: 10,
+                            fontSize: 12,
                             fontFamily: 'Libre Baskerville',
                             fontWeight: FontWeight.w700,
                           ),
@@ -116,7 +120,7 @@ class AddressesList extends StatelessWidget {
                           child: Text(
                             myAddresses[index].phone!,
                             style: const TextStyle(
-                              fontSize: 10,
+                              fontSize: 12,
                               fontFamily: 'Libre Baskerville',
                             ),
                           ),
@@ -131,6 +135,7 @@ class AddressesList extends StatelessWidget {
                     ///edit and delete button
                     Row(
                       children: [
+
                         InkWell(
                           onTap: () {
 
@@ -156,7 +161,7 @@ class AddressesList extends StatelessWidget {
                                 Text(
                                   l10n.editAddressBtn,
                                   style: const TextStyle(
-                                    fontSize: 10,
+                                    fontSize: 12,
                                     fontFamily: 'Libre Baskerville',
                                   ),
                                 ),
@@ -167,7 +172,7 @@ class AddressesList extends StatelessWidget {
                         const SizedBox(
                           width: 8,
                         ),
-                        InkWell(
+                        isDefault ? const SizedBox() : InkWell(
                           onTap: () async {
                             bool? res = await _showDeleteConfirmationDialog(context, l10n);
 
@@ -190,7 +195,7 @@ class AddressesList extends StatelessWidget {
                                 Text(
                                   l10n.deleteAddressBtn,
                                   style: const TextStyle(
-                                    fontSize: 10,
+                                    fontSize: 12,
                                     fontFamily: 'Libre Baskerville',
                                   ),
                                 ),
@@ -200,6 +205,36 @@ class AddressesList extends StatelessWidget {
                         ),
                       ],
                     ),
+
+                    const SizedBox(height: 10),
+
+                    //default address
+                    !isDefault ? InkWell(
+                      onTap: () async {
+                        //todo: call api to set default address
+                        //await checkoutProvider.getAllAddresses();
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: AppColors.primaryColor,
+                            width: 1,
+                          ),
+                        ),
+                        child: Text(
+                          l10n.setAsDefaultBtnText,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 12,
+                            fontFamily: 'Libre Baskerville',
+                          ),
+                        ),
+                      ),
+                    ) : const SizedBox(),
+
                   ],
                 ),
               ),

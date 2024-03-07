@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:labees/core/app/app_colors.dart';
 import 'package:labees/core/ui/product_item.dart';
+import 'package:labees/features/home/models/get_wishlist.dart';
+import 'package:labees/features/home/models/product.dart';
 import 'package:labees/features/home/view_model/home_provider.dart';
 import 'package:labees/features/products/product_details_screen.dart';
 import 'package:labees/features/wishlist/model/wishlist.dart';
@@ -22,7 +24,6 @@ class WishlistScreen extends StatefulWidget {
 }
 
 class _WishlistScreenState extends State<WishlistScreen> {
-  List<Wishlist> _wishlistProducts = [];
 
   @override
   void initState() {
@@ -31,14 +32,14 @@ class _WishlistScreenState extends State<WishlistScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context
           .read<HomeProvider>()
-          .getWishlist(context, AppLocalizations.of(context).localeName);
+          .getWishlist(context, AppLocalizations.of(context)!.localeName);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final homeProvider = context.watch<HomeProvider>();
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
@@ -50,10 +51,10 @@ class _WishlistScreenState extends State<WishlistScreen> {
           icon: const Icon(Icons.arrow_back, color: Colors.black),
         ),
         centerTitle: true,
-        title: homeProvider.getIsLoading
+        title: homeProvider.getIsLoading && homeProvider.getWishlistData == null
             ? const SizedBox()
             : Text(
-                '${l10n.wishlistTitle} ${homeProvider.getWishlistData.length}',
+                '${l10n.wishlistTitle} ${homeProvider.getWishlistData?.length ?? 0}',
                 style: const TextStyle(color: AppColors.primaryColor)),
       ),
       body: homeProvider.getIsLoading
@@ -109,7 +110,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
               },
             )
           : GridView.builder(
-              itemCount: homeProvider.getWishlistData.length,
+              itemCount: homeProvider.getWishlistData?.length ?? 0,
               padding: const EdgeInsets.all(16),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 childAspectRatio: 0.54,
@@ -131,8 +132,11 @@ class _WishlistScreenState extends State<WishlistScreen> {
                   },
                   child: ProductItem(
                     isWishlistProduct: true,
-                    product: homeProvider.getWishlistData[index].product!,
-                    addRemoveToWishlist: () {},
+                    product: homeProvider.getWishlistData?[index].product ?? Products(),
+                    addRemoveToWishlist: () async {
+
+
+                    },
                   ),
                 );
               },

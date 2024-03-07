@@ -34,7 +34,7 @@ class _CompletedOrdersPageState extends State<CompletedOrdersPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
     final orderProvider = context.watch<OrderProvider>();
 
     if (orderProvider.isLoading) {
@@ -48,64 +48,69 @@ class _CompletedOrdersPageState extends State<CompletedOrdersPage> {
       );
     }
 
-    return ListView.builder(
-      itemCount: orderProvider.ordersResponse.data!.length,
-      shrinkWrap: true,
-      padding: const EdgeInsets.symmetric(vertical: 16),
-      itemBuilder: (context, index) {
-        return Stack(
-          clipBehavior: Clip.none,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(16),
-              margin: const EdgeInsets.symmetric(vertical: 16),
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(16)),
-                border: Border.all(
-                  width: 1,
-                  color: Colors.grey,
-                ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ListView.builder(
-                    itemCount: orderProvider
-                        .ordersResponse.data![index].details!.length,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, productIndex) {
-                      final product = orderProvider
-                          .ordersResponse.data![index].details![productIndex];
-
-                      return OrderItem(product: product);
-                    },
-                  ),
-
-                  OrderCostDetailsAndStatus(orderData: orderProvider.ordersResponse.data![index]),
-
-                ],
-              ),
-            ),
-            Positioned(
-              right: 16,
-              child: Container(
-                width: 100,
-                height: 30,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFFFF5E6),
-                  borderRadius: BorderRadius.circular(60),
-                  border: Border.all(width: 1, color: Colors.orange),
-                ),
-                alignment: Alignment.center,
-                child: Text(
-                    orderProvider.ordersResponse.data![index].orderStatus!,
-                    style: const TextStyle(color: Colors.orange)),
-              ),
-            ),
-          ],
-        );
+    return RefreshIndicator(
+      onRefresh: () async {
+        await orderProvider.getOrders(context, 'delivered', 10, 1);
       },
+      child: ListView.builder(
+        itemCount: orderProvider.ordersResponse.data!.length,
+        shrinkWrap: true,
+        padding: const EdgeInsets.symmetric(vertical: 16),
+        itemBuilder: (context, index) {
+          return Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(16),
+                margin: const EdgeInsets.symmetric(vertical: 16),
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(16)),
+                  border: Border.all(
+                    width: 1,
+                    color: Colors.grey,
+                  ),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ListView.builder(
+                      itemCount: orderProvider
+                          .ordersResponse.data![index].details!.length,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, productIndex) {
+                        final product = orderProvider
+                            .ordersResponse.data![index].details![productIndex];
+
+                        return OrderItem(product: product);
+                      },
+                    ),
+
+                    OrderCostDetailsAndStatus(orderData: orderProvider.ordersResponse.data![index]),
+
+                  ],
+                ),
+              ),
+              Positioned(
+                right: 16,
+                child: Container(
+                  width: 100,
+                  height: 30,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFFF5E6),
+                    borderRadius: BorderRadius.circular(60),
+                    border: Border.all(width: 1, color: Colors.orange),
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                      orderProvider.ordersResponse.data![index].orderStatus!,
+                      style: const TextStyle(color: Colors.orange)),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 

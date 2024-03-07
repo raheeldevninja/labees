@@ -9,9 +9,9 @@ class Shop {
   String? updatedAt;
   String? banner;
   int? commercialDocument;
-  Null? crIdNo;
-  Null? crFreelanceDocument;
-  Null? additionalLegalDocument;
+  String? crIdNo;
+  String? crFreelanceDocument;
+  String? additionalLegalDocument;
 
   Shop(
       {this.id,

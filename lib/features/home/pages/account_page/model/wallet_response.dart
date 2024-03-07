@@ -1,7 +1,7 @@
 class WalletResponse {
   int? limit;
   int? offset;
-  int? totalWalletBalance;
+  double? totalWalletBalance;
   int? totalWalletTransactio;
   List<WalletTransactioList>? walletTransactioList;
 
@@ -21,7 +21,7 @@ class WalletResponse {
   WalletResponse.fromJson(Map<String, dynamic> json) {
     limit = json['limit'];
     offset = json['offset'];
-    totalWalletBalance = json['total_wallet_balance'];
+    totalWalletBalance = json['total_wallet_balance']?.toDouble() ?? 0.0;
     totalWalletTransactio = json['total_wallet_transactio'];
     if (json['wallet_transactio_list'] != null) {
       walletTransactioList = <WalletTransactioList>[];
@@ -52,7 +52,7 @@ class WalletTransactioList {
   int? credit;
   int? debit;
   int? adminBonus;
-  int? balance;
+  double? balance;
   String? transactionType;
   String? reference;
   String? createdAt;
@@ -78,7 +78,7 @@ class WalletTransactioList {
     credit = json['credit'];
     debit = json['debit'];
     adminBonus = json['admin_bonus'];
-    balance = json['balance'];
+    balance = json['balance']?.toDouble() ?? 0.0;
     transactionType = json['transaction_type'];
     reference = json['reference'];
     createdAt = json['created_at'];

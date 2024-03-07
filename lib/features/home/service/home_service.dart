@@ -15,6 +15,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:labees/features/home/models/product_model.dart';
+import 'package:labees/features/home/models/tag.dart';
 import 'package:labees/features/products/model/add_wish_list_response.dart';
 import 'package:labees/features/products/model/product_details.dart';
 import 'package:labees/features/products/model/wish_list_remove_response.dart';
@@ -42,7 +43,7 @@ class HomeService {
       );
 
       print('Response status: ${response.statusCode}');
-      print('main categories response: ${response.body}');
+      log('main categories response: ${response.body}');
 
       var result = jsonDecode(response.body);
 
@@ -139,6 +140,7 @@ class HomeService {
         List<AttributeValues>? sizeAttributes,
         List<AttributeValues>? colorAttributes,
         List<AttributeValues>? ukSizeAttributes,
+        List<Tag>? tags,
       }) async {
       //{FilterData? filterData}) async {
 
@@ -219,6 +221,25 @@ class HomeService {
       url += colorString;
     }
 
+
+    //tags
+    if(tags != null) {
+
+      String tagsString = '';
+
+      for(int i = 0; i < tags.length; i++) {
+
+        if(tags[i].isSelected) {
+          tagsString += '&filters[tags_filter]';
+          tagsString += '[$i]=${tags[i].id}';
+        }
+
+      }
+
+      url += tagsString;
+    }
+
+
     if(ukSizeAttributes != null) {
 
       String ukSizeString = '';
@@ -295,6 +316,7 @@ class HomeService {
 
     ProductDetails productDetails;
     String url = '${APIs.baseURL}${APIs.productDetails}$slug';
+    //String url = '${APIs.baseURL}${APIs.productDetails}tommy-shirt-red-RwfQQB';
 
     try {
 
@@ -311,7 +333,7 @@ class HomeService {
       );
 
       print('product details status: ${response.statusCode}');
-      print('product details response: ${response.body}');
+      //print('product details response: ${response.body}');
 
       var result = jsonDecode(response.body);
 
@@ -340,6 +362,10 @@ class HomeService {
     }
     on FormatException catch (e) {
       return ProductDetails(success: false, message: 'Bad response format');
+    }
+    catch(e) {
+      print('error message: ${e.toString()}');
+      return ProductDetails(success: false, message: 'Something went wrong !');
     }
     finally {
       EasyLoading.dismiss();
@@ -380,7 +406,7 @@ class HomeService {
       }
       else if (response.statusCode == 401) {
 
-        return AddWishListResponse(success: false, message: result['errors'][0]['message']);
+        return AddWishListResponse(success: false, message: result['message']);
       }
       else if (response.statusCode == 409) {
 
@@ -487,7 +513,7 @@ class HomeService {
       print('Response status: ${response.statusCode}');
       print('get wishlist response: ${response.body}');
 
-      var result = jsonDecode(response.body);
+      var result = jsonDecode(response.body)['wishlist'];
 
 
       if (response.statusCode == 200) {
@@ -505,7 +531,7 @@ class HomeService {
       }
       else if (response.statusCode == 401) {
 
-        return AllWishlistProducts(success: false, message: result['message']);
+        return AllWishlistProducts(success: false, message: jsonDecode(response.body)['message']);
       }
       else if (response.statusCode == 500) {
         return AllWishlistProducts(success: false, message: 'Server Error');
@@ -522,6 +548,10 @@ class HomeService {
     }
     on FormatException catch (e) {
       return AllWishlistProducts(success: false, message: 'Bad response format');
+    }
+    catch(e) {
+      print('wishlist error message: ${e.toString()}');
+      return AllWishlistProducts(success: false, message: 'Something went wrong !');
     }
     finally {
       EasyLoading.dismiss();

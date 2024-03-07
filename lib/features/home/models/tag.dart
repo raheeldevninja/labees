@@ -5,12 +5,34 @@ class Tag {
   String? createdAt;
   String? updatedAt;
 
+  bool isSelected = false;
+
   Tag(
       {this.id,
         this.name,
         this.sellerVisible,
         this.createdAt,
-        this.updatedAt,});
+        this.updatedAt,
+        this.isSelected = false,
+      });
+
+  Tag copyWith({
+    int? id,
+    String? name,
+    int? sellerVisible,
+    String? createdAt,
+    String? updatedAt,
+    bool? isSelected,
+  }) {
+    return Tag(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      sellerVisible: sellerVisible ?? this.sellerVisible,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isSelected: isSelected ?? this.isSelected,
+    );
+  }
 
   Tag.fromJson(Map<String, dynamic> json) {
     id = json['id'];

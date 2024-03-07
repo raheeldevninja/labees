@@ -25,7 +25,7 @@ class User {
   int? isPhoneVerified;
   String? temporaryToken;
   int? isEmailVerified;
-  int? walletBalance;
+  double? walletBalance;
   int? loyaltyPoint;
   String? lastSeen;
   int? customerGroup;
@@ -101,7 +101,7 @@ class User {
     isPhoneVerified = json['is_phone_verified'];
     temporaryToken = json['temporary_token'];
     isEmailVerified = json['is_email_verified'];
-    walletBalance = json['wallet_balance'];
+    walletBalance = json['wallet_balance']?.toDouble() ?? 0.0;
     loyaltyPoint = json['loyalty_point'];
     lastSeen = json['last_seen'];
     customerGroup = json['customer_group'];

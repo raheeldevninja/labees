@@ -32,7 +32,7 @@ class _MyOrdersTabState extends State<MyOrdersTab> {
   @override
   Widget build(BuildContext context) {
 
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return Padding(
       padding: const EdgeInsets.all(16),
@@ -54,7 +54,6 @@ class _MyOrdersTabState extends State<MyOrdersTab> {
               : const OrdersMainPage(),
 
           const SizedBox(height: 40,),
-
 
         ],
       ),

@@ -25,8 +25,10 @@ class MostWantedSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
     final homeProvider = Provider.of<HomeProvider>(context);
+    int length = homeProvider
+        .dashboardData.mostWantedBanners?.length ?? 0;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,12 +47,12 @@ class MostWantedSection extends StatelessWidget {
         SizedBox(
           height: 194,
           child: ListView.builder(
-            itemCount: homeProvider
-                .dashboardData.mostWantedBanners!.length,
+            itemCount: length,
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
             physics: const BouncingScrollPhysics(),
             itemBuilder: (context, index) {
+
               return InkWell(
                 onTap: () {
                   Navigator.push(
@@ -58,7 +60,8 @@ class MostWantedSection extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (context) => ProductsScreen(
                           id: homeProvider.dashboardData
-                              .mostWantedBanners![index].id!),
+                              .mostWantedBanners![index].id!, title: homeProvider.dashboardData
+                          .mostWantedBanners![index].title!),
                     ),
                   );
                 },
@@ -66,7 +69,7 @@ class MostWantedSection extends StatelessWidget {
                   mostWantedBanners: homeProvider
                       .dashboardData
                       .mostWantedBanners![index],
-                  bgColor: Utils.bannerBgColors[index],
+                  bgColor: Utils.bannerBgColors[index % length],
                 ),
               );
             },

@@ -74,7 +74,7 @@ class _RegisterSellerScreenState extends State<RegisterSellerScreen> {
   @override
   Widget build(BuildContext context) {
 
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     final sellerRegistrationProvider = Provider.of<SellerRegistrationProvider>(context);
 

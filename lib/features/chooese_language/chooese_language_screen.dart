@@ -12,7 +12,6 @@ import 'package:provider/provider.dart';
 *  Description: ChooseLanguageScreen
 */
 
-
 class ChooseLanguageScreen extends StatefulWidget {
   const ChooseLanguageScreen({Key? key}) : super(key: key);
 
@@ -47,8 +46,7 @@ class _ChooseLanguageScreenState extends State<ChooseLanguageScreen>
 
   @override
   Widget build(BuildContext context) {
-
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     final localeProvider = context.read<LocaleProvider>();
 
@@ -92,7 +90,7 @@ class _ChooseLanguageScreenState extends State<ChooseLanguageScreen>
               Row(
                 children: [
                   Text(
-                    AppLocalizations.of(context).choose_language,
+                    AppLocalizations.of(context)!.choose_language,
                     style: const TextStyle(
                       fontFamily: 'Libre Baskerville',
                       fontWeight: FontWeight.w400,
@@ -126,11 +124,10 @@ class _ChooseLanguageScreenState extends State<ChooseLanguageScreen>
                       height: 50,
                       child: ElevatedButton(
                         onPressed: () async {
-
                           localeProvider.changeLocale(const Locale('en'));
                           await localeProvider.saveChooseLanguageShown();
 
-                          if(mounted) {
+                          if (mounted) {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
@@ -156,11 +153,10 @@ class _ChooseLanguageScreenState extends State<ChooseLanguageScreen>
                       height: 50,
                       child: ElevatedButton(
                         onPressed: () async {
-
                           localeProvider.changeLocale(const Locale('ar'));
                           await localeProvider.saveChooseLanguageShown();
 
-                          if(mounted) {
+                          if (mounted) {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
@@ -168,7 +164,6 @@ class _ChooseLanguageScreenState extends State<ChooseLanguageScreen>
                               ),
                             );
                           }
-
                         },
                         style: ElevatedButton.styleFrom(
                           elevation: 0,
@@ -182,7 +177,10 @@ class _ChooseLanguageScreenState extends State<ChooseLanguageScreen>
                             borderRadius: BorderRadius.circular(60.0),
                           ),
                         ),
-                        child: const Text('العربیہ'),
+                        child: const Text(
+                          'العربیہ',
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
                     ),
                   ),

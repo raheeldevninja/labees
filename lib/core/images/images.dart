@@ -17,6 +17,7 @@ class Images {
   static const String newsLetterImg = 'assets/images/newsletter_img.svg';
   static const String masterCardImg = 'assets/images/mastercard.svg';
   static const String sellerImg = 'assets/images/seller_img.png';
+  static const String labeesAppbar = 'assets/images/labees_appbar.svg';
 
   //icons
   static const String menuIcon = 'assets/icons/menu_icon.svg';
@@ -36,6 +37,7 @@ class Images {
   static const String addIcon = 'assets/icons/add_icon.svg';
   static const String deleteIcon = 'assets/icons/delete_icon.svg';
   static const String trackIcon = 'assets/icons/track.svg';
+  static const String supportTicketIcon = 'assets/icons/support_ticket_icon.svg';
 
   //drawer icons
   static const String drawerCategories = 'assets/icons/categories_icon2.svg';
@@ -48,6 +50,7 @@ class Images {
   static const String drawerSettings = 'assets/icons/drawer_settings.svg';
   static const String logoutIcon = 'assets/icons/logout_icon.svg';
   static const String shareIcon = 'assets/icons/share_icon.svg';
+  static const String faqIcon = 'assets/icons/faq_icon.svg';
 
   //payment methods
   static const String paypal = 'assets/images/paypal.svg';

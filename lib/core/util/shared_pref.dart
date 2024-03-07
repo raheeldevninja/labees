@@ -94,7 +94,8 @@ class SharedPref {
     for (int i=0; i<cartProducts.length; i++) {
 
       if(cartProducts[i].id == product.id) {
-        cartProducts[i] = cartProducts[i].copyWith(quantity: cartProducts[i].quantity + product.quantity);
+        //cartProducts[i] = cartProducts[i].copyWith(quantity: cartProducts[i].quantity + product.quantity);
+        cartProducts[i] = cartProducts[i].copyWith(quantity: product.quantity);
         isProductExists = true;
       }
 

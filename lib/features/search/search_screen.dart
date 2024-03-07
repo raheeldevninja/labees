@@ -188,6 +188,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     },
                     child: ProductItem(
                       product: product,
+                      isSearchProduct: true,
                       addRemoveToWishlist: () async {
 
                         print('wishlist ${product.wishlist}');
@@ -203,7 +204,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
                           ///add to wishlist
                           await homeProvider.addToWishList(
-                              context, AppLocalizations.of(context).localeName, product.id!);
+                              context, AppLocalizations.of(context)!.localeName, product.id!);
                         }
 
                         print('query: ${searchController.text.trim()}');

@@ -23,7 +23,7 @@ class ImagesSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return Stack(
       children: [
@@ -91,6 +91,26 @@ class ImagesSlider extends StatelessWidget {
                     color: AppColors.lightGrey,
                   )),
             ],
+          ),
+        ),
+        Positioned(
+          right: 0,
+          left: 0,
+          top: 24,
+          child: Center(
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                  vertical: 4, horizontal: 12),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius:
+                  const BorderRadius.all(Radius.circular(30)),
+                  border: Border.all(width: 1, color: Colors.grey)),
+              child: const Text(
+                'New Season',
+                style: TextStyle(fontSize: 10),
+              ),
+            ),
           ),
         ),
       ],

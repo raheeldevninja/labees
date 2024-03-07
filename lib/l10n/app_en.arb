@@ -17,6 +17,8 @@
     "login": "Login",
     "logout": "Logout",
     "noNotifications": "No notifications",
+    "faq": "FAQs",
+    "privacy_policy": "Privacy Policy",
 
     "welcome": "Welcome",
     "loginToContinue": "Login to Continue",
@@ -30,6 +32,7 @@
     "appVersion": "App Version",
     "allCategories": "All Categories",
     "brands": "Brands",
+    "tags": "Tags",
     "designers": "Designers",
     "register": "Register",
     "registerHeading": "Register",
@@ -78,6 +81,7 @@
     "addressLabel": "Address",
     "phoneLabel": "Phone",
     "addAddress": "Add Address",
+    "updateAddress": "Update Address",
     "contactPersonName": "Contact Person Name",
     "contactPersonNameHint": "Enter Contact Person Name",
     "countryLabel": "Country",
@@ -93,6 +97,7 @@
     "pleaseEnterPostalCode": "Please enter postal code",
     "citiesNotFound": "Cities not found",
     "pleaseSelectCountry": "Please select country first",
+    "pleaseSelectCity": "Please select city",
     "pleaseEnterContactPersonName": "Please enter contact person name",
 
 
@@ -103,8 +108,8 @@
     "cancelOrderBtnText": "Cancel Order",
     "trackOrderBtnText": "Track Your Order",
     "totalLabel": "Total",
-    "subTotalLabel": "Sub Total",
-    "shippingLabel": "Shipping",
+    "subTotalLabel": "Items Value",
+    "shippingLabel": "Delivery Fees",
     "vatLabel": "VAT",
     "orderIdLabel": "Order Id",
     "noOrdersFound": "No Orders Found",
@@ -131,9 +136,9 @@
     "workingDaysTo": "working days to",
     "shippingFrom": "Shipping from",
     "productCode": "Product Code",
-    "productDescriptionTab": "Product description",
+    "productDescriptionTab": "Fabric",
     "sizesTab": "Sizes",
-    "customerReviewsTab": "Customer Reviews",
+    "customerReviewsTab": "Care",
     "similarProductsLabel": "Similar Products",
     "writeReviewLabel": "Write Review",
     "writeReviewHint": "Write Review",
@@ -148,7 +153,7 @@
     "orderSummary": "Order Summary",
     "applyBtnText": "Apply",
     "couponCode": "Coupon Code",
-    "coupon": "Coupon",
+    "coupon": "Discount on items",
     "vatInclusive": "VAT inclusive",
 
     "checkoutTitle": "Checkout",
@@ -194,7 +199,7 @@
     "newInHeading": "New In",
     "noProducts": "No Products",
 
-    "filterBy": "Filter By",
+    "filters": "Filters",
     "filterBrands": "Brands",
     "categoryLabel": "Category",
     "filterBtnText": "Filter",
@@ -255,6 +260,28 @@
 
     "otpVerificationHeading": "OTP Verification",
     "enterFourDigitCode": "Enter 4 digit code sent to your phone number. The code will expire in 60 seconds.",
-    "setNewPasswordBtnText": "Set New Password"
+    "setNewPasswordBtnText": "Set New Password",
+
+    "orderLabel": "Order",
+    "trackOrderTitle": "Track Order",
+    "paymentStatus": "Payment Status",
+    "firstStep": "First Step",
+    "secondStep": "Second Step",
+    "thirdStep": "Third Step",
+    "forthStep": "Forth Step",
+    "estimatedDelivery": "Estimated Delivery",
+
+    "setAsDefaultBtnText": "Set as Default",
+    "supportTicket": "Support Ticket",
+    "submitTicket": "Submit a New Ticket",
+
+    "subjectLabel": "Subject",
+    "enterYourSubjHint": "Enter your subject",
+    "issueDescLabel": "Describe your issue",
+    "issueDescHint": "Please describe your issue",
+    "typeLabel": "Type",
+    "priorityLabel": "Priority",
+    "submitTicketBtnText": "Submit Ticket",
+    "deliveryVATLabel": "Delivery VAT"
 
 }
