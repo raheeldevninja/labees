@@ -190,10 +190,10 @@ class CheckoutService {
     on SocketException {
       return AddAddressResponse(success: false, message: 'Not connect to internet !');
     }
-    on TimeoutException catch (e) {
+    on TimeoutException catch (_) {
       return AddAddressResponse(success: false, message: 'Request timeout');
     }
-    on FormatException catch (e) {
+    on FormatException catch (_) {
       return AddAddressResponse(success: false, message: 'Bad response format');
     }
     finally {
@@ -314,10 +314,10 @@ class CheckoutService {
     on SocketException {
       return AllAddresses(success: false, message: 'Not connect to internet !');
     }
-    on TimeoutException catch (e) {
+    on TimeoutException catch (_) {
       return AllAddresses(success: false, message: 'Request timeout');
     }
-    on FormatException catch (e) {
+    on FormatException catch (_) {
       return AllAddresses(success: false, message: 'Bad response format');
     }
     finally {
@@ -435,10 +435,10 @@ class CheckoutService {
     on SocketException {
       return PlaceOrderResponse(status: 0, message: 'Not connect to internet !');
     }
-    on TimeoutException catch (e) {
+    on TimeoutException catch (_) {
       return PlaceOrderResponse(status: 0, message: 'Request timeout');
     }
-    on FormatException catch (e) {
+    on FormatException catch (_) {
       return PlaceOrderResponse(status: 0, message: 'Bad response format');
     }
     finally {
@@ -496,10 +496,10 @@ class CheckoutService {
     on SocketException {
       return DeleteAddressResponse(success: false, message: 'Not connect to internet !');
     }
-    on TimeoutException catch (e) {
+    on TimeoutException catch (_) {
       return DeleteAddressResponse(success: false, message: 'Request timeout');
     }
-    on FormatException catch (e) {
+    on FormatException catch (_) {
       return DeleteAddressResponse(success: false, message: 'Bad response format');
     }
     finally {
@@ -558,10 +558,10 @@ class CheckoutService {
     on SocketException {
       return NotificationsResponse(success: false, message: 'Not connect to internet !');
     }
-    on TimeoutException catch (e) {
+    on TimeoutException catch (_) {
       return NotificationsResponse(success: false, message: 'Request timeout');
     }
-    on FormatException catch (e) {
+    on FormatException catch (_) {
       return NotificationsResponse(success: false, message: 'Bad response format');
     }
     finally {
