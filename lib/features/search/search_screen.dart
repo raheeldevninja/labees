@@ -27,7 +27,6 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-
   final searchController = TextEditingController();
 
   List<String> searchHistory = [];
@@ -55,7 +54,6 @@ class _SearchScreenState extends State<SearchScreen> {
     homeProvider.addSearchedProducts(productsList);
 
     print('searched products: ${homeProvider.getSearchedProducts.length}');
-
   }
 
   @override
@@ -175,7 +173,6 @@ class _SearchScreenState extends State<SearchScreen> {
                   final product = homeProvider.getSearchedProducts[index];
                   return InkWell(
                     onTap: () {
-
                       /*Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -184,33 +181,30 @@ class _SearchScreenState extends State<SearchScreen> {
                                   slug: product.slug!),
                         ),
                       );*/
-
                     },
                     child: ProductItem(
                       product: product,
                       isSearchProduct: true,
                       addRemoveToWishlist: () async {
-
                         print('wishlist ${product.wishlist}');
 
                         if (product.wishlist != null &&
-                            product.wishlist!.productId ==
-                                product.id) {
+                            product.wishlist!.productId == product.id) {
                           ///remove from wishlist
-                          await homeProvider
-                              .removeFromWishlist(product.id!);
+                          await homeProvider.removeFromWishlist(product.id!);
                         } else {
                           print('here');
 
                           ///add to wishlist
                           await homeProvider.addToWishList(
-                              context, AppLocalizations.of(context)!.localeName, product.id!);
+                              context,
+                              AppLocalizations.of(context)!.localeName,
+                              product.id!);
                         }
 
                         print('query: ${searchController.text.trim()}');
 
                         searchAlgolia(searchController.text.trim());
-
                       },
                     ),
                   );

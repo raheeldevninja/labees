@@ -4,7 +4,6 @@ import 'package:labees/features/auth/login_register/login_widget.dart';
 import 'package:labees/features/auth/login_register/register_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 /*
 *  Date 7 - Dec-2023
 *  Author: Raheel Khan- Abaska Technologies
@@ -19,12 +18,10 @@ class LoginRegisterWidget extends StatefulWidget {
 }
 
 class _LoginRegisterWidgetState extends State<LoginRegisterWidget> {
-
   bool _isLoginSelected = true;
 
   @override
   Widget build(BuildContext context) {
-
     final l10n = AppLocalizations.of(context)!;
 
     return Padding(
@@ -48,26 +45,31 @@ class _LoginRegisterWidgetState extends State<LoginRegisterWidget> {
                       Radius.circular(30),
                     ),
                     onTap: () {
-
                       setState(() {
                         _isLoginSelected = true;
                       });
-
                     },
                     child: Container(
                       height: 60,
                       decoration: BoxDecoration(
-                        color: _isLoginSelected ? AppColors.primaryColor : Colors.transparent ,
+                        color: _isLoginSelected
+                            ? AppColors.primaryColor
+                            : Colors.transparent,
                         borderRadius: const BorderRadius.all(
                           Radius.circular(30),
                         ),
                       ),
                       alignment: Alignment.center,
-                      child: Text(l10n.login, style: TextStyle(color: _isLoginSelected ? Colors.white : AppColors.primaryColor),),
+                      child: Text(
+                        l10n.login,
+                        style: TextStyle(
+                            color: _isLoginSelected
+                                ? Colors.white
+                                : AppColors.primaryColor),
+                      ),
                     ),
                   ),
                 ),
-
                 Expanded(
                   child: InkWell(
                     borderRadius: const BorderRadius.all(
@@ -77,27 +79,32 @@ class _LoginRegisterWidgetState extends State<LoginRegisterWidget> {
                       setState(() {
                         _isLoginSelected = false;
                       });
-
                     },
                     child: Container(
                       height: 60,
                       decoration: BoxDecoration(
-                        color: _isLoginSelected ? Colors.transparent : AppColors.primaryColor,
+                        color: _isLoginSelected
+                            ? Colors.transparent
+                            : AppColors.primaryColor,
                         borderRadius: const BorderRadius.all(
                           Radius.circular(30),
                         ),
                       ),
                       alignment: Alignment.center,
-                      child: Text(l10n.register, style: TextStyle(color: _isLoginSelected ? AppColors.primaryColor : Colors.white),),
+                      child: Text(
+                        l10n.register,
+                        style: TextStyle(
+                            color: _isLoginSelected
+                                ? AppColors.primaryColor
+                                : Colors.white),
+                      ),
                     ),
                   ),
                 ),
               ],
             ),
           ),
-
           _isLoginSelected ? const LoginWidget() : const RegisterWidget(),
-
         ],
       ),
     );

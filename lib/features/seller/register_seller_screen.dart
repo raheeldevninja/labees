@@ -12,7 +12,6 @@ import 'package:labees/features/seller/model/seller_registration_data.dart';
 import 'package:labees/features/seller/view_model/seller_registration_provider.dart';
 import 'package:provider/provider.dart';
 
-
 class RegisterSellerScreen extends StatefulWidget {
   const RegisterSellerScreen({Key? key}) : super(key: key);
 
@@ -21,7 +20,6 @@ class RegisterSellerScreen extends StatefulWidget {
 }
 
 class _RegisterSellerScreenState extends State<RegisterSellerScreen> {
-
   final _formKey = GlobalKey<FormState>();
 
   final _firstNameController = TextEditingController();
@@ -33,16 +31,13 @@ class _RegisterSellerScreenState extends State<RegisterSellerScreen> {
   final _shopAddressController = TextEditingController();
   final _crIDNoController = TextEditingController();
 
-
   final _createPasswordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
-
 
   final _firstNameFocus = FocusNode();
   final _lastNameFocus = FocusNode();
   final _emailFocus = FocusNode();
   final _mobileNoFocus = FocusNode();
-
 
   final _shopNameFocus = FocusNode();
   final _shopAddressFocus = FocusNode();
@@ -57,26 +52,21 @@ class _RegisterSellerScreenState extends State<RegisterSellerScreen> {
   final ImagePicker picker = ImagePicker();
 
   String? selectedDocumentType;
-  final List<String> commercialDocumentTypes = [
-    'CR',
-    'Freelance'
-  ];
-
+  final List<String> commercialDocumentTypes = ['CR', 'Freelance'];
 
   @override
   void initState() {
     super.initState();
 
     selectedDocumentType = commercialDocumentTypes[0];
-
   }
 
   @override
   Widget build(BuildContext context) {
-
     final l10n = AppLocalizations.of(context)!;
 
-    final sellerRegistrationProvider = Provider.of<SellerRegistrationProvider>(context);
+    final sellerRegistrationProvider =
+        Provider.of<SellerRegistrationProvider>(context);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -102,7 +92,6 @@ class _RegisterSellerScreenState extends State<RegisterSellerScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               const SizedBox(
                 height: 20,
               ),
@@ -124,20 +113,22 @@ class _RegisterSellerScreenState extends State<RegisterSellerScreen> {
                     fillColor: _firstNameFocus.hasFocus
                         ? Colors.white
                         : Colors.grey.withOpacity(0.1),
-                    contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 12.0, horizontal: 20),
                     hintText: l10n.firstNameHint,
-                    hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+                    hintStyle:
+                        const TextStyle(fontSize: 14, color: Colors.grey),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide:
-                      BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                      borderSide: BorderSide(
+                          color: Colors.grey.withOpacity(0.1), width: 1.0),
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide:
-                      const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                      borderSide: const BorderSide(
+                          color: AppColors.primaryColor, width: 1.0),
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                   ),
@@ -169,20 +160,22 @@ class _RegisterSellerScreenState extends State<RegisterSellerScreen> {
                     fillColor: _lastNameFocus.hasFocus
                         ? Colors.white
                         : Colors.grey.withOpacity(0.1),
-                    contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 12.0, horizontal: 20),
                     hintText: l10n.lastNameHint,
-                    hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+                    hintStyle:
+                        const TextStyle(fontSize: 14, color: Colors.grey),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide:
-                      BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                      borderSide: BorderSide(
+                          color: Colors.grey.withOpacity(0.1), width: 1.0),
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide:
-                      const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                      borderSide: const BorderSide(
+                          color: AppColors.primaryColor, width: 1.0),
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                   ),
@@ -215,20 +208,22 @@ class _RegisterSellerScreenState extends State<RegisterSellerScreen> {
                     fillColor: _emailFocus.hasFocus
                         ? Colors.white
                         : Colors.grey.withOpacity(0.1),
-                    contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 12.0, horizontal: 20),
                     hintText: l10n.emailHint,
-                    hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+                    hintStyle:
+                        const TextStyle(fontSize: 14, color: Colors.grey),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide:
-                      BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                      borderSide: BorderSide(
+                          color: Colors.grey.withOpacity(0.1), width: 1.0),
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide:
-                      const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                      borderSide: const BorderSide(
+                          color: AppColors.primaryColor, width: 1.0),
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                   ),
@@ -258,7 +253,9 @@ class _RegisterSellerScreenState extends State<RegisterSellerScreen> {
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                    color: _mobileNoFocus.hasFocus ? Colors.white : Colors.grey.withOpacity(0.1),
+                    color: _mobileNoFocus.hasFocus
+                        ? Colors.white
+                        : Colors.grey.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(25.0),
                     border: Border.all(
                       color: Colors.grey.withOpacity(0.1),
@@ -267,13 +264,13 @@ class _RegisterSellerScreenState extends State<RegisterSellerScreen> {
                   ),
                   child: Row(
                     children: [
-
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: InkWell(
                           onTap: () {
                             setState(() {
-                              _showCountryBottomSheet(context, l10n, showCountryCode: true);
+                              _showCountryBottomSheet(context, l10n,
+                                  showCountryCode: true);
                             });
                           },
                           child: Row(
@@ -301,20 +298,23 @@ class _RegisterSellerScreenState extends State<RegisterSellerScreen> {
                             fillColor: _mobileNoFocus.hasFocus
                                 ? Colors.white
                                 : Colors.grey.withOpacity(0.1),
-                            contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20),
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 12.0, horizontal: 20),
                             hintText: l10n.mobileHint,
-                            hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+                            hintStyle: const TextStyle(
+                                fontSize: 14, color: Colors.grey),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(25.0),
                             ),
                             enabledBorder: OutlineInputBorder(
-                              borderSide:
-                              BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                              borderSide: BorderSide(
+                                  color: Colors.grey.withOpacity(0.1),
+                                  width: 1.0),
                               borderRadius: BorderRadius.circular(25.0),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide:
-                              const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                              borderSide: const BorderSide(
+                                  color: AppColors.primaryColor, width: 1.0),
                               borderRadius: BorderRadius.circular(25.0),
                             ),
                           ),
@@ -351,20 +351,22 @@ class _RegisterSellerScreenState extends State<RegisterSellerScreen> {
                     fillColor: _shopNameFocus.hasFocus
                         ? Colors.white
                         : Colors.grey.withOpacity(0.1),
-                    contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 12.0, horizontal: 20),
                     hintText: l10n.shopNameHint,
-                    hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+                    hintStyle:
+                        const TextStyle(fontSize: 14, color: Colors.grey),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide:
-                      BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                      borderSide: BorderSide(
+                          color: Colors.grey.withOpacity(0.1), width: 1.0),
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide:
-                      const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                      borderSide: const BorderSide(
+                          color: AppColors.primaryColor, width: 1.0),
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                   ),
@@ -398,20 +400,22 @@ class _RegisterSellerScreenState extends State<RegisterSellerScreen> {
                     fillColor: _shopAddressFocus.hasFocus
                         ? Colors.white
                         : Colors.grey.withOpacity(0.1),
-                    contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 12.0, horizontal: 20),
                     hintText: l10n.shopAddressHint,
-                    hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+                    hintStyle:
+                        const TextStyle(fontSize: 14, color: Colors.grey),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide:
-                      BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                      borderSide: BorderSide(
+                          color: Colors.grey.withOpacity(0.1), width: 1.0),
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide:
-                      const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                      borderSide: const BorderSide(
+                          color: AppColors.primaryColor, width: 1.0),
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                   ),
@@ -440,13 +444,14 @@ class _RegisterSellerScreenState extends State<RegisterSellerScreen> {
                     vertical: 12,
                     horizontal: 16,
                   ),
-
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30.0),
-                    borderSide: BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                    borderSide: BorderSide(
+                        color: Colors.grey.withOpacity(0.1), width: 1.0),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                    borderSide: BorderSide(
+                        color: Colors.grey.withOpacity(0.1), width: 1.0),
                     borderRadius: BorderRadius.circular(30.0),
                   ),
                 ),
@@ -461,9 +466,7 @@ class _RegisterSellerScreenState extends State<RegisterSellerScreen> {
                     selectedDocumentType = value;
                   });
                 },
-
               ),
-
 
               const SizedBox(
                 height: 20,
@@ -487,20 +490,22 @@ class _RegisterSellerScreenState extends State<RegisterSellerScreen> {
                     fillColor: _crIDNoFocus.hasFocus
                         ? Colors.white
                         : Colors.grey.withOpacity(0.1),
-                    contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 12.0, horizontal: 20),
                     hintText: l10n.crNoHint,
-                    hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+                    hintStyle:
+                        const TextStyle(fontSize: 14, color: Colors.grey),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide:
-                      BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                      borderSide: BorderSide(
+                          color: Colors.grey.withOpacity(0.1), width: 1.0),
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide:
-                      const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                      borderSide: const BorderSide(
+                          color: AppColors.primaryColor, width: 1.0),
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                   ),
@@ -524,16 +529,16 @@ class _RegisterSellerScreenState extends State<RegisterSellerScreen> {
               //cr freelance document picker
               GestureDetector(
                 onTap: () async {
-                  FilePickerResult? result = await FilePicker.platform.pickFiles(
+                  FilePickerResult? result =
+                      await FilePicker.platform.pickFiles(
                     type: FileType.custom,
                     allowedExtensions: ['png', 'jpg', 'pdf', 'doc'],
                   );
 
                   if (result != null) {
-
                     PlatformFile file = result.files.first;
-                    sellerRegistrationProvider.setCRFreelanceDocFile(File(file.path!));
-
+                    sellerRegistrationProvider
+                        .setCRFreelanceDocFile(File(file.path!));
                   } else {
                     // User canceled the picker
                   }
@@ -558,7 +563,13 @@ class _RegisterSellerScreenState extends State<RegisterSellerScreen> {
                       ),
                       Expanded(
                         child: Text(
-                          sellerRegistrationProvider.getCRFreelanceDocFile == null ? l10n.uploadFile : sellerRegistrationProvider.getCRFreelanceDocFile!.path.split('/').last,
+                          sellerRegistrationProvider.getCRFreelanceDocFile ==
+                                  null
+                              ? l10n.uploadFile
+                              : sellerRegistrationProvider
+                                  .getCRFreelanceDocFile!.path
+                                  .split('/')
+                                  .last,
                           style: const TextStyle(
                             color: AppColors.primaryColor,
                             fontSize: 14,
@@ -584,7 +595,8 @@ class _RegisterSellerScreenState extends State<RegisterSellerScreen> {
               //logo picker
               GestureDetector(
                 onTap: () async {
-                  FilePickerResult? result = await FilePicker.platform.pickFiles(
+                  FilePickerResult? result =
+                      await FilePicker.platform.pickFiles(
                     type: FileType.custom,
                     allowedExtensions: ['png', 'jpg', 'pdf', 'doc'],
                   );
@@ -592,7 +604,6 @@ class _RegisterSellerScreenState extends State<RegisterSellerScreen> {
                   if (result != null) {
                     PlatformFile file = result.files.first;
                     sellerRegistrationProvider.setLogoFile(File(file.path!));
-
                   } else {
                     // User canceled the picker
                   }
@@ -617,7 +628,11 @@ class _RegisterSellerScreenState extends State<RegisterSellerScreen> {
                       ),
                       Expanded(
                         child: Text(
-                          sellerRegistrationProvider.getLogoFile == null ? l10n.uploadFile : sellerRegistrationProvider.getLogoFile!.path.split('/').last,
+                          sellerRegistrationProvider.getLogoFile == null
+                              ? l10n.uploadFile
+                              : sellerRegistrationProvider.getLogoFile!.path
+                                  .split('/')
+                                  .last,
                           style: const TextStyle(
                             color: AppColors.primaryColor,
                             fontSize: 14,
@@ -643,7 +658,8 @@ class _RegisterSellerScreenState extends State<RegisterSellerScreen> {
               //banner picker
               GestureDetector(
                 onTap: () async {
-                  FilePickerResult? result = await FilePicker.platform.pickFiles(
+                  FilePickerResult? result =
+                      await FilePicker.platform.pickFiles(
                     type: FileType.custom,
                     allowedExtensions: ['png', 'jpg', 'pdf', 'doc'],
                   );
@@ -651,7 +667,6 @@ class _RegisterSellerScreenState extends State<RegisterSellerScreen> {
                   if (result != null) {
                     PlatformFile file = result.files.first;
                     sellerRegistrationProvider.setBannerFile(File(file.path!));
-
                   } else {
                     // User canceled the picker
                   }
@@ -676,7 +691,11 @@ class _RegisterSellerScreenState extends State<RegisterSellerScreen> {
                       ),
                       Expanded(
                         child: Text(
-                          sellerRegistrationProvider.getBannerFile == null ? l10n.uploadFile : sellerRegistrationProvider.getBannerFile!.path.split('/').last,
+                          sellerRegistrationProvider.getBannerFile == null
+                              ? l10n.uploadFile
+                              : sellerRegistrationProvider.getBannerFile!.path
+                                  .split('/')
+                                  .last,
                           style: const TextStyle(
                             color: AppColors.primaryColor,
                             fontSize: 14,
@@ -702,15 +721,16 @@ class _RegisterSellerScreenState extends State<RegisterSellerScreen> {
               //banner picker
               GestureDetector(
                 onTap: () async {
-                  FilePickerResult? result = await FilePicker.platform.pickFiles(
+                  FilePickerResult? result =
+                      await FilePicker.platform.pickFiles(
                     type: FileType.custom,
                     allowedExtensions: ['png', 'jpg', 'pdf', 'doc'],
                   );
 
                   if (result != null) {
                     PlatformFile file = result.files.first;
-                    sellerRegistrationProvider.setAdditionalDocFile(File(file.path!));
-
+                    sellerRegistrationProvider
+                        .setAdditionalDocFile(File(file.path!));
                   } else {
                     // User canceled the picker
                   }
@@ -735,7 +755,13 @@ class _RegisterSellerScreenState extends State<RegisterSellerScreen> {
                       ),
                       Expanded(
                         child: Text(
-                          sellerRegistrationProvider.getAdditionalDocFile == null ? l10n.uploadFile : sellerRegistrationProvider.getAdditionalDocFile!.path.split('/').last,
+                          sellerRegistrationProvider.getAdditionalDocFile ==
+                                  null
+                              ? l10n.uploadFile
+                              : sellerRegistrationProvider
+                                  .getAdditionalDocFile!.path
+                                  .split('/')
+                                  .last,
                           style: const TextStyle(
                             color: AppColors.primaryColor,
                             fontSize: 14,
@@ -769,20 +795,22 @@ class _RegisterSellerScreenState extends State<RegisterSellerScreen> {
                     fillColor: _createPasswordFocus.hasFocus
                         ? Colors.white
                         : Colors.grey.withOpacity(0.1),
-                    contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 12.0, horizontal: 20),
                     hintText: l10n.createPasswordHint,
-                    hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+                    hintStyle:
+                        const TextStyle(fontSize: 14, color: Colors.grey),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide:
-                      BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                      borderSide: BorderSide(
+                          color: Colors.grey.withOpacity(0.1), width: 1.0),
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide:
-                      const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                      borderSide: const BorderSide(
+                          color: AppColors.primaryColor, width: 1.0),
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                   ),
@@ -797,7 +825,6 @@ class _RegisterSellerScreenState extends State<RegisterSellerScreen> {
                   },
                 ),
               ),
-
 
               const SizedBox(
                 height: 20,
@@ -820,20 +847,22 @@ class _RegisterSellerScreenState extends State<RegisterSellerScreen> {
                     fillColor: _confirmPasswordFocus.hasFocus
                         ? Colors.white
                         : Colors.grey.withOpacity(0.1),
-                    contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 12.0, horizontal: 20),
                     hintText: l10n.confirmPasswordHint,
-                    hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+                    hintStyle:
+                        const TextStyle(fontSize: 14, color: Colors.grey),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide:
-                      BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                      borderSide: BorderSide(
+                          color: Colors.grey.withOpacity(0.1), width: 1.0),
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide:
-                      const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                      borderSide: const BorderSide(
+                          color: AppColors.primaryColor, width: 1.0),
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                   ),
@@ -860,7 +889,8 @@ class _RegisterSellerScreenState extends State<RegisterSellerScreen> {
               ),
               GestureDetector(
                 onTap: () async {
-                  final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+                  final pickedFile =
+                      await picker.pickImage(source: ImageSource.gallery);
                   if (pickedFile != null) {
                     sellerRegistrationProvider.setImage(File(pickedFile.path));
                   }
@@ -874,19 +904,19 @@ class _RegisterSellerScreenState extends State<RegisterSellerScreen> {
                   ),
                   child: sellerRegistrationProvider.image == null
                       ? const Center(
-                    child: Icon(
-                      Icons.add,
-                      color: Colors.grey,
-                      size: 50,
-                    ),
-                  )
+                          child: Icon(
+                            Icons.add,
+                            color: Colors.grey,
+                            size: 50,
+                          ),
+                        )
                       : ClipRRect(
-                    borderRadius: BorderRadius.circular(25.0),
-                    child: Image.file(
-                      sellerRegistrationProvider.image!,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                          borderRadius: BorderRadius.circular(25.0),
+                          child: Image.file(
+                            sellerRegistrationProvider.image!,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                 ),
               ),
 
@@ -899,37 +929,38 @@ class _RegisterSellerScreenState extends State<RegisterSellerScreen> {
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () async {
-
                     if (_formKey.currentState!.validate()) {
+                      final sellerRegistrationProvider =
+                          context.read<SellerRegistrationProvider>();
 
-                      final sellerRegistrationProvider = context.read<SellerRegistrationProvider>();
-
-
-                      SellerRegistrationData sellerRegistrationData = SellerRegistrationData(
+                      SellerRegistrationData sellerRegistrationData =
+                          SellerRegistrationData(
                         fName: _firstNameController.text.trim(),
                         lName: _lastNameController.text.trim(),
                         email: _emailController.text.trim(),
-                        phone: '$selectedCountryCode-${_mobileNoController.text.trim()}',
+                        phone:
+                            '$selectedCountryCode-${_mobileNoController.text.trim()}',
                         password: _createPasswordController.text.trim(),
                         shopName: _shopNameController.text.trim(),
                         shopAddress: _shopAddressController.text.trim(),
                         crIDNo: _crIDNoController.text.trim(),
-                        commercialDocument: selectedDocumentType == 'CR' ? 1 : 2,
-                        crFreelanceDocPath: sellerRegistrationProvider.getCRFreelanceDocFile!.path,
+                        commercialDocument:
+                            selectedDocumentType == 'CR' ? 1 : 2,
+                        crFreelanceDocPath: sellerRegistrationProvider
+                            .getCRFreelanceDocFile!.path,
                         imagePath: sellerRegistrationProvider.getImage!.path,
                         logoPath: sellerRegistrationProvider.getLogoFile!.path,
-                        bannerPath: sellerRegistrationProvider.getBannerFile!.path,
-                        additionalLegalDocPath: sellerRegistrationProvider.getAdditionalDocFile!.path,
+                        bannerPath:
+                            sellerRegistrationProvider.getBannerFile!.path,
+                        additionalLegalDocPath: sellerRegistrationProvider
+                            .getAdditionalDocFile!.path,
                       );
 
                       await sellerRegistrationProvider.sellerRegister(
                         context,
                         sellerRegistrationData,
                       );
-
                     }
-
-
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primaryColor,
@@ -950,22 +981,20 @@ class _RegisterSellerScreenState extends State<RegisterSellerScreen> {
     );
   }
 
-  void _showCountryBottomSheet(BuildContext context, AppLocalizations l10n, {bool showCountryCode = false}) {
-
+  void _showCountryBottomSheet(BuildContext context, AppLocalizations l10n,
+      {bool showCountryCode = false}) {
     showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20.0),),
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(20.0),
+        ),
       ),
-
       builder: (BuildContext context) {
-
         final checkoutProvider = context.watch<CheckoutProvider>();
 
         return StatefulBuilder(
-
           builder: (BuildContext context, StateSetter setState) {
-
             return Container(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -976,33 +1005,30 @@ class _RegisterSellerScreenState extends State<RegisterSellerScreen> {
                     style: const TextStyle(fontSize: 18),
                   ),
                   const SizedBox(height: 16.0),
-
                   Expanded(
                     child: ListView.builder(
                       shrinkWrap: true,
                       itemCount: checkoutProvider.countriesData.length,
                       itemBuilder: (BuildContext context, int index) {
                         return ListTile(
-                          title: Text('${showCountryCode ? '${checkoutProvider.countriesData[index].phoneCode} - ' : ''} ${checkoutProvider.countriesData[index].name!}'),
-                          onTap: ()  {
-
-                            if(mounted) {
+                          title: Text(
+                              '${showCountryCode ? '${checkoutProvider.countriesData[index].phoneCode} - ' : ''} ${checkoutProvider.countriesData[index].name!}'),
+                          onTap: () {
+                            if (mounted) {
                               Navigator.pop(context);
                             }
 
-                            selectedCountry = checkoutProvider.countriesData[index];
-                            selectedCountryCode = checkoutProvider.countriesData[index].phoneCode;
+                            selectedCountry =
+                                checkoutProvider.countriesData[index];
+                            selectedCountryCode =
+                                checkoutProvider.countriesData[index].phoneCode;
 
                             setState(() {});
-
-
-
                           },
                         );
                       },
                     ),
                   ),
-
                 ],
               ),
             );
@@ -1029,7 +1055,5 @@ class _RegisterSellerScreenState extends State<RegisterSellerScreen> {
     _mobileNoFocus.dispose();
     _createPasswordFocus.dispose();
     _confirmPasswordFocus.dispose();
-
   }
-
 }

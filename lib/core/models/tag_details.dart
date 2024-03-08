@@ -5,13 +5,13 @@ class TagDetails {
   String? createdAt;
   String? updatedAt;
 
-  TagDetails(
-      {this.id,
-        this.name,
-        this.sellerVisible,
-        this.createdAt,
-        this.updatedAt,
-        });
+  TagDetails({
+    this.id,
+    this.name,
+    this.sellerVisible,
+    this.createdAt,
+    this.updatedAt,
+  });
 
   TagDetails.fromJson(Map<String, dynamic> json) {
     id = json['id'];

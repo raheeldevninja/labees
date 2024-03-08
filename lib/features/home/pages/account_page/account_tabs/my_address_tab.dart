@@ -15,7 +15,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 *  Description: MyAddressTab
 */
 
-
 class MyAddressTab extends StatefulWidget {
   const MyAddressTab({Key? key}) : super(key: key);
 
@@ -24,7 +23,6 @@ class MyAddressTab extends StatefulWidget {
 }
 
 class _MyAddressTabState extends State<MyAddressTab> {
-
   @override
   void initState() {
     super.initState();
@@ -32,11 +30,10 @@ class _MyAddressTabState extends State<MyAddressTab> {
 
   @override
   Widget build(BuildContext context) {
-
     final l10n = AppLocalizations.of(context)!;
     final checkoutProvider = Provider.of<CheckoutProvider>(context);
 
-    if(checkoutProvider.allAddresses == null) {
+    if (checkoutProvider.allAddresses == null) {
       checkoutProvider.getAllAddresses();
     }
 
@@ -58,22 +55,22 @@ class _MyAddressTabState extends State<MyAddressTab> {
           const SizedBox(
             height: 16,
           ),
-          checkoutProvider.allAddresses != null && checkoutProvider.allAddresses!.addresses!.isEmpty
+          checkoutProvider.allAddresses != null &&
+                  checkoutProvider.allAddresses!.addresses!.isEmpty
               ? const NoAddressWidget()
-              : AddressesList(myAddresses: checkoutProvider.allAddresses!.addresses!),
-
-          const SizedBox(height: 40,),
-
+              : AddressesList(
+                  myAddresses: checkoutProvider.allAddresses!.addresses!),
+          const SizedBox(
+            height: 40,
+          ),
           InkWell(
             onTap: () {
-
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => const AddAddressScreen(),
                 ),
               );
-
             },
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -111,4 +108,3 @@ class _MyAddressTabState extends State<MyAddressTab> {
     );
   }
 }
-

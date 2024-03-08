@@ -1,4 +1,3 @@
-
 /*
 *  Date 3 - Nov-2023
 *  Author: Raheel Khan- Abaska Technologies
@@ -6,7 +5,6 @@
 */
 
 class APIs {
-
   static String token = '';
 
   //static const String baseURL = 'https://labees.boedelipos.ch/api/v1/';
@@ -42,7 +40,8 @@ class APIs {
   static const String walletList = 'customer/wallet/list';
   static const String myPoints = 'customer/loyalty/list';
   static const String accountSettings = 'config/account-settings';
-  static const String convertToCurrency = 'customer/loyalty/loyalty-exchange-currency';
+  static const String convertToCurrency =
+      'customer/loyalty/loyalty-exchange-currency';
   static const String forgotPassword = 'auth/forgot-password';
   static const String verifyOTP = 'auth/verify-otp';
   static const String resetPassword = 'auth/reset-password';
@@ -55,17 +54,14 @@ class APIs {
   static const String createTicketSupport = 'customer/support-ticket/create';
   static const String ticketSupportList = 'customer/support-ticket/get';
 
-
-
   //images
   //static const String imageBaseURL = 'https://labees.boedelipos.ch/storage/app/public/';
-  static const String imageBaseURL = 'https://labeesnew.boedelipos.ch/storage/app/public/';
+  static const String imageBaseURL =
+      'https://labeesnew.boedelipos.ch/storage/app/public/';
   static const String categoryImages = 'category/';
   static const String bannerImages = 'banner/';
   static const String productThumbnailImages = 'product/thumbnail/';
   static const String productImages = 'product/';
   static const String brandImages = 'brand/';
   static const String attributeValue = 'attribute_value/';
-
-
 }

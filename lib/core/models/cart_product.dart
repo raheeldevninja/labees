@@ -1,7 +1,6 @@
 import 'package:labees/core/models/cart_choices.dart';
 
 class CartProduct {
-
   final int id;
   final String title;
   final String brand;
@@ -69,7 +68,8 @@ class CartProduct {
       slug: json['slug'],
       currentSock: json['current_stock'],
       choiceString: json['choice_str'],
-      choices: List<CartChoices>.from(json['choices'].map((x) => CartChoices.fromJson(x))),
+      choices: List<CartChoices>.from(
+          json['choices'].map((x) => CartChoices.fromJson(x))),
     );
   }
 
@@ -93,5 +93,4 @@ class CartProduct {
   String toString() {
     return 'CartProduct(id: $id, title: $title, brand: $brand, quantity: $quantity, totalPrice: $totalPrice, unitPrice: $unitPrice, image: $image, slug: $slug, currentSock: $currentSock)';
   }
-
 }

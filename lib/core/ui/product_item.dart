@@ -39,7 +39,9 @@ class _ProductItemState extends State<ProductItem> {
     final l10n = AppLocalizations.of(context)!;
     final homeProvider = Provider.of<HomeProvider>(context);
 
-    final tagName = widget.product.tagDetails!.isNotEmpty ? widget.product.tagDetails?.first.name! : '';
+    final tagName = widget.product.tagDetails!.isNotEmpty
+        ? widget.product.tagDetails?.first.name!
+        : '';
 
     return Column(
       children: [
@@ -69,52 +71,52 @@ class _ProductItemState extends State<ProductItem> {
                 ),
               ),
             ),
-            widget.isSearchProduct ? const SizedBox() : Positioned(
-              right: 4,
-              top: 0,
-              child: !widget.isWishlistProduct
-                  ? IconButton(
-                      onPressed: widget.addRemoveToWishlist,
-                      icon: Icon(
-                        widget.product.wishlist != null &&
-                                widget.product.wishlist!.productId ==
-                                    widget.product.id
-                            ? Icons.favorite
-                            : Icons.favorite_border,
-                        color: Colors.red,
-                        size: 20,
-                      ),
-                    )
-                  : IconButton(
-                      icon: const Icon(
-                        Icons.delete,
-                        color: Colors.red,
-                        size: 20,
-                      ),
-                      onPressed: () async {
-                        await homeProvider
-                            .removeFromWishlist(widget.product.id!);
+            widget.isSearchProduct
+                ? const SizedBox()
+                : Positioned(
+                    right: 4,
+                    top: 0,
+                    child: !widget.isWishlistProduct
+                        ? IconButton(
+                            onPressed: widget.addRemoveToWishlist,
+                            icon: Icon(
+                              widget.product.wishlist != null &&
+                                      widget.product.wishlist!.productId ==
+                                          widget.product.id
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              color: Colors.red,
+                              size: 20,
+                            ),
+                          )
+                        : IconButton(
+                            icon: const Icon(
+                              Icons.delete,
+                              color: Colors.red,
+                              size: 20,
+                            ),
+                            onPressed: () async {
+                              await homeProvider
+                                  .removeFromWishlist(widget.product.id!);
 
-                        if(mounted) {
-                          await homeProvider.getWishlist(context, AppLocalizations.of(context)!.localeName);
-                        }
+                              if (mounted) {
+                                await homeProvider.getWishlist(context,
+                                    AppLocalizations.of(context)!.localeName);
+                              }
 
-                        print('called dashbaord data: ${homeProvider.getMainCategoryId}');
+                              print(
+                                  'called dashbaord data: ${homeProvider.getMainCategoryId}');
 
-                        await homeProvider.getDashboardData(
-                          context,
-                          true,
-                          l10n.localeName,
-                          homeProvider.getMainCategoryId,
-                          'all',
-                        );
-
-
-
-
-                      },
-                    ),
-            ),
+                              await homeProvider.getDashboardData(
+                                context,
+                                true,
+                                l10n.localeName,
+                                homeProvider.getMainCategoryId,
+                                'all',
+                              );
+                            },
+                          ),
+                  ),
 
             /*
             Positioned(
@@ -134,18 +136,21 @@ class _ProductItemState extends State<ProductItem> {
             Positioned(
               left: 12,
               top: 16,
-              child: tagName!.isEmpty ? const SizedBox() : Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: const BorderRadius.all(Radius.circular(30)),
-                    border: Border.all(width: 1, color: Colors.grey)),
-                child: Text(
-                  tagName ?? '',
-                  style: const TextStyle(fontSize: 10),
-                ),
-              ),
+              child: tagName!.isEmpty
+                  ? const SizedBox()
+                  : Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 4, horizontal: 12),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(30)),
+                          border: Border.all(width: 1, color: Colors.grey)),
+                      child: Text(
+                        tagName ?? '',
+                        style: const TextStyle(fontSize: 10),
+                      ),
+                    ),
             ),
           ],
         ),

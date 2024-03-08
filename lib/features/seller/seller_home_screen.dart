@@ -9,7 +9,6 @@ class SellerHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
@@ -31,7 +30,9 @@ class SellerHomeScreen extends StatelessWidget {
               Text(
                 l10n.becomeSellerHeading,
                 style: const TextStyle(
-                    fontSize: 30, fontWeight: FontWeight.w400, color: AppColors.primaryColor),
+                    fontSize: 30,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.primaryColor),
               ),
               const SizedBox(
                 height: 20,
@@ -39,7 +40,9 @@ class SellerHomeScreen extends StatelessWidget {
               Text(
                 l10n.createSellerAccountText,
                 style: const TextStyle(
-                    fontSize: 16, fontWeight: FontWeight.w300, color: AppColors.primaryColor),
+                    fontSize: 16,
+                    fontWeight: FontWeight.w300,
+                    color: AppColors.primaryColor),
               ),
               const SizedBox(
                 height: 60,
@@ -58,7 +61,9 @@ class SellerHomeScreen extends StatelessWidget {
                 child: Text(
                   l10n.registerNow,
                   style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.w400, color: AppColors.primaryColor),
+                      fontSize: 20,
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.primaryColor),
                 ),
               ),
               const SizedBox(
@@ -86,7 +91,8 @@ class SellerHomeScreen extends StatelessWidget {
                   ),
                   child: Text(
                     l10n.registerAsSeller,
-                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.w400),
                   ),
                 ),
               ),

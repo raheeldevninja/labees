@@ -6,22 +6,22 @@ import 'package:labees/features/support_ticket/model/ticket_support_data.dart';
 import 'package:labees/features/support_ticket/model/ticket_support_list_response.dart';
 import 'package:labees/features/support_ticket/ticket_support_service/ticket_support_service.dart';
 
-
 class TicketSupportProvider extends ChangeNotifier {
   bool isLoading = false;
 
-
   bool get getIsLoading => isLoading;
 
-  CreateTicketResponse ? createTicketResponse;
+  CreateTicketResponse? createTicketResponse;
   TicketSupportResponse? ticketSupportResponse;
   List<TicketSupportListResponse>? ticketSupportLists = [];
 
-  createTicketSupport(BuildContext context, TicketSupportData ticketSupportData) async {
+  createTicketSupport(
+      BuildContext context, TicketSupportData ticketSupportData) async {
     EasyLoading.show(status: 'loading...');
     showLoading();
 
-    createTicketResponse = await TicketSupportService.createTicketSupport(ticketSupportData);
+    createTicketResponse =
+        await TicketSupportService.createTicketSupport(ticketSupportData);
 
     if (createTicketResponse!.status!) {
       Utils.toast(createTicketResponse!.message!);
@@ -35,9 +35,7 @@ class TicketSupportProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
   Future<void> getTicketSupportList() async {
-
     EasyLoading.show(status: 'loading...');
     showLoading();
 
@@ -52,11 +50,6 @@ class TicketSupportProvider extends ChangeNotifier {
     EasyLoading.dismiss();
     hideLoading();
   }
-
-
-
-
-
 
   showLoading() {
     isLoading = true;

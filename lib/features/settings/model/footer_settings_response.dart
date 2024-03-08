@@ -10,17 +10,17 @@ class FooterSettingsResponse {
   bool? success;
   String? message;
 
-  FooterSettingsResponse(
-      {this.pages,
-        this.socialMediaLinks,
-        this.appStoreLink,
-        this.playStoreLink,
-        this.sellerRegistration,
-        this.topCategories,
-        this.paymentMethodLogos,
-        this.success,
-        this.message,
-      });
+  FooterSettingsResponse({
+    this.pages,
+    this.socialMediaLinks,
+    this.appStoreLink,
+    this.playStoreLink,
+    this.sellerRegistration,
+    this.topCategories,
+    this.paymentMethodLogos,
+    this.success,
+    this.message,
+  });
 
   FooterSettingsResponse.fromJson(Map<String, dynamic> json) {
     if (json['pages'] != null) {
@@ -95,12 +95,12 @@ class Pages {
 
   Pages(
       {this.id,
-        this.name,
-        this.description,
-        this.slug,
-        this.status,
-        this.createdAt,
-        this.updatedAt});
+      this.name,
+      this.description,
+      this.slug,
+      this.status,
+      this.createdAt,
+      this.updatedAt});
 
   Pages.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -138,13 +138,13 @@ class SocialMediaLinks {
 
   SocialMediaLinks(
       {this.id,
-        this.name,
-        this.link,
-        this.icon,
-        this.status,
-        this.createdAt,
-        this.updatedAt,
-        this.translations});
+      this.name,
+      this.link,
+      this.icon,
+      this.status,
+      this.createdAt,
+      this.updatedAt,
+      this.translations});
 
   SocialMediaLinks.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -154,7 +154,6 @@ class SocialMediaLinks {
     status = json['status'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-
   }
 
   Map<String, dynamic> toJson() {
@@ -204,20 +203,20 @@ class TopCategories {
   int? status;
   int? priority;
 
-  TopCategories(
-      {this.id,
-        this.name,
-        this.slug,
-        this.icon,
-        this.parentId,
-        this.position,
-        this.createdAt,
-        this.updatedAt,
-        this.homeStatus,
-        this.topCategory,
-        this.status,
-        this.priority,
-        });
+  TopCategories({
+    this.id,
+    this.name,
+    this.slug,
+    this.icon,
+    this.parentId,
+    this.position,
+    this.createdAt,
+    this.updatedAt,
+    this.homeStatus,
+    this.topCategory,
+    this.status,
+    this.priority,
+  });
 
   TopCategories.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -232,7 +231,6 @@ class TopCategories {
     topCategory = json['top_category'];
     status = json['status'];
     priority = json['priority'];
-
   }
 
   Map<String, dynamic> toJson() {
@@ -265,12 +263,12 @@ class PaymentMethodLogos {
 
   PaymentMethodLogos(
       {this.id,
-        this.name,
-        this.image,
-        this.status,
-        this.createdAt,
-        this.updatedAt,
-        this.translations});
+      this.name,
+      this.image,
+      this.status,
+      this.createdAt,
+      this.updatedAt,
+      this.translations});
 
   PaymentMethodLogos.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -279,7 +277,6 @@ class PaymentMethodLogos {
     status = json['status'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-
   }
 
   Map<String, dynamic> toJson() {

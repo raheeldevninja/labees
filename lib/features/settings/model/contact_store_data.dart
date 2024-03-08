@@ -1,5 +1,4 @@
 class ContactStoreData {
-
   int inquiryType;
   String name;
   String email;
@@ -26,6 +25,4 @@ class ContactStoreData {
     data['message'] = this.message;
     return data;
   }
-
-
 }

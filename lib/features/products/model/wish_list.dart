@@ -7,10 +7,10 @@ class Wishlist {
 
   Wishlist(
       {this.id,
-        this.customerId,
-        this.productId,
-        this.createdAt,
-        this.updatedAt});
+      this.customerId,
+      this.productId,
+      this.createdAt,
+      this.updatedAt});
 
   Wishlist.fromJson(Map<String, dynamic> json) {
     id = json['id'];

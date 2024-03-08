@@ -1,4 +1,3 @@
-
 class AddressData {
   int? id;
   int? customerId;
@@ -20,22 +19,22 @@ class AddressData {
 
   AddressData(
       {this.id,
-        this.customerId,
-        this.contactPersonName,
-        this.addressType,
-        this.address,
-        this.city,
-        this.zip,
-        this.phone,
-        this.phoneCode,
-        this.createdAt,
-        this.updatedAt,
-        this.state,
-        this.country,
-        this.latitude,
-        this.longitude,
-        this.isBilling,
-        this.isDefault});
+      this.customerId,
+      this.contactPersonName,
+      this.addressType,
+      this.address,
+      this.city,
+      this.zip,
+      this.phone,
+      this.phoneCode,
+      this.createdAt,
+      this.updatedAt,
+      this.state,
+      this.country,
+      this.latitude,
+      this.longitude,
+      this.isBilling,
+      this.isDefault});
 
   AddressData.fromJson(Map<String, dynamic> json) {
     id = json['id'];

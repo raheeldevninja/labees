@@ -6,7 +6,6 @@ class MainCategories {
   bool? success;
   String? message;
 
-
   MainCategories({this.categories, this.success = false, this.message});
 
   MainCategories.fromJson(Map<String, dynamic> json) {

@@ -10,13 +10,12 @@ class WalletResponse {
 
   WalletResponse(
       {this.limit,
-        this.offset,
-        this.totalWalletBalance,
-        this.totalWalletTransactio,
-        this.walletTransactioList,
-        this.status,
-        this.message
-      });
+      this.offset,
+      this.totalWalletBalance,
+      this.totalWalletTransactio,
+      this.walletTransactioList,
+      this.status,
+      this.message});
 
   WalletResponse.fromJson(Map<String, dynamic> json) {
     limit = json['limit'];
@@ -60,16 +59,16 @@ class WalletTransactioList {
 
   WalletTransactioList(
       {this.id,
-        this.userId,
-        this.transactionId,
-        this.credit,
-        this.debit,
-        this.adminBonus,
-        this.balance,
-        this.transactionType,
-        this.reference,
-        this.createdAt,
-        this.updatedAt});
+      this.userId,
+      this.transactionId,
+      this.credit,
+      this.debit,
+      this.adminBonus,
+      this.balance,
+      this.transactionType,
+      this.reference,
+      this.createdAt,
+      this.updatedAt});
 
   WalletTransactioList.fromJson(Map<String, dynamic> json) {
     id = json['id'];

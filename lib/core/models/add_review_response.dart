@@ -6,7 +6,8 @@ class AddReviewResponse {
   String? message;
   bool? status;
 
-  AddReviewResponse({this.reviews, this.averageReview, this.message, this.status});
+  AddReviewResponse(
+      {this.reviews, this.averageReview, this.message, this.status});
 
   AddReviewResponse.fromJson(Map<String, dynamic> json) {
     if (json['reviews'] != null) {
@@ -47,18 +48,18 @@ class Reviews {
 
   Reviews(
       {this.id,
-        this.productId,
-        this.customerId,
-        this.deliveryManId,
-        this.orderId,
-        this.comment,
-        this.attachment,
-        this.rating,
-        this.status,
-        this.isSaved,
-        this.createdAt,
-        this.updatedAt,
-        this.customer});
+      this.productId,
+      this.customerId,
+      this.deliveryManId,
+      this.orderId,
+      this.comment,
+      this.attachment,
+      this.rating,
+      this.status,
+      this.isSaved,
+      this.createdAt,
+      this.updatedAt,
+      this.customer});
 
   Reviews.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -73,9 +74,8 @@ class Reviews {
     isSaved = json['is_saved'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    customer = json['customer'] != null
-        ? Customer.fromJson(json['customer'])
-        : null;
+    customer =
+        json['customer'] != null ? Customer.fromJson(json['customer']) : null;
   }
 
   Map<String, dynamic> toJson() {

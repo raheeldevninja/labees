@@ -9,18 +9,16 @@ import 'package:labees/features/home/pages/account_page/model/order_product.dart
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 /*
 *  Date 3 - Nov-2023
 *  Author: Raheel Khan- Abaska Technologies
 *  Description: Utils
 */
 
-
 class Utils {
-
   //bottom navigation
-  static PersistentTabController controller = PersistentTabController(initialIndex: 0);
+  static PersistentTabController controller =
+      PersistentTabController(initialIndex: 0);
 
   static String step = 'information';
   static final pageController = PageController();
@@ -35,8 +33,6 @@ class Utils {
     Colors.blue,
     Colors.green,
   ];
-
-
 
   static MainCategories mainCategories = MainCategories.men;
 
@@ -58,11 +54,13 @@ class Utils {
     );
   }
 
-
   //cancel order dialog
-  static void showCancelOrderDialog(BuildContext context, int orderId, AppLocalizations l10n, OrderProvider orderProvider,
+  static void showCancelOrderDialog(
+      BuildContext context,
+      int orderId,
+      AppLocalizations l10n,
+      OrderProvider orderProvider,
       TextEditingController reasonController) {
-
     List<String> cancellationReasonsList = [
       'Found a better price',
       'No need anymore',
@@ -85,7 +83,6 @@ class Utils {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-
               Center(
                 child: Container(
                   padding: const EdgeInsets.all(12),
@@ -93,7 +90,8 @@ class Utils {
                     color: Colors.red,
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(Icons.close, size: 48, color: AppColors.white),
+                  child:
+                      const Icon(Icons.close, size: 48, color: AppColors.white),
                 ),
               ),
 
@@ -112,7 +110,9 @@ class Utils {
                 ),
               ),
 
-              const SizedBox(height: 12,),
+              const SizedBox(
+                height: 12,
+              ),
               Center(
                 child: Text(
                   l10n.cancellationReasonLabel,
@@ -126,10 +126,14 @@ class Utils {
                 ),
               ),
 
-              const SizedBox(height: 20,),
+              const SizedBox(
+                height: 20,
+              ),
 
               Widgets.labels('${l10n.reasonLabel} '),
-              const SizedBox(height: 8,),
+              const SizedBox(
+                height: 8,
+              ),
 
               /*TextFormField(
                 controller: reasonController,
@@ -155,25 +159,25 @@ class Utils {
                 ),
               ),*/
 
-
               //cancellation reason drop down
               DropdownButtonFormField<String>(
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: AppColors.lightGrey.withOpacity(0.1),
-                  contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20),
+                  contentPadding: const EdgeInsets.symmetric(
+                      vertical: 12.0, horizontal: 20),
                   hintText: 'Select reason',
                   hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30.0),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.transparent, width: 1.0),
+                    borderSide:
+                        const BorderSide(color: Colors.transparent, width: 1.0),
                     borderRadius: BorderRadius.circular(30.0),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide:
-                    const BorderSide(width: 1.0),
+                    borderSide: const BorderSide(width: 1.0),
                     borderRadius: BorderRadius.circular(30.0),
                   ),
                 ),
@@ -187,7 +191,6 @@ class Utils {
                   selectedReason = value!;
                 },
               ),
-
             ],
           ),
           actions: [
@@ -197,13 +200,11 @@ class Utils {
               height: 50,
               child: ElevatedButton(
                 onPressed: () async {
-
                   //final orderProvider = Provider.of<OrderProvider>(context, listen: false);
 
                   print('selectedReason: $selectedReason');
 
-                  if(selectedReason.isEmpty) {
-
+                  if (selectedReason.isEmpty) {
                     Utils.toast(l10n.enterCancellationReason);
                     return;
                   }
@@ -216,7 +217,6 @@ class Utils {
 
                   await orderProvider.getOrders(context, 'all', 10, 1);
                   Navigator.pop(context);
-
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.red,
@@ -230,7 +230,6 @@ class Utils {
                 ),
               ),
             ),
-
           ],
         );
       },
@@ -376,7 +375,4 @@ class Utils {
         return 'Dec';
     }
   }
-
-
-
 }

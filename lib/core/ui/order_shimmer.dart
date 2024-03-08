@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-
 /*
 *  Date 4 - Now-2023
 *  Author: Raheel Khan- Abaska Technologies
 *  Description: OrdersShimmer
 */
-
 
 class OrdersShimmer extends StatelessWidget {
   const OrdersShimmer({Key? key}) : super(key: key);
@@ -16,7 +14,6 @@ class OrdersShimmer extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -34,12 +31,9 @@ class OrdersShimmer extends StatelessWidget {
                 ),
               ),
             ),
-
-
             Expanded(
               child: Column(
                 children: [
-
                   Container(
                     width: 100,
                     padding: const EdgeInsets.only(left: 16, right: 200),
@@ -55,8 +49,6 @@ class OrdersShimmer extends StatelessWidget {
                       ),
                     ),
                   ),
-
-
                   SizedBox(
                     width: double.maxFinite,
                     height: 20,
@@ -75,9 +67,7 @@ class OrdersShimmer extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 10),
-
                   SizedBox(
                     width: double.maxFinite,
                     height: 10,
@@ -96,9 +86,7 @@ class OrdersShimmer extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 10),
-
                   SizedBox(
                     width: double.maxFinite,
                     height: 10,
@@ -117,17 +105,12 @@ class OrdersShimmer extends StatelessWidget {
                       ),
                     ),
                   ),
-
                 ],
               ),
             ),
-
-
           ],
         ),
-
         const SizedBox(height: 10),
-
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -145,12 +128,9 @@ class OrdersShimmer extends StatelessWidget {
                 ),
               ),
             ),
-
-
             Expanded(
               child: Column(
                 children: [
-
                   Container(
                     width: 100,
                     padding: const EdgeInsets.only(left: 16, right: 200),
@@ -166,8 +146,6 @@ class OrdersShimmer extends StatelessWidget {
                       ),
                     ),
                   ),
-
-
                   SizedBox(
                     width: double.maxFinite,
                     height: 20,
@@ -186,9 +164,7 @@ class OrdersShimmer extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 10),
-
                   SizedBox(
                     width: double.maxFinite,
                     height: 10,
@@ -207,9 +183,7 @@ class OrdersShimmer extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 10),
-
                   SizedBox(
                     width: double.maxFinite,
                     height: 10,
@@ -228,17 +202,12 @@ class OrdersShimmer extends StatelessWidget {
                       ),
                     ),
                   ),
-
                 ],
               ),
             ),
-
-
           ],
         ),
-
         const SizedBox(height: 10),
-
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -256,12 +225,9 @@ class OrdersShimmer extends StatelessWidget {
                 ),
               ),
             ),
-
-
             Expanded(
               child: Column(
                 children: [
-
                   Container(
                     width: 100,
                     padding: const EdgeInsets.only(left: 16, right: 200),
@@ -277,8 +243,6 @@ class OrdersShimmer extends StatelessWidget {
                       ),
                     ),
                   ),
-
-
                   SizedBox(
                     width: double.maxFinite,
                     height: 20,
@@ -297,9 +261,7 @@ class OrdersShimmer extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 10),
-
                   SizedBox(
                     width: double.maxFinite,
                     height: 10,
@@ -318,9 +280,7 @@ class OrdersShimmer extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 10),
-
                   SizedBox(
                     width: double.maxFinite,
                     height: 10,
@@ -339,12 +299,9 @@ class OrdersShimmer extends StatelessWidget {
                       ),
                     ),
                   ),
-
                 ],
               ),
             ),
-
-
           ],
         ),
       ],

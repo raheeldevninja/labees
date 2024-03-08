@@ -9,16 +9,13 @@ class WalletPointShimmer extends StatelessWidget {
     return ListView(
       shrinkWrap: true,
       children: [
-
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             Expanded(
               child: Column(
                 children: [
                   const SizedBox(height: 20),
-
                   Container(
                     height: 50,
                     width: double.maxFinite,
@@ -35,9 +32,7 @@ class WalletPointShimmer extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 50),
-
                   SizedBox(
                     width: double.maxFinite,
                     height: 20,
@@ -56,9 +51,7 @@ class WalletPointShimmer extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 10),
-
                   SizedBox(
                     width: double.maxFinite,
                     height: 10,
@@ -77,9 +70,7 @@ class WalletPointShimmer extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 10),
-
                   SizedBox(
                     width: double.maxFinite,
                     height: 10,
@@ -98,9 +89,7 @@ class WalletPointShimmer extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 40),
-
                   SizedBox(
                     width: double.maxFinite,
                     height: 20,
@@ -119,9 +108,7 @@ class WalletPointShimmer extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 10),
-
                   SizedBox(
                     width: double.maxFinite,
                     height: 10,
@@ -140,9 +127,7 @@ class WalletPointShimmer extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 10),
-
                   SizedBox(
                     width: double.maxFinite,
                     height: 10,
@@ -161,9 +146,7 @@ class WalletPointShimmer extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 40),
-
                   SizedBox(
                     width: double.maxFinite,
                     height: 20,
@@ -182,9 +165,7 @@ class WalletPointShimmer extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 10),
-
                   SizedBox(
                     width: double.maxFinite,
                     height: 10,
@@ -203,9 +184,7 @@ class WalletPointShimmer extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 10),
-
                   SizedBox(
                     width: double.maxFinite,
                     height: 10,
@@ -227,10 +206,8 @@ class WalletPointShimmer extends StatelessWidget {
                 ],
               ),
             ),
-
           ],
         ),
-
       ],
     );
   }

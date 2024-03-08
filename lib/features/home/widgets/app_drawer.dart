@@ -90,12 +90,11 @@ class AppDrawer extends StatelessWidget {
           _buildNavDrawerItem(
             l10n.account,
             Images.drawerAccount,
-                () {
-                  Navigator.pop(context);
-                  Utils.controller.jumpToTab(3);
+            () {
+              Navigator.pop(context);
+              Utils.controller.jumpToTab(3);
             },
           ),
-
 
           ListTile(
             leading: Container(
@@ -122,64 +121,59 @@ class AppDrawer extends StatelessWidget {
             },
           ),
 
-
           _buildNavDrawerItem(
             l10n.bag,
             Images.drawerBag,
-                () {
-                  Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const MyBagScreen(),
-                    ),
-                  );
+            () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const MyBagScreen(),
+                ),
+              );
             },
           ),
 
           _buildNavDrawerItem(
             l10n.myOrders,
             Images.drawerMyOrders,
-                () {
-                  Navigator.pop(context);
-
-                },
+            () {
+              Navigator.pop(context);
+            },
           ),
 
           _buildNavDrawerItem(
             l10n.notifications,
             Images.drawerNotifications,
-                () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const NotificationsScreen(),
-                    ),
-                  );
-
+            () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const NotificationsScreen(),
+                ),
+              );
             },
           ),
 
           _buildNavDrawerItem(
             l10n.settings,
             Images.drawerSettings,
-                () {
-                  Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SettingsScreen(),
-                    ),
-                  );
-
+            () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SettingsScreen(),
+                ),
+              );
             },
           ),
-
 
           _buildNavDrawerItem(
             l10n.faq,
             Images.faqIcon,
-                () {
+            () {
               Navigator.pop(context);
               Navigator.push(
                 context,
@@ -187,7 +181,6 @@ class AppDrawer extends StatelessWidget {
                   builder: (context) => const FAQScreen(),
                 ),
               );
-
             },
           ),
 
@@ -195,7 +188,7 @@ class AppDrawer extends StatelessWidget {
           _buildNavDrawerItem(
             l10n.supportTicket,
             Images.supportTicketIcon,
-                () {
+            () {
               Navigator.pop(context);
               Navigator.push(
                 context,
@@ -203,7 +196,6 @@ class AppDrawer extends StatelessWidget {
                   builder: (context) => const TicketSupportListsScreen(),
                 ),
               );
-
             },
           ),
 
@@ -241,7 +233,6 @@ class AppDrawer extends StatelessWidget {
                 height: 50,
                 margin: const EdgeInsets.symmetric(horizontal: 60),
                 child: ElevatedButton(
-
                   onPressed: () async {
                     Navigator.pop(context);
 

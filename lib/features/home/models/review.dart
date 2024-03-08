@@ -15,19 +15,18 @@ class Reviews {
 
   Reviews(
       {this.id,
-        this.productId,
-        this.customerId,
-        this.deliveryManId,
-        this.orderId,
-        this.comment,
-        this.attachment,
-        this.rating,
-        this.status,
-        this.isSaved,
-        this.createdAt,
-        this.updatedAt,
-        this.customer
-      });
+      this.productId,
+      this.customerId,
+      this.deliveryManId,
+      this.orderId,
+      this.comment,
+      this.attachment,
+      this.rating,
+      this.status,
+      this.isSaved,
+      this.createdAt,
+      this.updatedAt,
+      this.customer});
 
   Reviews.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -42,9 +41,8 @@ class Reviews {
     isSaved = json['is_saved'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    customer = json['customer'] != null
-        ? Customer.fromJson(json['customer'])
-        : null;
+    customer =
+        json['customer'] != null ? Customer.fromJson(json['customer']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -67,7 +65,6 @@ class Reviews {
     return data;
   }
 }
-
 
 class Customer {
   int? id;
@@ -106,38 +103,38 @@ class Customer {
 
   Customer(
       {this.id,
-        this.name,
-        this.fName,
-        this.lName,
-        this.phone,
-        this.image,
-        this.email,
-        this.emailVerifiedAt,
-        this.createdAt,
-        this.updatedAt,
-        this.streetAddress,
-        this.country,
-        this.city,
-        this.zip,
-        this.houseNo,
-        this.apartmentNo,
-        this.cmFirebaseToken,
-        this.isActive,
-        this.paymentCardLastFour,
-        this.paymentCardBrand,
-        this.paymentCardFawryToken,
-        this.loginMedium,
-        this.socialId,
-        this.isPhoneVerified,
-        this.temporaryToken,
-        this.isEmailVerified,
-        this.walletBalance,
-        this.loyaltyPoint,
-        this.lastSeen,
-        this.customerGroup,
-        this.gender,
-        this.newsletter,
-        this.defaultLanguage});
+      this.name,
+      this.fName,
+      this.lName,
+      this.phone,
+      this.image,
+      this.email,
+      this.emailVerifiedAt,
+      this.createdAt,
+      this.updatedAt,
+      this.streetAddress,
+      this.country,
+      this.city,
+      this.zip,
+      this.houseNo,
+      this.apartmentNo,
+      this.cmFirebaseToken,
+      this.isActive,
+      this.paymentCardLastFour,
+      this.paymentCardBrand,
+      this.paymentCardFawryToken,
+      this.loginMedium,
+      this.socialId,
+      this.isPhoneVerified,
+      this.temporaryToken,
+      this.isEmailVerified,
+      this.walletBalance,
+      this.loyaltyPoint,
+      this.lastSeen,
+      this.customerGroup,
+      this.gender,
+      this.newsletter,
+      this.defaultLanguage});
 
   Customer.fromJson(Map<String, dynamic> json) {
     id = json['id'];

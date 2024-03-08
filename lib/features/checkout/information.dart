@@ -35,15 +35,11 @@ class _InformationState extends State<Information> {
   final _countrySearchController = TextEditingController();
   final _citySearchController = TextEditingController();
 
-
   final _contactPersonNameFocus = FocusNode();
   final _emailFocus = FocusNode();
   final _phoneFocus = FocusNode();
   final _addressFocus = FocusNode();
   final _postalCodeFocus = FocusNode();
-
-
-
 
   CountriesData? selectedCountry;
 
@@ -752,9 +748,7 @@ class _InformationState extends State<Information> {
                 l10n.selectCity,
                 style: const TextStyle(fontSize: 18),
               ),
-
               const SizedBox(height: 16.0),
-
               TextFormField(
                 controller: _citySearchController,
                 decoration: InputDecoration(
@@ -767,12 +761,13 @@ class _InformationState extends State<Information> {
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.grey, width: 1.0),
+                    borderSide:
+                        const BorderSide(color: Colors.grey, width: 1.0),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide:
-                    const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                    borderSide: const BorderSide(
+                        color: AppColors.primaryColor, width: 1.0),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                 ),
@@ -780,7 +775,6 @@ class _InformationState extends State<Information> {
                   checkoutProvider.searchCity(value);
                 },
               ),
-
               const SizedBox(height: 16.0),
               Expanded(
                 child: ListView.builder(
@@ -829,9 +823,7 @@ class _InformationState extends State<Information> {
                 l10n.selectCountry,
                 style: const TextStyle(fontSize: 18),
               ),
-
               const SizedBox(height: 16.0),
-
               TextFormField(
                 controller: _countrySearchController,
                 decoration: InputDecoration(
@@ -844,12 +836,13 @@ class _InformationState extends State<Information> {
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.grey, width: 1.0),
+                    borderSide:
+                        const BorderSide(color: Colors.grey, width: 1.0),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide:
-                    const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                    borderSide: const BorderSide(
+                        color: AppColors.primaryColor, width: 1.0),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                 ),
@@ -857,7 +850,6 @@ class _InformationState extends State<Information> {
                   checkoutProvider.searchCountry(value);
                 },
               ),
-
               const SizedBox(height: 16.0),
               Expanded(
                 child: ListView.builder(
@@ -986,7 +978,6 @@ class _InformationState extends State<Information> {
 
     _countrySearchController.dispose();
     _citySearchController.dispose();
-
 
     _contactPersonNameFocus.dispose();
     _emailFocus.dispose();

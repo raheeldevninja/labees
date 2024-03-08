@@ -1,5 +1,4 @@
 class FilterData {
-
   String? minAmount;
   String? maxAmount;
   List<int>? subCategories;
@@ -49,27 +48,25 @@ class FilterData {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
 
-
-    if(minAmount != null) {
+    if (minAmount != null) {
       data['minAmount'] = minAmount;
     }
-    if(maxAmount != null) {
+    if (maxAmount != null) {
       data['maxAmount'] = maxAmount;
     }
-    if(subCategories != null) {
+    if (subCategories != null) {
       data['subCategories'] = subCategories;
     }
-    if(brandFilters != null) {
+    if (brandFilters != null) {
       data['brandFilters'] = brandFilters;
     }
-    if(tagsFilters != null) {
+    if (tagsFilters != null) {
       data['tagsFilters'] = tagsFilters;
     }
-    if(attributeValues != null) {
+    if (attributeValues != null) {
       data['attributeValues'] = attributeValues;
     }
 
     return data;
   }
-
 }

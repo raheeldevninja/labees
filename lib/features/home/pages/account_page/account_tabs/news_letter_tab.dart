@@ -8,13 +8,11 @@ import 'package:labees/features/home/pages/account_page/account_tabs/view_model/
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 /*
 *  Date 5 - Dec-2023
 *  Author: Raheel Khan- Abaska Technologies
 *  Description: Add Address Screen
 */
-
 
 class NewsLetterTab extends StatefulWidget {
   const NewsLetterTab({Key? key}) : super(key: key);
@@ -24,7 +22,6 @@ class NewsLetterTab extends StatefulWidget {
 }
 
 class _NewsLetterTabState extends State<NewsLetterTab> {
-
   User? user;
 
   @override
@@ -34,24 +31,17 @@ class _NewsLetterTabState extends State<NewsLetterTab> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await _getUser();
     });
-
   }
 
   _getUser() async {
     user = await SharedPref.getUser();
-    setState(() {
-
-    });
+    setState(() {});
   }
-
-
 
   @override
   Widget build(BuildContext context) {
-
     final l10n = AppLocalizations.of(context)!;
     final accountProvider = Provider.of<AccountProvider>(context);
-
 
     return RefreshIndicator(
       onRefresh: () async {
@@ -109,23 +99,26 @@ class _NewsLetterTabState extends State<NewsLetterTab> {
 
                   ),*/
 
-                    ElevatedButton(
-                      onPressed: () async {
-                        await accountProvider.updateNewsletter(context, 1);
-                        _getUser();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: user?.newsletter == 1 ? AppColors.primaryColor : Colors.white,
-                        foregroundColor: user?.newsletter == 1 ? Colors.white : AppColors.primaryColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(60.0),
-                        ),
-                      ),
-                      child: Text(
-                        l10n.yesBtnText,
+                      ElevatedButton(
+                    onPressed: () async {
+                      await accountProvider.updateNewsletter(context, 1);
+                      _getUser();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: user?.newsletter == 1
+                          ? AppColors.primaryColor
+                          : Colors.white,
+                      foregroundColor: user?.newsletter == 1
+                          ? Colors.white
+                          : AppColors.primaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(60.0),
                       ),
                     ),
-
+                    child: Text(
+                      l10n.yesBtnText,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(width: 16),
@@ -155,14 +148,18 @@ class _NewsLetterTabState extends State<NewsLetterTab> {
                     ),
                   ),*/
 
-                  ElevatedButton(
+                      ElevatedButton(
                     onPressed: () async {
                       await accountProvider.updateNewsletter(context, 2);
                       _getUser();
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: user?.newsletter == 2 ? AppColors.primaryColor : Colors.white,
-                      foregroundColor: user?.newsletter == 2 ? Colors.white : AppColors.primaryColor,
+                      backgroundColor: user?.newsletter == 2
+                          ? AppColors.primaryColor
+                          : Colors.white,
+                      foregroundColor: user?.newsletter == 2
+                          ? Colors.white
+                          : AppColors.primaryColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(60.0),
                       ),

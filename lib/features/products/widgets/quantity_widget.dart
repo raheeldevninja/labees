@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:labees/core/app/app_colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 /*
 *  Date 25 - Nov-2023
 *  Author: Raheel Khan- Abaska Technologies
@@ -26,10 +25,8 @@ class QuantityWidget extends StatefulWidget {
 }
 
 class _QuantityWidgetState extends State<QuantityWidget> {
-
   @override
   Widget build(BuildContext context) {
-
     final l10n = AppLocalizations.of(context)!;
 
     return Container(
@@ -52,9 +49,11 @@ class _QuantityWidgetState extends State<QuantityWidget> {
                 color: AppColors.lightGrey.withOpacity(0.2),
                 shape: BoxShape.circle,
               ),
-              child: Icon(l10n.localeName == 'en'
-                  ? Icons.keyboard_arrow_left_rounded
-                  : Icons.keyboard_arrow_right_rounded, size: 16),
+              child: Icon(
+                  l10n.localeName == 'en'
+                      ? Icons.keyboard_arrow_left_rounded
+                      : Icons.keyboard_arrow_right_rounded,
+                  size: 16),
             ),
           ),
           const SizedBox(
@@ -80,9 +79,11 @@ class _QuantityWidgetState extends State<QuantityWidget> {
                 color: AppColors.lightGrey.withOpacity(0.2),
                 shape: BoxShape.circle,
               ),
-              child: Icon(l10n.localeName == 'en'
-                  ? Icons.keyboard_arrow_right_rounded
-                  : Icons.keyboard_arrow_left_rounded, size: 16),
+              child: Icon(
+                  l10n.localeName == 'en'
+                      ? Icons.keyboard_arrow_right_rounded
+                      : Icons.keyboard_arrow_left_rounded,
+                  size: 16),
             ),
           ),
         ],

@@ -17,18 +17,18 @@ class ReviewsList {
 
   ReviewsList(
       {this.id,
-        this.productId,
-        this.customerId,
-        this.deliveryManId,
-        this.orderId,
-        this.comment,
-        this.attachment,
-        this.rating,
-        this.status,
-        this.isSaved,
-        this.createdAt,
-        this.updatedAt,
-        this.customer});
+      this.productId,
+      this.customerId,
+      this.deliveryManId,
+      this.orderId,
+      this.comment,
+      this.attachment,
+      this.rating,
+      this.status,
+      this.isSaved,
+      this.createdAt,
+      this.updatedAt,
+      this.customer});
 
   ReviewsList.fromJson(Map<String, dynamic> json) {
     id = json['id'];

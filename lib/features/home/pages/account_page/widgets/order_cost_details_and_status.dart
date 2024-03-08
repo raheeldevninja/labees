@@ -10,7 +10,6 @@ import 'package:labees/features/home/pages/account_page/account_tabs/orders/trac
 import 'package:labees/features/home/pages/account_page/account_tabs/view_model/order_provider.dart';
 import 'package:provider/provider.dart';
 
-
 /*
 *  Date 19 - Dec-2023
 *  Author: Raheel Khan- Abaska Technologies
@@ -18,24 +17,20 @@ import 'package:provider/provider.dart';
 */
 
 class OrderCostDetailsAndStatus extends StatelessWidget {
-  OrderCostDetailsAndStatus({
-    required this.orderData,
-    Key? key}) : super(key: key);
+  OrderCostDetailsAndStatus({required this.orderData, Key? key})
+      : super(key: key);
 
   final OrderData orderData;
 
   final _reasonController = TextEditingController();
 
-
   @override
   Widget build(BuildContext context) {
-
     final l10n = AppLocalizations.of(context)!;
     final orderProvider = context.watch<OrderProvider>();
 
     return Column(
       children: [
-
         ///sub total
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -73,7 +68,7 @@ class OrderCostDetailsAndStatus extends StatelessWidget {
         ),
 
         ///discount
-        if(orderData.summary!.totalDiscountOnProduct! > 0) ...[
+        if (orderData.summary!.totalDiscountOnProduct! > 0) ...[
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -90,7 +85,6 @@ class OrderCostDetailsAndStatus extends StatelessWidget {
               ),
             ],
           ),
-
         ],
 
         ///vat percentage
@@ -139,7 +133,7 @@ class OrderCostDetailsAndStatus extends StatelessWidget {
               style: const TextStyle(fontFamily: 'Montserrat', fontSize: 14),
             ),
             Text(
-              '${((orderData.summary!.subtotal! + orderData.summary!.totalShippingCost! + (orderData.summary!.subtotal! * orderData.vatPerc! / 100) + orderData.shippingVAT!) - orderData.summary!.totalDiscountOnProduct!).toStringAsFixed(2) } Sar ',
+              '${((orderData.summary!.subtotal! + orderData.summary!.totalShippingCost! + (orderData.summary!.subtotal! * orderData.vatPerc! / 100) + orderData.shippingVAT!) - orderData.summary!.totalDiscountOnProduct!).toStringAsFixed(2)} Sar ',
               style: const TextStyle(
                   fontFamily: 'Montserrat',
                   fontSize: 18,
@@ -154,39 +148,36 @@ class OrderCostDetailsAndStatus extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-
             ///cancel order button
-            orderData.orderStatus == 'pending' &&  orderData.paymentStatus == 'unpaid'
-
+            orderData.orderStatus == 'pending' &&
+                    orderData.paymentStatus == 'unpaid'
                 ? TextButton(
-              onPressed: () {
-
-                Utils.showCancelOrderDialog(
-                  context,
-                  orderData.id!,
-                  l10n,
-                  orderProvider,
-                  _reasonController,
-                );
-
-              },
-              child: Text(
-                l10n.cancelOrderBtnText,
-                style: const TextStyle(
-                  fontFamily: 'Montserrat',
-                  fontSize: 14,
-                  color: Colors.red,
-                  decoration: TextDecoration.underline,
-                ),
-              ),
-            ) : const SizedBox(),
+                    onPressed: () {
+                      Utils.showCancelOrderDialog(
+                        context,
+                        orderData.id!,
+                        l10n,
+                        orderProvider,
+                        _reasonController,
+                      );
+                    },
+                    child: Text(
+                      l10n.cancelOrderBtnText,
+                      style: const TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontSize: 14,
+                        color: Colors.red,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  )
+                : const SizedBox(),
 
             ///track order button
             SizedBox(
               height: 35,
               child: ElevatedButton(
                 onPressed: () {
-
                   ///navigate to track order screen
                   Navigator.push(
                     context,
@@ -196,8 +187,6 @@ class OrderCostDetailsAndStatus extends StatelessWidget {
                       ),
                     ),
                   );
-
-
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primaryColor,
@@ -230,35 +219,30 @@ class OrderCostDetailsAndStatus extends StatelessWidget {
           ],
         ),
 
-
-
         ///review
         Row(
           children: [
-
             //add review button
             //orderData.orderStatus == 'delivered' && orderData.paymentStatus == 'paid'
             orderData.paymentStatus == 'paid'
                 ? TextButton(
-              onPressed: () async {
-
-                //orderProvider.addReview(productId, comment, rating);
-                _showRatingAndCommentDialog(context);
-              },
-              child: Text(
-                'Add Review',
-                style: const TextStyle(
-                  fontFamily: 'Montserrat',
-                  fontSize: 14,
-                  color: Colors.red,
-                  decoration: TextDecoration.underline,
-                ),
-              ),
-            ) : const SizedBox(),
-
+                    onPressed: () async {
+                      //orderProvider.addReview(productId, comment, rating);
+                      _showRatingAndCommentDialog(context);
+                    },
+                    child: Text(
+                      'Add Review',
+                      style: const TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontSize: 14,
+                        color: Colors.red,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  )
+                : const SizedBox(),
           ],
         ),
-
       ],
     );
   }
@@ -294,8 +278,7 @@ class OrderCostDetailsAndStatus extends StatelessWidget {
                 itemCount: 5,
                 itemSize: 30,
                 itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-                itemBuilder: (context, _) =>
-                const Icon(
+                itemBuilder: (context, _) => const Icon(
                   Icons.star,
                   color: Colors.amber,
                 ),
@@ -356,13 +339,12 @@ class OrderCostDetailsAndStatus extends StatelessWidget {
             ),
             TextButton(
               onPressed: () async {
+                await orderProvider.addReview(
+                    orderData.id!, reviewController.text.trim(), ratingValue);
 
-                await orderProvider.addReview(orderData.id!, reviewController.text.trim(), ratingValue);
-
-                if(orderProvider.addReviewResponse.status!) {
+                if (orderProvider.addReviewResponse.status!) {
                   Navigator.pop(context);
                 }
-
               },
               child: Text(
                 l10n.submitBtnText,
@@ -372,7 +354,6 @@ class OrderCostDetailsAndStatus extends StatelessWidget {
                   color: Colors.red,
                   decoration: TextDecoration.underline,
                 ),
-
               ),
             ),
           ],
@@ -380,9 +361,4 @@ class OrderCostDetailsAndStatus extends StatelessWidget {
       },
     );
   }
-
-
-
-
-
 }

@@ -6,7 +6,6 @@ import 'package:labees/features/home/pages/account_page/widgets/order_cost_detai
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 /*
 *  Date 4 - Now-2023
 *  Author: Raheel Khan- Abaska Technologies
@@ -21,7 +20,6 @@ class CompletedOrdersPage extends StatefulWidget {
 }
 
 class _CompletedOrdersPageState extends State<CompletedOrdersPage> {
-
   @override
   void initState() {
     super.initState();
@@ -85,9 +83,8 @@ class _CompletedOrdersPageState extends State<CompletedOrdersPage> {
                         return OrderItem(product: product);
                       },
                     ),
-
-                    OrderCostDetailsAndStatus(orderData: orderProvider.ordersResponse.data![index]),
-
+                    OrderCostDetailsAndStatus(
+                        orderData: orderProvider.ordersResponse.data![index]),
                   ],
                 ),
               ),
@@ -113,5 +110,4 @@ class _CompletedOrdersPageState extends State<CompletedOrdersPage> {
       ),
     );
   }
-
 }

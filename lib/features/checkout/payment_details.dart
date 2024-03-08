@@ -16,7 +16,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 *  Description: PaymentDetails
 */
 
-
 class PaymentDetails extends StatefulWidget {
   const PaymentDetails({Key? key}) : super(key: key);
 
@@ -25,7 +24,6 @@ class PaymentDetails extends StatefulWidget {
 }
 
 class _PaymentDetailsState extends State<PaymentDetails> {
-
   final _cardHolderNameController = TextEditingController();
   final _cardHolderNumberController = TextEditingController();
   final _dateController = TextEditingController();
@@ -34,7 +32,6 @@ class _PaymentDetailsState extends State<PaymentDetails> {
   bool saveDetails = false;
 
   List<PaymentMethod> paymentMethods = [];
-
 
   @override
   void initState() {
@@ -45,7 +42,10 @@ class _PaymentDetailsState extends State<PaymentDetails> {
   }
 
   _initPaymentMethods() {
-    paymentMethods.add(PaymentMethod(image: 'https://labees-website.boedelipos.ch/assets/pay_method6-9a87f6a3.svg', isSelected: true));
+    paymentMethods.add(PaymentMethod(
+        image:
+            'https://labees-website.boedelipos.ch/assets/pay_method6-9a87f6a3.svg',
+        isSelected: true));
     //paymentMethods.add(PaymentMethod(image: 'https://labees-website.boedelipos.ch/assets/pay_method7-e168a6d8.svg'));
   }
 
@@ -60,7 +60,6 @@ class _PaymentDetailsState extends State<PaymentDetails> {
       child: ListView(
         shrinkWrap: true,
         children: [
-
           Text(
             '${l10n.paymentMethod}: ',
             style: const TextStyle(
@@ -79,7 +78,6 @@ class _PaymentDetailsState extends State<PaymentDetails> {
               itemCount: paymentMethods.length,
               scrollDirection: Axis.horizontal,
               physics: const BouncingScrollPhysics(),
-
               itemBuilder: (context, index) {
                 return InkWell(
                   borderRadius: BorderRadius.circular(10),
@@ -90,7 +88,6 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                       }
                       paymentMethods[index].isSelected = true;
                     });
-
                   },
                   child: Container(
                     width: 140,
@@ -100,7 +97,9 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(
-                        color: paymentMethods[index].isSelected ? AppColors.primaryColor : AppColors.lightGrey.withOpacity(0.4),
+                        color: paymentMethods[index].isSelected
+                            ? AppColors.primaryColor
+                            : AppColors.lightGrey.withOpacity(0.4),
                         width: 1,
                       ),
                     ),
@@ -111,17 +110,13 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                     ),
                   ),
                 );
-
               },
             ),
           ),
 
-
-
           const SizedBox(
             height: 40,
           ),
-
 
           // Widgets.labels('Cardholder Name '),
           // const SizedBox(
@@ -309,13 +304,16 @@ class _PaymentDetailsState extends State<PaymentDetails> {
             height: 50,
             child: ElevatedButton(
               onPressed: () async {
-
-                List<CartProduct> cartProducts = await SharedPref.getCartProducts();
+                List<CartProduct> cartProducts =
+                    await SharedPref.getCartProducts();
 
                 //set payment method
-                double vatPer = (cartProvider.checkoutSettings.productTax! / 100) * cartProvider.calculateSubTotal();
+                double vatPer =
+                    (cartProvider.checkoutSettings.productTax! / 100) *
+                        cartProvider.calculateSubTotal();
 
-                final placeOrderModel = checkoutProvider.getPlaceOrderModel.copyWith(
+                final placeOrderModel =
+                    checkoutProvider.getPlaceOrderModel.copyWith(
                   billingAddressId: checkoutProvider.getBillingAddressId,
                   addressId: checkoutProvider.getShippingAddressId,
                   cartProducts: cartProducts,
@@ -331,17 +329,15 @@ class _PaymentDetailsState extends State<PaymentDetails> {
 
                 await checkoutProvider.placeOrder(placeOrderModel);
 
-                if(checkoutProvider.placeOrderResponse!.status == 1) {
+                if (checkoutProvider.placeOrderResponse!.status == 1) {
                   await SharedPref.clearCartProducts();
 
-
-                  if(mounted) {
+                  if (mounted) {
                     await context.read<CartProvider>().getCartProducts();
                   }
 
                   _showThankYouDialog(l10n);
                 }
-
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primaryColor,
@@ -359,7 +355,6 @@ class _PaymentDetailsState extends State<PaymentDetails> {
           const SizedBox(
             height: 50,
           ),
-
         ],
       ),
     );
@@ -367,14 +362,11 @@ class _PaymentDetailsState extends State<PaymentDetails> {
 
   //show thank you dialog box
   Future<void> _showThankYouDialog(AppLocalizations l10n) async {
-
     await showDialog(
       context: context,
       barrierDismissible: false,
-
       builder: (context) => AlertDialog(
-        title:
-        Center(
+        title: Center(
           child: Container(
             width: 60,
             height: 60,
@@ -394,28 +386,34 @@ class _PaymentDetailsState extends State<PaymentDetails> {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(l10n.thankYou, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
-            const SizedBox(height: 16,),
-            Text(l10n.orderPlacedSuccess, style: const TextStyle(fontSize: 16), textAlign: TextAlign.center,),
+            Text(
+              l10n.thankYou,
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            Text(
+              l10n.orderPlacedSuccess,
+              style: const TextStyle(fontSize: 16),
+              textAlign: TextAlign.center,
+            ),
           ],
         ),
         actions: [
           TextButton(
             onPressed: () {
-
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(builder: (context) => const HomeScreen()),
-                    (Route<dynamic> route) => false,
+                (Route<dynamic> route) => false,
               );
-
             },
             child: Text(l10n.okBtnText),
           ),
         ],
       ),
     );
-
   }
 
   @override
@@ -426,6 +424,5 @@ class _PaymentDetailsState extends State<PaymentDetails> {
     _cardHolderNumberController.dispose();
     _dateController.dispose();
     _cvvController.dispose();
-
   }
 }

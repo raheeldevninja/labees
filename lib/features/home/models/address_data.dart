@@ -1,5 +1,4 @@
 class AddressModel {
-
   int? id;
   String contactPersonName;
   String addressType;
@@ -28,7 +27,6 @@ class AddressModel {
     this.longitude,
   });
 
-
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
 
@@ -53,6 +51,6 @@ class AddressModel {
   }
 
   //query string
-  String queryString() => '?contact_person_name=$contactPersonName&address_type=$addressType&address=$address&is_billing=$isBilling&country=$country&city=$city&zip=$zip&phone=$phone&phone_code=$phoneCode&latitude=$latitude&longitude=$longitude';
-
+  String queryString() =>
+      '?contact_person_name=$contactPersonName&address_type=$addressType&address=$address&is_billing=$isBilling&country=$country&city=$city&zip=$zip&phone=$phone&phone_code=$phoneCode&latitude=$latitude&longitude=$longitude';
 }

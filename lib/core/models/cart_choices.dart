@@ -1,5 +1,4 @@
 class CartChoices {
-
   final int id;
   final String attributeChoice;
   final int attributeId;
@@ -49,6 +48,4 @@ class CartChoices {
       'name': name,
     };
   }
-
-
 }

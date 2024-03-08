@@ -13,14 +13,13 @@ class GetWishlist {
 
   GetWishlist(
       {this.id,
-        this.customerId,
-        this.productId,
-        this.createdAt,
-        this.updatedAt,
-        this.product,
-        this.success,
-        this.message
-      });
+      this.customerId,
+      this.productId,
+      this.createdAt,
+      this.updatedAt,
+      this.product,
+      this.success,
+      this.message});
 
   GetWishlist.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -29,7 +28,7 @@ class GetWishlist {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     product =
-    json['product'] != null ? Products.fromJson(json['product']) : null;
+        json['product'] != null ? Products.fromJson(json['product']) : null;
   }
 
   Map<String, dynamic> toJson() {

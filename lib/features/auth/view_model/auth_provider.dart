@@ -16,7 +16,6 @@ import 'package:labees/features/auth/service/auth_service.dart';
 import 'package:labees/features/home/models/registeration_data.dart';
 
 class AuthProvider extends ChangeNotifier {
-
   bool isLoading = false;
   late LoginResponse loginResponse;
   late ForgotPasswordResponse forgotPasswordResponse;
@@ -41,7 +40,6 @@ class AuthProvider extends ChangeNotifier {
   }
 
   login(BuildContext context, String email, String password) async {
-
     EasyLoading.show(status: 'loading...');
     showLoading();
 
@@ -50,56 +48,46 @@ class AuthProvider extends ChangeNotifier {
     print('login success: ${loginResponse.success}');
 
     if (loginResponse.success!) {
-
       isLoggedIn = true;
       await SharedPref.setLoggedIn(true);
       await SharedPref.saveUser(loginResponse.user!);
       await SharedPref.saveToken(loginResponse.token!);
 
-      if(loginResponse.user != null) {
+      if (loginResponse.user != null) {
         log('user data saving: ${loginResponse.user!.toJson()}');
         APIs.token = loginResponse.token!;
       }
 
       Utils.controller.jumpToTab(0);
-
-    }
-    else {
+    } else {
       print('auth provider: ${loginResponse.message}');
       Utils.toast(loginResponse.message!);
 
       isLoggedIn = false;
     }
 
-
     EasyLoading.dismiss();
     hideLoading();
     notifyListeners();
-
   }
 
   register(BuildContext context, RegistrationData registrationData) async {
-
     EasyLoading.show(status: 'loading...');
     showLoading();
 
     registrationResponse = await AuthService.register(registrationData);
 
     if (registrationResponse.success!) {
-
       isLoggedIn = true;
       await SharedPref.setLoggedIn(true);
       await SharedPref.saveToken(registrationResponse.token!);
 
-
-      if(registrationResponse.token != null) {
+      if (registrationResponse.token != null) {
         APIs.token = registrationResponse.token!;
       }
 
       Utils.controller.jumpToTab(0);
-
-    }
-    else {
+    } else {
       print('auth provider: ${registrationResponse.message}');
       Utils.toast(registrationResponse.message!);
 
@@ -123,10 +111,8 @@ class AuthProvider extends ChangeNotifier {
 
     //get cart products
 
-
     notifyListeners();
   }
-
 
   Future<void> getUserInfo() async {
     EasyLoading.show(status: 'loading...');
@@ -135,9 +121,7 @@ class AuthProvider extends ChangeNotifier {
     user = await AuthService.getUserInfo();
 
     if (user.success!) {
-
       await SharedPref.saveUser(user);
-
     } else {
       Utils.toast(user.message!);
     }
@@ -146,8 +130,6 @@ class AuthProvider extends ChangeNotifier {
     hideLoading();
     notifyListeners();
   }
-
-
 
   showLoading() {
     isLoading = true;
@@ -173,16 +155,13 @@ class AuthProvider extends ChangeNotifier {
   }
 
   forgotPassword(BuildContext context, String email) async {
-
     EasyLoading.show(status: 'loading...');
     showLoading();
 
     forgotPasswordResponse = await AuthService.forgotPassword(email);
 
     if (forgotPasswordResponse.status!) {
-
-    }
-    else {
+    } else {
       Utils.toast(forgotPasswordResponse.message!);
     }
 
@@ -192,16 +171,13 @@ class AuthProvider extends ChangeNotifier {
   }
 
   verifyOTP(BuildContext context, String email, String otp) async {
-
     EasyLoading.show(status: 'loading...');
     showLoading();
 
     verifyOTPResponse = await AuthService.verifyOTP(email, otp);
 
     if (verifyOTPResponse.status!) {
-
-    }
-    else {
+    } else {
       Utils.toast(verifyOTPResponse.message!);
     }
 
@@ -210,17 +186,16 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  setNewPassword(BuildContext context, String email, String otp, String password) async {
-
+  setNewPassword(
+      BuildContext context, String email, String otp, String password) async {
     EasyLoading.show(status: 'loading...');
     showLoading();
 
-    newPasswordResponse = await AuthService.setNewPassword(email, otp, password);
+    newPasswordResponse =
+        await AuthService.setNewPassword(email, otp, password);
 
     if (newPasswordResponse.status!) {
-
-    }
-    else {
+    } else {
       Utils.toast(newPasswordResponse.message!);
     }
 
@@ -228,5 +203,4 @@ class AuthProvider extends ChangeNotifier {
     hideLoading();
     notifyListeners();
   }
-
 }

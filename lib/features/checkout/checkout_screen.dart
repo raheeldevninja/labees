@@ -15,7 +15,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 *  Description: CheckoutScreen
 */
 
-
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({Key? key}) : super(key: key);
 
@@ -33,26 +32,18 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     super.initState();
 
     Utils.pageController.addListener(() {
-
       WidgetsBinding.instance.addPostFrameCallback((_) async {
-
-        if(mounted) {
+        if (mounted) {
           setState(() {
             Utils.currentPage = Utils.pageController.page!.round();
           });
         }
-
-
       });
-
-
     });
-
   }
 
   @override
   Widget build(BuildContext context) {
-
     final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
@@ -61,21 +52,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         shadowColor: Colors.transparent,
         backgroundColor: Colors.white,
         surfaceTintColor: Colors.transparent,
-
-          leading: IconButton(
+        leading: IconButton(
           onPressed: () {
-
-            if(Utils.currentPage >= 1) {
-
+            if (Utils.currentPage >= 1) {
               Utils.pageController.previousPage(
                   duration: const Duration(milliseconds: 400),
                   curve: Curves.easeIn);
-
-            }
-            else {
+            } else {
               Navigator.pop(context);
             }
-
           },
           icon: const Icon(Icons.arrow_back, color: Colors.black),
         ),
@@ -91,7 +76,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         padding: const EdgeInsets.all(16.0),
         child: Stack(
           children: [
-
             Positioned(
               top: 0,
               left: 0,
@@ -151,7 +135,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               const SizedBox(height: 8),
                               Text(l10n.shippingDetailsTab,
                                   style: TextStyle(
-                                      color: Utils.currentPage == 1.0 ? AppColors.primaryColor : AppColors.lightGrey,
+                                      color: Utils.currentPage == 1.0
+                                          ? AppColors.primaryColor
+                                          : AppColors.lightGrey,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w400)),
                             ],
@@ -206,7 +192,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         ),
                       ),
                       Container(
-                        width: currentPage == 0 ? 100 : currentPage == 1 ? 230 : double.maxFinite,
+                        width: currentPage == 0
+                            ? 100
+                            : currentPage == 1
+                                ? 230
+                                : double.maxFinite,
                         height: 4,
                         decoration: const BoxDecoration(
                           color: AppColors.primaryColor,
@@ -220,7 +210,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 ],
               ),
             ),
-
             Positioned(
               top: 100,
               left: 0,
@@ -241,8 +230,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 ],
               ),
             ),
-
-
             const SummarySheet(),
           ],
         ),
@@ -254,9 +241,5 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-
-
-
   }
-
 }

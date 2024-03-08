@@ -12,7 +12,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 *  Description: In Progress Orders Page
 */
 
-
 class InProgressOrdersPage extends StatefulWidget {
   const InProgressOrdersPage({Key? key}) : super(key: key);
 
@@ -21,36 +20,31 @@ class InProgressOrdersPage extends StatefulWidget {
 }
 
 class _InProgressOrdersPageState extends State<InProgressOrdersPage> {
-
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-
       final orderProvider = context.read<OrderProvider>();
       await orderProvider.getOrders(context, 'pending', 10, 1);
-
     });
-
   }
 
   @override
   Widget build(BuildContext context) {
-
     final l10n = AppLocalizations.of(context)!;
     final orderProvider = context.watch<OrderProvider>();
 
-    if(orderProvider.isLoading) {
+    if (orderProvider.isLoading) {
       return const OrdersShimmer();
     }
 
-    if(orderProvider.ordersResponse.data != null && orderProvider.ordersResponse.data!.isEmpty) {
+    if (orderProvider.ordersResponse.data != null &&
+        orderProvider.ordersResponse.data!.isEmpty) {
       return Center(
         child: Text(l10n.noOrdersFound),
       );
     }
-
 
     return RefreshIndicator(
       onRefresh: () async {
@@ -77,25 +71,23 @@ class _InProgressOrdersPageState extends State<InProgressOrdersPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-
                     ListView.builder(
-                      itemCount: orderProvider.ordersResponse.data![index].details!.length,
+                      itemCount: orderProvider
+                          .ordersResponse.data![index].details!.length,
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (context, productIndex) {
-
-                        final product = orderProvider.ordersResponse.data![index].details![productIndex];
+                        final product = orderProvider
+                            .ordersResponse.data![index].details![productIndex];
 
                         return OrderItem(product: product);
                       },
                     ),
-
-                    OrderCostDetailsAndStatus(orderData: orderProvider.ordersResponse.data![index]),
-
+                    OrderCostDetailsAndStatus(
+                        orderData: orderProvider.ordersResponse.data![index]),
                   ],
                 ),
               ),
-
               Positioned(
                 right: 16,
                 child: Container(
@@ -104,25 +96,18 @@ class _InProgressOrdersPageState extends State<InProgressOrdersPage> {
                   decoration: BoxDecoration(
                     color: const Color(0xFFFFF5E6),
                     borderRadius: BorderRadius.circular(60),
-                    border: Border.all(
-                        width: 1,
-                        color: Colors.orange
-                    ),
+                    border: Border.all(width: 1, color: Colors.orange),
                   ),
                   alignment: Alignment.center,
-                  child: Text(orderProvider.ordersResponse.data![index].orderStatus!, style: const TextStyle(color: Colors.orange)),
+                  child: Text(
+                      orderProvider.ordersResponse.data![index].orderStatus!,
+                      style: const TextStyle(color: Colors.orange)),
                 ),
               ),
-
             ],
           );
         },
       ),
     );
   }
-
 }
-
-
-
-

@@ -1,5 +1,4 @@
 class PointModel {
-
   final String productName;
   final String brand;
   final int point;
@@ -12,7 +11,8 @@ class PointModel {
     required this.date,
   });
 
-  PointModel copyWith({String? productName, String? brand, int? point, String? date}) {
+  PointModel copyWith(
+      {String? productName, String? brand, int? point, String? date}) {
     return PointModel(
       productName: productName ?? this.productName,
       brand: brand ?? this.brand,
@@ -20,5 +20,4 @@ class PointModel {
       date: date ?? this.date,
     );
   }
-
 }

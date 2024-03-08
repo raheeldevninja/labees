@@ -6,12 +6,12 @@ class AddWishListResponse {
   String? message;
   bool? success;
 
-  AddWishListResponse({this.wishlist, this.wishlistCount, this.message, this.success});
+  AddWishListResponse(
+      {this.wishlist, this.wishlistCount, this.message, this.success});
 
   AddWishListResponse.fromJson(Map<String, dynamic> json) {
-    wishlist = json['wishlist'] != null
-        ?  Wishlist.fromJson(json['wishlist'])
-        : null;
+    wishlist =
+        json['wishlist'] != null ? Wishlist.fromJson(json['wishlist']) : null;
     wishlistCount = json['wishlist_count'];
     message = json['message'];
   }

@@ -53,122 +53,124 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         title: Text(l10n.notifications,
             style: const TextStyle(color: AppColors.primaryColor)),
       ),
-      body: checkoutProvider.getIsLoading ? const SizedBox() :
+      body: checkoutProvider.getIsLoading
+          ? const SizedBox()
+          : RefreshIndicator(
+              onRefresh: () async {
+                await checkoutProvider.getNotifications();
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12),
+                  //   child: InkWell(
+                  //     onTap: () {},
+                  //     child: Text(
+                  //       'Mark all read',
+                  //       style: TextStyle(
+                  //           fontSize: 12, decoration: TextDecoration.underline),
+                  //     ),
+                  //   ),
+                  // ),
 
-      RefreshIndicator(
-        onRefresh: () async {
-          await checkoutProvider.getNotifications();
-        },
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12),
-            //   child: InkWell(
-            //     onTap: () {},
-            //     child: Text(
-            //       'Mark all read',
-            //       style: TextStyle(
-            //           fontSize: 12, decoration: TextDecoration.underline),
-            //     ),
-            //   ),
-            // ),
-
-            Expanded(
-              child: notifications.isEmpty
-                  ? Expanded(
-                      child: Center(
-                        child: Text(
-                          l10n.noNotifications,
-                        ),
-                      ),
-                    )
-                  : ListView.builder(
-                      itemCount: notifications.length,
-                      shrinkWrap: true,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                      ),
-                      itemBuilder: (context, index) {
-
-                        String timestamp = "2023-06-13T04:09:45.000000Z";
-                        DateTime dateTime = DateTime.parse(timestamp);
-                        String time = "${dateTime.hour < 10 ? 0 : ''}${dateTime.hour}:${dateTime.minute < 10 ? 0 : ''}${dateTime.minute}";
-
-                        //format date
-                        String formattedDate = DateFormat('dd/MM/yyyy').format(dateTime);
-
-
-                        return Container(
-                          padding: const EdgeInsets.all(16),
-                          margin: const EdgeInsets.all(4),
-                          decoration: BoxDecoration(
-                            color: Colors.grey.withOpacity(0.1),
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(12),
+                  Expanded(
+                    child: notifications.isEmpty
+                        ? Expanded(
+                            child: Center(
+                              child: Text(
+                                l10n.noNotifications,
+                              ),
                             ),
-                          ),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                flex: 3,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                          )
+                        : ListView.builder(
+                            itemCount: notifications.length,
+                            shrinkWrap: true,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                            ),
+                            itemBuilder: (context, index) {
+                              String timestamp = "2023-06-13T04:09:45.000000Z";
+                              DateTime dateTime = DateTime.parse(timestamp);
+                              String time =
+                                  "${dateTime.hour < 10 ? 0 : ''}${dateTime.hour}:${dateTime.minute < 10 ? 0 : ''}${dateTime.minute}";
+
+                              //format date
+                              String formattedDate =
+                                  DateFormat('dd/MM/yyyy').format(dateTime);
+
+                              return Container(
+                                padding: const EdgeInsets.all(16),
+                                margin: const EdgeInsets.all(4),
+                                decoration: BoxDecoration(
+                                  color: Colors.grey.withOpacity(0.1),
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(12),
+                                  ),
+                                ),
+                                child: Row(
                                   children: [
-                                    Text(
-                                      notifications[index].title!,
-                                      style: const TextStyle(
-                                        fontSize: 18,
-                                        color: AppColors.primaryColor,
-                                        fontWeight: FontWeight.w500,
+                                    Expanded(
+                                      flex: 3,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            notifications[index].title!,
+                                            style: const TextStyle(
+                                              fontSize: 18,
+                                              color: AppColors.primaryColor,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 4,
+                                          ),
+                                          Text(
+                                            notifications[index].description!,
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                              color: AppColors.primaryColor,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    const SizedBox(
-                                      height: 4,
-                                    ),
-                                    Text(
-                                      notifications[index].description!,
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        color: AppColors.primaryColor,
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          Text(
+                                            time,
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                              color: AppColors.primaryColor,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 4,
+                                          ),
+                                          Text(
+                                            formattedDate,
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                              color: AppColors.primaryColor,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ],
                                 ),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      time,
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        color: AppColors.primaryColor,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 4,
-                                    ),
-                                    Text(
-                                      formattedDate,
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        color: AppColors.primaryColor,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
+                              );
+                            },
                           ),
-                        );
-                      },
-                    ),
+                  ),
+                ],
+              ),
             ),
-          ],
-        ),
-      ),
     );
   }
 }

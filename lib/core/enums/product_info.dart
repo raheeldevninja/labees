@@ -4,8 +4,4 @@
 *  Description: ProductInfo Enum
 */
 
-enum ProductInfo {
-  description,
-  sizes,
-  reviews
-}
+enum ProductInfo { description, sizes, reviews }

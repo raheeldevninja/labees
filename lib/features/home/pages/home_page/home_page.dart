@@ -19,7 +19,6 @@ import 'package:provider/provider.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 /*
 *  Date 11 - September-2023
 *  Author: Raheel Khan- Abaska Technologies
@@ -76,18 +75,17 @@ class _HomePageState extends State<HomePage> {
     final List<Widget> imageSliders = homeProvider.getCategoryChildren!
         .map((item) => GestureDetector(
               onTap: () {
-
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ProductsScreen(id: item.id!, title: item.name!),
+                    builder: (context) =>
+                        ProductsScreen(id: item.id!, title: item.name!),
                   ),
                 );
               },
               child: CategoryCarouselItem(item: item),
             ))
         .toList();
-
 
     return Scaffold(
       key: _scaffoldKey,
@@ -120,13 +118,12 @@ class _HomePageState extends State<HomePage> {
               icon: SvgPicture.asset(
                 Images.searchIcon,
                 color: Colors.white,
-
               ),
             ),
           ],
         ),
         title:
-        /*SizedBox(
+            /*SizedBox(
           height: 40,
           child: InkWell(
             onTap: () {
@@ -170,7 +167,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),*/
-        SvgPicture.asset(
+            SvgPicture.asset(
           Images.labeesAppbar,
           color: Colors.white,
         ),
@@ -225,30 +222,29 @@ class _HomePageState extends State<HomePage> {
           : (homeProvider.categories == null)
               ? const SizedBox.shrink()
               : RefreshIndicator(
-                onRefresh: () async {
+                  onRefresh: () async {
+                    final homeProvider =
+                        Provider.of<HomeProvider>(context, listen: false);
+                    await homeProvider.getMainCategories(
+                        context, AppLocalizations.of(context)!.localeName);
 
-                  final homeProvider = Provider.of<HomeProvider>(context, listen: false);
-                  await homeProvider.getMainCategories(
-                  context, AppLocalizations.of(context)!.localeName);
+                    if (homeProvider.getMainCategoriesList.categories != null) {
+                      int categoryId = homeProvider
+                          .getMainCategoriesList.categories!.first.id!;
 
-                  if (homeProvider.getMainCategoriesList.categories != null) {
-                    int categoryId =
-                    homeProvider.getMainCategoriesList.categories!.first.id!;
-
-                    if (mounted) {
-                      await homeProvider.getDashboardData(context, true,
-                          AppLocalizations
-                              .of(context)!
-                              .localeName, categoryId, 'all');
+                      if (mounted) {
+                        await homeProvider.getDashboardData(
+                            context,
+                            true,
+                            AppLocalizations.of(context)!.localeName,
+                            categoryId,
+                            'all');
+                      }
                     }
-                  }
-
-
-                },
-                child: Column(
+                  },
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
                       ///header section
                       Stack(
                         clipBehavior: Clip.none,
@@ -501,25 +497,22 @@ class _HomePageState extends State<HomePage> {
                         height: 60,
                       ),*/
 
-
                       Expanded(
                         child: ListView(
                           shrinkWrap: true,
                           padding: const EdgeInsets.all(10.0),
                           children: const [
-
                             ShopNowBanner(),
                             SizedBox(height: 20),
                             MostWantedSection(),
                             SizedBox(height: 20),
                             NewArrivalsSection(),
-
                           ],
                         ),
                       ),
                     ],
                   ),
-              ),
+                ),
     );
   }
 
@@ -530,8 +523,3 @@ class _HomePageState extends State<HomePage> {
     _searchController.dispose();
   }
 }
-
-
-
-
-

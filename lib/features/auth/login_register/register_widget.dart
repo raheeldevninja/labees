@@ -12,7 +12,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 *  Description: RegisterWidget
 */
 
-
 class RegisterWidget extends StatefulWidget {
   const RegisterWidget({Key? key}) : super(key: key);
 
@@ -21,7 +20,6 @@ class RegisterWidget extends StatefulWidget {
 }
 
 class _RegisterWidgetState extends State<RegisterWidget> {
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final _firstNameController = TextEditingController();
@@ -40,7 +38,6 @@ class _RegisterWidgetState extends State<RegisterWidget> {
 
   @override
   Widget build(BuildContext context) {
-
     final l10n = AppLocalizations.of(context)!;
     final authProvider = Provider.of<AuthProvider>(context);
 
@@ -84,9 +81,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
             ),
             Focus(
               onFocusChange: (hasFocus) {
-                setState(() {
-
-                });
+                setState(() {});
               },
               child: TextFormField(
                 focusNode: _firstNameFocus,
@@ -94,20 +89,24 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                 maxLines: 1,
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor: _firstNameFocus.hasFocus ? Colors.white : Colors.grey.withOpacity(0.1),
-                  contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+                  fillColor: _firstNameFocus.hasFocus
+                      ? Colors.white
+                      : Colors.grey.withOpacity(0.1),
+                  contentPadding: const EdgeInsets.symmetric(
+                      vertical: 12.0, horizontal: 20.0),
                   hintText: l10n.firstNameHint,
                   hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                    borderSide: BorderSide(
+                        color: Colors.grey.withOpacity(0.1), width: 1.0),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                    borderSide: const BorderSide(
+                        color: AppColors.primaryColor, width: 1.0),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                 ),
@@ -128,29 +127,31 @@ class _RegisterWidgetState extends State<RegisterWidget> {
             ),
             Focus(
               onFocusChange: (hasFocus) {
-                setState(() {
-
-                });
+                setState(() {});
               },
               child: TextFormField(
                 controller: _lastNameController,
                 maxLines: 1,
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor: _lastNameFocus.hasFocus ? Colors.white : Colors.grey.withOpacity(0.1),
-                  contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20),
+                  fillColor: _lastNameFocus.hasFocus
+                      ? Colors.white
+                      : Colors.grey.withOpacity(0.1),
+                  contentPadding: const EdgeInsets.symmetric(
+                      vertical: 12.0, horizontal: 20),
                   hintText: l10n.lastNameHint,
                   hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                    borderSide: BorderSide(
+                        color: Colors.grey.withOpacity(0.1), width: 1.0),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                    borderSide: const BorderSide(
+                        color: AppColors.primaryColor, width: 1.0),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                 ),
@@ -171,9 +172,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
             ),
             Focus(
               onFocusChange: (hasFocus) {
-                setState(() {
-
-                });
+                setState(() {});
               },
               child: TextFormField(
                 focusNode: _emailFocus,
@@ -182,7 +181,9 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                 maxLines: 1,
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor: _emailFocus.hasFocus ? Colors.white : Colors.grey.withOpacity(0.1),
+                  fillColor: _emailFocus.hasFocus
+                      ? Colors.white
+                      : Colors.grey.withOpacity(0.1),
                   contentPadding: const EdgeInsets.all(12.0),
                   hintText: l10n.emailHint,
                   hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
@@ -190,12 +191,13 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                    borderSide: BorderSide(
+                        color: Colors.grey.withOpacity(0.1), width: 1.0),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                    borderSide: const BorderSide(
+                        color: AppColors.primaryColor, width: 1.0),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                 ),
@@ -221,9 +223,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
             ),
             Focus(
               onFocusChange: (hasFocus) {
-                setState(() {
-
-                });
+                setState(() {});
               },
               child: TextFormField(
                 focusNode: _phoneFocus,
@@ -232,20 +232,24 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                 maxLines: 1,
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor: _phoneFocus.hasFocus ? Colors.white : Colors.grey.withOpacity(0.1),
-                  contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20),
+                  fillColor: _phoneFocus.hasFocus
+                      ? Colors.white
+                      : Colors.grey.withOpacity(0.1),
+                  contentPadding: const EdgeInsets.symmetric(
+                      vertical: 12.0, horizontal: 20),
                   hintText: l10n.phoneNumberHint,
                   hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                    borderSide: BorderSide(
+                        color: Colors.grey.withOpacity(0.1), width: 1.0),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                    borderSide: const BorderSide(
+                        color: AppColors.primaryColor, width: 1.0),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                 ),
@@ -266,9 +270,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
             ),
             Focus(
               onFocusChange: (hasFocus) {
-                setState(() {
-
-                });
+                setState(() {});
               },
               child: TextFormField(
                 focusNode: _passwordFocus,
@@ -277,20 +279,24 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                 obscureText: true,
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor: _passwordFocus.hasFocus ? Colors.white : Colors.grey.withOpacity(0.1),
-                  contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20),
+                  fillColor: _passwordFocus.hasFocus
+                      ? Colors.white
+                      : Colors.grey.withOpacity(0.1),
+                  contentPadding: const EdgeInsets.symmetric(
+                      vertical: 12.0, horizontal: 20),
                   hintText: l10n.createPasswordHint,
                   hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                    borderSide: BorderSide(
+                        color: Colors.grey.withOpacity(0.1), width: 1.0),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                    borderSide: const BorderSide(
+                        color: AppColors.primaryColor, width: 1.0),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                 ),
@@ -314,9 +320,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
             ),
             Focus(
               onFocusChange: (hasFocus) {
-                setState(() {
-
-                });
+                setState(() {});
               },
               child: TextFormField(
                 focusNode: _confirmPasswordFocus,
@@ -325,7 +329,9 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                 maxLines: 1,
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor: _confirmPasswordFocus.hasFocus ? Colors.white : Colors.grey.withOpacity(0.1),
+                  fillColor: _confirmPasswordFocus.hasFocus
+                      ? Colors.white
+                      : Colors.grey.withOpacity(0.1),
                   contentPadding: const EdgeInsets.all(12.0),
                   hintText: l10n.confirmPasswordHint,
                   hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
@@ -333,12 +339,13 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                    borderSide: BorderSide(
+                        color: Colors.grey.withOpacity(0.1), width: 1.0),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                    borderSide: const BorderSide(
+                        color: AppColors.primaryColor, width: 1.0),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                 ),
@@ -362,7 +369,6 @@ class _RegisterWidgetState extends State<RegisterWidget> {
               child: ElevatedButton(
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-
                     RegistrationData registrationData = RegistrationData(
                       fName: _firstNameController.text,
                       lName: _lastNameController.text,
@@ -375,7 +381,6 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                       context,
                       registrationData,
                     );
-
                   }
                 },
                 style: ElevatedButton.styleFrom(
@@ -397,9 +402,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextButton(
-                  onPressed: () {
-
-                  },
+                  onPressed: () {},
                   child: Text(
                     l10n.termsAndConditions,
                     style: const TextStyle(

@@ -4,20 +4,17 @@ import 'package:labees/core/app/app_colors.dart';
 import 'package:labees/core/images/images.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 /*
 *  Date 20 - Oct-2023
 *  Author: Raheel Khan- Abaska Technologies
 *  Description: NoOrdersWidget
 */
 
-
 class NoOrdersWidget extends StatelessWidget {
   const NoOrdersWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     final l10n = AppLocalizations.of(context)!;
 
     return Column(
@@ -64,5 +61,3 @@ class NoOrdersWidget extends StatelessWidget {
     );
   }
 }
-
-

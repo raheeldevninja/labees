@@ -6,13 +6,11 @@ import 'package:labees/features/auth/view_model/auth_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 /*
 *  Date 7 - Dec-2023
 *  Author: Raheel Khan- Abaska Technologies
 *  Description: ForgotPasswordScreen
 */
-
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({Key? key}) : super(key: key);
@@ -22,7 +20,6 @@ class ForgotPasswordScreen extends StatefulWidget {
 }
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final _emailController = TextEditingController();
@@ -30,7 +27,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     final l10n = AppLocalizations.of(context)!;
     final authProvider = context.read<AuthProvider>();
 
@@ -85,9 +81,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               ),
               Focus(
                 onFocusChange: (hasFocus) {
-                  setState(() {
-
-                  });
+                  setState(() {});
                 },
                 child: TextFormField(
                   focusNode: _emailFocus,
@@ -96,20 +90,25 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: _emailFocus.hasFocus ? Colors.white : Colors.grey.withOpacity(0.1),
-                    contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20),
+                    fillColor: _emailFocus.hasFocus
+                        ? Colors.white
+                        : Colors.grey.withOpacity(0.1),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 12.0, horizontal: 20),
                     hintText: l10n.emailHint,
-                    hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+                    hintStyle:
+                        const TextStyle(fontSize: 14, color: Colors.grey),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                      borderSide: BorderSide(
+                          color: Colors.grey.withOpacity(0.1), width: 1.0),
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide:
-                      const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                      borderSide: const BorderSide(
+                          color: AppColors.primaryColor, width: 1.0),
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                   ),
@@ -126,32 +125,30 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   },
                 ),
               ),
-              const SizedBox(height: 40,),
+              const SizedBox(
+                height: 40,
+              ),
               SizedBox(
                 width: double.maxFinite,
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () async {
+                    if (_formKey.currentState!.validate()) {
+                      ///call forgot password api
+                      await authProvider.forgotPassword(
+                          context, _emailController.text.trim());
 
-
-                      if (_formKey.currentState!.validate()) {
-
-                        ///call forgot password api
-                        await authProvider.forgotPassword(context, _emailController.text.trim());
-
-                        if(mounted && authProvider.forgotPasswordResponse.status!) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => OTPVerificationScreen(email: _emailController.text.trim()),
-                            ),
-                          );
-                        }
-
-
+                      if (mounted &&
+                          authProvider.forgotPasswordResponse.status!) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => OTPVerificationScreen(
+                                email: _emailController.text.trim()),
+                          ),
+                        );
                       }
-
-
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primaryColor,
@@ -172,11 +169,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     );
   }
 
-
   @override
   void dispose() {
     super.dispose();
     _emailController.dispose();
   }
-
 }

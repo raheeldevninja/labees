@@ -10,13 +10,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 */
 
 class SharedPref {
-
   static const String isLoggedInKey = 'isLoggedIn';
   static const String userKey = 'user';
   static const String tokenKey = 'token';
   static const String cartProductsKey = 'cart_products';
   static const String showChooseLanguage = 'choose_language_screen_shown';
-
 
   static Future<bool> isLoggedIn() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -43,7 +41,6 @@ class SharedPref {
     await prefs.remove(userKey);
   }
 
-
   static Future<void> clearToken() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove(tokenKey);
@@ -65,15 +62,12 @@ class SharedPref {
       // Return null or some default user instance
       return null;
     }
-
   }
 
-
-  static  Future<String> getToken() async {
+  static Future<String> getToken() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString(tokenKey) ?? '';
   }
-
 
   //cart product
 
@@ -86,30 +80,24 @@ class SharedPref {
 
   // Add a CartProduct to the list and save to shared preferences
   static Future<void> addCartProduct(CartProduct product) async {
-
     bool isProductExists = false;
     List<CartProduct> cartProducts = await getCartProducts();
 
     //update product quantity if product id is same
-    for (int i=0; i<cartProducts.length; i++) {
-
-      if(cartProducts[i].id == product.id) {
+    for (int i = 0; i < cartProducts.length; i++) {
+      if (cartProducts[i].id == product.id) {
         //cartProducts[i] = cartProducts[i].copyWith(quantity: cartProducts[i].quantity + product.quantity);
         cartProducts[i] = cartProducts[i].copyWith(quantity: product.quantity);
         isProductExists = true;
       }
-
     }
 
-    if(!isProductExists) {
-
+    if (!isProductExists) {
       cartProducts.add(product);
     }
 
-
     await saveCartProducts(cartProducts);
   }
-
 
   static Future<void> clearCartProducts() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -132,7 +120,8 @@ class SharedPref {
   // Update a CartProduct in the list and save to shared preferences
   static Future<void> updateCartProduct(CartProduct updatedProduct) async {
     List<CartProduct> cartProducts = await getCartProducts();
-    int index = cartProducts.indexWhere((element) => element.id == updatedProduct.id);
+    int index =
+        cartProducts.indexWhere((element) => element.id == updatedProduct.id);
 
     if (index != -1) {
       cartProducts[index] = updatedProduct;
@@ -157,10 +146,8 @@ class SharedPref {
     return prefs.getBool(showChooseLanguage) ?? false;
   }
 
-
   static Future<void> clear() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.clear();
   }
-
 }

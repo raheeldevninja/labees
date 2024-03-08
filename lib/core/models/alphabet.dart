@@ -1,5 +1,4 @@
 class Alphabet {
-
   final String letter;
   final bool isSelected;
 
@@ -11,6 +10,4 @@ class Alphabet {
       isSelected: isSelected ?? this.isSelected,
     );
   }
-
-
 }

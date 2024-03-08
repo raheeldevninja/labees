@@ -6,7 +6,8 @@ class WishListRemoveResponse {
   String? message;
   bool? success;
 
-  WishListRemoveResponse({this.wishlist, this.wishlistCount, this.message, this.success});
+  WishListRemoveResponse(
+      {this.wishlist, this.wishlistCount, this.message, this.success});
 
   WishListRemoveResponse.fromJson(Map<String, dynamic> json) {
     wishlist = json['wishlist'];

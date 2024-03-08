@@ -16,13 +16,11 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 /*
 *  Date 9 - September-2023
 *  Author: Raheel Khan- Abaska Technologies
 *  Description: Home Screen
 */
-
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -32,18 +30,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-
       APIs.token = await SharedPref.getToken();
 
       log('token: ${APIs.token}');
 
-      if(mounted) {
+      if (mounted) {
         await Future.wait([
           context.read<CartProvider>().getCartProducts(),
           context.read<CartProvider>().getShippingMethods(),
@@ -52,10 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
           context.read<CheckoutProvider>().getAllAddresses(),
         ]);
       }
-
     });
-
-
   }
 
   @override
@@ -85,7 +78,8 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       popAllScreensOnTapOfSelectedTab: true,
       popActionScreens: PopActionScreensType.all,
-      itemAnimationProperties: null,/*ItemAnimationProperties(
+      itemAnimationProperties: null,
+      /*ItemAnimationProperties(
         // Navigation Bar's items animation properties.
         duration: Duration(milliseconds: 200),
         curve: Curves.ease,
@@ -95,8 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
         curve: Curves.ease,
         duration: Duration(milliseconds: 200),
       ),
-      navBarStyle:
-          NavBarStyle.style6,
+      navBarStyle: NavBarStyle.style6,
     );
   }
 
@@ -110,19 +103,14 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
-
     final l10n = AppLocalizations.of(context)!;
 
     return [
-
       _buildBottomNavBarItem(icon: Images.homeIcon, title: l10n.home),
-
-      _buildBottomNavBarItem(icon: Images.categoriesIcon, title: l10n.categories),
-
+      _buildBottomNavBarItem(
+          icon: Images.categoriesIcon, title: l10n.categories),
       _buildBottomNavBarItem(icon: Images.designersIcon, title: l10n.designers),
-
       _buildBottomNavBarItem(icon: Images.accountIcon, title: l10n.account),
-
     ];
   }
 
@@ -142,7 +130,4 @@ class _HomeScreenState extends State<HomeScreen> {
       inactiveColorPrimary: AppColors.inactiveIcon,
     );
   }
-
-
 }
-

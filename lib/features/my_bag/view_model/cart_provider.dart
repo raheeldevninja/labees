@@ -9,7 +9,6 @@ import 'package:labees/core/util/utils.dart';
 import 'package:labees/features/my_bag/cart_service/cart_service.dart';
 
 class CartProvider extends ChangeNotifier {
-
   bool isLoading = false;
 
   late ShippingMethods shippingMethods;
@@ -39,11 +38,12 @@ class CartProvider extends ChangeNotifier {
   }
 
   Future<void> incrementQuantity(int index) async {
-
     //cart products
     int quantity = cartProducts[index].quantity;
 
-    cartProducts[index] = cartProducts[index].copyWith(quantity: ++quantity, totalPrice: cartProducts[index].unitPrice * quantity);
+    cartProducts[index] = cartProducts[index].copyWith(
+        quantity: ++quantity,
+        totalPrice: cartProducts[index].unitPrice * quantity);
 
     print('updated product quantity: ${cartProducts[index].quantity}');
 
@@ -52,23 +52,22 @@ class CartProvider extends ChangeNotifier {
     await SharedPref.saveCartProducts(cartProducts);
   }
 
-
   Future<void> decrementQuantity(int index) async {
-
     int quantity = cartProducts[index].quantity;
 
     if (quantity == 1) {
       return;
     }
 
-    cartProducts[index] = cartProducts[index].copyWith(quantity: --quantity, totalPrice: cartProducts[index].unitPrice * quantity);
+    cartProducts[index] = cartProducts[index].copyWith(
+        quantity: --quantity,
+        totalPrice: cartProducts[index].unitPrice * quantity);
 
     print('updated product quantity: ${cartProducts[index].quantity}');
 
     notifyListeners();
 
     await SharedPref.saveCartProducts(cartProducts);
-
   }
 
   //cart product to cart and in save in shared pref
@@ -78,9 +77,7 @@ class CartProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
   Future<void> getShippingMethods() async {
-
     //EasyLoading.show(status: 'loading...');
     showLoading();
 
@@ -88,11 +85,9 @@ class CartProvider extends ChangeNotifier {
 
     if (shippingMethods.success) {
       shippingMethodsList = shippingMethods.data!;
-    }
-    else {
+    } else {
       Utils.toast(shippingMethods.message!);
     }
-
 
     //EasyLoading.dismiss();
     hideLoading();
@@ -101,32 +96,26 @@ class CartProvider extends ChangeNotifier {
 
   List<ShippingMethod> get getShippingMethodsList => shippingMethodsList;
 
-
   setSelectShippingMethod(ShippingMethod shippingMethod) {
     selectedShippingMethod = shippingMethod;
     notifyListeners();
   }
 
   ShippingMethod? getSelectedShippingMethod() {
-
-    if(selectedShippingMethod == null) {
+    if (selectedShippingMethod == null) {
       return null;
     }
 
     return selectedShippingMethod!;
   }
 
-
   Future<void> getCheckoutSettings() async {
-
     showLoading();
 
     checkoutSettings = await CartService.getCheckoutSettings();
 
     if (checkoutSettings.success!) {
-
-    }
-    else {
+    } else {
       Utils.toast(checkoutSettings.message!);
     }
 
@@ -135,7 +124,6 @@ class CartProvider extends ChangeNotifier {
   }
 
   double calculateSubTotal() {
-
     subTotal = 0.0;
     for (var element in cartProducts) {
       subTotal += element.unitPrice * element.quantity;
@@ -144,16 +132,15 @@ class CartProvider extends ChangeNotifier {
   }
 
   Future<void> applyCoupon(String code, int subTotal, int shippingCost) async {
-
     EasyLoading.show(status: 'loading...');
     showLoading();
 
-    applyCouponResponse = await CartService.applyCoupon(code, subTotal, shippingCost);
+    applyCouponResponse =
+        await CartService.applyCoupon(code, subTotal, shippingCost);
 
     if (applyCouponResponse!.success!) {
       setCouponDiscount();
-    }
-    else {
+    } else {
       couponDiscount = 0.0;
       Utils.toast(applyCouponResponse!.message!);
     }
@@ -164,32 +151,30 @@ class CartProvider extends ChangeNotifier {
   }
 
   calculateCouponDiscount() {
-
-    if(applyCouponResponse == null || applyCouponResponse!.data == null) {
+    if (applyCouponResponse == null || applyCouponResponse!.data == null) {
       return;
     }
 
-    if(applyCouponResponse!.data!.coupon!.discountType == 'percentage') {
-      couponDiscount = (applyCouponResponse!.data!.coupon!.discount! / 100) * subTotal;
-    }
-    else {
-      couponDiscount = applyCouponResponse!.data!.coupon!.discount?.toDouble() ?? 0.0;
+    if (applyCouponResponse!.data!.coupon!.discountType == 'percentage') {
+      couponDiscount =
+          (applyCouponResponse!.data!.coupon!.discount! / 100) * subTotal;
+    } else {
+      couponDiscount =
+          applyCouponResponse!.data!.coupon!.discount?.toDouble() ?? 0.0;
     }
 
     notifyListeners();
   }
 
   setCouponDiscount() {
-
-    if(applyCouponResponse == null || applyCouponResponse!.data == null) {
+    if (applyCouponResponse == null || applyCouponResponse!.data == null) {
       return;
     }
 
-    couponDiscount = applyCouponResponse!.data!.couponDiscount?.toDouble() ?? 0.0;
+    couponDiscount =
+        applyCouponResponse!.data!.couponDiscount?.toDouble() ?? 0.0;
     notifyListeners();
-
   }
-
 
   showLoading() {
     isLoading = true;
@@ -200,5 +185,4 @@ class CartProvider extends ChangeNotifier {
     isLoading = false;
     notifyListeners();
   }
-
 }

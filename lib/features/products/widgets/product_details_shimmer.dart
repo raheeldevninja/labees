@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-
 /*
 *  Date 29 - Oct-2023
 *  Author: Raheel Khan- Abaska Technologies
@@ -15,7 +14,6 @@ class ProductDetailsShimmer extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-
         Shimmer.fromColors(
           baseColor: Colors.grey[300]!,
           highlightColor: Colors.grey[100]!,
@@ -28,9 +26,7 @@ class ProductDetailsShimmer extends StatelessWidget {
             ),
           ),
         ),
-
         const SizedBox(height: 20),
-
         SizedBox(
           width: 100,
           child: Padding(
@@ -48,9 +44,7 @@ class ProductDetailsShimmer extends StatelessWidget {
             ),
           ),
         ),
-
         const SizedBox(height: 10),
-
         SizedBox(
           width: double.maxFinite,
           height: 20,
@@ -69,9 +63,7 @@ class ProductDetailsShimmer extends StatelessWidget {
             ),
           ),
         ),
-
         const SizedBox(height: 10),
-
         SizedBox(
           width: double.maxFinite,
           height: 20,
@@ -90,9 +82,7 @@ class ProductDetailsShimmer extends StatelessWidget {
             ),
           ),
         ),
-
         const SizedBox(height: 10),
-
         SizedBox(
           width: double.maxFinite,
           height: 20,
@@ -111,9 +101,7 @@ class ProductDetailsShimmer extends StatelessWidget {
             ),
           ),
         ),
-
         const SizedBox(height: 50),
-
         SizedBox(
           width: double.maxFinite,
           height: 20,
@@ -132,9 +120,7 @@ class ProductDetailsShimmer extends StatelessWidget {
             ),
           ),
         ),
-
         const SizedBox(height: 30),
-
         SizedBox(
           height: 20,
           child: ListView(
@@ -229,9 +215,7 @@ class ProductDetailsShimmer extends StatelessWidget {
             ],
           ),
         ),
-
         const SizedBox(height: 20),
-
         SizedBox(
           width: 100,
           child: Padding(
@@ -249,9 +233,7 @@ class ProductDetailsShimmer extends StatelessWidget {
             ),
           ),
         ),
-
         const SizedBox(height: 10),
-
         SizedBox(
           width: double.maxFinite,
           height: 20,
@@ -270,9 +252,7 @@ class ProductDetailsShimmer extends StatelessWidget {
             ),
           ),
         ),
-
         const SizedBox(height: 10),
-
         SizedBox(
           width: double.maxFinite,
           height: 20,
@@ -291,9 +271,7 @@ class ProductDetailsShimmer extends StatelessWidget {
             ),
           ),
         ),
-
         const SizedBox(height: 10),
-
         SizedBox(
           width: double.maxFinite,
           height: 20,
@@ -312,9 +290,7 @@ class ProductDetailsShimmer extends StatelessWidget {
             ),
           ),
         ),
-
         const SizedBox(height: 10),
-
         SizedBox(
           width: double.maxFinite,
           height: 20,
@@ -333,11 +309,8 @@ class ProductDetailsShimmer extends StatelessWidget {
             ),
           ),
         ),
-
         const SizedBox(height: 50),
-
       ],
     );
   }
 }
-

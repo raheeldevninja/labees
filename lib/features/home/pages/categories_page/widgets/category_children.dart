@@ -26,8 +26,8 @@ class CategoryChildren extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    print('categoryChild seleted: ${categoryChild.name} ${categoryChild.isSelected!}');
+    print(
+        'categoryChild seleted: ${categoryChild.name} ${categoryChild.isSelected!}');
 
     final homeProvider = Provider.of<HomeProvider>(context);
 
@@ -81,17 +81,20 @@ class CategoryChildren extends StatelessWidget {
       ),
     );*/
 
-
-
     return ExpansionTile(
       onExpansionChanged: (value) {
+        homeProvider.getCategoryChildren![index] = homeProvider
+            .getCategoryChildren![index]
+            .copyWith(isSelected: value);
 
-        homeProvider.getCategoryChildren![index] = homeProvider.getCategoryChildren![index].copyWith(isSelected: value);
-
-        print('CategoryChildrenSectionBackup: ${homeProvider.getCategoryChildren![index].name} ${homeProvider.getCategoryChildren![index].id!}');
+        print(
+            'CategoryChildrenSectionBackup: ${homeProvider.getCategoryChildren![index].name} ${homeProvider.getCategoryChildren![index].id!}');
 
         //set sub sub childs
-        homeProvider.setChildList(homeProvider.getCategoryChildren![index].childes!,  homeProvider.getCategoryChildren![index].parentId!, homeProvider.getCategoryChildren![index].name!);
+        homeProvider.setChildList(
+            homeProvider.getCategoryChildren![index].childes!,
+            homeProvider.getCategoryChildren![index].parentId!,
+            homeProvider.getCategoryChildren![index].name!);
 
         //homeProvider.setSelectedCategoryIndex(index);
       },
@@ -113,16 +116,15 @@ class CategoryChildren extends StatelessWidget {
       ),
       trailing: CachedNetworkImage(
         imageUrl:
-        '${APIs.imageBaseURL}${APIs.categoryImages}${categoryChild.icon!}',
+            '${APIs.imageBaseURL}${APIs.categoryImages}${categoryChild.icon!}',
         width: 40,
         height: 40,
         fit: BoxFit.cover,
       ),
       children: [
-
         categoryChild.isSelected!
-            ?
-        const SubCategoriesSection() : const SizedBox(),
+            ? const SubCategoriesSection()
+            : const SizedBox(),
       ],
     );
 

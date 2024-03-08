@@ -11,7 +11,6 @@ import 'package:labees/features/home/models/brand.dart';
 */
 
 class BrandGridViewItem extends StatelessWidget {
-
   const BrandGridViewItem({
     super.key,
     required this.brand,
@@ -21,7 +20,6 @@ class BrandGridViewItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(

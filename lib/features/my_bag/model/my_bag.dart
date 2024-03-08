@@ -1,5 +1,4 @@
 class MyBag {
-
   final String productBrand;
   final double price;
   final String productImage;
@@ -7,14 +6,13 @@ class MyBag {
   final String color;
   final int quantity;
 
-  MyBag({
-    required this.productBrand,
-    required this.price,
-    required this.productImage,
-    required this.size,
-    required this.color,
-    this.quantity = 1
-  });
+  MyBag(
+      {required this.productBrand,
+      required this.price,
+      required this.productImage,
+      required this.size,
+      required this.color,
+      this.quantity = 1});
 
   MyBag copyWith({
     String? productBrand,
@@ -34,5 +32,4 @@ class MyBag {
       quantity: quantity ?? this.quantity,
     );
   }
-
 }

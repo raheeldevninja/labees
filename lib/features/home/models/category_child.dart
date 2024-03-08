@@ -18,28 +18,25 @@ class CategoryChild {
 
   List<Childes>? childes;
 
-
-
   bool? isSelected = false;
 
-  CategoryChild(
-      {this.id,
-        this.name,
-        this.slug,
-        this.icon,
-        this.parentId,
-        this.position,
-        this.createdAt,
-        this.updatedAt,
-        this.homeStatus,
-        this.topCategory,
-        this.status,
-        this.priority,
-        this.brands,
-        this.childes,
-
-        this.isSelected = false,
-      });
+  CategoryChild({
+    this.id,
+    this.name,
+    this.slug,
+    this.icon,
+    this.parentId,
+    this.position,
+    this.createdAt,
+    this.updatedAt,
+    this.homeStatus,
+    this.topCategory,
+    this.status,
+    this.priority,
+    this.brands,
+    this.childes,
+    this.isSelected = false,
+  });
 
   CategoryChild copyWith({
     int? id,

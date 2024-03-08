@@ -6,7 +6,6 @@ import 'package:labees/features/home/pages/account_page/account_tabs/orders/comp
 import 'package:labees/features/home/pages/account_page/account_tabs/orders/in_progress_orders_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 /*
 *  Date 4 - Now-2023
 *  Author: Raheel Khan- Abaska Technologies
@@ -18,13 +17,11 @@ OrderStatus orderStatus = OrderStatus.all;
 class OrdersMainPage extends StatefulWidget {
   const OrdersMainPage({Key? key}) : super(key: key);
 
-
   @override
   State<OrdersMainPage> createState() => _OrdersMainPageState();
 }
 
 class _OrdersMainPageState extends State<OrdersMainPage> {
-
   late PageController pageController;
   int currentPage = 0;
 
@@ -37,36 +34,34 @@ class _OrdersMainPageState extends State<OrdersMainPage> {
 
   @override
   Widget build(BuildContext context) {
-
     final l10n = AppLocalizations.of(context)!;
 
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          
           Row(
             children: [
-
               Expanded(
                 child: SizedBox(
                   height: 30,
                   child: ElevatedButton(
                     onPressed: () {
-
-
-                      pageController.animateToPage(0, duration: const Duration(milliseconds: 200), curve: Curves.easeIn);
+                      pageController.animateToPage(0,
+                          duration: const Duration(milliseconds: 200),
+                          curve: Curves.easeIn);
 
                       setState(() {
                         orderStatus = OrderStatus.all;
                         currentPage = 0;
                       });
-
                     },
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.all(0),
                       //backgroundColor: orderStatus == OrderStatus.all ? AppColors.primaryColor : Colors.white,
-                      backgroundColor: currentPage == 0 ? AppColors.primaryColor : Colors.white,
+                      backgroundColor: currentPage == 0
+                          ? AppColors.primaryColor
+                          : Colors.white,
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(60.0),
@@ -78,7 +73,9 @@ class _OrdersMainPageState extends State<OrdersMainPage> {
                         fontFamily: 'Montserrat',
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
-                        color: currentPage == 0 ? Colors.white : AppColors.primaryColor,
+                        color: currentPage == 0
+                            ? Colors.white
+                            : AppColors.primaryColor,
                       ),
                     ),
                   ),
@@ -90,18 +87,19 @@ class _OrdersMainPageState extends State<OrdersMainPage> {
                   height: 30,
                   child: ElevatedButton(
                     onPressed: () {
-
-                      pageController.animateToPage(1, duration: const Duration(milliseconds: 200), curve: Curves.easeIn);
-
+                      pageController.animateToPage(1,
+                          duration: const Duration(milliseconds: 200),
+                          curve: Curves.easeIn);
 
                       setState(() {
                         orderStatus = OrderStatus.inProgress;
                         currentPage = 1;
                       });
-
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: currentPage == 1 ? AppColors.primaryColor : Colors.white,
+                      backgroundColor: currentPage == 1
+                          ? AppColors.primaryColor
+                          : Colors.white,
                       foregroundColor: Colors.white,
                       padding: const EdgeInsets.all(0),
                       shape: RoundedRectangleBorder(
@@ -114,7 +112,9 @@ class _OrdersMainPageState extends State<OrdersMainPage> {
                         fontFamily: 'Montserrat',
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
-                        color: currentPage == 1 ? Colors.white : AppColors.primaryColor,
+                        color: currentPage == 1
+                            ? Colors.white
+                            : AppColors.primaryColor,
                       ),
                     ),
                   ),
@@ -126,18 +126,20 @@ class _OrdersMainPageState extends State<OrdersMainPage> {
                   height: 30,
                   child: ElevatedButton(
                     onPressed: () {
-
-                      pageController.animateToPage(2, duration: const Duration(milliseconds: 200), curve: Curves.easeIn);
+                      pageController.animateToPage(2,
+                          duration: const Duration(milliseconds: 200),
+                          curve: Curves.easeIn);
 
                       setState(() {
                         orderStatus = OrderStatus.completed;
                         currentPage = 2;
                       });
-
                     },
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.all(0),
-                      backgroundColor: currentPage == 2 ? AppColors.primaryColor : Colors.white,
+                      backgroundColor: currentPage == 2
+                          ? AppColors.primaryColor
+                          : Colors.white,
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(60.0),
@@ -150,18 +152,19 @@ class _OrdersMainPageState extends State<OrdersMainPage> {
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
                         //color: orderStatus == OrderStatus.completed ? Colors.white : AppColors.primaryColor,
-                        color: currentPage == 2 ? Colors.white : AppColors.primaryColor,
+                        color: currentPage == 2
+                            ? Colors.white
+                            : AppColors.primaryColor,
                       ),
                     ),
                   ),
                 ),
               ),
-
             ],
           ),
-
-          const SizedBox(height: 20,),
-
+          const SizedBox(
+            height: 20,
+          ),
           Expanded(
             child: PageView(
               controller: pageController,
@@ -172,7 +175,6 @@ class _OrdersMainPageState extends State<OrdersMainPage> {
                 setState(() {
                   currentPage = page;
                 });
-
               },
               children: const [
                 AllOrdersPage(),
@@ -181,8 +183,6 @@ class _OrdersMainPageState extends State<OrdersMainPage> {
               ],
             ),
           ),
-
-
         ],
       ),
     );

@@ -9,19 +9,17 @@ class AttributeDetails {
   String? updatedAt;
   List<AttributeValues>? attributeValues;
 
-
-  AttributeDetails(
-      {this.id,
-        this.name,
-        this.categories,
-        this.subCategories,
-        this.subSubCategories,
-        this.showInFilter,
-        this.createdAt,
-        this.updatedAt,
-        this.attributeValues,
-
-      });
+  AttributeDetails({
+    this.id,
+    this.name,
+    this.categories,
+    this.subCategories,
+    this.subSubCategories,
+    this.showInFilter,
+    this.createdAt,
+    this.updatedAt,
+    this.attributeValues,
+  });
 
   AttributeDetails.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -70,13 +68,12 @@ class AttributeValues {
 
   AttributeValues(
       {this.id,
-        this.attributeId,
-        this.name,
-        this.image,
-        this.createdAt,
-        this.updatedAt,
-        this.isSelected = false
-      });
+      this.attributeId,
+      this.name,
+      this.image,
+      this.createdAt,
+      this.updatedAt,
+      this.isSelected = false});
 
   AttributeValues copyWith({
     int? id,
@@ -105,7 +102,6 @@ class AttributeValues {
     image = json['image'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-
   }
 
   Map<String, dynamic> toJson() {

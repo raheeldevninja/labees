@@ -10,25 +10,20 @@ import 'package:labees/core/util/apis.dart';
 *  Description: OrderItem
 */
 
-
 class OrderItem extends StatelessWidget {
   const OrderItem({Key? key, required this.product}) : super(key: key);
 
   final Details product;
 
-
   @override
   Widget build(BuildContext context) {
-
     final l10n = AppLocalizations.of(context)!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-
         Row(
           children: [
-
             //product image
             Container(
               width: 90,
@@ -58,11 +53,9 @@ class OrderItem extends StatelessWidget {
                       fontFamily: 'Montserrat',
                     ),
                   ),
-
                   const SizedBox(
                     height: 4,
                   ),
-
                   Text(
                     product.productDetails!.brand!.name!,
                     style: const TextStyle(
@@ -71,14 +64,11 @@ class OrderItem extends StatelessWidget {
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-
                   const SizedBox(
                     height: 8,
                   ),
-
                   Row(
                     children: [
-
                       Text(
                         'Qty ${product.qty}',
                         style: const TextStyle(
@@ -86,18 +76,14 @@ class OrderItem extends StatelessWidget {
                           fontFamily: 'Libre Baskerville',
                         ),
                       ),
-
                     ],
                   ),
-
                   const SizedBox(
                     height: 8,
                   ),
-
                 ],
               ),
             ),
-
           ],
         ),
 
@@ -107,7 +93,6 @@ class OrderItem extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-
             Text(
               l10n.orderIdLabel,
               style: const TextStyle(
@@ -115,7 +100,6 @@ class OrderItem extends StatelessWidget {
                 fontFamily: 'Montserrat',
               ),
             ),
-
             Text(
               product.orderId.toString(),
               style: const TextStyle(
@@ -124,7 +108,6 @@ class OrderItem extends StatelessWidget {
                 fontFamily: 'Montserrat',
               ),
             ),
-
           ],
         ),
 
@@ -134,7 +117,6 @@ class OrderItem extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-
             Text(
               l10n.priceLabel,
               style: const TextStyle(
@@ -142,7 +124,6 @@ class OrderItem extends StatelessWidget {
                 fontFamily: 'Montserrat',
               ),
             ),
-
             Text(
               '${product.price} Sar',
               style: const TextStyle(
@@ -151,14 +132,12 @@ class OrderItem extends StatelessWidget {
                 fontFamily: 'Montserrat',
               ),
             ),
-
           ],
         ),
 
         const Divider(
           height: 32,
         ),
-
       ],
     );
   }

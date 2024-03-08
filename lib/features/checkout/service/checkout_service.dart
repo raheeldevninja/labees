@@ -20,33 +20,25 @@ import 'package:labees/core/util/apis.dart';
 import 'package:labees/features/home/models/address_data.dart';
 
 class CheckoutService {
-
   static Future<Countries> getCountries() async {
-
     Countries countries = Countries();
-    String url = APIs.baseURL+APIs.countriesList;
+    String url = APIs.baseURL + APIs.countriesList;
 
     try {
-
       print('url: $url');
 
-      var response = await http.get(
-          Uri.parse(url),
-          headers: {
-            'Content-type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': 'Bearer ${APIs.token}'
-          }
-      );
+      var response = await http.get(Uri.parse(url), headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ${APIs.token}'
+      });
 
       print('Response status: ${response.statusCode}');
       print('countries response: ${response.body}');
 
       var result = jsonDecode(response.body);
 
-
       if (response.statusCode == 200) {
-
         List<CountriesData> countriesList = (result as List)
             .map((data) => CountriesData.fromJson(data))
             .toList();
@@ -57,61 +49,46 @@ class CheckoutService {
         countries.message = 'Success';
 
         return countries;
-      }
-      else if (response.statusCode == 401) {
-
-        return Countries(success: false, message: result['errors'][0]['message']);
-      }
-      else if (response.statusCode == 500) {
+      } else if (response.statusCode == 401) {
+        return Countries(
+            success: false, message: result['errors'][0]['message']);
+      } else if (response.statusCode == 500) {
         return Countries(success: false, message: 'Server Error');
-      }
-      else {
+      } else {
         return Countries(success: false, message: 'Something went wrong !');
       }
-    }
-    on SocketException {
+    } on SocketException {
       return Countries(success: false, message: 'Not connect to internet !');
-    }
-    on TimeoutException catch (e) {
+    } on TimeoutException catch (e) {
       return Countries(success: false, message: 'Request timeout');
-    }
-    on FormatException catch (e) {
+    } on FormatException catch (e) {
       return Countries(success: false, message: 'Bad response format');
-    }
-    finally {
+    } finally {
       EasyLoading.dismiss();
     }
   }
 
   static Future<Cities> getCities(int countryId) async {
-
     Cities cities = Cities();
     String url = '${APIs.baseURL}${APIs.citiesList}$countryId';
 
     try {
-
       print('url: $url');
 
-      var response = await http.get(
-          Uri.parse(url),
-          headers: {
-            'Content-type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': 'Bearer ${APIs.token}'
-          }
-      );
+      var response = await http.get(Uri.parse(url), headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ${APIs.token}'
+      });
 
       print('Response status: ${response.statusCode}');
       print('cities response: ${response.body}');
 
       var result = jsonDecode(response.body);
 
-
       if (response.statusCode == 200) {
-
-        List<CitiesData> citiesList = (result as List)
-            .map((data) => CitiesData.fromJson(data))
-            .toList();
+        List<CitiesData> citiesList =
+            (result as List).map((data) => CitiesData.fromJson(data)).toList();
 
         cities.data = citiesList;
 
@@ -119,51 +96,40 @@ class CheckoutService {
         cities.message = 'Success';
 
         return cities;
-      }
-      else if (response.statusCode == 401) {
-
+      } else if (response.statusCode == 401) {
         return Cities(success: false, message: result['errors'][0]['message']);
-      }
-      else if (response.statusCode == 500) {
+      } else if (response.statusCode == 500) {
         return Cities(success: false, message: 'Server Error');
-      }
-      else {
+      } else {
         return Cities(success: false, message: 'Something went wrong !');
       }
-    }
-    on SocketException {
+    } on SocketException {
       return Cities(success: false, message: 'Not connect to internet !');
-    }
-    on TimeoutException catch (e) {
+    } on TimeoutException catch (e) {
       return Cities(success: false, message: 'Request timeout');
-    }
-    on FormatException catch (e) {
+    } on FormatException catch (e) {
       return Cities(success: false, message: 'Bad response format');
-    }
-    finally {
+    } finally {
       EasyLoading.dismiss();
     }
   }
 
-  static Future<AddAddressResponse> addAddress(AddressModel addressModel) async {
-
+  static Future<AddAddressResponse> addAddress(
+      AddressModel addressModel) async {
     AddAddressResponse addAddressResponse;
-    String url = APIs.baseURL+APIs.addAddress;
+    String url = APIs.baseURL + APIs.addAddress;
 
     try {
-
       print('billing address url: $url');
       print('body: ${addressModel.toString()}');
 
-      var response = await http.post(
-          Uri.parse(url),
+      var response = await http.post(Uri.parse(url),
           body: jsonEncode(addressModel.toJson()),
           headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             'Authorization': 'Bearer ${APIs.token}',
-          }
-      );
+          });
 
       print('Response status: ${response.statusCode}');
       print('add billing address response: ${response.body}');
@@ -175,57 +141,45 @@ class CheckoutService {
         addAddressResponse.success = true;
         addAddressResponse.message = 'Success';
         return addAddressResponse;
-      }
-      else if (response.statusCode == 401) {
-
-        return AddAddressResponse(success: false, message: result['errors'][0]['message']);
-      }
-      else if (response.statusCode == 500) {
+      } else if (response.statusCode == 401) {
+        return AddAddressResponse(
+            success: false, message: result['errors'][0]['message']);
+      } else if (response.statusCode == 500) {
         return AddAddressResponse(success: false, message: 'Server Error');
+      } else {
+        return AddAddressResponse(
+            success: false, message: 'Something went wrong !');
       }
-      else {
-        return AddAddressResponse(success: false, message: 'Something went wrong !');
-      }
-    }
-    on SocketException {
-      return AddAddressResponse(success: false, message: 'Not connect to internet !');
-    }
-    on TimeoutException catch (_) {
+    } on SocketException {
+      return AddAddressResponse(
+          success: false, message: 'Not connect to internet !');
+    } on TimeoutException catch (_) {
       return AddAddressResponse(success: false, message: 'Request timeout');
-    }
-    on FormatException catch (_) {
+    } on FormatException catch (_) {
       return AddAddressResponse(success: false, message: 'Bad response format');
-    }
-    finally {
+    } finally {
       EasyLoading.dismiss();
     }
   }
 
-
-  static Future<UpdateAddressResponse> updateAddress(AddressModel addressModel) async {
-
+  static Future<UpdateAddressResponse> updateAddress(
+      AddressModel addressModel) async {
     UpdateAddressResponse updateAddressResponse;
-
-
-
 
     //String url = '${APIs.baseURL}${APIs.updateAddress}${addressModel.queryString()}';
     String url = '${APIs.baseURL}${APIs.updateAddress}';
 
     try {
-
       print('update address url: $url');
       print('body: ${addressModel.toString()}');
 
-      var response = await http.put(
-          Uri.parse(url),
+      var response = await http.put(Uri.parse(url),
           body: jsonEncode(addressModel.toJson()),
           headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             'Authorization': 'Bearer ${APIs.token}',
-          }
-      );
+          });
 
       print('Response status: ${response.statusCode}');
       print('update address response: ${response.body}');
@@ -237,50 +191,40 @@ class CheckoutService {
         updateAddressResponse.success = true;
         updateAddressResponse.message = 'Success';
         return updateAddressResponse;
-      }
-      else if (response.statusCode == 401) {
-
-        return UpdateAddressResponse(success: false, message: result['errors'][0]['message']);
-      }
-      else if (response.statusCode == 500) {
+      } else if (response.statusCode == 401) {
+        return UpdateAddressResponse(
+            success: false, message: result['errors'][0]['message']);
+      } else if (response.statusCode == 500) {
         return UpdateAddressResponse(success: false, message: 'Server Error');
+      } else {
+        return UpdateAddressResponse(
+            success: false, message: 'Something went wrong !');
       }
-      else {
-        return UpdateAddressResponse(success: false, message: 'Something went wrong !');
-      }
-    }
-    on SocketException {
-      return UpdateAddressResponse(success: false, message: 'Not connect to internet !');
-    }
-    on TimeoutException catch (e) {
+    } on SocketException {
+      return UpdateAddressResponse(
+          success: false, message: 'Not connect to internet !');
+    } on TimeoutException catch (e) {
       return UpdateAddressResponse(success: false, message: 'Request timeout');
-    }
-    on FormatException catch (e) {
-      return UpdateAddressResponse(success: false, message: 'Bad response format');
-    }
-    finally {
+    } on FormatException catch (e) {
+      return UpdateAddressResponse(
+          success: false, message: 'Bad response format');
+    } finally {
       EasyLoading.dismiss();
     }
   }
 
-
   static Future<AllAddresses> getAllAddresses() async {
-
     AllAddresses allAddresses = AllAddresses();
     String url = '${APIs.baseURL}${APIs.allAddresses}';
 
     try {
-
       print('url: $url');
 
-      var response = await http.get(
-          Uri.parse(url),
-          headers: {
-            'Content-type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': 'Bearer ${APIs.token}'
-          }
-      );
+      var response = await http.get(Uri.parse(url), headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ${APIs.token}'
+      });
 
       print('Response status: ${response.statusCode}');
       print('all addresses response: ${response.body}');
@@ -288,10 +232,8 @@ class CheckoutService {
       var result = jsonDecode(response.body);
 
       if (response.statusCode == 200) {
-
-        List<AddressData> addressesList = (result as List)
-            .map((data) => AddressData.fromJson(data))
-            .toList();
+        List<AddressData> addressesList =
+            (result as List).map((data) => AddressData.fromJson(data)).toList();
 
         allAddresses.addresses = addressesList;
 
@@ -299,53 +241,40 @@ class CheckoutService {
         allAddresses.message = 'Success';
 
         return allAddresses;
-      }
-      else if (response.statusCode == 401) {
-
-        return AllAddresses(success: false, message: result['errors'][0]['message']);
-      }
-      else if (response.statusCode == 500) {
+      } else if (response.statusCode == 401) {
+        return AllAddresses(
+            success: false, message: result['errors'][0]['message']);
+      } else if (response.statusCode == 500) {
         return AllAddresses(success: false, message: 'Server Error');
-      }
-      else {
+      } else {
         return AllAddresses(success: false, message: 'Something went wrong !');
       }
-    }
-    on SocketException {
+    } on SocketException {
       return AllAddresses(success: false, message: 'Not connect to internet !');
-    }
-    on TimeoutException catch (_) {
+    } on TimeoutException catch (_) {
       return AllAddresses(success: false, message: 'Request timeout');
-    }
-    on FormatException catch (_) {
+    } on FormatException catch (_) {
       return AllAddresses(success: false, message: 'Bad response format');
-    }
-    finally {
+    } finally {
       EasyLoading.dismiss();
     }
   }
 
-
   static Future<DefaultAddressResponse> updateDefaultAddress(int id) async {
-
     DefaultAddressResponse defaultAddressResponse;
 
-    String url = APIs.baseURL+APIs.updateDefaultAddress;
+    String url = APIs.baseURL + APIs.updateDefaultAddress;
 
     try {
-
       print('update default address url: $url');
       print('body: $id');
 
-      var response = await http.post(
-          Uri.parse(url),
-          body: jsonEncode({'id': id}),
-          headers: {
-            'Content-type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': 'Bearer ${APIs.token}',
-          }
-      );
+      var response = await http
+          .post(Uri.parse(url), body: jsonEncode({'id': id}), headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ${APIs.token}',
+      });
 
       print('Response status: ${response.statusCode}');
       print('update default address response: ${response.body}');
@@ -357,40 +286,34 @@ class CheckoutService {
         defaultAddressResponse.status = true;
         defaultAddressResponse.message = 'Success';
         return defaultAddressResponse;
-      }
-      else if (response.statusCode == 401) {
-
-        return DefaultAddressResponse(status: false, message: result['errors'][0]['message']);
-      }
-      else if (response.statusCode == 500) {
+      } else if (response.statusCode == 401) {
+        return DefaultAddressResponse(
+            status: false, message: result['errors'][0]['message']);
+      } else if (response.statusCode == 500) {
         return DefaultAddressResponse(status: false, message: 'Server Error');
+      } else {
+        return DefaultAddressResponse(
+            status: false, message: 'Something went wrong !');
       }
-      else {
-        return DefaultAddressResponse(status: false, message: 'Something went wrong !');
-      }
-    }
-    on SocketException {
-      return DefaultAddressResponse(status: false, message: 'Not connect to internet !');
-    }
-    on TimeoutException catch (e) {
+    } on SocketException {
+      return DefaultAddressResponse(
+          status: false, message: 'Not connect to internet !');
+    } on TimeoutException catch (e) {
       return DefaultAddressResponse(status: false, message: 'Request timeout');
-    }
-    on FormatException catch (e) {
-      return DefaultAddressResponse(status: false, message: 'Bad response format');
-    }
-    finally {
+    } on FormatException catch (e) {
+      return DefaultAddressResponse(
+          status: false, message: 'Bad response format');
+    } finally {
       EasyLoading.dismiss();
     }
   }
 
-
-  static Future<PlaceOrderResponse> placeOrder(PlaceOrderModel placeOrderModel) async {
-
+  static Future<PlaceOrderResponse> placeOrder(
+      PlaceOrderModel placeOrderModel) async {
     PlaceOrderResponse placeOrderResponse;
     String url = '${APIs.baseURL}${APIs.placeOrder}';
 
     try {
-
       print('url: $url');
       print('body: ${jsonEncode(placeOrderModel.toJson())}');
 
@@ -401,8 +324,7 @@ class CheckoutService {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             'Authorization': 'Bearer ${APIs.token}'
-          }
-      );
+          });
 
       print('Response status: ${response.statusCode}');
       log('place order response: ${response.body}');
@@ -410,61 +332,47 @@ class CheckoutService {
       var result = jsonDecode(response.body);
 
       if (response.statusCode == 200) {
-
         placeOrderResponse = PlaceOrderResponse.fromJson(result);
 
         placeOrderResponse.status = 1;
 
         return placeOrderResponse;
-      }
-      else if (response.statusCode == 401) {
-
-        return PlaceOrderResponse(status: 0, message: result['errors'][0]['message']);
-      }
-      else if (response.statusCode == 400) {
-
-        return PlaceOrderResponse(status: result['status'], message: result['message']);
-      }
-      else if (response.statusCode == 500) {
+      } else if (response.statusCode == 401) {
+        return PlaceOrderResponse(
+            status: 0, message: result['errors'][0]['message']);
+      } else if (response.statusCode == 400) {
+        return PlaceOrderResponse(
+            status: result['status'], message: result['message']);
+      } else if (response.statusCode == 500) {
         return PlaceOrderResponse(status: 0, message: 'Server Error');
-      }
-      else {
+      } else {
         return PlaceOrderResponse(status: 0, message: 'Something went wrong !');
       }
-    }
-    on SocketException {
-      return PlaceOrderResponse(status: 0, message: 'Not connect to internet !');
-    }
-    on TimeoutException catch (_) {
+    } on SocketException {
+      return PlaceOrderResponse(
+          status: 0, message: 'Not connect to internet !');
+    } on TimeoutException catch (_) {
       return PlaceOrderResponse(status: 0, message: 'Request timeout');
-    }
-    on FormatException catch (_) {
+    } on FormatException catch (_) {
       return PlaceOrderResponse(status: 0, message: 'Bad response format');
-    }
-    finally {
+    } finally {
       EasyLoading.dismiss();
     }
   }
 
-
   static Future<DeleteAddressResponse> deleteAddress(int id) async {
-
     DeleteAddressResponse deleteAddressResponse;
     String url = '${APIs.baseURL}${APIs.deleteAddress}?address_id=$id';
 
     try {
-
       print('url: $url');
       print('body: ');
 
-      var response = await http.delete(
-          Uri.parse(url),
-          headers: {
-            'Content-type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': 'Bearer ${APIs.token}'
-          }
-      );
+      var response = await http.delete(Uri.parse(url), headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ${APIs.token}'
+      });
 
       print('Response status: ${response.statusCode}');
       print('delete address response: ${response.body}');
@@ -472,67 +380,54 @@ class CheckoutService {
       var result = jsonDecode(response.body);
 
       if (response.statusCode == 200) {
-
         deleteAddressResponse = DeleteAddressResponse.fromJson(result);
         deleteAddressResponse.success = true;
 
         return deleteAddressResponse;
-      }
-      else if (response.statusCode == 401) {
-
-        return DeleteAddressResponse(success: false, message: result['errors'][0]['message']);
-      }
-      else if (response.statusCode == 400) {
-
-        return DeleteAddressResponse(success: false, message: result['message']);
-      }
-      else if (response.statusCode == 500) {
+      } else if (response.statusCode == 401) {
+        return DeleteAddressResponse(
+            success: false, message: result['errors'][0]['message']);
+      } else if (response.statusCode == 400) {
+        return DeleteAddressResponse(
+            success: false, message: result['message']);
+      } else if (response.statusCode == 500) {
         return DeleteAddressResponse(success: false, message: 'Server Error');
+      } else {
+        return DeleteAddressResponse(
+            success: false, message: 'Something went wrong !');
       }
-      else {
-        return DeleteAddressResponse(success: false, message: 'Something went wrong !');
-      }
-    }
-    on SocketException {
-      return DeleteAddressResponse(success: false, message: 'Not connect to internet !');
-    }
-    on TimeoutException catch (_) {
+    } on SocketException {
+      return DeleteAddressResponse(
+          success: false, message: 'Not connect to internet !');
+    } on TimeoutException catch (_) {
       return DeleteAddressResponse(success: false, message: 'Request timeout');
-    }
-    on FormatException catch (_) {
-      return DeleteAddressResponse(success: false, message: 'Bad response format');
-    }
-    finally {
+    } on FormatException catch (_) {
+      return DeleteAddressResponse(
+          success: false, message: 'Bad response format');
+    } finally {
       EasyLoading.dismiss();
     }
   }
 
   static Future<NotificationsResponse> getNotifications() async {
-
     NotificationsResponse notificationsResponse = NotificationsResponse();
     String url = '${APIs.baseURL}${APIs.notifications}';
 
     try {
-
       print('url: $url');
 
-      var response = await http.get(
-          Uri.parse(url),
-          headers: {
-            'Content-type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': 'Bearer ${APIs.token}'
-          }
-      );
+      var response = await http.get(Uri.parse(url), headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ${APIs.token}'
+      });
 
       print('Response status: ${response.statusCode}');
       print('notifications response: ${response.body}');
 
       var result = jsonDecode(response.body);
 
-
       if (response.statusCode == 200) {
-
         List<Notifications> notifications = (result as List)
             .map((data) => Notifications.fromJson(data))
             .toList();
@@ -543,32 +438,25 @@ class CheckoutService {
         notificationsResponse.message = 'Success';
 
         return notificationsResponse;
-      }
-      else if (response.statusCode == 401) {
-
-        return NotificationsResponse(success: false, message: result['errors'][0]['message']);
-      }
-      else if (response.statusCode == 500) {
+      } else if (response.statusCode == 401) {
+        return NotificationsResponse(
+            success: false, message: result['errors'][0]['message']);
+      } else if (response.statusCode == 500) {
         return NotificationsResponse(success: false, message: 'Server Error');
+      } else {
+        return NotificationsResponse(
+            success: false, message: 'Something went wrong !');
       }
-      else {
-        return NotificationsResponse(success: false, message: 'Something went wrong !');
-      }
-    }
-    on SocketException {
-      return NotificationsResponse(success: false, message: 'Not connect to internet !');
-    }
-    on TimeoutException catch (_) {
+    } on SocketException {
+      return NotificationsResponse(
+          success: false, message: 'Not connect to internet !');
+    } on TimeoutException catch (_) {
       return NotificationsResponse(success: false, message: 'Request timeout');
-    }
-    on FormatException catch (_) {
-      return NotificationsResponse(success: false, message: 'Bad response format');
-    }
-    finally {
+    } on FormatException catch (_) {
+      return NotificationsResponse(
+          success: false, message: 'Bad response format');
+    } finally {
       EasyLoading.dismiss();
     }
   }
-
-
-
 }

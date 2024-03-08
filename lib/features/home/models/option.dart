@@ -8,15 +8,15 @@ class Options {
 
   bool isSelected = false;
 
-  Options(
-      {this.id,
-        this.attributeId,
-        this.name,
-        this.image,
-        this.createdAt,
-        this.updatedAt,
-        this.isSelected = false,
-      });
+  Options({
+    this.id,
+    this.attributeId,
+    this.name,
+    this.image,
+    this.createdAt,
+    this.updatedAt,
+    this.isSelected = false,
+  });
 
   Options.fromJson(Map<String, dynamic> json) {
     id = json['id'];

@@ -31,7 +31,6 @@ class ChoiceOptions {
 }
 */
 
-
 class ChoiceOptions {
   String? attributeId;
   String? title;

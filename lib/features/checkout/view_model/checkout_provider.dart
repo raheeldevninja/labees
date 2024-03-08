@@ -32,7 +32,6 @@ class CheckoutProvider extends ChangeNotifier {
   DeleteAddressResponse? deleteAddressResponse;
   DefaultAddressResponse? defaultAddressResponse;
 
-
   late List<AddressData> addressData;
 
   AddAddressResponse? addAddressResponse;
@@ -58,7 +57,6 @@ class CheckoutProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
   PlaceOrderModel placeOrderModel = PlaceOrderModel();
 
   PlaceOrderModel get getPlaceOrderModel => placeOrderModel;
@@ -67,9 +65,6 @@ class CheckoutProvider extends ChangeNotifier {
     this.placeOrderModel = placeOrderModel;
     notifyListeners();
   }
-
-
-
 
   Future<void> getCountries() async {
     showLoading();
@@ -138,7 +133,6 @@ class CheckoutProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
   Future<void> getAllAddresses() async {
     showLoading();
 
@@ -156,13 +150,11 @@ class CheckoutProvider extends ChangeNotifier {
   }
 
   Future<void> updateDefaultAddress(int id) async {
-
     EasyLoading.show(status: 'loading...');
     showLoading();
     defaultAddressResponse = await CheckoutService.updateDefaultAddress(id);
 
     if (defaultAddressResponse!.status!) {
-
     } else {
       Utils.toast(defaultAddressResponse!.message!);
     }
@@ -173,9 +165,8 @@ class CheckoutProvider extends ChangeNotifier {
   }
 
   bool checkAddressesHaveBillingAddress() {
-
-    for(int i=0; i<allAddresses!.addresses!.length; i++) {
-      if(allAddresses!.addresses![i].isBilling == 1) {
+    for (int i = 0; i < allAddresses!.addresses!.length; i++) {
+      if (allAddresses!.addresses![i].isBilling == 1) {
         return true;
       }
     }
@@ -184,9 +175,8 @@ class CheckoutProvider extends ChangeNotifier {
   }
 
   int getFirstBillingAddressIndex() {
-
-    for(int i=0; i<allAddresses!.addresses!.length; i++) {
-      if(allAddresses!.addresses![i].isBilling == 1) {
+    for (int i = 0; i < allAddresses!.addresses!.length; i++) {
+      if (allAddresses!.addresses![i].isBilling == 1) {
         return i;
       }
     }
@@ -194,11 +184,9 @@ class CheckoutProvider extends ChangeNotifier {
     return -1;
   }
 
-
   bool checkAddressesHaveShippingAddress() {
-
-    for(int i=0; i<allAddresses!.addresses!.length; i++) {
-      if(allAddresses!.addresses![i].isBilling == 0) {
+    for (int i = 0; i < allAddresses!.addresses!.length; i++) {
+      if (allAddresses!.addresses![i].isBilling == 0) {
         return true;
       }
     }
@@ -207,16 +195,14 @@ class CheckoutProvider extends ChangeNotifier {
   }
 
   int getFirstShippingAddressIndex() {
-
-    for(int i=0; i<allAddresses!.addresses!.length; i++) {
-      if(allAddresses!.addresses![i].isBilling == 0) {
+    for (int i = 0; i < allAddresses!.addresses!.length; i++) {
+      if (allAddresses!.addresses![i].isBilling == 0) {
         return i;
       }
     }
 
     return -1;
   }
-
 
   Future<void> placeOrder(PlaceOrderModel placeOrderModel) async {
     EasyLoading.show(status: 'loading...');
@@ -225,7 +211,6 @@ class CheckoutProvider extends ChangeNotifier {
     placeOrderResponse = await CheckoutService.placeOrder(placeOrderModel);
 
     if (placeOrderResponse!.status == 1) {
-
     } else {
       Utils.toast(placeOrderResponse!.message!);
     }
@@ -235,7 +220,6 @@ class CheckoutProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
   Future<void> deleteAddress(int id) async {
     EasyLoading.show(status: 'loading...');
     showLoading();
@@ -244,7 +228,6 @@ class CheckoutProvider extends ChangeNotifier {
     await CheckoutService.getAllAddresses();
 
     if (deleteAddressResponse!.success!) {
-
     } else {
       Utils.toast(deleteAddressResponse!.message!);
     }
@@ -272,11 +255,11 @@ class CheckoutProvider extends ChangeNotifier {
       countriesData.addAll(listData);
     } else {
       countriesData.clear();
-      countriesData.addAll(originalCountriesData); // Restore original data when query is empty
+      countriesData.addAll(
+          originalCountriesData); // Restore original data when query is empty
     }
     notifyListeners();
   }
-
 
   List<CitiesData> originalCitiesData = [];
 
@@ -296,15 +279,13 @@ class CheckoutProvider extends ChangeNotifier {
       citiesData.addAll(listData);
     } else {
       cities!.data!.clear();
-      cities!.data!.addAll(originalCitiesData); // Restore original data when query is empty
+      cities!.data!.addAll(
+          originalCitiesData); // Restore original data when query is empty
     }
     notifyListeners();
   }
 
-
-
   Future<void> getNotifications() async {
-
     EasyLoading.show(status: 'loading...');
     showLoading();
 
@@ -319,8 +300,6 @@ class CheckoutProvider extends ChangeNotifier {
     EasyLoading.dismiss();
     hideLoading();
   }
-
-
 
   showLoading() {
     isLoading = true;

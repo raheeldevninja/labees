@@ -11,14 +11,13 @@ class FAQResponse {
 
   FAQResponse(
       {this.id,
-        this.question,
-        this.answer,
-        this.ranking,
-        this.status,
-        this.createdAt,
-        this.updatedAt,
-        this.isExpanded
-      });
+      this.question,
+      this.answer,
+      this.ranking,
+      this.status,
+      this.createdAt,
+      this.updatedAt,
+      this.isExpanded});
 
   FAQResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -42,5 +41,4 @@ class FAQResponse {
 
     return data;
   }
-
 }

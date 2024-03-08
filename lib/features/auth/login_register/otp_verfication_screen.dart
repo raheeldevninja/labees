@@ -5,14 +5,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:labees/features/auth/view_model/auth_provider.dart';
 import 'package:provider/provider.dart';
 
-
 /*
 *  Date 3 - Dec-2023
 *  Author: Raheel Khan- Abaska Technologies
 *  Description: OTPVerificationScreen
 */
-
-
 
 class OTPVerificationScreen extends StatefulWidget {
   const OTPVerificationScreen({
@@ -27,7 +24,6 @@ class OTPVerificationScreen extends StatefulWidget {
 }
 
 class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
-
   final _otp1 = TextEditingController();
   final _otp2 = TextEditingController();
   final _otp3 = TextEditingController();
@@ -35,7 +31,6 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     final l10n = AppLocalizations.of(context)!;
     final authProvider = context.read<AuthProvider>();
 
@@ -83,177 +78,178 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
               height: 40,
             ),
 
-
             ///circle otp text fields
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 50,
-                  child: TextFormField(
-                    controller: _otp1,
-                    textAlign: TextAlign.center,
-
-                    keyboardType: TextInputType.number,
-                    maxLength: 1,
-                    onChanged: (value) {
-                      FocusScope.of(context).nextFocus();
-                    },
-                    decoration: InputDecoration(
-                      counterText: '',
-                      contentPadding: const EdgeInsets.all(12.0),
-
-                      hintStyle: const TextStyle(
-                          fontSize: 14, color: AppColors.primaryColor),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50.0),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                            color: AppColors.primaryColor, width: 1.0),
-                        borderRadius: BorderRadius.circular(50.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                            color: AppColors.primaryColor, width: 1.0),
-                        borderRadius: BorderRadius.circular(50.0),
-                      ),
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              SizedBox(
+                width: 50,
+                child: TextFormField(
+                  controller: _otp1,
+                  textAlign: TextAlign.center,
+                  keyboardType: TextInputType.number,
+                  maxLength: 1,
+                  onChanged: (value) {
+                    FocusScope.of(context).nextFocus();
+                  },
+                  decoration: InputDecoration(
+                    counterText: '',
+                    contentPadding: const EdgeInsets.all(12.0),
+                    hintStyle: const TextStyle(
+                        fontSize: 14, color: AppColors.primaryColor),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50.0),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: AppColors.primaryColor, width: 1.0),
+                      borderRadius: BorderRadius.circular(50.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: AppColors.primaryColor, width: 1.0),
+                      borderRadius: BorderRadius.circular(50.0),
                     ),
                   ),
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
-                SizedBox(
-                  width: 50,
-                  child: TextFormField(
-                    controller: _otp2,
-                    textAlign: TextAlign.center,
-                    onChanged: (value) {
-                      FocusScope.of(context).nextFocus();
-                      if(value.isEmpty) {
-                        FocusScope.of(context).previousFocus();
-                        _otp1.selection = TextSelection.fromPosition(TextPosition(offset: _otp1.text.length));
-                      }
-                    },
-                    keyboardType: TextInputType.number,
-                    maxLength: 1,
-                    decoration: InputDecoration(
-                      counterText: '',
-                      contentPadding: const EdgeInsets.all(12.0),
-
-                      hintStyle: const TextStyle(
-                          fontSize: 14, color: AppColors.primaryColor),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50.0),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                            color: AppColors.primaryColor, width: 1.0),
-                        borderRadius: BorderRadius.circular(50.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                            color: AppColors.primaryColor, width: 1.0),
-                        borderRadius: BorderRadius.circular(50.0),
-                      ),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              SizedBox(
+                width: 50,
+                child: TextFormField(
+                  controller: _otp2,
+                  textAlign: TextAlign.center,
+                  onChanged: (value) {
+                    FocusScope.of(context).nextFocus();
+                    if (value.isEmpty) {
+                      FocusScope.of(context).previousFocus();
+                      _otp1.selection = TextSelection.fromPosition(
+                          TextPosition(offset: _otp1.text.length));
+                    }
+                  },
+                  keyboardType: TextInputType.number,
+                  maxLength: 1,
+                  decoration: InputDecoration(
+                    counterText: '',
+                    contentPadding: const EdgeInsets.all(12.0),
+                    hintStyle: const TextStyle(
+                        fontSize: 14, color: AppColors.primaryColor),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50.0),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: AppColors.primaryColor, width: 1.0),
+                      borderRadius: BorderRadius.circular(50.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: AppColors.primaryColor, width: 1.0),
+                      borderRadius: BorderRadius.circular(50.0),
                     ),
                   ),
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
-                SizedBox(
-                  width: 50,
-                  child: TextFormField(
-                    controller: _otp3,
-                    textAlign: TextAlign.center,
-                    onChanged: (value) {
-                      FocusScope.of(context).nextFocus();
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              SizedBox(
+                width: 50,
+                child: TextFormField(
+                  controller: _otp3,
+                  textAlign: TextAlign.center,
+                  onChanged: (value) {
+                    FocusScope.of(context).nextFocus();
 
-                      if(value.isEmpty) {
-                        FocusScope.of(context).previousFocus();
-                        _otp2.selection = TextSelection.fromPosition(TextPosition(offset: _otp2.text.length));
-                      }
-                    },
-                    keyboardType: TextInputType.number,
-                    maxLength: 1,
-                    decoration: InputDecoration(
-                      counterText: '',
-                      contentPadding: const EdgeInsets.all(12.0),
-
-                      hintStyle: const TextStyle(
-                          fontSize: 14, color: AppColors.primaryColor),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50.0),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                            color: AppColors.primaryColor, width: 1.0),
-                        borderRadius: BorderRadius.circular(50.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                            color: AppColors.primaryColor, width: 1.0),
-                        borderRadius: BorderRadius.circular(50.0),
-                      ),
+                    if (value.isEmpty) {
+                      FocusScope.of(context).previousFocus();
+                      _otp2.selection = TextSelection.fromPosition(
+                          TextPosition(offset: _otp2.text.length));
+                    }
+                  },
+                  keyboardType: TextInputType.number,
+                  maxLength: 1,
+                  decoration: InputDecoration(
+                    counterText: '',
+                    contentPadding: const EdgeInsets.all(12.0),
+                    hintStyle: const TextStyle(
+                        fontSize: 14, color: AppColors.primaryColor),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50.0),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: AppColors.primaryColor, width: 1.0),
+                      borderRadius: BorderRadius.circular(50.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: AppColors.primaryColor, width: 1.0),
+                      borderRadius: BorderRadius.circular(50.0),
                     ),
                   ),
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
-                SizedBox(
-                  width: 50,
-                  child: TextFormField(
-                    controller: _otp4,
-                    keyboardType: TextInputType.number,
-                    onChanged: (value) {
-                      FocusScope.of(context).unfocus();
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              SizedBox(
+                width: 50,
+                child: TextFormField(
+                  controller: _otp4,
+                  keyboardType: TextInputType.number,
+                  onChanged: (value) {
+                    FocusScope.of(context).unfocus();
 
-
-                      //on delete go back to previous field but cursor should be at the end
-                      if(value.isEmpty) {
-                        FocusScope.of(context).previousFocus();
-                        _otp3.selection = TextSelection.fromPosition(TextPosition(offset: _otp3.text.length));
-                      }
-
-                    },
-                    maxLength: 1,
-                    textAlign: TextAlign.center,
-                    decoration: InputDecoration(
-                      counterText: '',
-                      contentPadding: const EdgeInsets.all(12.0),
-
-                      hintStyle: const TextStyle(
-                          fontSize: 14, color: AppColors.primaryColor),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50.0),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                            color: AppColors.primaryColor, width: 1.0),
-                        borderRadius: BorderRadius.circular(50.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                            color: AppColors.primaryColor, width: 1.0),
-                        borderRadius: BorderRadius.circular(50.0),
-                      ),
+                    //on delete go back to previous field but cursor should be at the end
+                    if (value.isEmpty) {
+                      FocusScope.of(context).previousFocus();
+                      _otp3.selection = TextSelection.fromPosition(
+                          TextPosition(offset: _otp3.text.length));
+                    }
+                  },
+                  maxLength: 1,
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                    counterText: '',
+                    contentPadding: const EdgeInsets.all(12.0),
+                    hintStyle: const TextStyle(
+                        fontSize: 14, color: AppColors.primaryColor),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50.0),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: AppColors.primaryColor, width: 1.0),
+                      borderRadius: BorderRadius.circular(50.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: AppColors.primaryColor, width: 1.0),
+                      borderRadius: BorderRadius.circular(50.0),
                     ),
                   ),
                 ),
+              ),
             ]),
 
-            const SizedBox(height: 40,),
+            const SizedBox(
+              height: 40,
+            ),
 
             //timer
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.alarm, color: AppColors.primaryColor, size: 32,),
+                const Icon(
+                  Icons.alarm,
+                  color: AppColors.primaryColor,
+                  size: 32,
+                ),
 
-                const SizedBox(width: 10,),
+                const SizedBox(
+                  width: 10,
+                ),
                 //60 seconds timer
                 TweenAnimationBuilder(
                   tween: Tween(begin: 60.0, end: 0.0),
@@ -273,30 +269,33 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
               ],
             ),
 
-            const SizedBox(height: 40,),
+            const SizedBox(
+              height: 40,
+            ),
             SizedBox(
               width: double.maxFinite,
               height: 50,
               child: ElevatedButton(
                 onPressed: () async {
-
-                  String otpCode = _otp1.text.trim() + _otp2.text.trim() + _otp3.text.trim() + _otp4.text.trim();
+                  String otpCode = _otp1.text.trim() +
+                      _otp2.text.trim() +
+                      _otp3.text.trim() +
+                      _otp4.text.trim();
 
                   ///call verify otp api
                   await authProvider.verifyOTP(context, widget.email, otpCode);
 
-                  if(mounted && authProvider.verifyOTPResponse.status!) {
-
+                  if (mounted && authProvider.verifyOTPResponse.status!) {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => NewPasswordScreen(email: widget.email, otp: otpCode,),
+                        builder: (context) => NewPasswordScreen(
+                          email: widget.email,
+                          otp: otpCode,
+                        ),
                       ),
                     );
-
                   }
-
-
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primaryColor,
@@ -325,5 +324,4 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
     _otp3.dispose();
     _otp4.dispose();
   }
-
 }

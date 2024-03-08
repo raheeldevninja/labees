@@ -25,20 +25,19 @@ class TicketSupportListResponse {
 
   TicketSupportListResponse(
       {this.id,
-        this.customerId,
-        this.subject,
-        this.type,
-        this.priority,
-        this.description,
-        this.reply,
-        this.expectedSolveDate,
-        this.adminId,
-        this.status,
-        this.createdAt,
-        this.updatedAt,
-        this.message,
-        this.success
-      });
+      this.customerId,
+      this.subject,
+      this.type,
+      this.priority,
+      this.description,
+      this.reply,
+      this.expectedSolveDate,
+      this.adminId,
+      this.status,
+      this.createdAt,
+      this.updatedAt,
+      this.message,
+      this.success});
 
   TicketSupportListResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'];

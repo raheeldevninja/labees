@@ -23,13 +23,11 @@ import 'package:provider/provider.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 /*
 *  Date 20 - September-2023
 *  Author: Raheel Khan- Abaska Technologies
 *  Description: Categories Page
 */
-
 
 class CategoriesPage extends StatefulWidget {
   const CategoriesPage({Key? key}) : super(key: key);
@@ -56,18 +54,16 @@ class _CategoriesPageState extends State<CategoriesPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final homeProvider = Provider.of<HomeProvider>(context, listen: false);
 
-      homeProvider.setMainCategory(
-          homeProvider.categories![0].name!);
+      homeProvider.setMainCategory(homeProvider.categories![0].name!);
 
-      homeProvider.setChildList(homeProvider
-          .getCategoryChildren![0].childes!, homeProvider.getCategoryChildren![0].parentId!, homeProvider.getCategoryChildren![0].name!);
+      homeProvider.setChildList(
+          homeProvider.getCategoryChildren![0].childes!,
+          homeProvider.getCategoryChildren![0].parentId!,
+          homeProvider.getCategoryChildren![0].name!);
 
       homeProvider.getCategoryChildren![0] =
-          homeProvider.getCategoryChildren![0]
-              .copyWith(isSelected: true);
-
+          homeProvider.getCategoryChildren![0].copyWith(isSelected: true);
     });
-
   }
 
   @override
@@ -147,7 +143,6 @@ class _CategoriesPageState extends State<CategoriesPage> {
             ),
           ),
           actions: [
-
             IconButton(
               onPressed: () {
                 Navigator.push(
@@ -156,7 +151,6 @@ class _CategoriesPageState extends State<CategoriesPage> {
                     builder: (context) => const MyBagScreen(),
                   ),
                 );
-
               },
               icon: badges.Badge(
                 badgeContent: Text(
@@ -198,7 +192,6 @@ class _CategoriesPageState extends State<CategoriesPage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
           ///header tabs
           Container(
             color: AppColors.primaryColor,
@@ -221,21 +214,19 @@ class _CategoriesPageState extends State<CategoriesPage> {
                           Utils.mainCategories = MainCategories.men;
                         });
 
-                        homeProvider.setMainCategoryId(homeProvider.getMainCategoriesList.categories![0].id!);
+                        homeProvider.setMainCategoryId(homeProvider
+                            .getMainCategoriesList.categories![0].id!);
 
                         homeProvider.setCategoryChildren(
-                            homeProvider
-                                .categories![0].childes!);
+                            homeProvider.categories![0].childes!);
                       },
                       child: Container(
                         height: 60,
                         decoration: BoxDecoration(
-                          color: Utils.mainCategories ==
-                              MainCategories.men
+                          color: Utils.mainCategories == MainCategories.men
                               ? Colors.white
                               : AppColors.primaryColor,
-                          borderRadius:
-                          const BorderRadius.all(
+                          borderRadius: const BorderRadius.all(
                             Radius.circular(30),
                           ),
                         ),
@@ -243,8 +234,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                         child: Text(
                           homeProvider.categories![0].name!,
                           style: TextStyle(
-                              color: Utils.mainCategories ==
-                                  MainCategories.men
+                              color: Utils.mainCategories == MainCategories.men
                                   ? AppColors.primaryColor
                                   : Colors.white),
                         ),
@@ -258,25 +248,22 @@ class _CategoriesPageState extends State<CategoriesPage> {
                       ),
                       onTap: () {
                         setState(() {
-                          Utils.mainCategories =
-                              MainCategories.women;
+                          Utils.mainCategories = MainCategories.women;
                         });
 
-                        homeProvider.setMainCategoryId(homeProvider.getMainCategoriesList.categories![1].id!);
+                        homeProvider.setMainCategoryId(homeProvider
+                            .getMainCategoriesList.categories![1].id!);
 
                         homeProvider.setCategoryChildren(
-                            homeProvider
-                                .categories![1].childes!);
+                            homeProvider.categories![1].childes!);
                       },
                       child: Container(
                         height: 60,
                         decoration: BoxDecoration(
-                          color: Utils.mainCategories ==
-                              MainCategories.women
+                          color: Utils.mainCategories == MainCategories.women
                               ? Colors.white
                               : AppColors.primaryColor,
-                          borderRadius:
-                          const BorderRadius.all(
+                          borderRadius: const BorderRadius.all(
                             Radius.circular(30),
                           ),
                         ),
@@ -284,10 +271,10 @@ class _CategoriesPageState extends State<CategoriesPage> {
                         child: Text(
                           homeProvider.categories![1].name!,
                           style: TextStyle(
-                              color: Utils.mainCategories ==
-                                  MainCategories.women
-                                  ? AppColors.primaryColor
-                                  : Colors.white),
+                              color:
+                                  Utils.mainCategories == MainCategories.women
+                                      ? AppColors.primaryColor
+                                      : Colors.white),
                         ),
                       ),
                     ),
@@ -299,26 +286,22 @@ class _CategoriesPageState extends State<CategoriesPage> {
                       ),
                       onTap: () {
                         setState(() {
-                          Utils.mainCategories =
-                              MainCategories.kids;
+                          Utils.mainCategories = MainCategories.kids;
                         });
 
-                        homeProvider.setMainCategoryId(homeProvider.getMainCategoriesList.categories![2].id!);
-
+                        homeProvider.setMainCategoryId(homeProvider
+                            .getMainCategoriesList.categories![2].id!);
 
                         homeProvider.setCategoryChildren(
-                            homeProvider
-                                .categories![2].childes!);
+                            homeProvider.categories![2].childes!);
                       },
                       child: Container(
                         height: 60,
                         decoration: BoxDecoration(
-                          color: Utils.mainCategories ==
-                              MainCategories.kids
+                          color: Utils.mainCategories == MainCategories.kids
                               ? Colors.white
                               : AppColors.primaryColor,
-                          borderRadius:
-                          const BorderRadius.all(
+                          borderRadius: const BorderRadius.all(
                             Radius.circular(30),
                           ),
                         ),
@@ -326,8 +309,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                         child: Text(
                           homeProvider.categories![2].name!,
                           style: TextStyle(
-                              color: Utils.mainCategories ==
-                                  MainCategories.kids
+                              color: Utils.mainCategories == MainCategories.kids
                                   ? AppColors.primaryColor
                                   : Colors.white),
                         ),
@@ -343,7 +325,6 @@ class _CategoriesPageState extends State<CategoriesPage> {
             padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
-
                 Text(
                   l10n.allCategories,
                   style: const TextStyle(
@@ -358,7 +339,6 @@ class _CategoriesPageState extends State<CategoriesPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-
                       ///left section
                       const CategoryChildrenSection(),
 
@@ -368,7 +348,6 @@ class _CategoriesPageState extends State<CategoriesPage> {
                       Expanded(
                         child: ListView(
                           children: [
-
                             ///main categories row
                             const MainCategoriesRow(),
 
@@ -382,16 +361,15 @@ class _CategoriesPageState extends State<CategoriesPage> {
                             ///brands section
                             BrandsSection(
                               //selectedCategoryIndex: _selectedCategoryIndex,
-                              selectedCategoryIndex: homeProvider.getSelectedCategoryIndex,
+                              selectedCategoryIndex:
+                                  homeProvider.getSelectedCategoryIndex,
                             ),
-
                           ],
                         ),
                       ),
                     ],
                   ),
                 ),
-
               ],
             ),
           ),
@@ -400,7 +378,6 @@ class _CategoriesPageState extends State<CategoriesPage> {
     );
   }
 
-
   @override
   void dispose() {
     super.dispose();
@@ -408,5 +385,3 @@ class _CategoriesPageState extends State<CategoriesPage> {
     _searchController.dispose();
   }
 }
-
-

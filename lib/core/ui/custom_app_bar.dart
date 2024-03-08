@@ -10,13 +10,10 @@ import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:badges/badges.dart' as badges;
 
-
-
 class CustomAppBar extends StatefulWidget {
   const CustomAppBar({
     //required this.scaffoldKey,
     Key? key,
-
   }) : super(key: key);
 
   //final GlobalKey<ScaffoldState> scaffoldKey;
@@ -26,16 +23,12 @@ class CustomAppBar extends StatefulWidget {
 }
 
 class _CustomAppBarState extends State<CustomAppBar> {
-
   final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
-
 
   @override
   Widget build(BuildContext context) {
-
     final cartProvider = Provider.of<CartProvider>(context);
     final l10n = AppLocalizations.of(context)!;
-
 
     return AppBar(
       shadowColor: Colors.transparent,
@@ -71,8 +64,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
                 fillColor: Colors.white,
                 contentPadding: const EdgeInsets.all(12.0),
                 hintText: l10n.searchHint,
-                hintStyle:
-                const TextStyle(fontSize: 14, color: Colors.grey),
+                hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
                 suffixIcon: IconButton(
                   onPressed: () {},
                   icon: SvgPicture.asset(
@@ -83,8 +75,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
                   borderRadius: BorderRadius.circular(25.0),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderSide:
-                  const BorderSide(color: Colors.grey, width: 1.0),
+                  borderSide: const BorderSide(color: Colors.grey, width: 1.0),
                   borderRadius: BorderRadius.circular(25.0),
                 ),
                 focusedBorder: OutlineInputBorder(
@@ -98,7 +89,6 @@ class _CustomAppBarState extends State<CustomAppBar> {
         ),
       ),
       actions: [
-
         IconButton(
           onPressed: () {
             Navigator.push(
@@ -107,7 +97,6 @@ class _CustomAppBarState extends State<CustomAppBar> {
                 builder: (context) => const MyBagScreen(),
               ),
             );
-
           },
           icon: badges.Badge(
             badgeContent: Text(

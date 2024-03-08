@@ -1,5 +1,4 @@
 class ForgotPasswordResponse {
-
   bool? status;
   String? message;
 

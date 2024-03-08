@@ -30,9 +30,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
-
-void main() async { 
-
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
@@ -41,106 +39,98 @@ void main() async {
   //await Permission.notification.request();
   //await Permission.location.request();
 
-
   //if(Platform.isAndroid) {
 
-    FirebaseMessaging messaging = FirebaseMessaging.instance;
-    String? token;
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+  String? token;
 
-    token = await messaging.getToken();
+  token = await messaging.getToken();
 
-    log('fcm token: $token');
+  log('fcm token: $token');
 
+  NotificationSettings settings = await messaging.requestPermission(
+    alert: true,
+    announcement: true,
+    badge: true,
+    carPlay: true,
+    criticalAlert: true,
+    provisional: true,
+    sound: true,
+  );
 
-    NotificationSettings settings = await messaging.requestPermission(
-      alert: true,
-      announcement: true,
-      badge: true,
-      carPlay: true,
-      criticalAlert: true,
-      provisional: true,
-      sound: true,
-    );
+  print('User granted permission: ${settings.authorizationStatus}');
 
-    print('User granted permission: ${settings.authorizationStatus}');
+  const AndroidNotificationChannel channel = AndroidNotificationChannel(
+    'high_importance_channel', // id
+    'High Importance Notifications', // title
+    description:
+        'This channel is used for important notifications.', // description
+    importance: Importance.max,
+  );
 
-    const AndroidNotificationChannel channel = AndroidNotificationChannel(
-      'high_importance_channel', // id
-      'High Importance Notifications', // title
-      description: 'This channel is used for important notifications.', // description
-      importance: Importance.max,
-    );
+  flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
+  await flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
+      ?.createNotificationChannel(channel);
 
-    flutterLocalNotificationsPlugin =
-        FlutterLocalNotificationsPlugin();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-    await flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
-        ?.createNotificationChannel(channel);
+  await messaging.setForegroundNotificationPresentationOptions(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
 
-    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    print('Got a message whilst in the foreground!');
+    print('Message data: ${message.data}');
 
-    await messaging.setForegroundNotificationPresentationOptions(
-      alert: true,
-      badge: true,
-      sound: true,
-    );
+    RemoteNotification notification = message.notification!;
+    AndroidNotification? android = message.notification?.android;
 
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print('Got a message whilst in the foreground!');
-      print('Message data: ${message.data}');
+    if (message.notification != null) {
+      print(
+          'Message also contained a notification: ${message.notification!.title}');
+      print(
+          'Message also contained a notification: ${message.notification!.body}');
 
-      RemoteNotification notification = message.notification!;
-      AndroidNotification? android = message.notification?.android;
+      var initializationSettingsAndroid =
+          const AndroidInitializationSettings('mipmap/ic_launcher');
 
-
-      if (message.notification != null) {
-        print('Message also contained a notification: ${message.notification!.title}');
-        print('Message also contained a notification: ${message.notification!.body}');
-
-        var initializationSettingsAndroid = const AndroidInitializationSettings('mipmap/ic_launcher');
-
-
-        if (android != null) {
-          flutterLocalNotificationsPlugin.show(
-              notification.hashCode,
-              notification.title,
-              notification.body,
-              NotificationDetails(
-                android: AndroidNotificationDetails(
-                  channel.id,
-                  channel.name,
-                  channelDescription: channel.description,
-                  icon: initializationSettingsAndroid.defaultIcon,
-                ),
-              ));
-        }
-
+      if (android != null) {
+        flutterLocalNotificationsPlugin.show(
+            notification.hashCode,
+            notification.title,
+            notification.body,
+            NotificationDetails(
+              android: AndroidNotificationDetails(
+                channel.id,
+                channel.name,
+                channelDescription: channel.description,
+                icon: initializationSettingsAndroid.defaultIcon,
+              ),
+            ));
       }
-    });
-
+    }
+  });
 
   //}
 
-
   runApp(
-    MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (context) => AuthProvider()),
-          ChangeNotifierProvider(create: (context) => HomeProvider()),
-          ChangeNotifierProvider(create: (context) => CartProvider()),
-          ChangeNotifierProvider(create: (context) => CheckoutProvider()),
-          ChangeNotifierProvider(create: (context) => AccountProvider()),
-          ChangeNotifierProvider(create: (context) => OrderProvider()),
-          ChangeNotifierProvider(create: (context) => LocaleProvider()),
-          ChangeNotifierProvider(create: (context) => SellerRegistrationProvider()),
-          ChangeNotifierProvider(create: (context) => SettingsProvider()),
-          ChangeNotifierProvider(create: (context) => TicketSupportProvider()),
-        ],
-        child: const MyApp()
-    ),
-
+    MultiProvider(providers: [
+      ChangeNotifierProvider(create: (context) => AuthProvider()),
+      ChangeNotifierProvider(create: (context) => HomeProvider()),
+      ChangeNotifierProvider(create: (context) => CartProvider()),
+      ChangeNotifierProvider(create: (context) => CheckoutProvider()),
+      ChangeNotifierProvider(create: (context) => AccountProvider()),
+      ChangeNotifierProvider(create: (context) => OrderProvider()),
+      ChangeNotifierProvider(create: (context) => LocaleProvider()),
+      ChangeNotifierProvider(create: (context) => SellerRegistrationProvider()),
+      ChangeNotifierProvider(create: (context) => SettingsProvider()),
+      ChangeNotifierProvider(create: (context) => TicketSupportProvider()),
+    ], child: const MyApp()),
   );
 }
 
@@ -164,7 +154,6 @@ void showFlutterNotification(RemoteMessage message) {
   }
 }
 
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -177,7 +166,6 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSwatch().copyWith(
           primary: AppColors.primaryColor,
           background: const Color(0xFFFFFFFF),
-
         ),
       ),
       locale: context.watch<LocaleProvider>().appLocale,

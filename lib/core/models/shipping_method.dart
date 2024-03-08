@@ -1,11 +1,9 @@
 class ShippingMethods {
-
   bool success = false;
   String? message;
   List<ShippingMethod>? data;
 
   ShippingMethods({this.success = false, this.message, this.data});
-
 }
 
 class ShippingMethod {
@@ -19,18 +17,17 @@ class ShippingMethod {
   String? createdAt;
   String? updatedAt;
 
-
   ShippingMethod({
-        this.id,
-        this.creatorId,
-        this.creatorType,
-        this.title,
-        this.cost,
-        this.duration,
-        this.status,
-        this.createdAt,
-        this.updatedAt,
-      });
+    this.id,
+    this.creatorId,
+    this.creatorType,
+    this.title,
+    this.cost,
+    this.duration,
+    this.status,
+    this.createdAt,
+    this.updatedAt,
+  });
 
   ShippingMethod.fromJson(Map<String, dynamic> json) {
     id = json['id'];

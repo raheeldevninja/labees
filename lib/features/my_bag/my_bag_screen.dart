@@ -15,13 +15,11 @@ import 'package:labees/features/my_bag/view_model/cart_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 /*
 *  Date 15 - Nov-2023
 *  Author: Raheel Khan- Abaska Technologies
 *  Description: MyBagScreen
 */
-
 
 class MyBagScreen extends StatefulWidget {
   const MyBagScreen({Key? key}) : super(key: key);
@@ -31,21 +29,16 @@ class MyBagScreen extends StatefulWidget {
 }
 
 class _MyBagScreenState extends State<MyBagScreen> {
-
   List<MyBag> myBagProducts = [];
   int qty = 1;
-
 
   @override
   void initState() {
     super.initState();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
-
     final l10n = AppLocalizations.of(context)!;
 
     final authProvider = Provider.of<AuthProvider>(context);
@@ -71,31 +64,34 @@ class _MyBagScreenState extends State<MyBagScreen> {
               color: AppColors.white,
               child: Stack(
                 children: [
-                  cartProvider.cartProducts.isEmpty ? const Center(child: Text('No items')) : ListView.separated(
-                    //itemCount: myBagProducts.length,
-                    itemCount: cartProvider.cartProducts.length,
-                    padding: const EdgeInsets.all(16),
-                    itemBuilder: (context, index) {
-                      return Dismissible(
-                        key: UniqueKey(),
-                        onDismissed: (direction) {
-                          /*setState(() {
+                  cartProvider.cartProducts.isEmpty
+                      ? const Center(child: Text('No items'))
+                      : ListView.separated(
+                          //itemCount: myBagProducts.length,
+                          itemCount: cartProvider.cartProducts.length,
+                          padding: const EdgeInsets.all(16),
+                          itemBuilder: (context, index) {
+                            return Dismissible(
+                              key: UniqueKey(),
+                              onDismissed: (direction) {
+                                /*setState(() {
                             myBagProducts.removeAt(index);
                           });*/
 
-                          cartProvider.removeCartProduct(cartProvider.cartProducts[index]);
-                        },
-                        background: Container(
-                          padding: const EdgeInsets.only(right: 16),
-                          color: AppColors.primaryColor,
-                          alignment: Alignment.centerRight,
-                          //child: const Icon(Icons.delete, color: Colors.white),
-                          child: SvgPicture.asset(
-                            'assets/icons/delete_icon_bag.svg',
-                            color: Colors.white,
-                          ),
-                        ),
-                        child: /*MyBagItem(
+                                cartProvider.removeCartProduct(
+                                    cartProvider.cartProducts[index]);
+                              },
+                              background: Container(
+                                padding: const EdgeInsets.only(right: 16),
+                                color: AppColors.primaryColor,
+                                alignment: Alignment.centerRight,
+                                //child: const Icon(Icons.delete, color: Colors.white),
+                                child: SvgPicture.asset(
+                                  'assets/icons/delete_icon_bag.svg',
+                                  color: Colors.white,
+                                ),
+                              ),
+                              child: /*MyBagItem(
                           myBag: myBagProducts[index],
                           increment: () {
                             int qty = myBagProducts[index].quantity;
@@ -116,25 +112,25 @@ class _MyBagScreenState extends State<MyBagScreen> {
                             }
                           },
                         ),*/
-                        CartProductItem(
-                          cartProduct: cartProvider.cartProducts[index],
-                          quantity: cartProvider.cartProducts[index].quantity,
-                          increment: () {
-                            //cartProvider.incrementQuantity(cartProvider.cartProducts[index]);
-                            cartProvider.incrementQuantity(index);
+                                  CartProductItem(
+                                cartProduct: cartProvider.cartProducts[index],
+                                quantity:
+                                    cartProvider.cartProducts[index].quantity,
+                                increment: () {
+                                  //cartProvider.incrementQuantity(cartProvider.cartProducts[index]);
+                                  cartProvider.incrementQuantity(index);
+                                },
+                                decrement: () {
+                                  //cartProvider.decrementQuantity(cartProvider.cartProducts[index]);
+                                  cartProvider.decrementQuantity(index);
+                                },
+                              ),
+                            );
                           },
-                          decrement: () {
-                            //cartProvider.decrementQuantity(cartProvider.cartProducts[index]);
-                            cartProvider.decrementQuantity(index);
+                          separatorBuilder: (BuildContext context, int index) {
+                            return const Divider();
                           },
                         ),
-                      );
-                    },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return const Divider();
-                    },
-                  ),
-
                   const SummarySheet(),
                 ],
               ),
@@ -150,20 +146,16 @@ class _MyBagScreenState extends State<MyBagScreen> {
                     height: 50,
                     child: ElevatedButton(
                       onPressed: () {
-
-                        if(cartProvider.cartProducts.isNotEmpty) {
+                        if (cartProvider.cartProducts.isNotEmpty) {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                               builder: (context) => const CheckoutScreen(),
                             ),
                           );
-
-                        }
-                        else {
+                        } else {
                           Utils.toast('No items in cart');
                         }
-
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primaryColor,
@@ -172,7 +164,10 @@ class _MyBagScreenState extends State<MyBagScreen> {
                           borderRadius: BorderRadius.circular(30),
                         ),
                       ),
-                      child: Text(l10n.checkoutBtnText, style: const TextStyle(color: Colors.white),),
+                      child: Text(
+                        l10n.checkoutBtnText,
+                        style: const TextStyle(color: Colors.white),
+                      ),
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -217,7 +212,6 @@ class MyBagItem extends StatefulWidget {
 class _MyBagItemState extends State<MyBagItem> {
   @override
   Widget build(BuildContext context) {
-
     final l10n = AppLocalizations.of(context)!;
 
     return Container(
@@ -295,10 +289,11 @@ class _MyBagItemState extends State<MyBagItem> {
                               color: AppColors.lightGrey.withOpacity(0.2),
                               shape: BoxShape.circle,
                             ),
-                            child:
-                                Icon(l10n.localeName == 'en'
+                            child: Icon(
+                                l10n.localeName == 'en'
                                     ? Icons.keyboard_arrow_left_rounded
-                                    : Icons.keyboard_arrow_right_rounded, size: 16),
+                                    : Icons.keyboard_arrow_right_rounded,
+                                size: 16),
                           ),
                         ),
                         const SizedBox(
@@ -324,9 +319,10 @@ class _MyBagItemState extends State<MyBagItem> {
                               color: AppColors.lightGrey.withOpacity(0.2),
                               shape: BoxShape.circle,
                             ),
-                            child: Icon(l10n.localeName == 'en'
-                                ? Icons.keyboard_arrow_right_rounded
-                                : Icons.keyboard_arrow_left_rounded,
+                            child: Icon(
+                                l10n.localeName == 'en'
+                                    ? Icons.keyboard_arrow_right_rounded
+                                    : Icons.keyboard_arrow_left_rounded,
                                 size: 16),
                           ),
                         ),
@@ -351,7 +347,6 @@ class _MyBagItemState extends State<MyBagItem> {
   }
 }
 
-
 class CartProductItem extends StatefulWidget {
   const CartProductItem({
     Key? key,
@@ -373,7 +368,6 @@ class CartProductItem extends StatefulWidget {
 class _CartProductItemState extends State<CartProductItem> {
   @override
   Widget build(BuildContext context) {
-
     final l10n = AppLocalizations.of(context)!;
 
     return Container(
@@ -402,9 +396,10 @@ class _CartProductItemState extends State<CartProductItem> {
                 child: CachedNetworkImage(
                   width: 80,
                   height: 80,
-                  imageUrl: '${APIs.imageBaseURL}${APIs.productThumbnailImages}${widget.cartProduct.image}',
+                  imageUrl:
+                      '${APIs.imageBaseURL}${APIs.productThumbnailImages}${widget.cartProduct.image}',
                   placeholder: (context, url) =>
-                  const CupertinoActivityIndicator(),
+                      const CupertinoActivityIndicator(),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               ),
@@ -423,17 +418,16 @@ class _CartProductItemState extends State<CartProductItem> {
                   const SizedBox(height: 8),
                   Text(widget.cartProduct.title,
                       style: const TextStyle(
-                          fontFamily: 'Libre Baskerville',
-                          fontSize: 12)),
+                          fontFamily: 'Libre Baskerville', fontSize: 12)),
                   const SizedBox(height: 8),
                   Container(
                     width: 90,
                     padding: const EdgeInsets.all(4),
                     decoration: BoxDecoration(
                         borderRadius:
-                        const BorderRadius.all(Radius.circular(30)),
+                            const BorderRadius.all(Radius.circular(30)),
                         border:
-                        Border.all(width: 1, color: AppColors.borderColor)),
+                            Border.all(width: 1, color: AppColors.borderColor)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       mainAxisSize: MainAxisSize.min,
@@ -448,10 +442,11 @@ class _CartProductItemState extends State<CartProductItem> {
                               color: AppColors.lightGrey.withOpacity(0.2),
                               shape: BoxShape.circle,
                             ),
-                            child:
-                            Icon(l10n.localeName == 'en'
-                                ? Icons.keyboard_arrow_left_rounded
-                                : Icons.keyboard_arrow_right_rounded, size: 16),
+                            child: Icon(
+                                l10n.localeName == 'en'
+                                    ? Icons.keyboard_arrow_left_rounded
+                                    : Icons.keyboard_arrow_right_rounded,
+                                size: 16),
                           ),
                         ),
                         const SizedBox(
@@ -478,9 +473,10 @@ class _CartProductItemState extends State<CartProductItem> {
                               color: AppColors.lightGrey.withOpacity(0.2),
                               shape: BoxShape.circle,
                             ),
-                            child: Icon(l10n.localeName == 'en'
-                                ? Icons.keyboard_arrow_right_rounded
-                                : Icons.keyboard_arrow_left_rounded,
+                            child: Icon(
+                                l10n.localeName == 'en'
+                                    ? Icons.keyboard_arrow_right_rounded
+                                    : Icons.keyboard_arrow_left_rounded,
                                 size: 16),
                           ),
                         ),
@@ -492,7 +488,8 @@ class _CartProductItemState extends State<CartProductItem> {
             ),
             const SizedBox(width: 10),
             Expanded(
-                child: Text('${widget.cartProduct.unitPrice * widget.cartProduct.quantity} Sar',
+                child: Text(
+                    '${widget.cartProduct.unitPrice * widget.cartProduct.quantity} Sar',
                     style: const TextStyle(
                         fontFamily: 'Libre Baskerville',
                         fontSize: 14,

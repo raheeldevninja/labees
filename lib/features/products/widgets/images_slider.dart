@@ -9,7 +9,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 *  Description: ImagesSlider
 */
 
-
 class ImagesSlider extends StatelessWidget {
   ImagesSlider({
     super.key,
@@ -19,10 +18,8 @@ class ImagesSlider extends StatelessWidget {
   final List<Widget> productImages;
   final CarouselController _controller = CarouselController();
 
-
   @override
   Widget build(BuildContext context) {
-
     final l10n = AppLocalizations.of(context)!;
 
     return Stack(
@@ -64,8 +61,8 @@ class ImagesSlider extends StatelessWidget {
                 onPressed: () {
                   _controller.previousPage(
                       duration: const Duration(
-                        milliseconds: 200,
-                      ));
+                    milliseconds: 200,
+                  ));
                 },
                 icon: Icon(
                   l10n.localeName == 'en'
@@ -80,8 +77,8 @@ class ImagesSlider extends StatelessWidget {
                   onPressed: () {
                     _controller.nextPage(
                         duration: const Duration(
-                          milliseconds: 200,
-                        ));
+                      milliseconds: 200,
+                    ));
                   },
                   icon: Icon(
                     l10n.localeName == 'en'
@@ -99,12 +96,10 @@ class ImagesSlider extends StatelessWidget {
           top: 24,
           child: Center(
             child: Container(
-              padding: const EdgeInsets.symmetric(
-                  vertical: 4, horizontal: 12),
+              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
               decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius:
-                  const BorderRadius.all(Radius.circular(30)),
+                  borderRadius: const BorderRadius.all(Radius.circular(30)),
                   border: Border.all(width: 1, color: Colors.grey)),
               child: const Text(
                 'New Season',

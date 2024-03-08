@@ -4,7 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:labees/core/app/app_colors.dart';
 import 'package:labees/core/images/images.dart';
 
-
 /*
 *  Date 29 - Oct-2023
 *  Author: Raheel Khan- Abaska Technologies
@@ -16,11 +15,8 @@ class ShippingInfo extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-
-
   @override
   Widget build(BuildContext context) {
-
     final l10n = AppLocalizations.of(context)!;
 
     return Row(

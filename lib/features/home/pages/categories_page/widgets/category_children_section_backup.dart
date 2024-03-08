@@ -4,20 +4,17 @@ import 'package:labees/features/home/pages/categories_page/widgets/category_chil
 import 'package:labees/features/home/view_model/home_provider.dart';
 import 'package:provider/provider.dart';
 
-
 /*
 *  Date 20 - September-2023
 *  Author: Raheel Khan- Abaska Technologies
 *  Description: CategoryChildrenSection
 */
 
-
 class CategoryChildrenSectionBackup extends StatelessWidget {
   const CategoryChildrenSectionBackup({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     final homeProvider = Provider.of<HomeProvider>(context);
 
     return SizedBox(
@@ -28,14 +25,11 @@ class CategoryChildrenSectionBackup extends StatelessWidget {
         thickness: 2,
         child: ListView.builder(
           shrinkWrap: true,
-
           itemCount: homeProvider.getCategoryChildren!.length,
           padding: const EdgeInsets.all(4),
           itemBuilder: (context, index) {
-
             return InkWell(
               onTap: () {
-
                 // print('clicked');
                 //
                 // for (int i = 0; i < homeProvider.getCategoryChildren!.length; i++) {
@@ -54,9 +48,11 @@ class CategoryChildrenSectionBackup extends StatelessWidget {
                 // homeProvider.setChildList(homeProvider.getCategoryChildren![index].childes!, homeProvider.getCategoryChildren![index].name!);
                 //
                 // homeProvider.setSelectedCategoryIndex(index);
-
               },
-              child: CategoryChildren(categoryChild:  homeProvider.getCategoryChildren![index], index: index,),
+              child: CategoryChildren(
+                categoryChild: homeProvider.getCategoryChildren![index],
+                index: index,
+              ),
             );
           },
         ),
@@ -64,4 +60,3 @@ class CategoryChildrenSectionBackup extends StatelessWidget {
     );
   }
 }
-

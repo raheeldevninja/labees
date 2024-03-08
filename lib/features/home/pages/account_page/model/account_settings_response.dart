@@ -9,12 +9,11 @@ class AccountSettingsResponse {
 
   AccountSettingsResponse(
       {this.walletStatus,
-        this.loyaltyPointStatus,
-        this.loyaltyPointExchangeRate,
-        this.loyaltyPointMinimumPoint,
-        this.status,
-        this.message
-      });
+      this.loyaltyPointStatus,
+      this.loyaltyPointExchangeRate,
+      this.loyaltyPointMinimumPoint,
+      this.status,
+      this.message});
 
   AccountSettingsResponse.fromJson(Map<String, dynamic> json) {
     walletStatus = json['wallet_status'];

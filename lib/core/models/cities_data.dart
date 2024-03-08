@@ -1,5 +1,4 @@
 class Cities {
-
   bool success = false;
   String? message;
 
@@ -7,7 +6,6 @@ class Cities {
 
   Cities({this.success = false, this.message, this.data});
 }
-
 
 class CitiesData {
   int? id;
@@ -18,15 +16,15 @@ class CitiesData {
   String? updatedAt;
   String? nameEn;
 
-  CitiesData(
-      {this.id,
-        this.name,
-        this.countryId,
-        this.status,
-        this.createdAt,
-        this.updatedAt,
-        this.nameEn,
-      });
+  CitiesData({
+    this.id,
+    this.name,
+    this.countryId,
+    this.status,
+    this.createdAt,
+    this.updatedAt,
+    this.nameEn,
+  });
 
   CitiesData.fromJson(Map<String, dynamic> json) {
     id = json['id'];

@@ -14,21 +14,21 @@ class Childes {
 
   bool isSelected = false;
 
-  Childes(
-      {this.id,
-        this.name,
-        this.slug,
-        this.icon,
-        this.parentId,
-        this.position,
-        this.createdAt,
-        this.updatedAt,
-        this.homeStatus,
-        this.topCategory,
-        this.status,
-        this.priority,
-        this.isSelected = false,
-      });
+  Childes({
+    this.id,
+    this.name,
+    this.slug,
+    this.icon,
+    this.parentId,
+    this.position,
+    this.createdAt,
+    this.updatedAt,
+    this.homeStatus,
+    this.topCategory,
+    this.status,
+    this.priority,
+    this.isSelected = false,
+  });
 
   Childes.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -43,7 +43,6 @@ class Childes {
     topCategory = json['top_category'];
     status = json['status'];
     priority = json['priority'];
-
   }
 
   Map<String, dynamic> toJson() {
