@@ -4,8 +4,4 @@
 *  Description: OrderStatus Enum
 */
 
-enum OrderStatus {
-  all,
-  inProgress,
-  completed
-}
+enum OrderStatus { all, inProgress, completed }

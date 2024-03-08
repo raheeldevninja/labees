@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-
   static const Color activeIcon = Colors.black;
   static const Color inactiveIcon = Color(0xFF7E7E7E);
   static const Color primaryColor = Color(0xFF00354E);
@@ -21,6 +20,4 @@ class AppColors {
   static const Color green = Color(0xFF1EA210);
   static const Color paidColor = Color(0xFF00FF08);
   static const Color starColor = Color(0xFFFF7700);
-
-
 }

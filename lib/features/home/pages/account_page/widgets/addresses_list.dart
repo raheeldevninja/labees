@@ -8,7 +8,6 @@ import 'package:labees/features/home/pages/account_page/account_tabs/add_address
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 /*
 *  Date 18 - Dec-2023
 *  Author: Raheel Khan- Abaska Technologies
@@ -16,7 +15,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 */
 
 class AddressesList extends StatelessWidget {
-
   const AddressesList({
     Key? key,
     required this.myAddresses,
@@ -26,17 +24,14 @@ class AddressesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final l10n = AppLocalizations.of(context)!;
     final checkoutProvider = Provider.of<CheckoutProvider>(context);
-
 
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: myAddresses.length,
       itemBuilder: (context, index) {
-
         final isDefault = myAddresses[index].isDefault == 1;
 
         return Container(
@@ -135,18 +130,16 @@ class AddressesList extends StatelessWidget {
                     ///edit and delete button
                     Row(
                       children: [
-
                         InkWell(
                           onTap: () {
-
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => AddAddressScreen(addressData: myAddresses[index],),
+                                builder: (context) => AddAddressScreen(
+                                  addressData: myAddresses[index],
+                                ),
                               ),
                             );
-
-
                           },
                           child: Container(
                             padding: const EdgeInsets.all(8),
@@ -172,69 +165,75 @@ class AddressesList extends StatelessWidget {
                         const SizedBox(
                           width: 8,
                         ),
-                        isDefault ? const SizedBox() : InkWell(
-                          onTap: () async {
-                            bool? res = await _showDeleteConfirmationDialog(context, l10n);
+                        isDefault
+                            ? const SizedBox()
+                            : InkWell(
+                                onTap: () async {
+                                  bool? res =
+                                      await _showDeleteConfirmationDialog(
+                                          context, l10n);
 
-                            if(res == true){
-                              await checkoutProvider.deleteAddress(myAddresses[index].id!);
-                              await checkoutProvider.getAllAddresses();
-                            }
-
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(8),
-                            child: Row(
-                              children: [
-                                SvgPicture.asset(
-                                  Images.deleteIcon,
-                                ),
-                                const SizedBox(
-                                  width: 8,
-                                ),
-                                Text(
-                                  l10n.deleteAddressBtn,
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    fontFamily: 'Libre Baskerville',
+                                  if (res == true) {
+                                    await checkoutProvider
+                                        .deleteAddress(myAddresses[index].id!);
+                                    await checkoutProvider.getAllAddresses();
+                                  }
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.all(8),
+                                  child: Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        Images.deleteIcon,
+                                      ),
+                                      const SizedBox(
+                                        width: 8,
+                                      ),
+                                      Text(
+                                        l10n.deleteAddressBtn,
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                          fontFamily: 'Libre Baskerville',
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                        ),
+                              ),
                       ],
                     ),
 
                     const SizedBox(height: 10),
 
                     //default address
-                    !isDefault ? InkWell(
-                      onTap: () async {
-                        await checkoutProvider.updateDefaultAddress(myAddresses[index].id!);
-                        await checkoutProvider.getAllAddresses();
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color: AppColors.primaryColor,
-                            width: 1,
-                          ),
-                        ),
-                        child: Text(
-                          l10n.setAsDefaultBtnText,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 12,
-                            fontFamily: 'Libre Baskerville',
-                          ),
-                        ),
-                      ),
-                    ) : const SizedBox(),
-
+                    !isDefault
+                        ? InkWell(
+                            onTap: () async {
+                              await checkoutProvider
+                                  .updateDefaultAddress(myAddresses[index].id!);
+                              await checkoutProvider.getAllAddresses();
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: AppColors.primaryColor,
+                                  width: 1,
+                                ),
+                              ),
+                              child: Text(
+                                l10n.setAsDefaultBtnText,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 12,
+                                  fontFamily: 'Libre Baskerville',
+                                ),
+                              ),
+                            ),
+                          )
+                        : const SizedBox(),
                   ],
                 ),
               ),
@@ -246,13 +245,12 @@ class AddressesList extends StatelessWidget {
   }
 
   ///delete confirmation dialog
-  Future<bool?> _showDeleteConfirmationDialog(BuildContext context, AppLocalizations l10n) {
-
+  Future<bool?> _showDeleteConfirmationDialog(
+      BuildContext context, AppLocalizations l10n) {
     return showDialog<bool>(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-
         return AlertDialog(
           title: Text(l10n.deleteAddressTitle),
           content: SingleChildScrollView(
@@ -266,15 +264,12 @@ class AddressesList extends StatelessWidget {
             TextButton(
               child: Text(l10n.yesBtnText),
               onPressed: () {
-
                 Navigator.of(context).pop(true);
-
               },
             ),
             TextButton(
               child: Text(l10n.noBtnText),
               onPressed: () {
-
                 Navigator.of(context).pop(false);
               },
             ),
@@ -283,5 +278,4 @@ class AddressesList extends StatelessWidget {
       },
     );
   }
-
 }

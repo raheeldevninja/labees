@@ -4,13 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:labees/core/util/apis.dart';
 import 'package:labees/features/home/models/category_child.dart';
 
-
 /*
 *  Date 12 - September-2023
 *  Author: Raheel Khan- Abaska Technologies
 *  Description: CategoryCarouselItem
 */
-
 
 class CategoryCarouselItem extends StatelessWidget {
   const CategoryCarouselItem({required this.item, Key? key}) : super(key: key);
@@ -40,12 +38,9 @@ class CategoryCarouselItem extends StatelessWidget {
           CachedNetworkImage(
             width: 50,
             height: 50,
-            imageUrl:
-            '${APIs.imageBaseURL}${APIs.categoryImages}${item.icon!}',
-            placeholder: (context, url) =>
-            const CupertinoActivityIndicator(),
-            errorWidget: (context, url, error) =>
-            const Icon(Icons.error),
+            imageUrl: '${APIs.imageBaseURL}${APIs.categoryImages}${item.icon!}',
+            placeholder: (context, url) => const CupertinoActivityIndicator(),
+            errorWidget: (context, url, error) => const Icon(Icons.error),
           ),
           const SizedBox(height: 12),
           Text(

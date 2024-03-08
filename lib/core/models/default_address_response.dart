@@ -1,5 +1,4 @@
 class DefaultAddressResponse {
-
   String? message;
   bool? status;
 

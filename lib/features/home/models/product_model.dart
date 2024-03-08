@@ -4,7 +4,6 @@ import 'package:labees/features/home/models/product.dart';
 import 'package:labees/features/home/models/tag.dart';
 
 class ProductModel {
-
   Category? category;
   ProductData? products;
   List<SubCategories>? subCategories;
@@ -13,27 +12,22 @@ class ProductModel {
   List<Tag>? tags;
   List<AttributeDetails>? attributes;
 
-
   bool? success;
   String? message;
 
   ProductModel(
-      {
-        this.category,
-        this.products,
-        this.subCategories,
-        this.brands,
-        this.tags,
-        this.attributes,
-        this.success = false,
-        this.message
-      });
+      {this.category,
+      this.products,
+      this.subCategories,
+      this.brands,
+      this.tags,
+      this.attributes,
+      this.success = false,
+      this.message});
 
   ProductModel.fromJson(Map<String, dynamic> json) {
-
-    category = json['category'] != null
-        ? Category.fromJson(json['category'])
-        : null;
+    category =
+        json['category'] != null ? Category.fromJson(json['category']) : null;
 
     if (json['sub_categories'] != null) {
       subCategories = <SubCategories>[];
@@ -110,20 +104,20 @@ class Category {
   int? status;
   int? priority;
 
-  Category(
-      {this.id,
-        this.name,
-        this.slug,
-        this.icon,
-        this.parentId,
-        this.position,
-        this.createdAt,
-        this.updatedAt,
-        this.homeStatus,
-        this.topCategory,
-        this.status,
-        this.priority,
-      });
+  Category({
+    this.id,
+    this.name,
+    this.slug,
+    this.icon,
+    this.parentId,
+    this.position,
+    this.createdAt,
+    this.updatedAt,
+    this.homeStatus,
+    this.topCategory,
+    this.status,
+    this.priority,
+  });
 
   Category.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -190,7 +184,6 @@ class ProductData {
   }
 }
 
-
 class SubCategories {
   int? id;
   String? name;
@@ -207,21 +200,21 @@ class SubCategories {
 
   bool isSelected = false;
 
-  SubCategories(
-      {this.id,
-        this.name,
-        this.slug,
-        this.icon,
-        this.parentId,
-        this.position,
-        this.createdAt,
-        this.updatedAt,
-        this.homeStatus,
-        this.topCategory,
-        this.status,
-        this.priority,
-        this.isSelected = false,
-      });
+  SubCategories({
+    this.id,
+    this.name,
+    this.slug,
+    this.icon,
+    this.parentId,
+    this.position,
+    this.createdAt,
+    this.updatedAt,
+    this.homeStatus,
+    this.topCategory,
+    this.status,
+    this.priority,
+    this.isSelected = false,
+  });
 
   //copyWith
   SubCategories copyWith({
@@ -269,7 +262,6 @@ class SubCategories {
     topCategory = json['top_category'];
     status = json['status'];
     priority = json['priority'];
-
   }
 
   Map<String, dynamic> toJson() {
@@ -290,11 +282,3 @@ class SubCategories {
     return data;
   }
 }
-
-
-
-
-
-
-
-

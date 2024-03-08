@@ -18,7 +18,6 @@ class FAQScreen extends StatefulWidget {
 }
 
 class _FAQScreenState extends State<FAQScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -27,19 +26,17 @@ class _FAQScreenState extends State<FAQScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _getFAQs();
     });
-
   }
 
   _getFAQs() {
-
-    Provider.of<SettingsProvider>(context, listen: false).getFAQs(AppLocalizations.of(context)!.localeName);
+    Provider.of<SettingsProvider>(context, listen: false)
+        .getFAQs(AppLocalizations.of(context)!.localeName);
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final settingsProvider = Provider.of<SettingsProvider>(context);
-
 
     return Scaffold(
       appBar: AppBar(
@@ -54,50 +51,53 @@ class _FAQScreenState extends State<FAQScreen> {
         title: Text(l10n.faq,
             style: const TextStyle(color: AppColors.primaryColor)),
       ),
-      body: settingsProvider.getIsLoading ? const SizedBox() : Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
+      body: settingsProvider.getIsLoading
+          ? const SizedBox()
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                //expansion tile
 
+                Expanded(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: settingsProvider.allFAQs.faqsResponse!.length,
+                    itemBuilder: (context, index) {
+                      return ExpansionTile(
+                        onExpansionChanged: (value) {
+                          print('value: $value');
 
-          //expansion tile
-
-          Expanded(
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: settingsProvider.allFAQs.faqsResponse!.length,
-              itemBuilder: (context, index) {
-                return ExpansionTile(
-                  
-
-                  onExpansionChanged: (value) {
-                    print('value: $value');
-
-                    settingsProvider.setFAQExpansionTileStatus(index, value);
-
-                  },
-                  expandedAlignment: Alignment.centerLeft,
-                  iconColor: AppColors.primaryColor,
-                  title: Container(color: settingsProvider.allFAQs.faqsResponse![index].isExpanded! ? AppColors.primaryColor : Colors.white,
-                      child: Text(settingsProvider.allFAQs.faqsResponse![index].question!,
-                          style: TextStyle(color: settingsProvider.allFAQs.faqsResponse![index].isExpanded! ? Colors.white : AppColors.primaryColor)
-
-                      )),
-
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Text(settingsProvider.allFAQs.faqsResponse![index].answer!)),
-
-                  ],
-                );
-              },
+                          settingsProvider.setFAQExpansionTileStatus(
+                              index, value);
+                        },
+                        expandedAlignment: Alignment.centerLeft,
+                        iconColor: AppColors.primaryColor,
+                        title: Container(
+                            color: settingsProvider
+                                    .allFAQs.faqsResponse![index].isExpanded!
+                                ? AppColors.primaryColor
+                                : Colors.white,
+                            child: Text(
+                                settingsProvider
+                                    .allFAQs.faqsResponse![index].question!,
+                                style: TextStyle(
+                                    color: settingsProvider.allFAQs
+                                            .faqsResponse![index].isExpanded!
+                                        ? Colors.white
+                                        : AppColors.primaryColor))),
+                        children: [
+                          Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16.0),
+                              child: Text(settingsProvider
+                                  .allFAQs.faqsResponse![index].answer!)),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              ],
             ),
-          ),
-
-
-
-        ],
-      ),
     );
   }
 }

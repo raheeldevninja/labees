@@ -28,29 +28,29 @@ class Seller {
 
   Seller(
       {this.id,
-        this.fName,
-        this.lName,
-        this.phone,
-        this.image,
-        this.email,
-        this.password,
-        this.status,
-        this.rememberToken,
-        this.createdAt,
-        this.updatedAt,
-        this.bankName,
-        this.branch,
-        this.accountNo,
-        this.holderName,
-        this.authToken,
-        this.salesCommissionPercentage,
-        this.gst,
-        this.cmFirebaseToken,
-        this.posStatus,
-        this.adminId,
-        this.sellerRoleId,
-        this.parentId,
-        this.shop});
+      this.fName,
+      this.lName,
+      this.phone,
+      this.image,
+      this.email,
+      this.password,
+      this.status,
+      this.rememberToken,
+      this.createdAt,
+      this.updatedAt,
+      this.bankName,
+      this.branch,
+      this.accountNo,
+      this.holderName,
+      this.authToken,
+      this.salesCommissionPercentage,
+      this.gst,
+      this.cmFirebaseToken,
+      this.posStatus,
+      this.adminId,
+      this.sellerRoleId,
+      this.parentId,
+      this.shop});
 
   Seller.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -110,4 +110,3 @@ class Seller {
     return data;
   }
 }
-

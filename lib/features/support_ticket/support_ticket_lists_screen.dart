@@ -19,35 +19,29 @@ class TicketSupportListsScreen extends StatefulWidget {
   const TicketSupportListsScreen({super.key});
 
   @override
-  State<TicketSupportListsScreen> createState() => _TicketSupportListsScreenState();
+  State<TicketSupportListsScreen> createState() =>
+      _TicketSupportListsScreenState();
 }
 
 class _TicketSupportListsScreenState extends State<TicketSupportListsScreen> {
-
   @override
   void initState() {
     super.initState();
 
     //add postFrame callback
     WidgetsBinding.instance.addPostFrameCallback((_) {
-
-      final ticketSupportProvider = Provider.of<TicketSupportProvider>(context, listen: false);
+      final ticketSupportProvider =
+          Provider.of<TicketSupportProvider>(context, listen: false);
       ticketSupportProvider.getTicketSupportList();
-
     });
-
   }
-
 
   @override
   Widget build(BuildContext context) {
-
     final l10n = AppLocalizations.of(context)!;
     final ticketSupportProvider = Provider.of<TicketSupportProvider>(context);
 
-
     return Scaffold(
-
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
         backgroundColor: Colors.white,
@@ -61,147 +55,194 @@ class _TicketSupportListsScreenState extends State<TicketSupportListsScreen> {
         title: Text(l10n.supportTicketsTitle,
             style: const TextStyle(color: AppColors.primaryColor)),
       ),
-      body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-        children: [
+      body: RefreshIndicator(
+        onRefresh: () async {
+          final ticketSupportProvider =
+              Provider.of<TicketSupportProvider>(context, listen: false);
+          ticketSupportProvider.getTicketSupportList();
+        },
+        child: ListView(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: ticketSupportProvider.ticketSupportLists!.length,
+                itemBuilder: (context, index) {
+                  String status = '';
+                  final ticketSupportItem =
+                      ticketSupportProvider.ticketSupportLists![index];
 
-          //header
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: AppColors.primaryColor,
-              borderRadius: BorderRadius.circular(4),
-            ),
-            child: Row(
-              children: [
+                  if (ticketSupportItem.status! == '1') {
+                    status = 'Received';
+                  } else if (ticketSupportItem.status! == '2') {
+                    status = 'Assigned';
+                  } else if (ticketSupportItem.status! == '5') {
+                    status = 'Cancelled';
+                  }
 
+                  final date = DateTime.parse(ticketSupportItem.createdAt!);
+                  final formattedDate =
+                      '${Utils.monthNumToName(date.month)} ${date.day}, ${date.year}';
 
-                Expanded(child: Text('ID', style: TextStyle(color: Colors.white, fontSize: 12), textAlign: TextAlign.center,)),
-                Expanded(child: Text('Topic', style: TextStyle(color: Colors.white, fontSize: 12), textAlign: TextAlign.center)),
-                Expanded(flex: 2, child: Text('Sub Date', style: TextStyle(color: Colors.white, fontSize: 12), textAlign: TextAlign.center)),
-                Expanded(flex: 2, child: Text('Type', style: TextStyle(color: Colors.white, fontSize: 12), textAlign: TextAlign.center)),
-                Expanded(child: Text('Status', style: TextStyle(color: Colors.white, fontSize: 12), textAlign: TextAlign.center)),
-                Expanded(flex: 2, child: Text('Action', style: TextStyle(color: Colors.white, fontSize: 12), textAlign: TextAlign.center)),
-
-
-              ],
-            ),
-          ),
-
-          const SizedBox(height: 10),
-
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.grey.withOpacity(0.3),
-              borderRadius: BorderRadius.circular(4),
-            ),
-            child: ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: ticketSupportProvider.ticketSupportLists!.length,
-              itemBuilder: (context, index) {
-
-                String status = '';
-
-                if(ticketSupportProvider.ticketSupportLists![index].status! == '1') {
-                  status = 'Received';
-                }
-                else if(ticketSupportProvider.ticketSupportLists![index].status! == '2') {
-                  status = 'Assigned';
-                }
-                else if(ticketSupportProvider.ticketSupportLists![index].status! == '5') {
-                  status = 'Cancelled';
-                }
-
-                final date = DateTime.parse(ticketSupportProvider.ticketSupportLists![index].createdAt!);
-                final formattedDate =
-                    '${Utils.monthNumToName(date.month)} ${date.day}, ${date.year}';
-
-
-                return Container(
-                  //padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    border: index == ticketSupportProvider.ticketSupportLists!.length-1 ? null : Border(
-                      bottom: BorderSide(
-                        color: Colors.black.withOpacity(0.3),
-                      ),
+                  return Container(
+                    padding: const EdgeInsets.all(10),
+                    margin: const EdgeInsets.only(bottom: 10),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey.withOpacity(0.3)),
                     ),
-                  ),
-                  child: Row(
-                    children: [
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              'Subscription Date: ',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.normal),
+                              textAlign: TextAlign.center,
+                            ),
+                            Text(formattedDate,
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 14),
+                                textAlign: TextAlign.center),
+                            Spacer(),
+                            Text(
+                              'ID: ',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.center,
+                            ),
+                            Text(
+                              ticketSupportItem.id.toString(),
+                              style: const TextStyle(
+                                  color: Colors.black, fontSize: 12),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          children: [
+                            const Expanded(
+                                child: Text(
+                              'Topic: ',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold),
+                            )),
+                            Expanded(
+                                flex: 3,
+                                child: Text(ticketSupportItem.subject!,
+                                    style: const TextStyle(
+                                        color: Colors.black, fontSize: 16))),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          children: [
+                            const Expanded(
+                                child: Text('Type: ',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold))),
+                            Expanded(
+                                flex: 3,
+                                child: Text(ticketSupportItem.type!,
+                                    style: const TextStyle(
+                                        color: Colors.black, fontSize: 16))),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(top: 10),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 30),
+                              decoration: BoxDecoration(
+                                color: ticketSupportItem.status == '5'
+                                    ? Colors.red.withOpacity(0.1)
+                                    : Colors.grey.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(30),
+                                border: Border.all(
+                                    color: ticketSupportItem.status == '5'
+                                        ? Colors.red
+                                        : Colors.grey.withOpacity(0.3)),
+                              ),
+                              child: Text(status,
+                                  style: TextStyle(
+                                      color: ticketSupportItem.status == '5'
+                                          ? Colors.red
+                                          : Colors.black,
+                                      fontSize: 12),
+                                  textAlign: TextAlign.center),
+                            ),
 
-                      Expanded(child: Text(ticketSupportProvider.ticketSupportLists![index].id.toString(), style: TextStyle(color: Colors.black, fontSize: 12), textAlign: TextAlign.center,)),
-                      Expanded(child: Text(ticketSupportProvider.ticketSupportLists![index].subject!, style: TextStyle(color: Colors.black, fontSize: 12), textAlign: TextAlign.center)),
-                      Expanded(flex: 2, child: Text(formattedDate, style: TextStyle(color: Colors.black, fontSize: 12), textAlign: TextAlign.center)),
-                      Expanded(flex: 2, child: Text(ticketSupportProvider.ticketSupportLists![index].type!, style: TextStyle(color: Colors.black, fontSize: 12), textAlign: TextAlign.center)),
-                      Expanded(child: Text(status, style: TextStyle(color: Colors.black, fontSize: 12), textAlign: TextAlign.center)),
-                      Expanded(
-                        flex: 1,
-                          child: Column(
-                        children: [
+                            const Spacer(),
 
-                          //delete icon
-                          IconButton(
-                            onPressed: () {
-                              //delete ticket
-                            },
-                            icon: const Icon(Icons.delete, color: Colors.red),
-                          ),
+                            //view icon
+                            IconButton(
+                              onPressed: () {
+                                //view ticket
+                              },
+                              icon: const Icon(Icons.remove_red_eye,
+                                  color: Colors.blue),
+                            ),
 
-                          //view icon
-                          IconButton(
-                            onPressed: () {
-                              //view ticket
-                            },
-                            icon: const Icon(Icons.remove_red_eye, color: Colors.blue),
-                          ),
-
-                        ],
-                      )),
-
-                    ],
-                  ),
-                );
-              },
+                            //delete icon
+                            IconButton(
+                              onPressed: () {
+                                //delete ticket
+                              },
+                              icon: const Icon(Icons.delete, color: Colors.red),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
             ),
-          ),
 
+            const SizedBox(height: 40),
 
-
-          const SizedBox(height: 40),
-
-          ///submit new ticket button
-          SizedBox(
-            width: double.maxFinite,
-            height: 50,
-            child: SimpleButton(
-              text: l10n.submitTicketBtnText,
-              callback: () async {
-
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const SupportTicketScreen(),
-                  ),
-
-                );
-
-
-              },
+            ///submit new ticket button
+            SizedBox(
+              width: double.maxFinite,
+              height: 50,
+              child: SimpleButton(
+                text: l10n.submitTicketBtnText,
+                callback: () async {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SupportTicketScreen(),
+                    ),
+                  );
+                },
+              ),
             ),
-          ),
 
-          const SizedBox(height: 40),
-
-        ],
+            const SizedBox(height: 40),
+          ],
+        ),
       ),
     );
   }
 
   @override
   dispose() {
-
     super.dispose();
   }
-
 }

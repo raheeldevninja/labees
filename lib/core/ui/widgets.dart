@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:labees/core/app/app_colors.dart';
 
-
 /*
 *  Date 1 - Nov-2023
 *  Author: Raheel Khan- Abaska Technologies
@@ -9,7 +8,6 @@ import 'package:labees/core/app/app_colors.dart';
 */
 
 class Widgets {
-
   static Widget labels(String label, {bool isRequired = true}) {
     return Row(
       children: [
@@ -20,12 +18,13 @@ class Widgets {
             fontFamily: 'Montserrat',
           ),
         ),
-        isRequired ? const Text(
-          '*',
-          style: TextStyle(color: AppColors.requiredColor),
-        ) : const SizedBox(),
+        isRequired
+            ? const Text(
+                '*',
+                style: TextStyle(color: AppColors.requiredColor),
+              )
+            : const SizedBox(),
       ],
     );
   }
-
 }

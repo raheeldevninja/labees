@@ -69,16 +69,11 @@ class _ProductsScreenState extends State<ProductsScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final homeProvider = Provider.of<HomeProvider>(context, listen: false);
 
-      await homeProvider.getProducts(context, AppLocalizations.of(context)!.localeName, widget.id, 10, 1, 'newest');
+      await homeProvider.getProducts(context,
+          AppLocalizations.of(context)!.localeName, widget.id, 10, 1, 'newest');
       //await homeProvider.getProducts(context, 1, 10, 1, 'newest');
-
-
-
-
-
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -215,27 +210,32 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     elevation: 16,
                     style: const TextStyle(color: AppColors.primaryColor),
                     onChanged: (String? newValue) {
-
                       setState(() {
                         sortValue = newValue!;
                       });
 
-                      String sValue = sortValue.toLowerCase().replaceAll(' ', '_');
+                      String sValue =
+                          sortValue.toLowerCase().replaceAll(' ', '_');
                       print('sort value: $sValue');
 
-                      homeProvider.getProducts(context, AppLocalizations.of(context)!.localeName, widget.id, 10, 1, sValue);
-
+                      homeProvider.getProducts(
+                          context,
+                          AppLocalizations.of(context)!.localeName,
+                          widget.id,
+                          10,
+                          1,
+                          sValue);
                     },
                     items: <String>['Newest', 'Lowest Price', 'Highest Price']
                         .map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Text(value, style: const TextStyle(fontSize: 14)),
+                        child:
+                            Text(value, style: const TextStyle(fontSize: 14)),
                       );
                     }).toList(),
                   ),
                 ),
-
               ],
             ),
           ),
@@ -264,11 +264,15 @@ class _ProductsScreenState extends State<ProductsScreen> {
                       backgroundColor: Colors.grey.withOpacity(0.3),
                       label: Text(homeProvider.selectedSubCategories[i].name!),
                       onDeleted: () async {
-
-                        homeProvider.subCategories!.firstWhere((element) => element.id == homeProvider.selectedSubCategories[i].id).isSelected = false;
+                        homeProvider.subCategories!
+                            .firstWhere((element) =>
+                                element.id ==
+                                homeProvider.selectedSubCategories[i].id)
+                            .isSelected = false;
                         homeProvider.selectedSubCategories.removeAt(i);
 
-                        String sValue = sortValue.toLowerCase().replaceAll(' ', '_');
+                        String sValue =
+                            sortValue.toLowerCase().replaceAll(' ', '_');
 
                         await homeProvider.getProducts(
                           context,
@@ -283,10 +287,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
                           brands: homeProvider.brandsList,
                           sizeAttributes: homeProvider.selectedSizeAttributes,
                           colorAttributes: homeProvider.selectedColorAttributes,
-                          ukSizeAttributes: homeProvider.selectedUkSizeAttributes,
+                          ukSizeAttributes:
+                              homeProvider.selectedUkSizeAttributes,
                           tags: homeProvider.selectedTags,
                         );
-
                       },
                     ),
                   for (int i = 0; i < homeProvider.selectedBrands.length; i++)
@@ -294,11 +298,14 @@ class _ProductsScreenState extends State<ProductsScreen> {
                       backgroundColor: Colors.grey.withOpacity(0.3),
                       label: Text(homeProvider.selectedBrands[i].name!),
                       onDeleted: () async {
-
-                        homeProvider.brandsList!.firstWhere((element) => element.id == homeProvider.selectedBrands[i].id).isSelected = false;
+                        homeProvider.brandsList!
+                            .firstWhere((element) =>
+                                element.id == homeProvider.selectedBrands[i].id)
+                            .isSelected = false;
                         homeProvider.selectedBrands.removeAt(i);
 
-                        String sValue = sortValue.toLowerCase().replaceAll(' ', '_');
+                        String sValue =
+                            sortValue.toLowerCase().replaceAll(' ', '_');
 
                         await homeProvider.getProducts(
                           context,
@@ -313,11 +320,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
                           brands: homeProvider.brandsList,
                           sizeAttributes: homeProvider.selectedSizeAttributes,
                           colorAttributes: homeProvider.selectedColorAttributes,
-                          ukSizeAttributes: homeProvider.selectedUkSizeAttributes,
+                          ukSizeAttributes:
+                              homeProvider.selectedUkSizeAttributes,
                           tags: homeProvider.selectedTags,
                         );
-
-
                       },
                     ),
                   for (int i = 0; i < homeProvider.selectedTags.length; i++)
@@ -325,11 +331,14 @@ class _ProductsScreenState extends State<ProductsScreen> {
                       backgroundColor: Colors.grey.withOpacity(0.3),
                       label: Text(homeProvider.selectedTags[i].name!),
                       onDeleted: () async {
-
-                        homeProvider.tags!.firstWhere((element) => element.id == homeProvider.selectedTags[i].id).isSelected = false;
+                        homeProvider.tags!
+                            .firstWhere((element) =>
+                                element.id == homeProvider.selectedTags[i].id)
+                            .isSelected = false;
                         homeProvider.selectedTags.removeAt(i);
 
-                        String sValue = sortValue.toLowerCase().replaceAll(' ', '_');
+                        String sValue =
+                            sortValue.toLowerCase().replaceAll(' ', '_');
 
                         await homeProvider.getProducts(
                           context,
@@ -344,11 +353,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
                           brands: homeProvider.brandsList,
                           sizeAttributes: homeProvider.selectedSizeAttributes,
                           colorAttributes: homeProvider.selectedColorAttributes,
-                          ukSizeAttributes: homeProvider.selectedUkSizeAttributes,
+                          ukSizeAttributes:
+                              homeProvider.selectedUkSizeAttributes,
                           tags: homeProvider.selectedTags,
                         );
-
-
                       },
                     ),
                   for (int i = 0;
@@ -358,36 +366,37 @@ class _ProductsScreenState extends State<ProductsScreen> {
                       backgroundColor: Colors.grey.withOpacity(0.3),
                       label: Text(homeProvider.selectedSizeAttributes[i].name!),
                       onDeleted: () async {
-
                         homeProvider.attributes!.forEach((element) {
-                          if(element.name == 'Size') {
+                          if (element.name == 'Size') {
                             element.attributeValues!.forEach((element) {
-                              if(element.id == homeProvider.selectedSizeAttributes[i].id) {
+                              if (element.id ==
+                                  homeProvider.selectedSizeAttributes[i].id) {
                                 element.isSelected = false;
                               }
                             });
                           }
-                          if(element.name == 'UK Size') {
+                          if (element.name == 'UK Size') {
                             element.attributeValues!.forEach((element) {
-                              if(element.id == homeProvider.selectedSizeAttributes[i].id) {
+                              if (element.id ==
+                                  homeProvider.selectedSizeAttributes[i].id) {
                                 element.isSelected = false;
                               }
                             });
                           }
-                          if(element.name == 'Color') {
+                          if (element.name == 'Color') {
                             element.attributeValues!.forEach((element) {
-                              if(element.id == homeProvider.selectedSizeAttributes[i].id) {
+                              if (element.id ==
+                                  homeProvider.selectedSizeAttributes[i].id) {
                                 element.isSelected = false;
                               }
                             });
                           }
-
                         });
-
 
                         homeProvider.selectedSizeAttributes.removeAt(i);
 
-                        String sValue = sortValue.toLowerCase().replaceAll(' ', '_');
+                        String sValue =
+                            sortValue.toLowerCase().replaceAll(' ', '_');
 
                         await homeProvider.getProducts(
                           context,
@@ -402,14 +411,12 @@ class _ProductsScreenState extends State<ProductsScreen> {
                           brands: homeProvider.brandsList,
                           sizeAttributes: homeProvider.selectedSizeAttributes,
                           colorAttributes: homeProvider.selectedColorAttributes,
-                          ukSizeAttributes: homeProvider.selectedUkSizeAttributes,
+                          ukSizeAttributes:
+                              homeProvider.selectedUkSizeAttributes,
                           tags: homeProvider.selectedTags,
                         );
-
-
-
                       },
-                  ),
+                    ),
                   if (homeProvider.selectedMinPrice.isNotEmpty)
                     Chip(
                       backgroundColor: Colors.grey.withOpacity(0.3),
@@ -417,7 +424,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
                       onDeleted: () async {
                         homeProvider.setSelectedMinPrice('');
 
-                        String sValue = sortValue.toLowerCase().replaceAll(' ', '_');
+                        String sValue =
+                            sortValue.toLowerCase().replaceAll(' ', '_');
 
                         await homeProvider.getProducts(
                           context,
@@ -432,10 +440,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
                           brands: homeProvider.brandsList,
                           sizeAttributes: homeProvider.selectedSizeAttributes,
                           colorAttributes: homeProvider.selectedColorAttributes,
-                          ukSizeAttributes: homeProvider.selectedUkSizeAttributes,
+                          ukSizeAttributes:
+                              homeProvider.selectedUkSizeAttributes,
                           tags: homeProvider.selectedTags,
                         );
-
                       },
                     ),
                   if (homeProvider.selectedMaxPrice.isNotEmpty)
@@ -443,10 +451,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
                       backgroundColor: Colors.grey.withOpacity(0.3),
                       label: Text(homeProvider.selectedMaxPrice),
                       onDeleted: () async {
-
                         homeProvider.setSelectedMaxPrice('');
 
-                        String sValue = sortValue.toLowerCase().replaceAll(' ', '_');
+                        String sValue =
+                            sortValue.toLowerCase().replaceAll(' ', '_');
 
                         await homeProvider.getProducts(
                           context,
@@ -461,11 +469,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
                           brands: homeProvider.brandsList,
                           sizeAttributes: homeProvider.selectedSizeAttributes,
                           colorAttributes: homeProvider.selectedColorAttributes,
-                          ukSizeAttributes: homeProvider.selectedUkSizeAttributes,
+                          ukSizeAttributes:
+                              homeProvider.selectedUkSizeAttributes,
                           tags: homeProvider.selectedTags,
                         );
-
-
                       },
                     ),
                 ],
@@ -548,7 +555,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
                           //final product = products[index];
                           final product = homeProvider.products![index];
 
-
                           return InkWell(
                             onTap: () {
                               Navigator.push(
@@ -562,10 +568,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
                             child: ProductItem(
                               product: product,
                               addRemoveToWishlist: () async {
-
                                 if (product.wishlist != null &&
-                                    product.wishlist!.productId ==
-                                        product.id) {
+                                    product.wishlist!.productId == product.id) {
                                   ///remove from wishlist
                                   await homeProvider
                                       .removeFromWishlist(product.id!);
@@ -574,18 +578,24 @@ class _ProductsScreenState extends State<ProductsScreen> {
 
                                   ///add to wishlist
                                   await homeProvider.addToWishList(
-                                      context, AppLocalizations.of(context)!.localeName, product.id!);
+                                      context,
+                                      AppLocalizations.of(context)!.localeName,
+                                      product.id!);
                                 }
 
-
-                                String sValue = sortValue.toLowerCase().replaceAll(' ', '_');
+                                String sValue = sortValue
+                                    .toLowerCase()
+                                    .replaceAll(' ', '_');
                                 print('sort value: $sValue');
 
-
-                                await homeProvider.getProducts(context,
-                                    AppLocalizations.of(context)!.localeName, widget.id, 10, 1, sValue, showShimmer: false);
-
-
+                                await homeProvider.getProducts(
+                                    context,
+                                    AppLocalizations.of(context)!.localeName,
+                                    widget.id,
+                                    10,
+                                    1,
+                                    sValue,
+                                    showShimmer: false);
                               },
                             ),
                           );
@@ -601,7 +611,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
-
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
             topLeft: Radius.circular(24.0), topRight: Radius.circular(24.0)),
@@ -625,10 +634,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
 }
 
 class FilterBottomSheet extends StatefulWidget {
-  const FilterBottomSheet({
-    required this.id,
-    required this.sortValue,
-    super.key});
+  const FilterBottomSheet(
+      {required this.id, required this.sortValue, super.key});
 
   final int id;
   final String sortValue;
@@ -638,11 +645,8 @@ class FilterBottomSheet extends StatefulWidget {
 }
 
 class _FilterBottomSheetState extends State<FilterBottomSheet> {
-
-
   var _minAmountController = TextEditingController();
   var _maxAmountController = TextEditingController();
-
 
   List<SubCategories> subCategories = [];
   List<Brand> brands = [];
@@ -652,7 +656,6 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
   List<Tag> tags = [];
   List<AttributeValues> ukSizeAttributes = [];
 
-
   @override
   void initState() {
     // TODO: implement initState
@@ -661,76 +664,65 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final homeProvider = Provider.of<HomeProvider>(context, listen: false);
 
-
-      for(int i=0; i<homeProvider.selectedSubCategories.length; i++) {
+      for (int i = 0; i < homeProvider.selectedSubCategories.length; i++) {
         homeProvider.getSubCategories!.forEach((element) {
-          if(element.id == homeProvider.selectedSubCategories[i].id) {
+          if (element.id == homeProvider.selectedSubCategories[i].id) {
             element.isSelected = true;
           }
         });
       }
 
-      for(int i=0; i<homeProvider.selectedBrands.length; i++) {
+      for (int i = 0; i < homeProvider.selectedBrands.length; i++) {
         homeProvider.getBrands!.forEach((element) {
-          if(element.id == homeProvider.selectedBrands[i].id) {
+          if (element.id == homeProvider.selectedBrands[i].id) {
             element.isSelected = true;
           }
         });
       }
 
-
-      for(int i=0; i<homeProvider.selectedTags.length; i++) {
+      for (int i = 0; i < homeProvider.selectedTags.length; i++) {
         homeProvider.getTags!.forEach((element) {
-          if(element.id == homeProvider.selectedTags[i].id) {
+          if (element.id == homeProvider.selectedTags[i].id) {
             element.isSelected = true;
           }
         });
       }
 
-      for(int i=0; i<homeProvider.selectedSizeAttributes.length; i++) {
+      for (int i = 0; i < homeProvider.selectedSizeAttributes.length; i++) {
         homeProvider.attributes!.forEach((element) {
-          if(element.name == 'Size') {
+          if (element.name == 'Size') {
             element.attributeValues!.forEach((element) {
-              if(element.id == homeProvider.selectedSizeAttributes[i].id) {
+              if (element.id == homeProvider.selectedSizeAttributes[i].id) {
                 element.isSelected = true;
               }
             });
           }
-          if(element.name == 'UK Size') {
+          if (element.name == 'UK Size') {
             element.attributeValues!.forEach((element) {
-              if(element.id == homeProvider.selectedSizeAttributes[i].id) {
+              if (element.id == homeProvider.selectedSizeAttributes[i].id) {
                 element.isSelected = true;
               }
             });
           }
-          if(element.name == 'Color') {
+          if (element.name == 'Color') {
             element.attributeValues!.forEach((element) {
-              if(element.id == homeProvider.selectedSizeAttributes[i].id) {
+              if (element.id == homeProvider.selectedSizeAttributes[i].id) {
                 element.isSelected = true;
               }
             });
           }
         });
-
 
         _minAmountController.text = homeProvider.selectedMinPrice;
         _maxAmountController.text = homeProvider.selectedMaxPrice;
-
       }
 
-
-      setState(() {
-
-      });
-
-
+      setState(() {});
     });
-
   }
 
   @override
   Widget build(BuildContext context) {
-
     final l10n = AppLocalizations.of(context)!;
     final homeProvider = Provider.of<HomeProvider>(context);
 
@@ -740,17 +732,15 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       child: ListView(
         children: [
-
           Row(
             children: [
-
               SvgPicture.asset(
                 Images.filterIcon,
                 color: AppColors.primaryColor,
               ),
-
-              const SizedBox(width: 8,),
-
+              const SizedBox(
+                width: 8,
+              ),
               Text(
                 '${l10n.filters}: ',
                 style: const TextStyle(
@@ -758,17 +748,13 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                     color: AppColors.primaryColor,
                     fontWeight: FontWeight.w400),
               ),
-
               const Expanded(child: SizedBox()),
-
-
               InkWell(
                 onTap: () {
                   Navigator.pop(context);
                 },
                 child: const Icon(Icons.close, color: AppColors.primaryColor),
               ),
-
             ],
           ),
           const SizedBox(
@@ -809,7 +795,6 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
           ),
 
           if (homeProvider.getSubCategories!.isNotEmpty) ...[
-
             Text(
               l10n.categoryLabel,
               style: const TextStyle(
@@ -817,18 +802,14 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                   color: AppColors.primaryColor,
                   fontWeight: FontWeight.w400),
             ),
-
             const SizedBox(
               height: 10,
             ),
-
             Wrap(
               spacing: 10,
               runSpacing: 10,
               children: [
-                for (int i = 0;
-                i < homeProvider.getSubCategories!.length;
-                i++)
+                for (int i = 0; i < homeProvider.getSubCategories!.length; i++)
                   InkWell(
                     borderRadius: BorderRadius.circular(8.0),
                     onTap: () {
@@ -838,19 +819,16 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                                         .getSubCategories![i].isSelected;
                               });*/
 
-
                       //toggle sub category
                       homeProvider.toggleSubCategories(i);
 
-                      homeProvider.addRemoveSelectedSubCategories(homeProvider.getSubCategories![i]);
-
-
+                      homeProvider.addRemoveSelectedSubCategories(
+                          homeProvider.getSubCategories![i]);
                     },
                     child: Container(
                       padding: const EdgeInsets.all(8.0),
                       decoration: BoxDecoration(
-                        color: homeProvider
-                            .getSubCategories![i].isSelected
+                        color: homeProvider.getSubCategories![i].isSelected
                             ? AppColors.selectedOption.withOpacity(0.3)
                             : Colors.white,
                         borderRadius: BorderRadius.circular(8.0),
@@ -928,9 +906,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               spacing: 10,
               runSpacing: 10,
               children: [
-                for (int i = 0;
-                i < homeProvider.getBrands!.length;
-                i++) ...[
+                for (int i = 0; i < homeProvider.getBrands!.length; i++) ...[
                   InkWell(
                     borderRadius: BorderRadius.circular(8.0),
                     onTap: () {
@@ -940,8 +916,8 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                               });*/
 
                       homeProvider.toggleBrands(i);
-                      homeProvider.addRemoveSelectedBrands(homeProvider.getBrands![i]);
-
+                      homeProvider
+                          .addRemoveSelectedBrands(homeProvider.getBrands![i]);
                     },
                     child: Container(
                       padding: const EdgeInsets.all(8.0),
@@ -1000,8 +976,8 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
 
                       homeProvider.toggleTags(i);
 
-                      homeProvider.addRemoveSelectedTags(homeProvider.getTags![i]);
-
+                      homeProvider
+                          .addRemoveSelectedTags(homeProvider.getTags![i]);
                     },
                     child: Container(
                       padding: const EdgeInsets.all(8.0),
@@ -1060,7 +1036,8 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                 padding: EdgeInsets.all(8.0),
                 child: Text('Sar '),
               ),
-              prefixIconConstraints: const BoxConstraints(minWidth: 0, minHeight: 0),
+              prefixIconConstraints:
+                  const BoxConstraints(minWidth: 0, minHeight: 0),
               prefixStyle: const TextStyle(
                   fontFamily: 'Montserrat',
                   fontSize: 14,
@@ -1076,7 +1053,8 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                 borderRadius: BorderRadius.circular(8.0),
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                borderSide:
+                    const BorderSide(color: AppColors.primaryColor, width: 1.0),
                 borderRadius: BorderRadius.circular(8.0),
               ),
             ),
@@ -1111,7 +1089,8 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                 padding: EdgeInsets.all(8.0),
                 child: Text('Sar '),
               ),
-              prefixIconConstraints: const BoxConstraints(minWidth: 0, minHeight: 0),
+              prefixIconConstraints:
+                  const BoxConstraints(minWidth: 0, minHeight: 0),
               prefixStyle: const TextStyle(
                   fontFamily: 'Montserrat',
                   fontSize: 14,
@@ -1127,7 +1106,8 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                 borderRadius: BorderRadius.circular(8.0),
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                borderSide:
+                    const BorderSide(color: AppColors.primaryColor, width: 1.0),
                 borderRadius: BorderRadius.circular(8.0),
               ),
             ),
@@ -1155,10 +1135,8 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               runSpacing: 10,
               children: [
                 for (int j = 0;
-                j <
-                    homeProvider
-                        .attributes![i].attributeValues!.length;
-                j++)
+                    j < homeProvider.attributes![i].attributeValues!.length;
+                    j++)
                   InkWell(
                     borderRadius: BorderRadius.circular(30.0),
                     onTap: () {
@@ -1169,58 +1147,54 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                                         .attributeValues![j].isSelected;
                               });*/
 
-
                       homeProvider.toggleAttribute(i, j);
 
-                      homeProvider.addRemoveSelectedSizeAttributes(homeProvider.attributes![i].attributeValues![j]);
-
+                      homeProvider.addRemoveSelectedSizeAttributes(
+                          homeProvider.attributes![i].attributeValues![j]);
                     },
                     child: Container(
-                      padding:
-                      homeProvider.attributes![i].name != 'Color'
+                      padding: homeProvider.attributes![i].name != 'Color'
                           ? const EdgeInsets.all(8.0)
                           : const EdgeInsets.all(1.0),
-                      decoration: homeProvider.attributes![i].name !=
-                          'Color'
+                      decoration: homeProvider.attributes![i].name != 'Color'
                           ? BoxDecoration(
-                        color: homeProvider.attributes![i]
-                            .attributeValues![j].isSelected
-                            ? AppColors.selectedOption
-                            .withOpacity(0.3)
-                            : Colors.white,
-                        borderRadius: BorderRadius.circular(8.0),
-                        border: Border.all(
-                          color: AppColors.borderColor,
-                          width: 1,
-                        ),
-                      )
+                              color: homeProvider.attributes![i]
+                                      .attributeValues![j].isSelected
+                                  ? AppColors.selectedOption.withOpacity(0.3)
+                                  : Colors.white,
+                              borderRadius: BorderRadius.circular(8.0),
+                              border: Border.all(
+                                color: AppColors.borderColor,
+                                width: 1,
+                              ),
+                            )
                           : BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: homeProvider.attributes![i]
-                              .attributeValues![j].isSelected
-                              ? AppColors.blackColor
-                              : Colors.transparent,
-                          width: 1,
-                        ),
-                      ),
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: homeProvider.attributes![i]
+                                        .attributeValues![j].isSelected
+                                    ? AppColors.blackColor
+                                    : Colors.transparent,
+                                width: 1,
+                              ),
+                            ),
                       child: homeProvider.attributes![i].name == 'Color'
                           ? ClipRRect(
-                        borderRadius: BorderRadius.circular(60.0),
-                        child: SvgPicture.network(
-                          '${APIs.imageBaseURL}${APIs.attributeValue}${homeProvider.attributes![i].attributeValues![j].image!}',
-                          width: 30,
-                          height: 30,
-                        ),
-                      )
+                              borderRadius: BorderRadius.circular(60.0),
+                              child: SvgPicture.network(
+                                '${APIs.imageBaseURL}${APIs.attributeValue}${homeProvider.attributes![i].attributeValues![j].image!}',
+                                width: 30,
+                                height: 30,
+                              ),
+                            )
                           : Text(
-                        homeProvider.attributes![i]
-                            .attributeValues![j].name!,
-                        style: const TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontSize: 14,
-                            color: AppColors.blackColor),
-                      ),
+                              homeProvider
+                                  .attributes![i].attributeValues![j].name!,
+                              style: const TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontSize: 14,
+                                  color: AppColors.blackColor),
+                            ),
                     ),
                   ),
               ],
@@ -1240,7 +1214,8 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               onPressed: () async {
                 Navigator.pop(context);
 
-                final homeProvider = Provider.of<HomeProvider>(context, listen: false);
+                final homeProvider =
+                    Provider.of<HomeProvider>(context, listen: false);
 
                 // List<AttributeValues> sizeAttributes = [];
                 // List<AttributeValues> colorAttributes = [];
@@ -1254,53 +1229,44 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
 
                 //get selected size attributes
                 for (int i = 0; i < homeProvider.attributes!.length; i++) {
-
                   if (homeProvider.attributes![i].name == 'Size') {
-                    for (int j = 0; j < homeProvider.attributes![i].attributeValues!.length; j++) {
-
-                      if (homeProvider.attributes![i].attributeValues![j].isSelected) {
-                        sizeAttributes.add(homeProvider.attributes![i].attributeValues![j]);
+                    for (int j = 0;
+                        j < homeProvider.attributes![i].attributeValues!.length;
+                        j++) {
+                      if (homeProvider
+                          .attributes![i].attributeValues![j].isSelected) {
+                        sizeAttributes.add(
+                            homeProvider.attributes![i].attributeValues![j]);
                       }
-
                     }
-
                   }
-
                 }
 
                 //get selected color attributes
-                for (int i = 0;
-                i < homeProvider.attributes!.length;
-                i++) {
+                for (int i = 0; i < homeProvider.attributes!.length; i++) {
                   if (homeProvider.attributes![i].name == 'Color') {
                     for (int j = 0;
-                    j <
-                        homeProvider
-                            .attributes![i].attributeValues!.length;
-                    j++) {
-                      if (homeProvider.attributes![i]
-                          .attributeValues![j].isSelected) {
-                        colorAttributes.add(homeProvider
-                            .attributes![i].attributeValues![j]);
+                        j < homeProvider.attributes![i].attributeValues!.length;
+                        j++) {
+                      if (homeProvider
+                          .attributes![i].attributeValues![j].isSelected) {
+                        colorAttributes.add(
+                            homeProvider.attributes![i].attributeValues![j]);
                       }
                     }
                   }
                 }
 
                 //get selected uk size attributes
-                for (int i = 0;
-                i < homeProvider.attributes!.length;
-                i++) {
+                for (int i = 0; i < homeProvider.attributes!.length; i++) {
                   if (homeProvider.attributes![i].name == 'UK Size') {
                     for (int j = 0;
-                    j <
-                        homeProvider
-                            .attributes![i].attributeValues!.length;
-                    j++) {
-                      if (homeProvider.attributes![i]
-                          .attributeValues![j].isSelected) {
-                        ukSizeAttributes.add(homeProvider
-                            .attributes![i].attributeValues![j]);
+                        j < homeProvider.attributes![i].attributeValues!.length;
+                        j++) {
+                      if (homeProvider
+                          .attributes![i].attributeValues![j].isSelected) {
+                        ukSizeAttributes.add(
+                            homeProvider.attributes![i].attributeValues![j]);
                       }
                     }
                   }
@@ -1313,9 +1279,8 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                   }
                 }
 
-
-                String sValue = widget.sortValue.toLowerCase().replaceAll(' ', '_');
-
+                String sValue =
+                    widget.sortValue.toLowerCase().replaceAll(' ', '_');
 
                 await homeProvider.getProducts(
                   context,
@@ -1366,13 +1331,13 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                 _minAmountController.clear();
                 _maxAmountController.clear();
 
-
                 final homeProvider =
-                Provider.of<HomeProvider>(context, listen: false);
+                    Provider.of<HomeProvider>(context, listen: false);
 
                 homeProvider.clearFilters();
 
-                String sValue = widget.sortValue.toLowerCase().replaceAll(' ', '_');
+                String sValue =
+                    widget.sortValue.toLowerCase().replaceAll(' ', '_');
 
                 await homeProvider.getProducts(
                     context,
@@ -1397,8 +1362,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                 children: [
                   Text(
                     l10n.clearFilterBtnText,
-                    style:
-                    const TextStyle(color: AppColors.primaryColor),
+                    style: const TextStyle(color: AppColors.primaryColor),
                   ),
                 ],
               ),
@@ -1409,4 +1373,3 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
     );
   }
 }
-

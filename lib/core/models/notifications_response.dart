@@ -1,13 +1,12 @@
 class NotificationsResponse {
-
   bool success = false;
   String? message;
 
   List<Notifications>? notifications;
 
-  NotificationsResponse({this.success = false, this.message, this.notifications});
+  NotificationsResponse(
+      {this.success = false, this.message, this.notifications});
 }
-
 
 class Notifications {
   int? id;
@@ -21,13 +20,13 @@ class Notifications {
 
   Notifications(
       {this.id,
-        this.title,
-        this.description,
-        this.notificationCount,
-        this.image,
-        this.status,
-        this.createdAt,
-        this.updatedAt});
+      this.title,
+      this.description,
+      this.notificationCount,
+      this.image,
+      this.status,
+      this.createdAt,
+      this.updatedAt});
 
   Notifications.fromJson(Map<String, dynamic> json) {
     id = json['id'];

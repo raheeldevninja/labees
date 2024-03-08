@@ -174,13 +174,13 @@ class _AccountTabState extends State<AccountTab> {
                   borderRadius: BorderRadius.circular(25.0),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderSide:
-                      BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                  borderSide: BorderSide(
+                      color: Colors.grey.withOpacity(0.1), width: 1.0),
                   borderRadius: BorderRadius.circular(25.0),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide:
-                      const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                  borderSide: const BorderSide(
+                      color: AppColors.primaryColor, width: 1.0),
                   borderRadius: BorderRadius.circular(25.0),
                 ),
               ),
@@ -214,13 +214,13 @@ class _AccountTabState extends State<AccountTab> {
                   borderRadius: BorderRadius.circular(25.0),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderSide:
-                      BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                  borderSide: BorderSide(
+                      color: Colors.grey.withOpacity(0.1), width: 1.0),
                   borderRadius: BorderRadius.circular(25.0),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide:
-                      const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                  borderSide: const BorderSide(
+                      color: AppColors.primaryColor, width: 1.0),
                   borderRadius: BorderRadius.circular(25.0),
                 ),
               ),
@@ -254,13 +254,13 @@ class _AccountTabState extends State<AccountTab> {
                   borderRadius: BorderRadius.circular(25.0),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderSide:
-                      BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                  borderSide: BorderSide(
+                      color: Colors.grey.withOpacity(0.1), width: 1.0),
                   borderRadius: BorderRadius.circular(25.0),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide:
-                      const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                  borderSide: const BorderSide(
+                      color: AppColors.primaryColor, width: 1.0),
                   borderRadius: BorderRadius.circular(25.0),
                 ),
               ),
@@ -294,13 +294,13 @@ class _AccountTabState extends State<AccountTab> {
                   borderRadius: BorderRadius.circular(25.0),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderSide:
-                      BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                  borderSide: BorderSide(
+                      color: Colors.grey.withOpacity(0.1), width: 1.0),
                   borderRadius: BorderRadius.circular(25.0),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide:
-                      const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                  borderSide: const BorderSide(
+                      color: AppColors.primaryColor, width: 1.0),
                   borderRadius: BorderRadius.circular(25.0),
                 ),
               ),
@@ -363,13 +363,13 @@ class _AccountTabState extends State<AccountTab> {
                   borderRadius: BorderRadius.circular(25.0),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderSide:
-                      BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                  borderSide: BorderSide(
+                      color: Colors.grey.withOpacity(0.1), width: 1.0),
                   borderRadius: BorderRadius.circular(25.0),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide:
-                      const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                  borderSide: const BorderSide(
+                      color: AppColors.primaryColor, width: 1.0),
                   borderRadius: BorderRadius.circular(25.0),
                 ),
               ),
@@ -404,13 +404,13 @@ class _AccountTabState extends State<AccountTab> {
                   borderRadius: BorderRadius.circular(25.0),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderSide:
-                      BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                  borderSide: BorderSide(
+                      color: Colors.grey.withOpacity(0.1), width: 1.0),
                   borderRadius: BorderRadius.circular(25.0),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide:
-                      const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                  borderSide: const BorderSide(
+                      color: AppColors.primaryColor, width: 1.0),
                   borderRadius: BorderRadius.circular(25.0),
                 ),
               ),
@@ -445,13 +445,13 @@ class _AccountTabState extends State<AccountTab> {
                   borderRadius: BorderRadius.circular(25.0),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderSide:
-                      BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                  borderSide: BorderSide(
+                      color: Colors.grey.withOpacity(0.1), width: 1.0),
                   borderRadius: BorderRadius.circular(25.0),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide:
-                      const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                  borderSide: const BorderSide(
+                      color: AppColors.primaryColor, width: 1.0),
                   borderRadius: BorderRadius.circular(25.0),
                 ),
               ),
@@ -467,14 +467,15 @@ class _AccountTabState extends State<AccountTab> {
               text: l10n.update,
               callback: () async {
                 final authProvider =
-                Provider.of<AuthProvider>(context, listen: false);
+                    Provider.of<AuthProvider>(context, listen: false);
 
                 AccountData accountData = AccountData(
                   firstName: _firstNameController.text.trim(),
                   lastName: _lastNameController.text.trim(),
                   email: _emailController.text.trim(),
                   phone: _phoneController.text.trim(),
-                  gender: selectedGender == Gender.male ? l10n.male : l10n.female,
+                  gender:
+                      selectedGender == Gender.male ? l10n.male : l10n.female,
                   oldPassword: _currentPasswordController.text.trim(),
                   newPassword: _newPasswordController.text.trim(),
                 );
@@ -522,4 +523,3 @@ class _AccountTabState extends State<AccountTab> {
     _confirmPasswordController.dispose();
   }
 }
-

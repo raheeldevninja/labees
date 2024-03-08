@@ -9,10 +9,9 @@ class DashboardData {
 
   DashboardData(
       {this.newArrivalProducts,
-        this.mostWantedBanners,
-        this.success,
-        this.message
-      });
+      this.mostWantedBanners,
+      this.success,
+      this.message});
 
   DashboardData.fromJson(Map<String, dynamic> json) {
     newArrivalProducts = json['new_arrival_products'] != null
@@ -91,21 +90,21 @@ class MostWantedBanners {
 
   MostWantedBanners(
       {this.id,
-        this.photo,
-        this.photoAr,
-        this.title,
-        this.subTitle,
-        this.bannerType,
-        this.featuredBannerSize,
-        this.featuredBannerColor,
-        this.featuredBannerTextColor,
-        this.published,
-        this.createdAt,
-        this.updatedAt,
-        this.urlType,
-        this.url,
-        this.resourceType,
-        this.resourceId});
+      this.photo,
+      this.photoAr,
+      this.title,
+      this.subTitle,
+      this.bannerType,
+      this.featuredBannerSize,
+      this.featuredBannerColor,
+      this.featuredBannerTextColor,
+      this.published,
+      this.createdAt,
+      this.updatedAt,
+      this.urlType,
+      this.url,
+      this.resourceType,
+      this.resourceId});
 
   MostWantedBanners.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -124,7 +123,6 @@ class MostWantedBanners {
     url = json['url'];
     resourceType = json['resource_type'];
     resourceId = json['resource_id'];
-
   }
 
   Map<String, dynamic> toJson() {

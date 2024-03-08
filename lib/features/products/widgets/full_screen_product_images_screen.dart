@@ -39,7 +39,8 @@ class _FullScreenProductImagesScreenState
         scrollPhysics: const BouncingScrollPhysics(),
         builder: (BuildContext context, int index) {
           return PhotoViewGalleryPageOptions(
-            imageProvider: NetworkImage('${APIs.imageBaseURL}${APIs.productImages}${widget.images![index]}'),
+            imageProvider: NetworkImage(
+                '${APIs.imageBaseURL}${APIs.productImages}${widget.images![index]}'),
             initialScale: PhotoViewComputedScale.contained * 0.8,
             heroAttributes: PhotoViewHeroAttributes(tag: widget.images![index]),
           );
@@ -59,7 +60,6 @@ class _FullScreenProductImagesScreenState
         onPageChanged: (index) {
           setState(() {});
         },
-
       ),
     );
   }

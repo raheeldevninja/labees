@@ -9,5 +9,5 @@ class NotificationModel {
     required this.description,
     required this.time,
     required this.date,
-});
+  });
 }

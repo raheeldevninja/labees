@@ -16,19 +16,19 @@ class Shop {
 
   Shop(
       {this.id,
-        this.sellerId,
-        this.name,
-        this.address,
-        this.contact,
-        this.image,
-        this.createdAt,
-        this.updatedAt,
-        this.banner,
-        this.commercialDocument,
-        this.crIdNo,
-        this.crFreelanceDocument,
-        this.additionalLegalDocument,
-        this.city});
+      this.sellerId,
+      this.name,
+      this.address,
+      this.contact,
+      this.image,
+      this.createdAt,
+      this.updatedAt,
+      this.banner,
+      this.commercialDocument,
+      this.crIdNo,
+      this.crFreelanceDocument,
+      this.additionalLegalDocument,
+      this.city});
 
   Shop.fromJson(Map<String, dynamic> json) {
     id = json['id'];

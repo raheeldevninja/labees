@@ -19,7 +19,6 @@ import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 /*
 *  Date 26 - Nov-2023
 *  Author: Raheel Khan- Abaska Technologies
@@ -34,7 +33,6 @@ class DesignersPage extends StatefulWidget {
 }
 
 class _DesignersPageState extends State<DesignersPage> {
-
   late ScrollController _scrollController;
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -131,28 +129,65 @@ class _DesignersPageState extends State<DesignersPage> {
   }
 
   _initBrands() {
-    brands.add(Brand(name: 'Versace', image: 'https://labees.mydomain101.net/storage/app/public/brand/2023-07-06-64a694045e73c.svg',));
-    brands.add(Brand(name: 'Versace', image: 'https://labees.mydomain101.net/storage/app/public/brand/2023-07-06-64a693dfa4114.svg'));
+    brands.add(Brand(
+      name: 'Versace',
+      image:
+          'https://labees.mydomain101.net/storage/app/public/brand/2023-07-06-64a694045e73c.svg',
+    ));
+    brands.add(Brand(
+        name: 'Versace',
+        image:
+            'https://labees.mydomain101.net/storage/app/public/brand/2023-07-06-64a693dfa4114.svg'));
 
+    brands.add(Brand(
+      name: 'Versace',
+      image:
+          'https://labees.mydomain101.net/storage/app/public/brand/2023-07-06-64a694045e73c.svg',
+    ));
+    brands.add(Brand(
+        name: 'Versace',
+        image:
+            'https://labees.mydomain101.net/storage/app/public/brand/2023-07-06-64a693dfa4114.svg'));
 
-    brands.add(Brand(name: 'Versace', image: 'https://labees.mydomain101.net/storage/app/public/brand/2023-07-06-64a694045e73c.svg',));
-    brands.add(Brand(name: 'Versace', image: 'https://labees.mydomain101.net/storage/app/public/brand/2023-07-06-64a693dfa4114.svg'));
+    brands.add(Brand(
+      name: 'Versace',
+      image:
+          'https://labees.mydomain101.net/storage/app/public/brand/2023-07-06-64a694045e73c.svg',
+    ));
+    brands.add(Brand(
+        name: 'Versace',
+        image:
+            'https://labees.mydomain101.net/storage/app/public/brand/2023-07-06-64a693dfa4114.svg'));
 
+    brands.add(Brand(
+      name: 'Versace',
+      image:
+          'https://labees.mydomain101.net/storage/app/public/brand/2023-07-06-64a694045e73c.svg',
+    ));
+    brands.add(Brand(
+        name: 'Versace',
+        image:
+            'https://labees.mydomain101.net/storage/app/public/brand/2023-07-06-64a693dfa4114.svg'));
 
-    brands.add(Brand(name: 'Versace', image: 'https://labees.mydomain101.net/storage/app/public/brand/2023-07-06-64a694045e73c.svg',));
-    brands.add(Brand(name: 'Versace', image: 'https://labees.mydomain101.net/storage/app/public/brand/2023-07-06-64a693dfa4114.svg'));
+    brands.add(Brand(
+      name: '',
+      image:
+          'https://labees.mydomain101.net/storage/app/public/brand/2023-07-06-64a694045e73c.svg',
+    ));
+    brands.add(Brand(
+        name: '',
+        image:
+            'https://labees.mydomain101.net/storage/app/public/brand/2023-07-06-64a693dfa4114.svg'));
 
-    brands.add(Brand(name: 'Versace', image: 'https://labees.mydomain101.net/storage/app/public/brand/2023-07-06-64a694045e73c.svg',));
-    brands.add(Brand(name: 'Versace', image: 'https://labees.mydomain101.net/storage/app/public/brand/2023-07-06-64a693dfa4114.svg'));
-
-
-    brands.add(Brand(name: '', image: 'https://labees.mydomain101.net/storage/app/public/brand/2023-07-06-64a694045e73c.svg',));
-    brands.add(Brand(name: '', image: 'https://labees.mydomain101.net/storage/app/public/brand/2023-07-06-64a693dfa4114.svg'));
-
-
-    brands.add(Brand(name: '', image: 'https://labees.mydomain101.net/storage/app/public/brand/2023-07-06-64a694045e73c.svg',));
-    brands.add(Brand(name: '', image: 'https://labees.mydomain101.net/storage/app/public/brand/2023-07-06-64a693dfa4114.svg'));
-
+    brands.add(Brand(
+      name: '',
+      image:
+          'https://labees.mydomain101.net/storage/app/public/brand/2023-07-06-64a694045e73c.svg',
+    ));
+    brands.add(Brand(
+        name: '',
+        image:
+            'https://labees.mydomain101.net/storage/app/public/brand/2023-07-06-64a693dfa4114.svg'));
   }
 
   _initColorsList() {
@@ -177,7 +212,6 @@ class _DesignersPageState extends State<DesignersPage> {
     sizes.add(ProductSizes(size: 'XXL'));
   }
 
-
   _initAlphabets() {
     alphabets.add(Alphabet(letter: '0-9'));
 
@@ -189,7 +223,6 @@ class _DesignersPageState extends State<DesignersPage> {
 
   @override
   Widget build(BuildContext context) {
-
     final l10n = AppLocalizations.of(context)!;
     final cartProvider = Provider.of<CartProvider>(context);
 
@@ -202,7 +235,7 @@ class _DesignersPageState extends State<DesignersPage> {
           shadowColor: Colors.transparent,
           backgroundColor: Colors.white,
           surfaceTintColor: Colors.transparent,
-            leading: IconButton(
+          leading: IconButton(
             onPressed: () {
               _scaffoldKey.currentState!.openDrawer();
             },
@@ -448,9 +481,7 @@ class _DesignersPageState extends State<DesignersPage> {
                   //right section
                   Expanded(
                     child: Column(
-
                       children: [
-
                         //horizontal listview of alphabets
                         SizedBox(
                           height: 40,
@@ -459,7 +490,6 @@ class _DesignersPageState extends State<DesignersPage> {
                             shrinkWrap: true,
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context, index) {
-
                               final header = alphabets.elementAt(index);
 
                               return InkWell(
@@ -474,8 +504,6 @@ class _DesignersPageState extends State<DesignersPage> {
                                       .copyWith(isSelected: true);
 
                                   setState(() {});
-
-
                                 },
                                 child: Container(
                                   margin: const EdgeInsets.all(4),
@@ -509,7 +537,9 @@ class _DesignersPageState extends State<DesignersPage> {
                           ),
                         ),
 
-                        const SizedBox(height: 16,),
+                        const SizedBox(
+                          height: 16,
+                        ),
 
                         //list view of designers with sticky headers of alphabet
                         Expanded(
@@ -518,13 +548,12 @@ class _DesignersPageState extends State<DesignersPage> {
                             itemCount: alphabets.length,
                             shrinkWrap: true,
                             itemBuilder: (context, index) {
-
                               return StickyHeader(
                                 header: Container(
                                   height: 40,
                                   alignment: Alignment.centerLeft,
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 16),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16),
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     border: Border(
@@ -554,25 +583,29 @@ class _DesignersPageState extends State<DesignersPage> {
                                       onTap: () {},
                                       child: Container(
                                         height: 30,
-                                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 16, vertical: 6),
                                         child: Text(
                                           'A',
                                           style: TextStyle(
                                             fontSize: 14,
-                                            color:
-                                                AppColors.blackColor,
-                                            fontFamily:
-                                                'Montserrat',
+                                            color: AppColors.blackColor,
+                                            fontFamily: 'Montserrat',
                                           ),
                                           maxLines: 1,
-                                          overflow:
-                                              TextOverflow.ellipsis,
+                                          overflow: TextOverflow.ellipsis,
                                         ),
                                       ),
                                     );
-                                  }, separatorBuilder: (BuildContext context, int index) {
-                                    return Container(height: 0.5, color: AppColors.lightGrey.withOpacity(0.3),);
-                                },
+                                  },
+                                  separatorBuilder:
+                                      (BuildContext context, int index) {
+                                    return Container(
+                                      height: 0.5,
+                                      color:
+                                          AppColors.lightGrey.withOpacity(0.3),
+                                    );
+                                  },
                                 ),
                               );
                             },
@@ -967,7 +1000,6 @@ class _DesignersPageState extends State<DesignersPage> {
   }
 
   void scrollToHeader(Alphabet header) {
-
     final index = alphabets.indexOf(header);
 
     //animate to header position

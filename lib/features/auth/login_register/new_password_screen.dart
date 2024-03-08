@@ -8,13 +8,11 @@ import 'package:labees/features/home/home_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 /*
 *  Date 5 - Dec-2023
 *  Author: Raheel Khan- Abaska Technologies
 *  Description: NewPasswordScreen
 */
-
 
 class NewPasswordScreen extends StatefulWidget {
   const NewPasswordScreen({
@@ -26,13 +24,11 @@ class NewPasswordScreen extends StatefulWidget {
   final String email;
   final String otp;
 
-
   @override
   State<NewPasswordScreen> createState() => _NewPasswordScreenState();
 }
 
 class _NewPasswordScreenState extends State<NewPasswordScreen> {
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final _passwordController = TextEditingController();
@@ -43,7 +39,6 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     final l10n = AppLocalizations.of(context);
     final authProvider = context.read<AuthProvider>();
 
@@ -108,20 +103,25 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                   obscureText: true,
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: _passwordFocus.hasFocus ? Colors.white : Colors.grey.withOpacity(0.1),
-                    contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20),
+                    fillColor: _passwordFocus.hasFocus
+                        ? Colors.white
+                        : Colors.grey.withOpacity(0.1),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 12.0, horizontal: 20),
                     hintText: 'Enter your password',
-                    hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+                    hintStyle:
+                        const TextStyle(fontSize: 14, color: Colors.grey),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                      borderSide: BorderSide(
+                          color: Colors.grey.withOpacity(0.1), width: 1.0),
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide:
-                      const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                      borderSide: const BorderSide(
+                          color: AppColors.primaryColor, width: 1.0),
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                   ),
@@ -145,9 +145,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
               ),
               Focus(
                 onFocusChange: (hasFocus) {
-                  setState(() {
-
-                  });
+                  setState(() {});
                 },
                 child: TextFormField(
                   focusNode: _confirmPasswordFocus,
@@ -157,20 +155,25 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                   obscureText: true,
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: _confirmPasswordFocus.hasFocus ? Colors.white : Colors.grey.withOpacity(0.1),
-                    contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20),
+                    fillColor: _confirmPasswordFocus.hasFocus
+                        ? Colors.white
+                        : Colors.grey.withOpacity(0.1),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 12.0, horizontal: 20),
                     hintText: 'Enter confirm password',
-                    hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+                    hintStyle:
+                        const TextStyle(fontSize: 14, color: Colors.grey),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                      borderSide: BorderSide(
+                          color: Colors.grey.withOpacity(0.1), width: 1.0),
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide:
-                      const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                      borderSide: const BorderSide(
+                          color: AppColors.primaryColor, width: 1.0),
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                   ),
@@ -185,29 +188,29 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                   },
                 ),
               ),
-              const SizedBox(height: 40,),
+              const SizedBox(
+                height: 40,
+              ),
               SizedBox(
                 width: double.maxFinite,
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () async {
-
                     if (_formKey.currentState!.validate()) {
-                      await authProvider.setNewPassword(context, widget.email, widget.otp, _passwordController.text);
+                      await authProvider.setNewPassword(context, widget.email,
+                          widget.otp, _passwordController.text);
                     }
 
-                    if(mounted && authProvider.newPasswordResponse.status!) {
-
+                    if (mounted && authProvider.newPasswordResponse.status!) {
                       Navigator.pushAndRemoveUntil(
                         context,
-                        MaterialPageRoute(builder: (context) => const HomeScreen()),
+                        MaterialPageRoute(
+                            builder: (context) => const HomeScreen()),
                         (Route<dynamic> route) => false,
                       );
 
                       Utils.controller.jumpToTab(0);
-
                     }
-
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primaryColor,

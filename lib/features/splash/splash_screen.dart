@@ -6,7 +6,6 @@ import 'package:labees/features/chooese_language/chooese_language_screen.dart';
 import 'package:labees/features/home/home_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-
 /*
 *  Date 12 - Oct-2023
 *  Author: Raheel Khan- Abaska Technologies
@@ -49,13 +48,10 @@ class _SplashScreenState extends State<SplashScreen>
 
     _navigateToChooseLangScreen();
 
-
     _requestNotificationsPermission();
   }
 
   _requestNotificationsPermission() async {
-
-
     PermissionStatus status = await Permission.notification.status;
     if (!status.isGranted) {
       Permission.notification.request();
@@ -114,24 +110,19 @@ class _SplashScreenState extends State<SplashScreen>
 
   _navigateToChooseLangScreen() {
     Future.delayed(const Duration(seconds: 4), () async {
-
-      if(await SharedPref.isChooseLanguageScreenShown()) {
+      if (await SharedPref.isChooseLanguageScreenShown()) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) => const HomeScreen(),
           ),
         );
-      }
-      else {
-
+      } else {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) => const ChooseLanguageScreen(),
           ),
         );
       }
-
-
     });
   }
 

@@ -4,8 +4,4 @@
 *  Description: MainCategories Enum
 */
 
-enum MainCategories {
-  men,
-  women,
-  kids
-}
+enum MainCategories { men, women, kids }

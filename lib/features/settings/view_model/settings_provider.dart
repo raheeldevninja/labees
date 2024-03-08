@@ -11,11 +11,8 @@ import 'package:labees/features/settings/service/settings_service.dart';
 
 import '../model/faqs_response.dart';
 
-
 class SettingsProvider extends ChangeNotifier {
-
   bool isLoading = false;
-
 
   bool get getIsLoading => isLoading;
 
@@ -26,20 +23,15 @@ class SettingsProvider extends ChangeNotifier {
   late AllFAQs allFAQs;
 
   contactUs(BuildContext context, ContactStoreData contactStoreData) async {
-
     EasyLoading.show(status: 'loading...');
     showLoading();
-
 
     contactResponse = await SettingsService.contactUs(contactStoreData);
 
     if (contactResponse.success!) {
-
       Utils.toast(contactResponse.message!);
       Navigator.pop(context);
-
-    }
-    else {
+    } else {
       Utils.toast(contactResponse.message!);
     }
 
@@ -49,15 +41,12 @@ class SettingsProvider extends ChangeNotifier {
   }
 
   Future<void> getCompanySettings() async {
-
     EasyLoading.show();
     showLoading();
-
 
     companySettingsResponse = await SettingsService.getCompanySettings();
 
     if (companySettingsResponse.success!) {
-
     } else {
       Utils.toast(companySettingsResponse.message!);
     }
@@ -67,16 +56,13 @@ class SettingsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
   Future<void> getFAQs(String lang) async {
-
     EasyLoading.show();
     showLoading();
 
     allFAQs = await SettingsService.getFAQs(lang);
 
     if (allFAQs.success!) {
-
     } else {
       Utils.toast(allFAQs.message!);
     }
@@ -85,7 +71,6 @@ class SettingsProvider extends ChangeNotifier {
     hideLoading();
     notifyListeners();
   }
-
 
   //set faq expansion tile status
   void setFAQExpansionTileStatus(int index, bool isExpanded) {
@@ -101,15 +86,12 @@ class SettingsProvider extends ChangeNotifier {
   }
 
   Future<void> getFooterSettings() async {
-
     EasyLoading.show();
     showLoading();
-
 
     footerSettingsResponse = await SettingsService.getFooterSettings();
 
     if (footerSettingsResponse.success!) {
-
     } else {
       Utils.toast(footerSettingsResponse.message!);
     }
@@ -120,15 +102,12 @@ class SettingsProvider extends ChangeNotifier {
   }
 
   Future<void> getPageDetails(String slug) async {
-
     EasyLoading.show();
     showLoading();
-
 
     pageDetailsResponse = await SettingsService.getPageDetails(slug);
 
     if (pageDetailsResponse!.success!) {
-
     } else {
       Utils.toast(pageDetailsResponse!.message!);
     }
@@ -137,8 +116,6 @@ class SettingsProvider extends ChangeNotifier {
     hideLoading();
     notifyListeners();
   }
-
-
 
   showLoading() {
     isLoading = true;
@@ -149,6 +126,4 @@ class SettingsProvider extends ChangeNotifier {
     isLoading = false;
     notifyListeners();
   }
-
-
 }

@@ -5,7 +5,11 @@ class CheckoutSettings {
   bool? success;
   String? message;
 
-  CheckoutSettings({this.billingInputByCustomer, this.productTax, this.success, this.message});
+  CheckoutSettings(
+      {this.billingInputByCustomer,
+      this.productTax,
+      this.success,
+      this.message});
 
   CheckoutSettings.fromJson(Map<String, dynamic> json) {
     billingInputByCustomer = json['billing_input_by_customer'];

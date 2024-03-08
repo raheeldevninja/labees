@@ -7,14 +7,14 @@ class Tag {
 
   bool isSelected = false;
 
-  Tag(
-      {this.id,
-        this.name,
-        this.sellerVisible,
-        this.createdAt,
-        this.updatedAt,
-        this.isSelected = false,
-      });
+  Tag({
+    this.id,
+    this.name,
+    this.sellerVisible,
+    this.createdAt,
+    this.updatedAt,
+    this.isSelected = false,
+  });
 
   Tag copyWith({
     int? id,

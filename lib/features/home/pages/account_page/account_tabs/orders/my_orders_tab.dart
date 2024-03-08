@@ -4,14 +4,11 @@ import 'package:labees/features/home/pages/account_page/widgets/no_orders_widget
 import 'package:labees/features/home/pages/account_page/account_tabs/orders/orders_main_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
-
 /*
 *  Date 10 - Now-2023
 *  Author: Raheel Khan- Abaska Technologies
 *  Description: My Orders Tab
 */
-
 
 class MyOrdersTab extends StatefulWidget {
   const MyOrdersTab({Key? key}) : super(key: key);
@@ -21,7 +18,6 @@ class MyOrdersTab extends StatefulWidget {
 }
 
 class _MyOrdersTabState extends State<MyOrdersTab> {
-
   @override
   void initState() {
     super.initState();
@@ -31,7 +27,6 @@ class _MyOrdersTabState extends State<MyOrdersTab> {
 
   @override
   Widget build(BuildContext context) {
-
     final l10n = AppLocalizations.of(context)!;
 
     return Padding(
@@ -52,9 +47,9 @@ class _MyOrdersTabState extends State<MyOrdersTab> {
           Utils.myOrders.isEmpty
               ? const NoOrdersWidget()
               : const OrdersMainPage(),
-
-          const SizedBox(height: 40,),
-
+          const SizedBox(
+            height: 40,
+          ),
         ],
       ),
     );

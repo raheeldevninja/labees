@@ -15,23 +15,21 @@ class Categories {
   int? priority;
   List<CategoryChild>? childes;
 
-
-  Categories(
-      {this.id,
-        this.name,
-        this.slug,
-        this.icon,
-        this.parentId,
-        this.position,
-        this.createdAt,
-        this.updatedAt,
-        this.homeStatus,
-        this.topCategory,
-        this.status,
-        this.priority,
-        this.childes,
-
-      });
+  Categories({
+    this.id,
+    this.name,
+    this.slug,
+    this.icon,
+    this.parentId,
+    this.position,
+    this.createdAt,
+    this.updatedAt,
+    this.homeStatus,
+    this.topCategory,
+    this.status,
+    this.priority,
+    this.childes,
+  });
 
   Categories.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -75,4 +73,3 @@ class Categories {
     return data;
   }
 }
-

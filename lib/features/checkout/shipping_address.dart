@@ -10,13 +10,11 @@ import 'package:labees/features/home/models/address_data.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 /*
 *  Date 24 - Dec-2023
 *  Author: Raheel Khan- Abaska Technologies
 *  Description: ShippingAddress
 */
-
 
 class ShippingAddress extends StatefulWidget {
   const ShippingAddress({Key? key}) : super(key: key);
@@ -26,7 +24,6 @@ class ShippingAddress extends StatefulWidget {
 }
 
 class _ShippingAddressState extends State<ShippingAddress> {
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final _contactPersonNameController = TextEditingController();
@@ -38,13 +35,11 @@ class _ShippingAddressState extends State<ShippingAddress> {
   final _countrySearchController = TextEditingController();
   final _citySearchController = TextEditingController();
 
-
   final _contactPersonNameFocus = FocusNode();
   final _emailFocus = FocusNode();
   final _phoneFocus = FocusNode();
   final _addressFocus = FocusNode();
   final _postalCodeFocus = FocusNode();
-
 
   CountriesData? selectedCountry;
   //String? selectedCountry;
@@ -54,7 +49,6 @@ class _ShippingAddressState extends State<ShippingAddress> {
 
   String? selectedAddressType;
   String? selectedState;
-
 
   String? selectedAddress;
   int? selectedAddressId;
@@ -70,44 +64,36 @@ class _ShippingAddressState extends State<ShippingAddress> {
     'Others',
   ];
 
-
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      final checkoutProvider =
+          Provider.of<CheckoutProvider>(context, listen: false);
 
-      final checkoutProvider = Provider.of<CheckoutProvider>(context, listen: false);
-
-      if(checkoutProvider.allAddresses != null && checkoutProvider.allAddresses!.addresses != null &&
+      if (checkoutProvider.allAddresses != null &&
+          checkoutProvider.allAddresses!.addresses != null &&
           checkoutProvider.checkAddressesHaveShippingAddress()) {
+        int shippingAddressIndex =
+            checkoutProvider.getFirstShippingAddressIndex();
 
-        int shippingAddressIndex = checkoutProvider.getFirstShippingAddressIndex();
-
-        if(shippingAddressIndex != -1) {
-
+        if (shippingAddressIndex != -1) {
           setState(() {
             selectedAddressId = checkoutProvider
                 .allAddresses!.addresses![shippingAddressIndex].id;
 
             selectedAddress =
-            '${checkoutProvider.allAddresses!.addresses![shippingAddressIndex].phone!}, '
+                '${checkoutProvider.allAddresses!.addresses![shippingAddressIndex].phone!}, '
                 '${checkoutProvider.allAddresses!.addresses![shippingAddressIndex].contactPersonName!}, ${checkoutProvider.allAddresses!.addresses![shippingAddressIndex].zip!}';
           });
-
         }
-
-
       }
-
     });
-
   }
-
 
   @override
   Widget build(BuildContext context) {
-
     final l10n = AppLocalizations.of(context)!;
     final checkoutProvider = context.watch<CheckoutProvider>();
 
@@ -119,7 +105,6 @@ class _ShippingAddressState extends State<ShippingAddress> {
           //crossAxisAlignment: CrossAxisAlignment.start,
           shrinkWrap: true,
           children: [
-
             Text(
               l10n.shippingAddressHeading,
               style: const TextStyle(
@@ -132,82 +117,85 @@ class _ShippingAddressState extends State<ShippingAddress> {
               height: 10,
             ),
 
-          if(checkoutProvider.allAddresses!.addresses != null && checkoutProvider.checkAddressesHaveShippingAddress()) ...[
-
-            Widgets.labels('${l10n.existingAddresses} ', isRequired: true),
-            const SizedBox(
-              height: 10,
-            ),
-
-            InkWell(
-              borderRadius: BorderRadius.circular(32.0),
-              onTap: () {
-                _showAddressesBottomSheet(context, l10n);
-              },
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(32.0),
-                  border: Border.all(
-                    color: Colors.grey,
-                    width: 1.0,
-                  ),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Expanded(child: Text(selectedAddress ?? l10n.selectAddress, maxLines: 1, overflow: TextOverflow.ellipsis,)),
-                    const SizedBox(width: 8),
-                    const Icon(Icons.arrow_drop_down),
-                  ],
-                ),
+            if (checkoutProvider.allAddresses!.addresses != null &&
+                checkoutProvider.checkAddressesHaveShippingAddress()) ...[
+              Widgets.labels('${l10n.existingAddresses} ', isRequired: true),
+              const SizedBox(
+                height: 10,
               ),
-            ),
-
-            const SizedBox(
-              height: 20,
-            ),
-
-            Center(child: Text(l10n.orLabel, style: const TextStyle(fontSize: 20),)),
-
-            const SizedBox(
-              height: 20,
-            ),
-
-            SizedBox(
-              width: double.maxFinite,
-              height: 50,
-              child:  ElevatedButton(
-                onPressed: () {
-
-                  setState(() {
-                    showAddressForm = true;
-                  });
-
+              InkWell(
+                borderRadius: BorderRadius.circular(32.0),
+                onTap: () {
+                  _showAddressesBottomSheet(context, l10n);
                 },
-                style: ElevatedButton.styleFrom(
-                  side: const BorderSide(
-                    width: 1.0,
-                    color: AppColors.primaryColor,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: 12),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(32.0),
+                    border: Border.all(
+                      color: Colors.grey,
+                      width: 1.0,
+                    ),
                   ),
-                  backgroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(60.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Expanded(
+                          child: Text(
+                        selectedAddress ?? l10n.selectAddress,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      )),
+                      const SizedBox(width: 8),
+                      const Icon(Icons.arrow_drop_down),
+                    ],
                   ),
-                ),
-                child: Text(
-                  l10n.addNewAddressBtnText,
-                  style: const TextStyle(color: AppColors.primaryColor),
                 ),
               ),
-            ),
+              const SizedBox(
+                height: 20,
+              ),
+              Center(
+                  child: Text(
+                l10n.orLabel,
+                style: const TextStyle(fontSize: 20),
+              )),
+              const SizedBox(
+                height: 20,
+              ),
+              SizedBox(
+                width: double.maxFinite,
+                height: 50,
+                child: ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      showAddressForm = true;
+                    });
+                  },
+                  style: ElevatedButton.styleFrom(
+                    side: const BorderSide(
+                      width: 1.0,
+                      color: AppColors.primaryColor,
+                    ),
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(60.0),
+                    ),
+                  ),
+                  child: Text(
+                    l10n.addNewAddressBtnText,
+                    style: const TextStyle(color: AppColors.primaryColor),
+                  ),
+                ),
+              ),
+            ],
 
-          ],
-
-            if(checkoutProvider.allAddresses!.addresses == null || checkoutProvider.allAddresses!.addresses!.isEmpty ||
-    !checkoutProvider.checkAddressesHaveShippingAddress() || showAddressForm == true) ...[
-
+            if (checkoutProvider.allAddresses!.addresses == null ||
+                checkoutProvider.allAddresses!.addresses!.isEmpty ||
+                !checkoutProvider.checkAddressesHaveShippingAddress() ||
+                showAddressForm == true) ...[
               const SizedBox(
                 height: 20,
               ),
@@ -218,9 +206,7 @@ class _ShippingAddressState extends State<ShippingAddress> {
               ),
               Focus(
                 onFocusChange: (hasFocus) {
-                  setState(() {
-
-                  });
+                  setState(() {});
                 },
                 child: TextFormField(
                   focusNode: _contactPersonNameFocus,
@@ -229,20 +215,25 @@ class _ShippingAddressState extends State<ShippingAddress> {
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: _contactPersonNameFocus.hasFocus ? Colors.white : Colors.grey.withOpacity(0.1),
-                    contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20),
+                    fillColor: _contactPersonNameFocus.hasFocus
+                        ? Colors.white
+                        : Colors.grey.withOpacity(0.1),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 12.0, horizontal: 20),
                     hintText: l10n.contactPersonNameHint,
-                    hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+                    hintStyle:
+                        const TextStyle(fontSize: 14, color: Colors.grey),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.grey, width: 1.0),
+                      borderSide:
+                          const BorderSide(color: Colors.grey, width: 1.0),
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide:
-                      const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                      borderSide: const BorderSide(
+                          color: AppColors.primaryColor, width: 1.0),
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                   ),
@@ -263,13 +254,13 @@ class _ShippingAddressState extends State<ShippingAddress> {
               ),
               Focus(
                 onFocusChange: (hasFocus) {
-                  setState(() {
-
-                  });
+                  setState(() {});
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                    color: _phoneFocus.hasFocus ? Colors.white : Colors.grey.withOpacity(0.1),
+                    color: _phoneFocus.hasFocus
+                        ? Colors.white
+                        : Colors.grey.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(25.0),
                     border: Border.all(
                       color: Colors.grey,
@@ -278,14 +269,13 @@ class _ShippingAddressState extends State<ShippingAddress> {
                   ),
                   child: Row(
                     children: [
-
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        decoration: const BoxDecoration(
-                        ),
+                        decoration: const BoxDecoration(),
                         child: InkWell(
                           onTap: () {
-                            _showCountryBottomSheet(context, l10n, showCountryCode: true);
+                            _showCountryBottomSheet(context, l10n,
+                                showCountryCode: true);
                           },
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -328,25 +318,23 @@ class _ShippingAddressState extends State<ShippingAddress> {
               //countries
               Row(
                 children: [
-
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-
-                        Widgets.labels('${l10n.countryLabel} ', isRequired: true),
+                        Widgets.labels('${l10n.countryLabel} ',
+                            isRequired: true),
                         const SizedBox(
                           height: 10,
                         ),
-
                         InkWell(
                           borderRadius: BorderRadius.circular(32.0),
                           onTap: () {
-
                             _showCountryBottomSheet(context, l10n);
                           },
                           child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16.0, vertical: 12),
                             decoration: BoxDecoration(
                               color: Colors.grey.withOpacity(0.1),
                               borderRadius: BorderRadius.circular(32.0),
@@ -358,7 +346,12 @@ class _ShippingAddressState extends State<ShippingAddress> {
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Expanded(child: Text(selectedCountry?.name ?? l10n.selectCountry, maxLines: 1, overflow: TextOverflow.ellipsis,)),
+                                Expanded(
+                                    child: Text(
+                                  selectedCountry?.name ?? l10n.selectCountry,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                )),
                                 const SizedBox(width: 8),
                                 const Icon(Icons.arrow_drop_down),
                               ],
@@ -397,7 +390,6 @@ class _ShippingAddressState extends State<ShippingAddress> {
 
                         },
                       ),*/
-
                       ],
                     ),
                   ),
@@ -411,27 +403,24 @@ class _ShippingAddressState extends State<ShippingAddress> {
               //cities and postal code
               Row(
                 children: [
-
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-
                         Widgets.labels('${l10n.cityLabel} ', isRequired: true),
                         const SizedBox(
                           height: 10,
                         ),
-
                         InkWell(
                           borderRadius: BorderRadius.circular(32.0),
                           onTap: () {
-
-                            if(checkoutProvider.cities == null) {
-                              Fluttertoast.showToast(msg: 'Please select country first');
+                            if (checkoutProvider.cities == null) {
+                              Fluttertoast.showToast(
+                                  msg: 'Please select country first');
                               return;
                             }
 
-                            if(checkoutProvider.cities!.data!.isEmpty) {
+                            if (checkoutProvider.cities!.data!.isEmpty) {
                               Fluttertoast.showToast(msg: 'Cities not found');
                               return;
                             }
@@ -439,7 +428,8 @@ class _ShippingAddressState extends State<ShippingAddress> {
                             _showCityBottomSheet(context, l10n);
                           },
                           child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16.0, vertical: 12),
                             decoration: BoxDecoration(
                               color: Colors.grey.withOpacity(0.1),
                               borderRadius: BorderRadius.circular(32.0),
@@ -451,7 +441,12 @@ class _ShippingAddressState extends State<ShippingAddress> {
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Expanded(child: Text(selectedCity?.name ?? l10n.selectCity, maxLines: 1, overflow: TextOverflow.ellipsis,)),
+                                Expanded(
+                                    child: Text(
+                                  selectedCity?.name ?? l10n.selectCity,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                )),
                                 const SizedBox(width: 8),
                                 const Icon(Icons.arrow_drop_down),
                               ],
@@ -484,25 +479,19 @@ class _ShippingAddressState extends State<ShippingAddress> {
                           });
                         },
                       ),*/
-
-
-
                       ],
                     ),
                   ),
-
                   const SizedBox(width: 16),
-
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-
-                        Widgets.labels('${l10n.postalCodeLabel} ', isRequired: true),
+                        Widgets.labels('${l10n.postalCodeLabel} ',
+                            isRequired: true),
                         const SizedBox(
                           height: 10,
                         ),
-
                         Focus(
                           onFocusChange: (hasFocus) {
                             setState(() {});
@@ -514,20 +503,25 @@ class _ShippingAddressState extends State<ShippingAddress> {
                             maxLines: 1,
                             decoration: InputDecoration(
                               filled: true,
-                              fillColor: _postalCodeFocus.hasFocus ? Colors.white : Colors.grey.withOpacity(0.1),
-                              contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20),
+                              fillColor: _postalCodeFocus.hasFocus
+                                  ? Colors.white
+                                  : Colors.grey.withOpacity(0.1),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 12.0, horizontal: 20),
                               hintText: l10n.postalCodeLabel,
-                              hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+                              hintStyle: const TextStyle(
+                                  fontSize: 14, color: Colors.grey),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
                               ),
                               enabledBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(color: Colors.grey, width: 1.0),
+                                borderSide: const BorderSide(
+                                    color: Colors.grey, width: 1.0),
                                 borderRadius: BorderRadius.circular(25.0),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                                borderSide: const BorderSide(
+                                    color: AppColors.primaryColor, width: 1.0),
                                 borderRadius: BorderRadius.circular(25.0),
                               ),
                             ),
@@ -539,12 +533,9 @@ class _ShippingAddressState extends State<ShippingAddress> {
                             },
                           ),
                         ),
-
-
                       ],
                     ),
                   ),
-
                 ],
               ),
 
@@ -585,7 +576,6 @@ class _ShippingAddressState extends State<ShippingAddress> {
                 height: 20,
               ),
 
-
               Widgets.labels('${l10n.addressLabel} '),
               const SizedBox(
                 height: 10,
@@ -600,20 +590,24 @@ class _ShippingAddressState extends State<ShippingAddress> {
                   maxLines: 1,
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: _addressFocus.hasFocus ? Colors.white : Colors.grey.withOpacity(0.1),
+                    fillColor: _addressFocus.hasFocus
+                        ? Colors.white
+                        : Colors.grey.withOpacity(0.1),
                     contentPadding: const EdgeInsets.all(12.0),
                     hintText: l10n.addressHint,
-                    hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+                    hintStyle:
+                        const TextStyle(fontSize: 14, color: Colors.grey),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.grey, width: 1.0),
+                      borderSide:
+                          const BorderSide(color: Colors.grey, width: 1.0),
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide:
-                      const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                      borderSide: const BorderSide(
+                          color: AppColors.primaryColor, width: 1.0),
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                   ),
@@ -628,30 +622,27 @@ class _ShippingAddressState extends State<ShippingAddress> {
 
               ///hide form button
 
-              if(checkoutProvider.allAddresses!.addresses == null || checkoutProvider.allAddresses!.addresses!.isEmpty) ...[
+              if (checkoutProvider.allAddresses!.addresses == null ||
+                  checkoutProvider.allAddresses!.addresses!.isEmpty) ...[
                 Row(
-                  mainAxisAlignment: l10n.localeName == 'en' ? MainAxisAlignment.start : MainAxisAlignment.end,
+                  mainAxisAlignment: l10n.localeName == 'en'
+                      ? MainAxisAlignment.start
+                      : MainAxisAlignment.end,
                   children: [
                     TextButton(
                       onPressed: () {
-
                         _clearForm();
 
                         setState(() {
                           showAddressForm = false;
                         });
-
                       },
                       child: const Text('Hide Form'),
                     ),
                   ],
                 ),
               ],
-
-
-
             ],
-
 
             const SizedBox(
               height: 20,
@@ -663,20 +654,19 @@ class _ShippingAddressState extends State<ShippingAddress> {
               height: 50,
               child: ElevatedButton(
                 onPressed: () async {
-
-                  if(checkoutProvider.allAddresses?.addresses == null ||
-                     !checkoutProvider.checkAddressesHaveShippingAddress() ||
-                      checkoutProvider.allAddresses!.addresses!.isEmpty  || showAddressForm) {
-
-                    if(selectedCity == null) {
+                  if (checkoutProvider.allAddresses?.addresses == null ||
+                      !checkoutProvider.checkAddressesHaveShippingAddress() ||
+                      checkoutProvider.allAddresses!.addresses!.isEmpty ||
+                      showAddressForm) {
+                    if (selectedCity == null) {
                       Utils.toast('Please select city');
                       return;
                     }
 
                     if (_formKey.currentState!.validate()) {
-
                       AddressModel addressModel = AddressModel(
-                        contactPersonName: _contactPersonNameController.text.trim(),
+                        contactPersonName:
+                            _contactPersonNameController.text.trim(),
                         phone: _phoneController.text,
                         phoneCode: selectedCountry!.phoneCode!,
                         country: selectedCountry!.id!,
@@ -690,18 +680,17 @@ class _ShippingAddressState extends State<ShippingAddress> {
                       await checkoutProvider.addAddress(context, addressModel);
 
                       //set shipping address id
-                      checkoutProvider.setShippingAddressId(checkoutProvider.addAddressResponse!.addressId);
+                      checkoutProvider.setShippingAddressId(
+                          checkoutProvider.addAddressResponse!.addressId);
 
                       await checkoutProvider.getAllAddresses();
 
-                      Utils.pageController.nextPage(duration: const Duration(milliseconds: 400), curve: Curves.easeIn);
-
+                      Utils.pageController.nextPage(
+                          duration: const Duration(milliseconds: 400),
+                          curve: Curves.easeIn);
                     }
-
-                  }
-                  else {
-
-                    if(selectedAddress == null) {
+                  } else {
+                    if (selectedAddress == null) {
                       Utils.toast('Please select address');
                       return;
                     }
@@ -709,12 +698,10 @@ class _ShippingAddressState extends State<ShippingAddress> {
                     checkoutProvider.setShippingAddressId(selectedAddressId!);
                     print('shipping addr id: $selectedAddressId');
 
-                    Utils.pageController.nextPage(duration: const Duration(milliseconds: 400), curve: Curves.easeIn);
+                    Utils.pageController.nextPage(
+                        duration: const Duration(milliseconds: 400),
+                        curve: Curves.easeIn);
                   }
-
-
-
-
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primaryColor,
@@ -732,8 +719,6 @@ class _ShippingAddressState extends State<ShippingAddress> {
             const SizedBox(
               height: 50,
             ),
-
-
           ],
         ),
       ),
@@ -761,7 +746,6 @@ class _ShippingAddressState extends State<ShippingAddress> {
                 style: const TextStyle(fontSize: 18),
               ),
               const SizedBox(height: 16.0),
-
               TextFormField(
                 controller: _citySearchController,
                 decoration: InputDecoration(
@@ -774,12 +758,13 @@ class _ShippingAddressState extends State<ShippingAddress> {
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.grey, width: 1.0),
+                    borderSide:
+                        const BorderSide(color: Colors.grey, width: 1.0),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide:
-                    const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                    borderSide: const BorderSide(
+                        color: AppColors.primaryColor, width: 1.0),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                 ),
@@ -787,9 +772,7 @@ class _ShippingAddressState extends State<ShippingAddress> {
                   checkoutProvider.searchCity(value);
                 },
               ),
-
               const SizedBox(height: 16.0),
-
               Expanded(
                 child: ListView.builder(
                   shrinkWrap: true,
@@ -838,7 +821,6 @@ class _ShippingAddressState extends State<ShippingAddress> {
                 style: const TextStyle(fontSize: 18),
               ),
               const SizedBox(height: 16.0),
-
               TextFormField(
                 controller: _countrySearchController,
                 decoration: InputDecoration(
@@ -851,12 +833,13 @@ class _ShippingAddressState extends State<ShippingAddress> {
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.grey, width: 1.0),
+                    borderSide:
+                        const BorderSide(color: Colors.grey, width: 1.0),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide:
-                    const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                    borderSide: const BorderSide(
+                        color: AppColors.primaryColor, width: 1.0),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                 ),
@@ -864,9 +847,7 @@ class _ShippingAddressState extends State<ShippingAddress> {
                   checkoutProvider.searchCountry(value);
                 },
               ),
-
               const SizedBox(height: 16.0),
-
               Expanded(
                 child: ListView.builder(
                   shrinkWrap: true,
@@ -881,7 +862,7 @@ class _ShippingAddressState extends State<ShippingAddress> {
 
                         setState(() {
                           selectedCountry =
-                          checkoutProvider.countriesData[index];
+                              checkoutProvider.countriesData[index];
                           selectedCountryCode =
                               checkoutProvider.countriesData[index].phoneCode;
                           selectedCity = null;
@@ -929,11 +910,11 @@ class _ShippingAddressState extends State<ShippingAddress> {
                   shrinkWrap: true,
                   itemCount: checkoutProvider.allAddresses!.addresses!.length,
                   itemBuilder: (BuildContext context, int index) {
-
-                    print('is billing: ${checkoutProvider.allAddresses!.addresses![index].isBilling}');
+                    print(
+                        'is billing: ${checkoutProvider.allAddresses!.addresses![index].isBilling}');
 
                     if (checkoutProvider
-                        .allAddresses!.addresses![index].isBilling ==
+                            .allAddresses!.addresses![index].isBilling ==
                         1) {
                       return const SizedBox();
                     }
@@ -941,21 +922,20 @@ class _ShippingAddressState extends State<ShippingAddress> {
                     return ListTile(
                       title: Text(
                           '${checkoutProvider.allAddresses!.addresses![index].phone!}, '
-                              '${checkoutProvider.allAddresses!.addresses![index].contactPersonName!}, ${checkoutProvider.allAddresses!.addresses![index].zip!}'),
+                          '${checkoutProvider.allAddresses!.addresses![index].contactPersonName!}, ${checkoutProvider.allAddresses!.addresses![index].zip!}'),
                       onTap: () {
                         setState(() {
                           selectedAddressId = checkoutProvider
                               .allAddresses!.addresses![index].id;
 
                           selectedAddress =
-                          '${checkoutProvider.allAddresses!.addresses![index].phone!}, '
+                              '${checkoutProvider.allAddresses!.addresses![index].phone!}, '
                               '${checkoutProvider.allAddresses!.addresses![index].contactPersonName!}, ${checkoutProvider.allAddresses!.addresses![index].zip!}';
 
                           showAddressForm = false;
                         });
 
                         _clearForm();
-
 
                         // Handle city selection
                         Navigator.pop(context); // Close the bottom sheet
@@ -971,9 +951,7 @@ class _ShippingAddressState extends State<ShippingAddress> {
     );
   }
 
-
   _clearForm() {
-
     _contactPersonNameController.clear();
     _emailController.clear();
     _phoneController.clear();
@@ -986,9 +964,7 @@ class _ShippingAddressState extends State<ShippingAddress> {
     selectedAddressType = null;
 
     selectedState = null;
-
   }
-
 
   @override
   void dispose() {
@@ -1008,8 +984,5 @@ class _ShippingAddressState extends State<ShippingAddress> {
     _phoneFocus.dispose();
     _addressFocus.dispose();
     _postalCodeFocus.dispose();
-
   }
-
 }
-

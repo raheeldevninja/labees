@@ -1,5 +1,4 @@
 class SellerRegistrationData {
-
   String fName;
   String lName;
   String email;
@@ -47,5 +46,4 @@ class SellerRegistrationData {
       'cr_id_no': crIDNo,
     };
   }
-
 }

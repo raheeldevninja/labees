@@ -10,11 +10,10 @@ class AddAddressResponse {
 
   AddAddressResponse(
       {this.addressId,
-        this.billingAddresses,
-        this.shippingAddresses,
-        this.message,
-        this.success
-      });
+      this.billingAddresses,
+      this.shippingAddresses,
+      this.message,
+      this.success});
 
   AddAddressResponse.fromJson(Map<String, dynamic> json) {
     addressId = json['address_id'];

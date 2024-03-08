@@ -12,15 +12,14 @@ class PageDetailsResponse {
 
   PageDetailsResponse(
       {this.id,
-        this.name,
-        this.description,
-        this.slug,
-        this.status,
-        this.createdAt,
-        this.updatedAt,
-        this.message,
-        this.success
-      });
+      this.name,
+      this.description,
+      this.slug,
+      this.status,
+      this.createdAt,
+      this.updatedAt,
+      this.message,
+      this.success});
 
   PageDetailsResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'];

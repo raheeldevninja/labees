@@ -37,5 +37,3 @@ class NoAddressWidget extends StatelessWidget {
     );
   }
 }
-
-

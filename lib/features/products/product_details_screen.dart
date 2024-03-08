@@ -70,9 +70,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   List<String> selectedChoiceOptions = [];
 
-
   var product;
-
 
   List productMainImages = [];
   VariantProducts? variantProduct;
@@ -106,20 +104,16 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
       variantProductImages = variantProduct?.images;
 
-      productImagesList =
-        product?.variantProducts?.isNotEmpty
-              ? variantProductImages
-              : productMainImages;
+      productImagesList = product?.variantProducts?.isNotEmpty
+          ? variantProductImages
+          : productMainImages;
 
       print('productImagesList ${productImagesList}');
-
 
       ///populate attributes
 
       if (product!.choiceOptions != null) {
-        for (int i = 0;
-            i < product!.choiceOptions!.length;
-            i++) {
+        for (int i = 0; i < product!.choiceOptions!.length; i++) {
           selectedAttributes[product!.choiceOptions![i].title!] = [];
         }
       }
@@ -140,12 +134,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
     //variantProduct = isVariantProduct ? product.variantProducts.first : null;
 
-
     Widget productDetailsWidget = const ProductDescription();
 
     /*colorIndex = homeProvider.getColorIndex();
     sizeIndex = homeProvider.getSizeIndex();*/
-
 
     if (homeProvider.getIsLoading || homeProvider.productDetails == null) {
       return const ColoredBox(
@@ -165,7 +157,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => FullScreenProductImagesScreen(
-                          images: isVariantProduct ? variantProduct!.images : product.images!,
+                          images: isVariantProduct
+                              ? variantProduct!.images
+                              : product.images!,
                         ),
                       ),
                     );
@@ -200,7 +194,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       productDetailsWidget = const ProductCareWidget();
     }
 
-
     final attributes = product.attributes;
     final choiceOptions = product.choiceOptions;
 
@@ -218,7 +211,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   widget.slug,
                 );
               },
-            child: ListView(
+              child: ListView(
                 children: [
                   ImagesSlider(productImages: productImages),
                   Padding(
@@ -228,14 +221,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       children: [
                         Row(
                           children: [
-
-                            Text('${isVariantProduct ? variantProduct!.name : product.name}',
-                                style: const TextStyle(
-                                    fontSize: 18,
-                                    color: AppColors.primaryColor,
-                                    fontWeight: FontWeight.bold),
+                            Text(
+                              '${isVariantProduct ? variantProduct!.name : product.name}',
+                              style: const TextStyle(
+                                  fontSize: 18,
+                                  color: AppColors.primaryColor,
+                                  fontWeight: FontWeight.bold),
                             ),
-
 
                             /*IconButton(
                               onPressed: () async {
@@ -277,17 +269,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 size: 20,
                               ),
                             ),*/
-
                           ],
                         ),
-
 
                         const SizedBox(
                           height: 16,
                         ),
 
-                        product.shortDescription !=
-                                null
+                        product.shortDescription != null
                             ? Text(
                                 '${isVariantProduct ? variantProduct!.shortDescription : product.shortDescription}',
                                 style: const TextStyle(
@@ -304,8 +293,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         Row(
                           children: [
                             RatingBar.builder(
-                              initialRating: double.parse(product.averageReview ??
-                                  '0.0'),
+                              initialRating:
+                                  double.parse(product.averageReview ?? '0.0'),
                               minRating: 1,
                               itemSize: 30,
                               direction: Axis.horizontal,
@@ -321,7 +310,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               onRatingUpdate: (rating) {},
                             ),
                             const SizedBox(width: 16),
-                            Text('${product.averageReview} ${l10n.ratingLabel}'),
+                            Text(
+                                '${product.averageReview} ${l10n.ratingLabel}'),
                           ],
                         ),
 
@@ -329,9 +319,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           height: 16,
                         ),
 
-                        Text('${isVariantProduct ? variantProduct!.unitPrice : product.unitPrice} Sar',
-                          style:
-                              const TextStyle(fontSize: 20, color: AppColors.red),
+                        Text(
+                          '${isVariantProduct ? variantProduct!.unitPrice : product.unitPrice} Sar',
+                          style: const TextStyle(
+                              fontSize: 20, color: AppColors.red),
                         ),
 
                         const SizedBox(
@@ -368,14 +359,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               Wrap(
                                 direction: Axis.horizontal,
                                 children: [
-
                                   for (int choiceOptionIndex = 0;
                                       choiceOptionIndex <
                                           choiceOptions[i].options!.length;
                                       choiceOptionIndex++) ...[
                                     InkWell(
                                       onTap: () {
-
                                         if (choiceOptions[i].title == 'Color') {
                                           for (int j = 0;
                                               j <
@@ -435,19 +424,22 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
                                         ///update variant product
 
-                                        for (int j = 0; j < choiceOptions[i].options!.length; j++) {
-
-                                          if (choiceOptions[i].options![j].isSelected) {
+                                        for (int j = 0;
+                                            j <
+                                                choiceOptions[i]
+                                                    .options!
+                                                    .length;
+                                            j++) {
+                                          if (choiceOptions[i]
+                                              .options![j]
+                                              .isSelected) {
                                             //add selected choice option id
-                                            selectedAttributes[choiceOptions[i].title!] = [choiceOptions[i].options![j].id];
-
+                                            selectedAttributes[
+                                                choiceOptions[i].title!] = [
+                                              choiceOptions[i].options![j].id
+                                            ];
                                           }
                                         }
-
-
-
-
-
 
                                         //join selectedAttributes values
                                         String selectedChoicesIds =
@@ -456,12 +448,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                                 .toList()
                                                 .join(',');
 
-                                        print('selected choice options: $selectedChoicesIds');
+                                        print(
+                                            'selected choice options: $selectedChoicesIds');
 
                                         //update variant product
-                                        product.variantProducts!.forEach((element) {
-
-                                          print('element: ${element.childAttributeValueIds}');
+                                        product.variantProducts!
+                                            .forEach((element) {
+                                          print(
+                                              'element: ${element.childAttributeValueIds}');
 
                                           //if(element.childAttributeValueIds == selectedChoiceOptions.join(',')) {
                                           if (element.childAttributeValueIds ==
@@ -470,60 +464,55 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                                 'variant product found: ${element.name}');
                                             setState(() {
                                               variantProduct = element;
-                                              variantProductImages = variantProduct!.images;
-
+                                              variantProductImages =
+                                                  variantProduct!.images;
 
                                               productImagesList =
-                                              isVariantProduct
-                                                  ? variantProductImages
-                                                  : productMainImages;
-
+                                                  isVariantProduct
+                                                      ? variantProductImages
+                                                      : productMainImages;
                                             });
 
+                                            print(
+                                                'current stock: ${variantProduct?.currentStock}');
 
-                                            print('current stock: ${variantProduct?.currentStock}');
-
-                                            if(variantProduct?.currentStock == 0) {
+                                            if (variantProduct?.currentStock ==
+                                                0) {
                                               Utils.toast('Out of stock');
                                             }
-
-
                                           }
-
                                         });
-
-
-
-
-
 
                                         //check stock
                                         if (variantProduct != null &&
-                                            product.variantProducts!.isNotEmpty) {
-
+                                            product
+                                                .variantProducts!.isNotEmpty) {
                                           int variationQty = 0;
 
-                                          for(int varIndex=0; varIndex<product.variantProducts.length; varIndex++) {
-
-                                            if(product.variantProducts[varIndex].childAttributeValueIds == selectedChoicesIds) {
-                                              variationQty = product.variantProducts[varIndex].currentStock!;
+                                          for (int varIndex = 0;
+                                              varIndex <
+                                                  product
+                                                      .variantProducts.length;
+                                              varIndex++) {
+                                            if (product
+                                                    .variantProducts[varIndex]
+                                                    .childAttributeValueIds ==
+                                                selectedChoicesIds) {
+                                              variationQty = product
+                                                  .variantProducts[varIndex]
+                                                  .currentStock!;
                                             }
-
                                           }
-
 
                                           print('qty : $variationQty');
 
                                           if (variationQty == 0) {
                                             Utils.toast('Out of stock');
-
                                           } else if (variationQty < qty) {
                                             Utils.toast(
                                                 'Only $variationQty left in stock');
                                           }
                                         }
-
-
 
                                         setState(() {});
                                       },
@@ -531,9 +520,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                         width: 40,
                                         height: 40,
                                         alignment: Alignment.center,
-                                        padding: choiceOptions[i].title == 'Color'
-                                            ? const EdgeInsets.all(1.0)
-                                            : const EdgeInsets.all(8.0),
+                                        padding:
+                                            choiceOptions[i].title == 'Color'
+                                                ? const EdgeInsets.all(1.0)
+                                                : const EdgeInsets.all(8.0),
                                         margin: const EdgeInsets.symmetric(
                                             vertical: 2.0, horizontal: 4.0),
                                         decoration: BoxDecoration(
@@ -543,9 +533,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                               ? AppColors.selectedOption
                                                   .withOpacity(0.3)
                                               : Colors.white,
-                                          shape: choiceOptions[i].title == 'Color'
-                                              ? BoxShape.circle
-                                              : BoxShape.rectangle,
+                                          shape:
+                                              choiceOptions[i].title == 'Color'
+                                                  ? BoxShape.circle
+                                                  : BoxShape.rectangle,
                                           border: Border.all(
                                             color: choiceOptions[i]
                                                     .options![choiceOptionIndex]
@@ -576,7 +567,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                                 style: const TextStyle(
                                                     fontFamily: 'Montserrat',
                                                     fontSize: 14,
-                                                    color: AppColors.blackColor),
+                                                    color:
+                                                        AppColors.blackColor),
                                               ),
                                       ),
                                     ),
@@ -663,33 +655,32 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               height: 50,
                               child: ElevatedButton(
                                 onPressed: () async {
-
                                   List<CartChoices> choicesList = [];
                                   String choiceStr = '';
                                   int variationQty = 0;
 
-                                  for (int i = 0; i < product.choiceOptions!.length; i++) {
-                                    for (int j = 0; j < product.choiceOptions![i].options!.length; j++) {
-                                      if (product.choiceOptions![i].options![j].isSelected == true) {
+                                  for (int i = 0;
+                                      i < product.choiceOptions!.length;
+                                      i++) {
+                                    for (int j = 0;
+                                        j <
+                                            product.choiceOptions![i].options!
+                                                .length;
+                                        j++) {
+                                      if (product.choiceOptions![i].options![j]
+                                              .isSelected ==
+                                          true) {
                                         choicesList.add(CartChoices(
-                                          name: product
-                                              .choiceOptions![i]
-                                              .options![j]
-                                              .name!,
-                                          attributeName: product
-                                              .choiceOptions![i]
-                                              .title!,
-                                          attributeChoice: product
-                                              .choiceOptions![i]
-                                              .name!,
-                                          id: product
-                                              .choiceOptions![i]
-                                              .options![j]
-                                              .id!,
-                                          attributeId: product
-                                              .choiceOptions![i]
-                                              .options![j]
-                                              .attributeId!,
+                                          name: product.choiceOptions![i]
+                                              .options![j].name!,
+                                          attributeName:
+                                              product.choiceOptions![i].title!,
+                                          attributeChoice:
+                                              product.choiceOptions![i].name!,
+                                          id: product.choiceOptions![i]
+                                              .options![j].id!,
+                                          attributeId: product.choiceOptions![i]
+                                              .options![j].attributeId!,
                                         ));
 
                                         //choiceStr += '${product.choiceOptions![i].options![j].id!}-';
@@ -702,15 +693,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                       .toList()
                                       .join('-');
 
-
-                                  String selectedChoicesIds =
-                                  selectedAttributes.values
+                                  String selectedChoicesIds = selectedAttributes
+                                      .values
                                       .expand((element) => element)
                                       .toList()
                                       .join(',');
 
-
-                                  if(isVariantProduct && choiceStr == '') {
+                                  if (isVariantProduct && choiceStr == '') {
                                     Utils.toast('Please select attributes');
                                     return;
                                   }
@@ -725,20 +714,22 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                         0, selectedChoicesIds.length - 1);
                                   }*/
 
-
                                   print('choice str: $selectedChoicesIds');
 
                                   if (product.variantProducts != null &&
                                       product.variantProducts!.isNotEmpty) {
-
-                                    for(int varIndex=0; varIndex<product.variantProducts.length; varIndex++) {
-
-                                      if(product.variantProducts[varIndex].childAttributeValueIds == selectedChoicesIds) {
-                                        variationQty = product.variantProducts[varIndex].currentStock!;
+                                    for (int varIndex = 0;
+                                        varIndex <
+                                            product.variantProducts.length;
+                                        varIndex++) {
+                                      if (product.variantProducts[varIndex]
+                                              .childAttributeValueIds ==
+                                          selectedChoicesIds) {
+                                        variationQty = product
+                                            .variantProducts[varIndex]
+                                            .currentStock!;
                                       }
-
                                     }
-
 
                                     print('add to cart qty : $variationQty');
 
@@ -757,40 +748,37 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     }
                                   }
 
-
                                   print('new choice str: $choiceStr');
 
-
                                   CartProduct cartProduct = CartProduct(
-                                      id: product.id!,
-                                      title: product.name!,
-                                      brand: product.brand!.name!,
-                                      image: product.thumbnail!,
-                                      totalPrice: product.unitPrice! *
-                                          qty,
-                                      unitPrice: product.unitPrice!,
-                                      quantity: qty,
-                                      slug: product.slug!,
-                                      currentSock: isVariantProduct ? variantProduct!.currentStock : product.currentStock!,
-                                      choiceString: choiceStr,
-                                      choices: choicesList,
+                                    id: product.id!,
+                                    title: product.name!,
+                                    brand: product.brand!.name!,
+                                    image: product.thumbnail!,
+                                    totalPrice: product.unitPrice! * qty,
+                                    unitPrice: product.unitPrice!,
+                                    quantity: qty,
+                                    slug: product.slug!,
+                                    currentSock: isVariantProduct
+                                        ? variantProduct!.currentStock
+                                        : product.currentStock!,
+                                    choiceString: choiceStr,
+                                    choices: choicesList,
                                   );
 
                                   await SharedPref.addCartProduct(cartProduct);
 
                                   await cartProvider.getCartProducts();
 
-
                                   if (mounted) {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => const MyBagScreen(),
+                                        builder: (context) =>
+                                            const MyBagScreen(),
                                       ),
                                     );
                                   }
-
-
                                 },
                                 style: ElevatedButton.styleFrom(
                                   elevation: 0,
@@ -821,7 +809,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                       fontWeight: FontWeight.w300,
                                       color: AppColors.blackColor),
                                 ),
-
                                 RichText(
                                   text: TextSpan(
                                     text: 'Sold by: ',
@@ -832,7 +819,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                         color: AppColors.blackColor),
                                     children: [
                                       TextSpan(
-                                        text: '${homeProvider.productDetails!.product!.seller!.fName}',
+                                        text:
+                                            '${homeProvider.productDetails!.product!.seller!.fName}',
                                         style: const TextStyle(
                                           fontFamily: 'Montserrat',
                                           fontSize: 14,
@@ -844,7 +832,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     ],
                                   ),
                                 ),
-
                               ],
                             ),
                           ],
@@ -903,11 +890,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           height: 16,
                         ),
 
-
-                        if (product.similarProducts !=
-                                null &&
-                            product.similarProducts!
-                                .isNotEmpty) ...[
+                        if (product.similarProducts != null &&
+                            product.similarProducts!.isNotEmpty) ...[
                           Text(l10n.similarProductsLabel,
                               style: const TextStyle(
                                   fontSize: 18,
@@ -928,7 +912,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   ),
                 ],
               ),
-          ),
+            ),
     );
   }
 }

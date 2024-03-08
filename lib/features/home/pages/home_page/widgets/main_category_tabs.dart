@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-
-
 class MainCategoryTabs extends StatelessWidget {
   const MainCategoryTabs({Key? key}) : super(key: key);
 

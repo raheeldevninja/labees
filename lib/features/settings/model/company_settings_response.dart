@@ -5,7 +5,8 @@ class CompanySettingsResponse {
   String? message;
   bool? success;
 
-  CompanySettingsResponse({this.companyPhone, this.companyEmail, this.message, this.success});
+  CompanySettingsResponse(
+      {this.companyPhone, this.companyEmail, this.message, this.success});
 
   CompanySettingsResponse.fromJson(Map<String, dynamic> json) {
     companyPhone = json['company_phone'];

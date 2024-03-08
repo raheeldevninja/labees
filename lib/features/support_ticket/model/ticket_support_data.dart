@@ -1,5 +1,4 @@
 class TicketSupportData {
-
   String subject;
   String type;
   String priority;

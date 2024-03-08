@@ -4,7 +4,6 @@ import 'package:labees/features/home/models/choice_option.dart';
 import 'package:labees/features/home/view_model/home_provider.dart';
 import 'package:provider/provider.dart';
 
-
 /*
 *  Date 28 - Nov-2023
 *  Author: Raheel Khan- Abaska Technologies
@@ -12,7 +11,6 @@ import 'package:provider/provider.dart';
 */
 
 class SizeOptions extends StatefulWidget {
-
   const SizeOptions({
     required this.choiceOptions,
     Key? key,
@@ -27,23 +25,16 @@ class SizeOptions extends StatefulWidget {
 class _SizeOptionsState extends State<SizeOptions> {
   @override
   Widget build(BuildContext context) {
-
     final homeProvider = Provider.of<HomeProvider>(context);
 
     return Wrap(
       direction: Axis.horizontal,
       children: [
-        for (int i = 0;
-        i <
-            widget.choiceOptions.options!.length;
-        i++)
+        for (int i = 0; i < widget.choiceOptions.options!.length; i++)
           InkWell(
             borderRadius: BorderRadius.circular(8.0),
             onTap: () {
-              for (int j = 0;
-              j <
-                  widget.choiceOptions.options!.length;
-              j++) {
+              for (int j = 0; j < widget.choiceOptions.options!.length; j++) {
                 if (j == i) {
                   widget.choiceOptions.options![j].isSelected = true;
                 } else {
@@ -51,7 +42,8 @@ class _SizeOptionsState extends State<SizeOptions> {
                 }
               }
 
-              homeProvider.setSelectedSize(widget.choiceOptions.options![i].name!);
+              homeProvider
+                  .setSelectedSize(widget.choiceOptions.options![i].name!);
 
               print('Selected Size: ${homeProvider.getSelectedSize}');
 
@@ -62,7 +54,7 @@ class _SizeOptionsState extends State<SizeOptions> {
               height: 40,
               padding: const EdgeInsets.all(8.0),
               margin:
-              const EdgeInsets.symmetric(vertical: 2.0, horizontal: 4.0),
+                  const EdgeInsets.symmetric(vertical: 2.0, horizontal: 4.0),
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: widget.choiceOptions.options![i].isSelected

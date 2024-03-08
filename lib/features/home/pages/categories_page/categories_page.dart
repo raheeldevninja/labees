@@ -55,7 +55,10 @@ class _CategoriesPageState extends State<CategoriesPage> {
 
       homeProvider.setMainCategory(homeProvider.categories![0].name!);
 
-      homeProvider.setChildList(homeProvider.getCategoryChildren![0].childes!, homeProvider.getCategoryChildren![0].parentId!, homeProvider.getCategoryChildren![0].name!);
+      homeProvider.setChildList(
+          homeProvider.getCategoryChildren![0].childes!,
+          homeProvider.getCategoryChildren![0].parentId!,
+          homeProvider.getCategoryChildren![0].name!);
 
       homeProvider.getCategoryChildren![0] =
           homeProvider.getCategoryChildren![0].copyWith(isSelected: true);
@@ -329,12 +332,12 @@ class _CategoriesPageState extends State<CategoriesPage> {
                   await homeProvider.getMainCategories(
                       context, AppLocalizations.of(context)!.localeName);
 
-                  homeProvider.setMainCategory(homeProvider.categories![mainCategoryIndex].name!);
+                  homeProvider.setMainCategory(
+                      homeProvider.categories![mainCategoryIndex].name!);
 
                   homeProvider.setCategoryChildren(
                     homeProvider.categories![mainCategoryIndex].childes!,
                   );
-
                 },
                 child: Column(
                   //shrinkWrap: true,

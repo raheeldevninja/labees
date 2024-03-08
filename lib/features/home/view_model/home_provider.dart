@@ -19,9 +19,7 @@ import 'package:labees/features/products/model/add_wish_list_response.dart';
 import 'package:labees/features/products/model/product_details.dart';
 import 'package:labees/features/products/model/wish_list_remove_response.dart';
 
-
 class HomeProvider extends ChangeNotifier {
-
   bool isLoading = false;
   late MainCategories mainCategories;
   late DashboardData dashboardData;
@@ -33,9 +31,7 @@ class HomeProvider extends ChangeNotifier {
   late List<MostWantedBanners> mostWantedBanners;
   List<MostWantedBanners> get getMostWantedBanners => mostWantedBanners;
 
-
   MainCategories get getMainCategoriesList => mainCategories;
-
 
   String? mainCategory;
 
@@ -43,10 +39,7 @@ class HomeProvider extends ChangeNotifier {
 
   ProductInfo productInfo = ProductInfo.description;
 
-
-
   /**select filter lists**/
-
 
   List<SubCategories> selectedSubCategories = [];
   List<Brand> selectedBrands = [];
@@ -60,9 +53,8 @@ class HomeProvider extends ChangeNotifier {
   String selectedMaxPrice = '';
 
   addRemoveSelectedSubCategories(SubCategories subCategory) {
-
-    for(int i=0; i<selectedSubCategories.length; i++) {
-      if(selectedSubCategories[i].id == subCategory.id) {
+    for (int i = 0; i < selectedSubCategories.length; i++) {
+      if (selectedSubCategories[i].id == subCategory.id) {
         selectedSubCategories.removeAt(i);
         return;
       }
@@ -74,9 +66,8 @@ class HomeProvider extends ChangeNotifier {
   }
 
   addRemoveSelectedBrands(Brand brand) {
-
-    for(int i=0; i<selectedBrands.length; i++) {
-      if(selectedBrands[i].id == brand.id) {
+    for (int i = 0; i < selectedBrands.length; i++) {
+      if (selectedBrands[i].id == brand.id) {
         selectedBrands.removeAt(i);
         return;
       }
@@ -88,9 +79,8 @@ class HomeProvider extends ChangeNotifier {
   }
 
   addRemoveSelectedTags(Tag tag) {
-
-    for(int i=0; i<selectedTags.length; i++) {
-      if(selectedTags[i].id == tag.id) {
+    for (int i = 0; i < selectedTags.length; i++) {
+      if (selectedTags[i].id == tag.id) {
         selectedTags.removeAt(i);
         return;
       }
@@ -102,9 +92,8 @@ class HomeProvider extends ChangeNotifier {
   }
 
   addRemoveSelectedSizeAttributes(AttributeValues sizeAttribute) {
-
-    for(int i=0; i<selectedSizeAttributes.length; i++) {
-      if(selectedSizeAttributes[i].id == sizeAttribute.id) {
+    for (int i = 0; i < selectedSizeAttributes.length; i++) {
+      if (selectedSizeAttributes[i].id == sizeAttribute.id) {
         selectedSizeAttributes.removeAt(i);
         return;
       }
@@ -125,22 +114,17 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
   /**select filter lists**/
-
-
-
-
 
   setSelectedCategoryIndex(int index) {
     selectedCategoryIndex = index;
-    categoryChildren![index] = categoryChildren![index].copyWith(isSelected: !categoryChildren![index].isSelected!);
+    categoryChildren![index] = categoryChildren![index]
+        .copyWith(isSelected: !categoryChildren![index].isSelected!);
 
     notifyListeners();
   }
 
   int get getSelectedCategoryIndex => selectedCategoryIndex;
-
 
   bool get getIsLoading => isLoading;
 
@@ -155,17 +139,15 @@ class HomeProvider extends ChangeNotifier {
   List<Brand> allBrandsList = [];
 
   List<Brand> getCategoryChildBrands() {
-
     for (var element in categoryChildren!) {
       List<Brand> tempBrands = [];
       tempBrands = element.brands!;
 
-      for(int i=0; i<tempBrands.length; i++) {
-        if(!allBrandsList.contains(tempBrands[i])) {
+      for (int i = 0; i < tempBrands.length; i++) {
+        if (!allBrandsList.contains(tempBrands[i])) {
           allBrandsList.add(tempBrands[i]);
         }
       }
-
     }
 
     return allBrandsList;
@@ -219,47 +201,42 @@ class HomeProvider extends ChangeNotifier {
 
   int get getMainCategoryId => mainCategoryId;
 
-
   setCategoryChildren(List<CategoryChild> categoryChild) {
     categoryChildren = categoryChild;
     notifyListeners();
   }
 
   setMainCategory(String mainCategory) {
-     this.mainCategory = mainCategory;
-     notifyListeners();
+    this.mainCategory = mainCategory;
+    notifyListeners();
   }
 
   String? get getMainCategory => mainCategory;
 
-
   setChildList(List<Childes>? cl, int parentId, String mainCategoryName) {
-
-    final child = Childes(id: parentId, name: 'All $mainCategoryName', isSelected: false);
+    final child =
+        Childes(id: parentId, name: 'All $mainCategoryName', isSelected: false);
 
     childsList = cl;
 
-    if(cl!.isNotEmpty) {
+    if (cl!.isNotEmpty) {
       print('adding first child: ${child.id}');
 
-      childsList!.firstWhere((element) => element.name == child.name, orElse: () {
+      childsList!.firstWhere((element) => element.name == child.name,
+          orElse: () {
         childsList!.insert(0, child);
 
         notifyListeners();
         return child;
       });
-
-    }
-    else {
+    } else {
       childsList!.add(child);
     }
 
     notifyListeners();
   }
 
-
   Future<void> getMainCategories(BuildContext context, String lang) async {
-
     //EasyLoading.show(status: 'loading...');
     showLoading();
 
@@ -268,76 +245,77 @@ class HomeProvider extends ChangeNotifier {
     if (mainCategories.success!) {
       categories = mainCategories.categories;
       categoryChildren = mainCategories.categories!.first.childes;
-    }
-    else {
+    } else {
       print('home provider: ${mainCategories.message}');
       Utils.toast(mainCategories.message!);
-
     }
-
 
     //EasyLoading.dismiss();
     hideLoading();
     notifyListeners();
-
   }
 
-
-  Future<void> getDashboardData(BuildContext context, bool showShimmer, String lang, int categoryId, String allowedData) async {
-
-    if(showShimmer) {
+  Future<void> getDashboardData(BuildContext context, bool showShimmer,
+      String lang, int categoryId, String allowedData) async {
+    if (showShimmer) {
       showLoading();
     }
 
-    dashboardData = await HomeService.getDashboardData(lang, categoryId, allowedData);
+    dashboardData =
+        await HomeService.getDashboardData(lang, categoryId, allowedData);
 
     if (dashboardData.success!) {
       newArrivalProducts = dashboardData.newArrivalProducts!;
       mostWantedBanners = dashboardData.mostWantedBanners!;
-    }
-    else {
+    } else {
       Utils.toast(dashboardData.message!);
     }
 
-    if(showShimmer) {
+    if (showShimmer) {
       hideLoading();
     }
 
     notifyListeners();
   }
 
-
-  Future<void> getProducts(BuildContext context, String lang, int id,
-      int limit, int offset, String sort,
-      {String? minAmount, String? maxAmount, List<SubCategories>? subCategoriesList, List<Brand> ? brands,
-        List<AttributeValues>? sizeAttributes,
-        List<AttributeValues>? colorAttributes,
-        List<AttributeValues>? ukSizeAttributes,
-        List<Tag>? tags,
-        bool showShimmer = true,
-      }) async {
-      //{FilterData? filterData}) async {
+  Future<void> getProducts(
+    BuildContext context,
+    String lang,
+    int id,
+    int limit,
+    int offset,
+    String sort, {
+    String? minAmount,
+    String? maxAmount,
+    List<SubCategories>? subCategoriesList,
+    List<Brand>? brands,
+    List<AttributeValues>? sizeAttributes,
+    List<AttributeValues>? colorAttributes,
+    List<AttributeValues>? ukSizeAttributes,
+    List<Tag>? tags,
+    bool showShimmer = true,
+  }) async {
+    //{FilterData? filterData}) async {
 
     //EasyLoading.show(status: 'loading...');
 
     products = [];
 
-    if(showShimmer) {
+    if (showShimmer) {
       showLoading();
     }
 
-
     productModel = await HomeService.getProducts(lang, id, limit, offset, sort,
-        minAmount: minAmount, maxAmount: maxAmount, subCategories: subCategoriesList, brands: brands,
+        minAmount: minAmount,
+        maxAmount: maxAmount,
+        subCategories: subCategoriesList,
+        brands: brands,
         sizeAttributes: sizeAttributes,
         colorAttributes: colorAttributes,
         ukSizeAttributes: ukSizeAttributes,
-        tags: tags
-    );
-
+        tags: tags);
 
     if (productModel!.success!) {
-
       products = productModel!.products!.products;
 
       subCategories = productModel!.subCategories;
@@ -345,41 +323,30 @@ class HomeProvider extends ChangeNotifier {
       tags = productModel!.tags;
       attributes = productModel!.attributes;
 
-
       print('tags length: ${tags!.length}');
-
-    }
-    else {
+    } else {
       Utils.toast(productModel!.message!);
     }
 
-    if(showShimmer) {
+    if (showShimmer) {
       hideLoading();
     }
     notifyListeners();
-
   }
 
-
-  Future<void> getProductDetails(BuildContext context, String lang, String slug) async {
-
+  Future<void> getProductDetails(
+      BuildContext context, String lang, String slug) async {
     //EasyLoading.show(status: 'loading...');
     showLoading();
 
     try {
-
       productDetails = await HomeService.getProductDetails(lang, slug);
 
       if (productDetails!.success!) {
-
-      }
-      else {
+      } else {
         Utils.toast(productDetails!.message!);
       }
-
-
-    }
-    catch(e) {
+    } catch (e) {
       print('error: $e');
       print('error message: ${e.toString()}');
     }
@@ -387,12 +354,10 @@ class HomeProvider extends ChangeNotifier {
     //EasyLoading.dismiss();
     hideLoading();
     notifyListeners();
-
   }
 
-
-  Future<void> addToWishList(BuildContext context, String lang, int productId) async {
-
+  Future<void> addToWishList(
+      BuildContext context, String lang, int productId) async {
     EasyLoading.show();
     //showLoading();
 
@@ -400,8 +365,7 @@ class HomeProvider extends ChangeNotifier {
 
     if (addWishListResponse!.success!) {
       //Utils.toast(addWishListResponse!.message!);
-    }
-    else {
+    } else {
       Utils.toast(addWishListResponse!.message!);
     }
 
@@ -427,9 +391,7 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
   Future<void> getWishlist(BuildContext context, String lang) async {
-
     AllWishlistProducts allWishlistProducts = AllWishlistProducts();
 
     showLoading();
@@ -439,68 +401,60 @@ class HomeProvider extends ChangeNotifier {
     if (allWishlistProducts.success!) {
       getWishlistData = allWishlistProducts.wishlistProducts!;
       notifyListeners();
-    }
-    else {
+    } else {
       Utils.toast(allWishlistProducts.message!);
       Navigator.pop(context);
     }
 
-
     hideLoading();
   }
 
-
   int getColorIndex() {
+    if (productDetails == null ||
+        productDetails!.product!.choiceOptions == null ||
+        productDetails!.product!.choiceOptions!.isEmpty) return -1;
 
-    if(productDetails == null || productDetails!.product!.choiceOptions == null || productDetails!.product!.choiceOptions!.isEmpty) return -1;
-
-    for(int i=0; i< productDetails!.product!.choiceOptions!.length; i++) {
-
-      if(productDetails!.product!.choiceOptions![i].title == 'Color') {
+    for (int i = 0; i < productDetails!.product!.choiceOptions!.length; i++) {
+      if (productDetails!.product!.choiceOptions![i].title == 'Color') {
         return i;
       }
-
     }
 
     return -1;
   }
 
   int getSizeIndex() {
+    if (productDetails == null ||
+        productDetails!.product!.choiceOptions == null ||
+        productDetails!.product!.choiceOptions!.isEmpty) return -1;
 
-    if(productDetails == null || productDetails!.product!.choiceOptions == null || productDetails!.product!.choiceOptions!.isEmpty) return -1;
-
-    for(int i=0; i< productDetails!.product!.choiceOptions!.length; i++) {
-
-      if(productDetails!.product!.choiceOptions![i].title == 'Size') {
+    for (int i = 0; i < productDetails!.product!.choiceOptions!.length; i++) {
+      if (productDetails!.product!.choiceOptions![i].title == 'Size') {
         return i;
       }
-
     }
 
     return -1;
   }
 
   clearFilters() {
-
     //reset selection in subcategories
-    for(int i=0; i<subCategories!.length; i++) {
+    for (int i = 0; i < subCategories!.length; i++) {
       subCategories![i].isSelected = false;
     }
 
     //reset selection in brands
-    for(int i=0; i<brandsList!.length; i++) {
+    for (int i = 0; i < brandsList!.length; i++) {
       brandsList![i].isSelected = false;
     }
 
     tags = [];
 
-
-    for(int i=0; i<attributes!.length; i++) {
-      for(int j=0; j<attributes![i].attributeValues!.length; j++) {
+    for (int i = 0; i < attributes!.length; i++) {
+      for (int j = 0; j < attributes![i].attributeValues!.length; j++) {
         attributes![i].attributeValues![j].isSelected = false;
       }
     }
-
 
     selectedBrands = [];
     selectedSubCategories = [];
@@ -512,10 +466,8 @@ class HomeProvider extends ChangeNotifier {
     selectedMinPrice = '';
     selectedMaxPrice = '';
 
-
     notifyListeners();
   }
-
 
   addSearchedProducts(List<Products> productsList) {
     products = productsList;
@@ -524,10 +476,10 @@ class HomeProvider extends ChangeNotifier {
 
   List<Products> get getSearchedProducts => products!;
 
-
   //toggle subcategories
   void toggleSubCategories(int index) {
-    subCategories![index] = subCategories![index].copyWith(isSelected: !subCategories![index].isSelected);
+    subCategories![index] = subCategories![index]
+        .copyWith(isSelected: !subCategories![index].isSelected);
 
     notifyListeners();
   }
@@ -535,7 +487,8 @@ class HomeProvider extends ChangeNotifier {
   //toggle brands
   void toggleBrands(int index) {
     //brandsList![index].isSelected = !brandsList![index].isSelected;
-    brandsList![index] = brandsList![index].copyWith(isSelected: !brandsList![index].isSelected);
+    brandsList![index] =
+        brandsList![index].copyWith(isSelected: !brandsList![index].isSelected);
     notifyListeners();
   }
 
@@ -546,11 +499,12 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
   //toggle colors, sizes
   void toggleAttribute(int i, int j) {
     //attributes![i].attributeValues![j].isSelected = !attributes![i].attributeValues![j].isSelected;
-    attributes![i].attributeValues![j] = attributes![i].attributeValues![j].copyWith(isSelected: !attributes![i].attributeValues![j].isSelected);
+    attributes![i].attributeValues![j] = attributes![i]
+        .attributeValues![j]
+        .copyWith(isSelected: !attributes![i].attributeValues![j].isSelected);
     notifyListeners();
   }
 
@@ -567,5 +521,4 @@ class HomeProvider extends ChangeNotifier {
   refresh() {
     notifyListeners();
   }
-
 }

@@ -12,5 +12,4 @@ class ProductColor {
       isSelected: isSelected ?? this.isSelected,
     );
   }
-
 }

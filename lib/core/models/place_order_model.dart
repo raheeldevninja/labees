@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:labees/core/models/cart_product.dart';
 
 class PlaceOrderModel {
-
   List<CartProduct>? cartProducts;
   final int? addressId;
   final int? billingAddressId;
@@ -32,7 +31,11 @@ class PlaceOrderModel {
 
   factory PlaceOrderModel.fromJson(Map<String, dynamic> json) {
     return PlaceOrderModel(
-      cartProducts: json['cart_data'] != null ? (json['cart_data'] as List).map((i) => CartProduct.fromJson(i)).toList() : null,
+      cartProducts: json['cart_data'] != null
+          ? (json['cart_data'] as List)
+              .map((i) => CartProduct.fromJson(i))
+              .toList()
+          : null,
       addressId: json['address_id'],
       billingAddressId: json['billing_address_id'],
       paymentMethod: json['payment_method'],
@@ -48,7 +51,9 @@ class PlaceOrderModel {
 
   Map<String, dynamic> toJson() {
     return {
-      'cart_data': cartProducts != null ? jsonEncode(cartProducts!.map((i) => i.toJson()).toList()) : null,
+      'cart_data': cartProducts != null
+          ? jsonEncode(cartProducts!.map((i) => i.toJson()).toList())
+          : null,
       'address_id': addressId,
       'billing_address_id': billingAddressId,
       'payment_method': paymentMethod,
@@ -83,12 +88,12 @@ class PlaceOrderModel {
       paymentMethod: paymentMethod ?? this.paymentMethod,
       shippingMethod: shippingMethod ?? this.shippingMethod,
       isPartiallyPaid: isPartiallyPaid ?? this.isPartiallyPaid,
-      partiallyWalletAmount: partiallyWalletAmount ?? this.partiallyWalletAmount,
+      partiallyWalletAmount:
+          partiallyWalletAmount ?? this.partiallyWalletAmount,
       couponCode: couponCode ?? this.couponCode,
       couponDiscount: couponDiscount ?? this.couponDiscount,
       vat: vat ?? this.vat,
       vatPrice: vatPrice ?? this.vatPrice,
     );
   }
-
 }

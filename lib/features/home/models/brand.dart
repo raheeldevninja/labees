@@ -10,16 +10,15 @@ class Brand {
   bool isSelected = false;
 
   Brand({
-        this.id,
-        this.name,
-        this.image,
-        this.homeStatus,
-        this.status,
-        this.createdAt,
-        this.updatedAt,
-        this.isSelected = false,
-      });
-
+    this.id,
+    this.name,
+    this.image,
+    this.homeStatus,
+    this.status,
+    this.createdAt,
+    this.updatedAt,
+    this.isSelected = false,
+  });
 
   Brand copyWith({
     int? id,
@@ -51,7 +50,6 @@ class Brand {
     status = json['status'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-
   }
 
   Map<String, dynamic> toJson() {

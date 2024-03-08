@@ -26,8 +26,7 @@ class Data {
   Data({this.coupon, this.couponDiscount});
 
   Data.fromJson(Map<String, dynamic> json) {
-    coupon =
-    json['coupon'] != null ? Coupon.fromJson(json['coupon']) : null;
+    coupon = json['coupon'] != null ? Coupon.fromJson(json['coupon']) : null;
     couponDiscount = json['coupon_discount'];
   }
 
@@ -64,24 +63,24 @@ class Coupon {
 
   Coupon(
       {this.id,
-        this.addedBy,
-        this.couponType,
-        this.couponBearer,
-        this.sellerId,
-        this.customerId,
-        this.customerGroupId,
-        this.title,
-        this.code,
-        this.startDate,
-        this.expireDate,
-        this.minPurchase,
-        this.maxDiscount,
-        this.discount,
-        this.discountType,
-        this.status,
-        this.createdAt,
-        this.updatedAt,
-        this.limit});
+      this.addedBy,
+      this.couponType,
+      this.couponBearer,
+      this.sellerId,
+      this.customerId,
+      this.customerGroupId,
+      this.title,
+      this.code,
+      this.startDate,
+      this.expireDate,
+      this.minPurchase,
+      this.maxDiscount,
+      this.discount,
+      this.discountType,
+      this.status,
+      this.createdAt,
+      this.updatedAt,
+      this.limit});
 
   Coupon.fromJson(Map<String, dynamic> json) {
     id = json['id'];

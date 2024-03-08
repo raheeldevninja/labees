@@ -24,14 +24,11 @@ class _PointsTabState extends State<PointsTab> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await context.read<AccountProvider>().getMyPoints(context, 10, 1);
 
-      if(mounted) {
+      if (mounted) {
         await context.read<AccountProvider>().getAccountSettings(context);
       }
 
-      setState(() {
-
-      });
-
+      setState(() {});
     });
   }
 
@@ -40,19 +37,18 @@ class _PointsTabState extends State<PointsTab> {
     final l10n = AppLocalizations.of(context)!;
     final accountProvider = context.watch<AccountProvider>();
 
-    if(accountProvider.myPointsResponse == null) {
+    if (accountProvider.myPointsResponse == null) {
       return const SizedBox();
     }
 
     return accountProvider.getLoading
         ? const WalletPointShimmer()
-        :
-    RefreshIndicator(
-      onRefresh: () async {
-        await accountProvider.getMyPoints(context, 10, 1);
-        await accountProvider.getAccountSettings(context);
-      },
-      child: Padding(
+        : RefreshIndicator(
+            onRefresh: () async {
+              await accountProvider.getMyPoints(context, 10, 1);
+              await accountProvider.getAccountSettings(context);
+            },
+            child: Padding(
               padding: const EdgeInsets.all(16),
               child: Column(
                 //padding: const EdgeInsets.all(16),
@@ -232,8 +228,8 @@ class _PointsTabState extends State<PointsTab> {
                                           children: [
                                             const Text(
                                               'Date: ',
-                                              style:
-                                                  TextStyle(color: Colors.black),
+                                              style: TextStyle(
+                                                  color: Colors.black),
                                               textAlign: TextAlign.center,
                                             ),
                                             Text(
@@ -251,8 +247,8 @@ class _PointsTabState extends State<PointsTab> {
                                           children: [
                                             const Text(
                                               'Expiry Date: ',
-                                              style:
-                                                  TextStyle(color: Colors.black),
+                                              style: TextStyle(
+                                                  color: Colors.black),
                                               textAlign: TextAlign.center,
                                             ),
                                             Text(
@@ -279,7 +275,8 @@ class _PointsTabState extends State<PointsTab> {
                                     ),
                                   ),
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       const Text(
                                         'Balance',
@@ -319,8 +316,8 @@ class _PointsTabState extends State<PointsTab> {
                                           const Expanded(
                                             child: Text(
                                               'Credit: ',
-                                              style:
-                                                  TextStyle(color: Colors.black),
+                                              style: TextStyle(
+                                                  color: Colors.black),
                                               textAlign: TextAlign.start,
                                             ),
                                           ),
@@ -337,7 +334,8 @@ class _PointsTabState extends State<PointsTab> {
                                     Container(
                                       width: 1,
                                       height: 20,
-                                      color: AppColors.lightGrey.withOpacity(0.8),
+                                      color:
+                                          AppColors.lightGrey.withOpacity(0.8),
                                       margin: const EdgeInsets.symmetric(
                                           horizontal: 16),
                                     ),
@@ -347,8 +345,8 @@ class _PointsTabState extends State<PointsTab> {
                                           const Expanded(
                                             child: Text(
                                               'Debit: ',
-                                              style:
-                                                  TextStyle(color: Colors.black),
+                                              style: TextStyle(
+                                                  color: Colors.black),
                                               textAlign: TextAlign.start,
                                             ),
                                           ),
@@ -374,7 +372,7 @@ class _PointsTabState extends State<PointsTab> {
                 ],
               ),
             ),
-    );
+          );
   }
 
   ///convert to currency dialog

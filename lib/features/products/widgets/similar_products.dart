@@ -34,7 +34,8 @@ class SimilarProducts extends StatelessWidget {
         crossAxisSpacing: 10.0,
       ),
       itemBuilder: (BuildContext context, int index) {
-        final product = homeProvider.productDetails!.product!.similarProducts![index];
+        final product =
+            homeProvider.productDetails!.product!.similarProducts![index];
 
         return InkWell(
           onTap: () {
@@ -61,8 +62,8 @@ class SimilarProducts extends StatelessWidget {
                     AppLocalizations.of(context)!.localeName, product.id!);
               }
 
-              await homeProvider.getProductDetails(context, AppLocalizations.of(context)!.localeName, slug);
-
+              await homeProvider.getProductDetails(
+                  context, AppLocalizations.of(context)!.localeName, slug);
             },
           ),
         );

@@ -10,5 +10,4 @@ class ProductSizes {
       isSelected: isSelected ?? this.isSelected,
     );
   }
-
 }

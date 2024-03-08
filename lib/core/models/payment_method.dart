@@ -1,5 +1,4 @@
 class PaymentMethod {
-
   String image;
   bool isSelected;
 
@@ -7,5 +6,4 @@ class PaymentMethod {
     required this.image,
     this.isSelected = false,
   });
-
 }

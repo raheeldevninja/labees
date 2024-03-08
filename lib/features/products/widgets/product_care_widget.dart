@@ -11,13 +11,11 @@ import 'package:html/dom.dart' as htmlDom;
 *  Description: ProductSizesWidget
 */
 
-
 class ProductCareWidget extends StatelessWidget {
   const ProductCareWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     final homeProvider = Provider.of<HomeProvider>(context);
     String htmlString = homeProvider.productDetails!.product!.care ?? '';
 
@@ -28,12 +26,12 @@ class ProductCareWidget extends StatelessWidget {
     return Text(
       parsedText,
       style: const TextStyle(
-        fontSize: 14,
-        color: AppColors.blackColor,
-        fontWeight: FontWeight.w400
-      ),
+          fontSize: 14,
+          color: AppColors.blackColor,
+          fontWeight: FontWeight.w400),
     );
   }
+
   String parseHtml(htmlDom.Document document) {
     // Extract text content from the parsed HTML
     String textContent = '';
@@ -44,5 +42,4 @@ class ProductCareWidget extends StatelessWidget {
 
     return textContent;
   }
-
 }

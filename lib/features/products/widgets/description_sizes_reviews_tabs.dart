@@ -9,7 +9,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 *  Description: DescriptionSizesReviewsTabs
 */
 
-
 class DescriptionSizesReviewsTabs extends StatefulWidget {
   const DescriptionSizesReviewsTabs({
     super.key,
@@ -31,7 +30,6 @@ class DescriptionSizesReviewsTabs extends StatefulWidget {
 
 class _DescriptionSizesReviewsTabsState
     extends State<DescriptionSizesReviewsTabs> {
-
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;

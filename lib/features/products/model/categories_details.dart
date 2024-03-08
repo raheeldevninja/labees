@@ -12,19 +12,20 @@ class CategoriesDetails {
   int? status;
   int? priority;
 
-  CategoriesDetails(
-      {this.id,
-        this.name,
-        this.slug,
-        this.icon,
-        this.parentId,
-        this.position,
-        this.createdAt,
-        this.updatedAt,
-        this.homeStatus,
-        this.topCategory,
-        this.status,
-        this.priority,});
+  CategoriesDetails({
+    this.id,
+    this.name,
+    this.slug,
+    this.icon,
+    this.parentId,
+    this.position,
+    this.createdAt,
+    this.updatedAt,
+    this.homeStatus,
+    this.topCategory,
+    this.status,
+    this.priority,
+  });
 
   CategoriesDetails.fromJson(Map<String, dynamic> json) {
     id = json['id'];

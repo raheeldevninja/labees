@@ -24,7 +24,6 @@ class WishlistScreen extends StatefulWidget {
 }
 
 class _WishlistScreenState extends State<WishlistScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -132,11 +131,9 @@ class _WishlistScreenState extends State<WishlistScreen> {
                   },
                   child: ProductItem(
                     isWishlistProduct: true,
-                    product: homeProvider.getWishlistData?[index].product ?? Products(),
-                    addRemoveToWishlist: () async {
-
-
-                    },
+                    product: homeProvider.getWishlistData?[index].product ??
+                        Products(),
+                    addRemoveToWishlist: () async {},
                   ),
                 );
               },

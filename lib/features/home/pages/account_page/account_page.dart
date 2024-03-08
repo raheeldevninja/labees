@@ -16,7 +16,6 @@ import 'package:labees/features/search/search_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 /*
 *  Date 9 - Now-2023
 *  Author: Raheel Khan- Abaska Technologies
@@ -30,7 +29,8 @@ class AccountPage extends StatefulWidget {
   State<AccountPage> createState() => _AccountPageState();
 }
 
-class _AccountPageState extends State<AccountPage> with SingleTickerProviderStateMixin {
+class _AccountPageState extends State<AccountPage>
+    with SingleTickerProviderStateMixin {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _searchController = TextEditingController();
 
@@ -42,12 +42,12 @@ class _AccountPageState extends State<AccountPage> with SingleTickerProviderStat
   void initState() {
     super.initState();
 
-    _tabController = TabController(length: 6, vsync: this); // Set the number of tabs
+    _tabController =
+        TabController(length: 6, vsync: this); // Set the number of tabs
   }
 
   @override
   Widget build(BuildContext context) {
-
     final l10n = AppLocalizations.of(context)!;
     final authProvider = Provider.of<AuthProvider>(context);
 
@@ -97,7 +97,8 @@ class _AccountPageState extends State<AccountPage> with SingleTickerProviderStat
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.grey, width: 1.0),
+                    borderSide:
+                        const BorderSide(color: Colors.grey, width: 1.0),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   focusedBorder: OutlineInputBorder(
@@ -110,21 +111,23 @@ class _AccountPageState extends State<AccountPage> with SingleTickerProviderStat
             ),
           ),
         ),
-        bottom: authProvider.isLoggedIn ? TabBar(
-          controller: _tabController,
-          labelColor: Colors.black,
-          isScrollable: true,
-          indicatorColor: AppColors.primaryColor,
-          indicatorWeight: 6,
-          tabs: [
-            Tab(text: l10n.accountTab),
-            Tab(text: l10n.myAddressTab),
-            Tab(text: l10n.myOrders),
-            Tab(text: l10n.newLetterTab),
-            Tab(text: l10n.walletTab),
-            Tab(text: l10n.pointsTab),
-          ],
-        ) : null,
+        bottom: authProvider.isLoggedIn
+            ? TabBar(
+                controller: _tabController,
+                labelColor: Colors.black,
+                isScrollable: true,
+                indicatorColor: AppColors.primaryColor,
+                indicatorWeight: 6,
+                tabs: [
+                  Tab(text: l10n.accountTab),
+                  Tab(text: l10n.myAddressTab),
+                  Tab(text: l10n.myOrders),
+                  Tab(text: l10n.newLetterTab),
+                  Tab(text: l10n.walletTab),
+                  Tab(text: l10n.pointsTab),
+                ],
+              )
+            : null,
         actions: [
           IconButton(
             onPressed: () {
@@ -144,17 +147,19 @@ class _AccountPageState extends State<AccountPage> with SingleTickerProviderStat
       ),
       drawer: const AppDrawer(),
       //body: const LoginRegisterWidget(),
-      body: authProvider.isLoggedIn ? TabBarView(
-        controller: _tabController,
-        children: const [
-          AccountTab(),
-          MyAddressTab(),
-          MyOrdersTab(),
-          NewsLetterTab(),
-          WalletTab(),
-          PointsTab(),
-        ],
-      ) : const LoginRegisterWidget(),
+      body: authProvider.isLoggedIn
+          ? TabBarView(
+              controller: _tabController,
+              children: const [
+                AccountTab(),
+                MyAddressTab(),
+                MyOrdersTab(),
+                NewsLetterTab(),
+                WalletTab(),
+                PointsTab(),
+              ],
+            )
+          : const LoginRegisterWidget(),
     );
   }
 
@@ -164,6 +169,5 @@ class _AccountPageState extends State<AccountPage> with SingleTickerProviderStat
 
     _searchController.dispose();
     _tabController.dispose();
-
   }
 }

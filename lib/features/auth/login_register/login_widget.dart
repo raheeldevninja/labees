@@ -8,7 +8,6 @@ import 'package:labees/features/my_bag/view_model/cart_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 /*
 *  Date 6 - Dec-2023
 *  Author: Raheel Khan- Abaska Technologies
@@ -87,9 +86,7 @@ class _LoginWidgetState extends State<LoginWidget> {
             ),
             Focus(
               onFocusChange: (onFocus) {
-                setState(() {
-
-                });
+                setState(() {});
               },
               child: TextFormField(
                 focusNode: _emailPhoneFocus,
@@ -97,7 +94,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                 maxLines: 1,
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor: _emailPhoneFocus.hasFocus ? Colors.white : Colors.grey.withOpacity(0.1),
+                  fillColor: _emailPhoneFocus.hasFocus
+                      ? Colors.white
+                      : Colors.grey.withOpacity(0.1),
                   contentPadding: const EdgeInsets.all(12.0),
                   hintText: l10n.enterEmailOrPhone,
                   hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
@@ -105,8 +104,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                    borderSide: BorderSide(
+                        color: Colors.grey.withOpacity(0.1), width: 1.0),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   focusedBorder: OutlineInputBorder(
@@ -137,9 +136,7 @@ class _LoginWidgetState extends State<LoginWidget> {
             ),
             Focus(
               onFocusChange: (onFocus) {
-                setState(() {
-
-                });
+                setState(() {});
               },
               child: TextFormField(
                 focusNode: _passwordFocus,
@@ -159,15 +156,19 @@ class _LoginWidgetState extends State<LoginWidget> {
                       color: Colors.grey,
                     ),
                   ),
-                  fillColor: _passwordFocus.hasFocus ? Colors.white : Colors.grey.withOpacity(0.1),
-                  contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20),
+                  fillColor: _passwordFocus.hasFocus
+                      ? Colors.white
+                      : Colors.grey.withOpacity(0.1),
+                  contentPadding: const EdgeInsets.symmetric(
+                      vertical: 12.0, horizontal: 20),
                   hintText: l10n.passwordHint,
                   hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                    borderSide: BorderSide(
+                        color: Colors.grey.withOpacity(0.1), width: 1.0),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   focusedBorder: OutlineInputBorder(
@@ -188,7 +189,9 @@ class _LoginWidgetState extends State<LoginWidget> {
               height: 20,
             ),
             Row(
-              mainAxisAlignment: l10n.localeName == 'en' ? MainAxisAlignment.end : MainAxisAlignment.start,
+              mainAxisAlignment: l10n.localeName == 'en'
+                  ? MainAxisAlignment.end
+                  : MainAxisAlignment.start,
               children: [
                 TextButton(
                   onPressed: () {
@@ -224,9 +227,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                       _passwordController.text,
                     );
 
-                    if(authProvider.loginResponse.success!) {
-
-                      if(mounted) {
+                    if (authProvider.loginResponse.success!) {
+                      if (mounted) {
                         await Future.wait([
                           context.read<CartProvider>().getCartProducts(),
                           context.read<CartProvider>().getShippingMethods(),
@@ -235,9 +237,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                           context.read<CheckoutProvider>().getAllAddresses(),
                         ]);
                       }
-
                     }
-
                   }
                 },
                 style: ElevatedButton.styleFrom(

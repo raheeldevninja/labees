@@ -21,7 +21,6 @@ class SupportTicketScreen extends StatefulWidget {
 }
 
 class _SupportTicketScreenState extends State<SupportTicketScreen> {
-
   final _formKey = GlobalKey<FormState>();
   final _subjectController = TextEditingController();
   final _descriptionController = TextEditingController();
@@ -44,7 +43,6 @@ class _SupportTicketScreenState extends State<SupportTicketScreen> {
 
   String selectedPriority = 'Urgent';
 
-
   final FocusNode _subjectFocus = FocusNode();
   final FocusNode _descriptionFocus = FocusNode();
 
@@ -53,22 +51,15 @@ class _SupportTicketScreenState extends State<SupportTicketScreen> {
     super.initState();
 
     //add postFrame callback
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-
-    });
-
+    WidgetsBinding.instance.addPostFrameCallback((_) {});
   }
-
 
   @override
   Widget build(BuildContext context) {
-
     final l10n = AppLocalizations.of(context)!;
     final ticketSupportProvider = Provider.of<TicketSupportProvider>(context);
 
-
     return Scaffold(
-
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
         backgroundColor: Colors.white,
@@ -87,7 +78,6 @@ class _SupportTicketScreenState extends State<SupportTicketScreen> {
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           children: [
-
             Text(
               l10n.submitTicket,
               style: const TextStyle(
@@ -97,7 +87,6 @@ class _SupportTicketScreenState extends State<SupportTicketScreen> {
             ),
 
             const SizedBox(height: 40),
-
 
             Widgets.labels('${l10n.subjectLabel} '),
             const SizedBox(
@@ -123,21 +112,21 @@ class _SupportTicketScreenState extends State<SupportTicketScreen> {
                   fillColor: _subjectFocus.hasFocus
                       ? Colors.white
                       : Colors.grey.withOpacity(0.1),
-                  contentPadding:
-                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20),
+                  contentPadding: const EdgeInsets.symmetric(
+                      vertical: 12.0, horizontal: 20),
                   hintText: l10n.subjectHint,
                   hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide:
-                    BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                    borderSide: BorderSide(
+                        color: Colors.grey.withOpacity(0.1), width: 1.0),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide:
-                    const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                    borderSide: const BorderSide(
+                        color: AppColors.primaryColor, width: 1.0),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                 ),
@@ -180,7 +169,6 @@ class _SupportTicketScreenState extends State<SupportTicketScreen> {
               ),
             ),
 
-
             const SizedBox(height: 20),
 
             Widgets.labels('${l10n.priorityLabel} '),
@@ -217,7 +205,6 @@ class _SupportTicketScreenState extends State<SupportTicketScreen> {
               ),
             ),
 
-
             const SizedBox(height: 20),
 
             Widgets.labels('${l10n.issueDescLabel} '),
@@ -244,21 +231,21 @@ class _SupportTicketScreenState extends State<SupportTicketScreen> {
                   fillColor: _subjectFocus.hasFocus
                       ? Colors.white
                       : Colors.grey.withOpacity(0.1),
-                  contentPadding:
-                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20),
+                  contentPadding: const EdgeInsets.symmetric(
+                      vertical: 12.0, horizontal: 20),
                   hintText: l10n.issueDescHint,
                   hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide:
-                    BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                    borderSide: BorderSide(
+                        color: Colors.grey.withOpacity(0.1), width: 1.0),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide:
-                    const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                    borderSide: const BorderSide(
+                        color: AppColors.primaryColor, width: 1.0),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                 ),
@@ -274,28 +261,23 @@ class _SupportTicketScreenState extends State<SupportTicketScreen> {
               child: SimpleButton(
                 text: l10n.submitTicketBtnText,
                 callback: () async {
-
                   if (_formKey.currentState!.validate()) {
+                    //create ticket support
+                    TicketSupportData ticketSupportData = TicketSupportData(
+                      subject: _subjectController.text.trim(),
+                      type: selectedType,
+                      priority: selectedPriority,
+                      description: _descriptionController.text.trim(),
+                    );
 
-                      //create ticket support
-                      TicketSupportData ticketSupportData = TicketSupportData(
-                        subject: _subjectController.text.trim(),
-                        type: selectedType,
-                        priority: selectedPriority,
-                        description: _descriptionController.text.trim(),
-                      );
-
-                      await ticketSupportProvider.createTicketSupport(context, ticketSupportData);
-
+                    await ticketSupportProvider.createTicketSupport(
+                        context, ticketSupportData);
                   }
-
-
                 },
               ),
             ),
 
             const SizedBox(height: 40),
-
           ],
         ),
       ),
@@ -312,5 +294,4 @@ class _SupportTicketScreenState extends State<SupportTicketScreen> {
 
     super.dispose();
   }
-
 }

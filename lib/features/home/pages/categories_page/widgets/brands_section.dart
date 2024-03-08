@@ -22,27 +22,23 @@ class BrandsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final l10n = AppLocalizations.of(context)!;
     final homeProvider = Provider.of<HomeProvider>(context);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-
         homeProvider
-            .getCategoryChildren![selectedCategoryIndex]
-            .brands!
-            .isNotEmpty
+                .getCategoryChildren![selectedCategoryIndex].brands!.isNotEmpty
             ? Text(
-          l10n.brands,
-          style: const TextStyle(
-            fontFamily: 'Montserrat',
-            fontSize: 16,
-            color: AppColors.blackColor,
-            fontWeight: FontWeight.w600,
-          ),
-        )
+                l10n.brands,
+                style: const TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontSize: 16,
+                  color: AppColors.blackColor,
+                  fontWeight: FontWeight.w600,
+                ),
+              )
             : const SizedBox(),
 
         const SizedBox(
@@ -53,12 +49,9 @@ class BrandsSection extends StatelessWidget {
         GridView.builder(
           shrinkWrap: true,
           itemCount: homeProvider
-              .getCategoryChildren![selectedCategoryIndex]
-              .brands!
-              .length,
+              .getCategoryChildren![selectedCategoryIndex].brands!.length,
           physics: const NeverScrollableScrollPhysics(),
-          gridDelegate:
-          const SliverGridDelegateWithFixedCrossAxisCount(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             childAspectRatio: 1.3,
             crossAxisCount: 3,
             mainAxisSpacing: 6.0,
@@ -67,29 +60,28 @@ class BrandsSection extends StatelessWidget {
           itemBuilder: (BuildContext context, int brandIndex) {
             return InkWell(
               onTap: () {
-
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ProductsScreen(id: homeProvider
-                        .getCategoryChildren![selectedCategoryIndex]
-                        .brands![brandIndex].id!,
-                      title: homeProvider
-                          .getCategoryChildren![selectedCategoryIndex]
-                          .brands![brandIndex].name!
-                    ),
+                    builder: (context) => ProductsScreen(
+                        id: homeProvider
+                            .getCategoryChildren![selectedCategoryIndex]
+                            .brands![brandIndex]
+                            .id!,
+                        title: homeProvider
+                            .getCategoryChildren![selectedCategoryIndex]
+                            .brands![brandIndex]
+                            .name!),
                   ),
                 );
-
               },
-              child: BrandGridViewItem(brand: homeProvider
-                  .getCategoryChildren![selectedCategoryIndex]
-                  .brands![brandIndex],),
+              child: BrandGridViewItem(
+                brand: homeProvider.getCategoryChildren![selectedCategoryIndex]
+                    .brands![brandIndex],
+              ),
             );
           },
         ),
-
-
       ],
     );
   }

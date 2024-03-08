@@ -5,13 +5,11 @@ import 'package:html/dom.dart' as htmlDom;
 import 'package:labees/features/home/view_model/home_provider.dart';
 import 'package:provider/provider.dart';
 
-
 /*
 *  Date 19 - Nov-2023
 *  Author: Raheel Khan- Abaska Technologies
 *  Description: ProductDescription
 */
-
 
 class ProductDescription extends StatelessWidget {
   const ProductDescription({
@@ -20,8 +18,6 @@ class ProductDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
     final homeProvider = Provider.of<HomeProvider>(context);
 
     String htmlString = homeProvider.productDetails!.product!.fabric ?? '';
@@ -33,10 +29,9 @@ class ProductDescription extends StatelessWidget {
     return Text(
       parsedText,
       style: const TextStyle(
-        fontSize: 14,
-        color: AppColors.blackColor,
-        fontWeight: FontWeight.w400
-      ),
+          fontSize: 14,
+          color: AppColors.blackColor,
+          fontWeight: FontWeight.w400),
     );
   }
 

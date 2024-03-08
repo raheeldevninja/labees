@@ -22,7 +22,6 @@ class MostWantedBannerItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       width: 140,
       padding: const EdgeInsets.all(16),
@@ -48,7 +47,7 @@ class MostWantedBannerItem extends StatelessWidget {
               width: 90,
               height: 90,
               imageUrl:
-              '${APIs.imageBaseURL}${APIs.bannerImages}${mostWantedBanners.photo!}',
+                  '${APIs.imageBaseURL}${APIs.bannerImages}${mostWantedBanners.photo!}',
               placeholder: (context, url) => const CupertinoActivityIndicator(),
               errorWidget: (context, url, error) => const Icon(Icons.error),
             ),

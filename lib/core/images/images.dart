@@ -4,9 +4,7 @@
 *  Description: Images constants
 */
 
-
 class Images {
-
   static const String bgImage = 'assets/images/bg_image.png';
 
   static const String labeesAr = 'assets/images/labees_ar.svg';
@@ -37,7 +35,8 @@ class Images {
   static const String addIcon = 'assets/icons/add_icon.svg';
   static const String deleteIcon = 'assets/icons/delete_icon.svg';
   static const String trackIcon = 'assets/icons/track.svg';
-  static const String supportTicketIcon = 'assets/icons/support_ticket_icon.svg';
+  static const String supportTicketIcon =
+      'assets/icons/support_ticket_icon.svg';
 
   //drawer icons
   static const String drawerCategories = 'assets/icons/categories_icon2.svg';
@@ -46,7 +45,8 @@ class Images {
   static const String drawerWishlist = 'assets/icons/drawer_wishlist.svg';
   static const String drawerBag = 'assets/icons/drawer_bag.svg';
   static const String drawerMyOrders = 'assets/icons/drawer_my_orders.svg';
-  static const String drawerNotifications = 'assets/icons/drawer_notifications.svg';
+  static const String drawerNotifications =
+      'assets/icons/drawer_notifications.svg';
   static const String drawerSettings = 'assets/icons/drawer_settings.svg';
   static const String logoutIcon = 'assets/icons/logout_icon.svg';
   static const String shareIcon = 'assets/icons/share_icon.svg';
@@ -58,5 +58,4 @@ class Images {
   static const String masterCard = 'assets/images/mastercard.svg';
   static const String mada = 'assets/images/mada.svg';
   static const String sadaat = 'assets/images/sadaat.svg';
-
 }

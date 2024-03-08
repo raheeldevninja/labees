@@ -1,7 +1,6 @@
 import 'package:labees/features/home/pages/account_page/model/order_product.dart';
 
 class Order {
-
   final String orderStatus;
   final String paymentStatus;
   final String shippingStatus;
@@ -35,5 +34,4 @@ class Order {
       paymentMethod: paymentMethod ?? this.paymentMethod,
     );
   }
-
 }

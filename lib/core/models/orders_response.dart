@@ -25,21 +25,20 @@ class OrdersResponse {
 
   OrdersResponse(
       {this.currentPage,
-        this.data,
-        this.firstPageUrl,
-        this.from,
-        this.lastPage,
-        this.lastPageUrl,
-        this.links,
-        this.nextPageUrl,
-        this.path,
-        this.perPage,
-        this.prevPageUrl,
-        this.to,
-        this.total,
-        this.success,
-        this.message
-      });
+      this.data,
+      this.firstPageUrl,
+      this.from,
+      this.lastPage,
+      this.lastPageUrl,
+      this.links,
+      this.nextPageUrl,
+      this.path,
+      this.perPage,
+      this.prevPageUrl,
+      this.to,
+      this.total,
+      this.success,
+      this.message});
 
   OrdersResponse.fromJson(Map<String, dynamic> json) {
     currentPage = json['current_page'];
@@ -143,54 +142,54 @@ class OrderData {
 
   OrderData(
       {this.id,
-        this.customerId,
-        this.customerType,
-        this.paymentStatus,
-        this.orderStatus,
-        this.cancelReason,
-        this.paymentMethod,
-        this.transactionRef,
-        this.orderAmount,
-        this.adminCommission,
-        this.isPause,
-        this.cause,
-        this.shippingAddress,
-        this.createdAt,
-        this.updatedAt,
-        this.discountAmount,
-        this.discountType,
-        this.couponCode,
-        this.couponDiscountBearer,
-        this.shippingMethodId,
-        this.shippingCost,
-        this.orderGroupId,
-        this.verificationCode,
-        this.sellerId,
-        this.sellerIs,
-        this.shippingAddressData,
-        this.deliveryManId,
-        this.deliverymanCharge,
-        this.expectedDeliveryDate,
-        this.orderNote,
-        this.billingAddress,
-        this.billingAddressData,
-        this.orderType,
-        this.extraDiscount,
-        this.extraDiscountType,
-        this.checked,
-        this.shippingType,
-        this.deliveryType,
-        this.deliveryServiceName,
-        this.thirdPartyDeliveryTrackingId,
-        this.adminId,
-        this.isPartiallyPaid,
-        this.partiallyPaidAmount,
-        this.vat,
-        this.vatPerc,
-        this.shippingVAT,
-        this.details,
-        this.summary,
-        this.deliveryMan});
+      this.customerId,
+      this.customerType,
+      this.paymentStatus,
+      this.orderStatus,
+      this.cancelReason,
+      this.paymentMethod,
+      this.transactionRef,
+      this.orderAmount,
+      this.adminCommission,
+      this.isPause,
+      this.cause,
+      this.shippingAddress,
+      this.createdAt,
+      this.updatedAt,
+      this.discountAmount,
+      this.discountType,
+      this.couponCode,
+      this.couponDiscountBearer,
+      this.shippingMethodId,
+      this.shippingCost,
+      this.orderGroupId,
+      this.verificationCode,
+      this.sellerId,
+      this.sellerIs,
+      this.shippingAddressData,
+      this.deliveryManId,
+      this.deliverymanCharge,
+      this.expectedDeliveryDate,
+      this.orderNote,
+      this.billingAddress,
+      this.billingAddressData,
+      this.orderType,
+      this.extraDiscount,
+      this.extraDiscountType,
+      this.checked,
+      this.shippingType,
+      this.deliveryType,
+      this.deliveryServiceName,
+      this.thirdPartyDeliveryTrackingId,
+      this.adminId,
+      this.isPartiallyPaid,
+      this.partiallyPaidAmount,
+      this.vat,
+      this.vatPerc,
+      this.shippingVAT,
+      this.details,
+      this.summary,
+      this.deliveryMan});
 
   OrderData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -251,7 +250,7 @@ class OrderData {
       });
     }
     summary =
-    json['summary'] != null ? new Summary.fromJson(json['summary']) : null;
+        json['summary'] != null ? new Summary.fromJson(json['summary']) : null;
     deliveryMan = json['delivery_man'];
   }
 
@@ -338,22 +337,22 @@ class BillingAddressData {
 
   BillingAddressData(
       {this.id,
-        this.customerId,
-        this.contactPersonName,
-        this.addressType,
-        this.address,
-        this.city,
-        this.zip,
-        this.phone,
-        this.phoneCode,
-        this.createdAt,
-        this.updatedAt,
-        this.state,
-        this.country,
-        this.latitude,
-        this.longitude,
-        this.isBilling,
-        this.isDefault});
+      this.customerId,
+      this.contactPersonName,
+      this.addressType,
+      this.address,
+      this.city,
+      this.zip,
+      this.phone,
+      this.phoneCode,
+      this.createdAt,
+      this.updatedAt,
+      this.state,
+      this.country,
+      this.latitude,
+      this.longitude,
+      this.isBilling,
+      this.isDefault});
 
   BillingAddressData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -423,26 +422,26 @@ class Details {
 
   Details(
       {this.id,
-        this.orderId,
-        this.productId,
-        this.sellerId,
-        this.digitalFileAfterSell,
-        this.productDetails,
-        this.qty,
-        this.price,
-        this.tax,
-        this.discount,
-        this.deliveryStatus,
-        this.paymentStatus,
-        this.createdAt,
-        this.updatedAt,
-        this.shippingMethodId,
-        this.variant,
-        //this.variation,
-        this.discountType,
-        this.isStockDecreased,
-        this.refundRequest,
-        this.seller});
+      this.orderId,
+      this.productId,
+      this.sellerId,
+      this.digitalFileAfterSell,
+      this.productDetails,
+      this.qty,
+      this.price,
+      this.tax,
+      this.discount,
+      this.deliveryStatus,
+      this.paymentStatus,
+      this.createdAt,
+      this.updatedAt,
+      this.shippingMethodId,
+      this.variant,
+      //this.variation,
+      this.discountType,
+      this.isStockDecreased,
+      this.refundRequest,
+      this.seller});
 
   Details.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -472,8 +471,7 @@ class Details {
     discountType = json['discount_type'];
     isStockDecreased = json['is_stock_decreased'];
     refundRequest = json['refund_request'];
-    seller =
-    json['seller'] != null ? Seller.fromJson(json['seller']) : null;
+    seller = json['seller'] != null ? Seller.fromJson(json['seller']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -576,68 +574,68 @@ class ProductDetails {
 
   ProductDetails(
       {this.id,
-        this.addedBy,
-        this.userId,
-        this.name,
-        this.slug,
-        this.productType,
-        this.categoryIds,
-        this.categories,
-        this.brandId,
-        this.unit,
-        this.minQty,
-        this.refundable,
-        this.digitalProductType,
-        this.digitalFileReady,
-        this.images,
-        this.thumbnail,
-        this.hoverThumbnail,
-        this.featured,
-        this.flashDeal,
-        this.videoProvider,
-        this.videoUrl,
-        this.colors,
-        this.tags,
-        this.similarProducts,
-        this.customersAlsoBoughtProducts,
-        this.variantProduct,
-        this.attributes,
-        this.choiceOptions,
-        this.variation,
-        this.published,
-        this.unitPrice,
-        this.purchasePrice,
-        this.tax,
-        this.taxType,
-        this.discount,
-        this.discountType,
-        this.currentStock,
-        this.minimumOrderQty,
-        this.shortDescription,
-        this.details,
-        this.sizes,
-        this.freeShipping,
-        this.attachment,
-        this.createdAt,
-        this.updatedAt,
-        this.status,
-        this.featuredStatus,
-        this.metaTitle,
-        this.metaDescription,
-        this.metaImage,
-        this.requestStatus,
-        this.deniedNote,
-        this.shippingCost,
-        this.multiplyQty,
-        this.tempShippingCost,
-        this.isShippingCostUpdated,
-        this.code,
-        this.qualityScore,
-        this.referenceSku,
-        this.reviewsCount,
-        this.reviews,
-        this.colorsFormatted,
-        this.brand});
+      this.addedBy,
+      this.userId,
+      this.name,
+      this.slug,
+      this.productType,
+      this.categoryIds,
+      this.categories,
+      this.brandId,
+      this.unit,
+      this.minQty,
+      this.refundable,
+      this.digitalProductType,
+      this.digitalFileReady,
+      this.images,
+      this.thumbnail,
+      this.hoverThumbnail,
+      this.featured,
+      this.flashDeal,
+      this.videoProvider,
+      this.videoUrl,
+      this.colors,
+      this.tags,
+      this.similarProducts,
+      this.customersAlsoBoughtProducts,
+      this.variantProduct,
+      this.attributes,
+      this.choiceOptions,
+      this.variation,
+      this.published,
+      this.unitPrice,
+      this.purchasePrice,
+      this.tax,
+      this.taxType,
+      this.discount,
+      this.discountType,
+      this.currentStock,
+      this.minimumOrderQty,
+      this.shortDescription,
+      this.details,
+      this.sizes,
+      this.freeShipping,
+      this.attachment,
+      this.createdAt,
+      this.updatedAt,
+      this.status,
+      this.featuredStatus,
+      this.metaTitle,
+      this.metaDescription,
+      this.metaImage,
+      this.requestStatus,
+      this.deniedNote,
+      this.shippingCost,
+      this.multiplyQty,
+      this.tempShippingCost,
+      this.isShippingCostUpdated,
+      this.code,
+      this.qualityScore,
+      this.referenceSku,
+      this.reviewsCount,
+      this.reviews,
+      this.colorsFormatted,
+      this.brand});
 
   ProductDetails.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -814,7 +812,6 @@ class ProductDetails {
   }
 }
 
-
 class Seller {
   int? id;
   String? fName;
@@ -843,29 +840,29 @@ class Seller {
 
   Seller(
       {this.id,
-        this.fName,
-        this.lName,
-        this.phone,
-        this.image,
-        this.email,
-        this.password,
-        this.status,
-        this.rememberToken,
-        this.createdAt,
-        this.updatedAt,
-        this.bankName,
-        this.branch,
-        this.accountNo,
-        this.holderName,
-        this.authToken,
-        this.salesCommissionPercentage,
-        this.gst,
-        this.cmFirebaseToken,
-        this.posStatus,
-        this.adminId,
-        this.sellerRoleId,
-        this.parentId,
-        this.shop});
+      this.fName,
+      this.lName,
+      this.phone,
+      this.image,
+      this.email,
+      this.password,
+      this.status,
+      this.rememberToken,
+      this.createdAt,
+      this.updatedAt,
+      this.bankName,
+      this.branch,
+      this.accountNo,
+      this.holderName,
+      this.authToken,
+      this.salesCommissionPercentage,
+      this.gst,
+      this.cmFirebaseToken,
+      this.posStatus,
+      this.adminId,
+      this.sellerRoleId,
+      this.parentId,
+      this.shop});
 
   Seller.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -943,18 +940,18 @@ class Shop {
 
   Shop(
       {this.id,
-        this.sellerId,
-        this.name,
-        this.address,
-        this.contact,
-        this.image,
-        this.createdAt,
-        this.updatedAt,
-        this.banner,
-        this.commercialDocument,
-        this.crIdNo,
-        this.crFreelanceDocument,
-        this.additionalLegalDocument});
+      this.sellerId,
+      this.name,
+      this.address,
+      this.contact,
+      this.image,
+      this.createdAt,
+      this.updatedAt,
+      this.banner,
+      this.commercialDocument,
+      this.crIdNo,
+      this.crFreelanceDocument,
+      this.additionalLegalDocument});
 
   Shop.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -999,9 +996,9 @@ class Summary {
 
   Summary(
       {this.subtotal,
-        this.totalTax,
-        this.totalDiscountOnProduct,
-        this.totalShippingCost});
+      this.totalTax,
+      this.totalDiscountOnProduct,
+      this.totalShippingCost});
 
   Summary.fromJson(Map<String, dynamic> json) {
     subtotal = json['subtotal'];
@@ -1019,4 +1016,3 @@ class Summary {
     return data;
   }
 }
-

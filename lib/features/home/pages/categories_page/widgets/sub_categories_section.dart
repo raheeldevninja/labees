@@ -6,7 +6,6 @@ import 'package:labees/features/home/view_model/home_provider.dart';
 import 'package:labees/features/products/products_screen.dart';
 import 'package:provider/provider.dart';
 
-
 /*
 *  Date 20 - September-2023
 *  Author: Raheel Khan- Abaska Technologies
@@ -20,7 +19,6 @@ class SubCategoriesSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final homeProvider = Provider.of<HomeProvider>(context);
 
     return Container(
@@ -39,45 +37,40 @@ class SubCategoriesSection extends StatelessWidget {
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
-
-          print('SubCategoriesSection: ${homeProvider.childsList![index].name} ${homeProvider.childsList![index].id}');
+          print(
+              'SubCategoriesSection: ${homeProvider.childsList![index].name} ${homeProvider.childsList![index].id}');
 
           return ListTile(
-            visualDensity:
-            const VisualDensity(vertical: -4),
+            visualDensity: const VisualDensity(vertical: -4),
             onTap: () {
-
               //int? id = index == 0 ? homeProvider.childsList![index].parentId : homeProvider.childsList![index].id!;
               int? id = homeProvider.childsList![index].id!;
 
-              print('SubCategoriesSection: ${homeProvider.childsList![index].name} $id');
+              print(
+                  'SubCategoriesSection: ${homeProvider.childsList![index].name} $id');
 
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ProductsScreen(id: homeProvider.childsList![index].id!, title: homeProvider.childsList![index].name!),
+                  builder: (context) => ProductsScreen(
+                      id: homeProvider.childsList![index].id!,
+                      title: homeProvider.childsList![index].name!),
                   //builder: (context) => ProductsScreen(id: id!, title: homeProvider.childsList![index].name!),
                 ),
               );
-
             },
             title: Text(
               homeProvider.childsList![index].name!,
               style: TextStyle(
                 fontFamily: 'Montserrat',
                 fontSize: 12,
-                color: homeProvider
-                    .childsList![index].isSelected
+                color: homeProvider.childsList![index].isSelected
                     ? AppColors.primaryColor
                     : AppColors.lightGrey,
               ),
             ),
-            trailing:
-            SvgPicture.network(
-                '${APIs.imageBaseURL}${APIs.categoryImages}${homeProvider
-                    .childsList![index].icon ?? ''}'
-            ),
-
+            trailing: SvgPicture.network(
+                '${APIs.imageBaseURL}${APIs.categoryImages}${homeProvider.childsList![index].icon ?? ''}'),
           );
         },
       ),

@@ -8,7 +8,6 @@ import 'package:labees/features/seller/model/seller_registration_response.dart';
 import 'package:labees/features/seller/service/seller_registration_service.dart';
 
 class SellerRegistrationProvider extends ChangeNotifier {
-
   bool isLoading = false;
 
   bool get getIsLoading => isLoading;
@@ -56,20 +55,19 @@ class SellerRegistrationProvider extends ChangeNotifier {
 
   File? get getImage => image;
 
-
-  sellerRegister(BuildContext context, SellerRegistrationData sellerRegistrationData) async {
-
+  sellerRegister(BuildContext context,
+      SellerRegistrationData sellerRegistrationData) async {
     EasyLoading.show(status: 'loading...');
     showLoading();
 
-    sellerRegistrationResponse = await SellerRegistrationService.sellerRegister(sellerRegistrationData);
+    sellerRegistrationResponse =
+        await SellerRegistrationService.sellerRegister(sellerRegistrationData);
 
     if (sellerRegistrationResponse.success!) {
       Utils.toast(sellerRegistrationResponse.message!);
 
       Navigator.pop(context);
-    }
-    else {
+    } else {
       Utils.toast(sellerRegistrationResponse.message!);
     }
 
@@ -77,7 +75,6 @@ class SellerRegistrationProvider extends ChangeNotifier {
     hideLoading();
     notifyListeners();
   }
-
 
   showLoading() {
     isLoading = true;
@@ -88,6 +85,4 @@ class SellerRegistrationProvider extends ChangeNotifier {
     isLoading = false;
     notifyListeners();
   }
-
-
 }

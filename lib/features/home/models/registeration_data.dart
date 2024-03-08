@@ -23,5 +23,4 @@ class RegistrationData {
       'password': password,
     };
   }
-
 }

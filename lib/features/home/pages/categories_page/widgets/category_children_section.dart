@@ -4,20 +4,17 @@ import 'package:labees/features/home/pages/categories_page/widgets/category_chil
 import 'package:labees/features/home/view_model/home_provider.dart';
 import 'package:provider/provider.dart';
 
-
 /*
 *  Date 20 - September-2023
 *  Author: Raheel Khan- Abaska Technologies
 *  Description: CategoryChildrenSection
 */
 
-
 class CategoryChildrenSection extends StatelessWidget {
   const CategoryChildrenSection({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     final homeProvider = Provider.of<HomeProvider>(context);
 
     return SizedBox(
@@ -35,26 +32,28 @@ class CategoryChildrenSection extends StatelessWidget {
             return InkWell(
               onTap: () {
                 for (int i = 0;
-                i < homeProvider.getCategoryChildren!.length;
-                i++) {
-                  homeProvider.getCategoryChildren![i] =
-                      homeProvider.getCategoryChildren![i]
-                          .copyWith(isSelected: false);
+                    i < homeProvider.getCategoryChildren!.length;
+                    i++) {
+                  homeProvider.getCategoryChildren![i] = homeProvider
+                      .getCategoryChildren![i]
+                      .copyWith(isSelected: false);
                 }
                 // homeProvider.getCategoryChildren![index] =
                 //     homeProvider.getCategoryChildren![index]
                 //         .copyWith(isSelected: !homeProvider.getCategoryChildren![index].isSelected!);
 
                 //set sub sub childs
-                homeProvider.setChildList(homeProvider
-                    .getCategoryChildren![index].childes!, homeProvider.getCategoryChildren![0].parentId!, homeProvider.getCategoryChildren![index].name!);
-
+                homeProvider.setChildList(
+                    homeProvider.getCategoryChildren![index].childes!,
+                    homeProvider.getCategoryChildren![0].parentId!,
+                    homeProvider.getCategoryChildren![index].name!);
 
                 homeProvider.setSelectedCategoryIndex(index);
-
               },
-              child: CategoryChildren(categoryChild:
-              homeProvider.getCategoryChildren![index], index: index,),
+              child: CategoryChildren(
+                categoryChild: homeProvider.getCategoryChildren![index],
+                index: index,
+              ),
             );
           },
         ),
@@ -62,4 +61,3 @@ class CategoryChildrenSection extends StatelessWidget {
     );
   }
 }
-

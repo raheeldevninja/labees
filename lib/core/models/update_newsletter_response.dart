@@ -21,4 +21,3 @@ class UpdateNewsletterResponse {
     return data;
   }
 }
-

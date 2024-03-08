@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:labees/core/util/shared_pref.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 /*
 *  Date 3 - Dec 3-2023
 *  Author: Raheel Khan- Abaska Technologies
@@ -42,13 +41,10 @@ class LocaleProvider extends ChangeNotifier {
   }
 
   Future<void> saveChooseLanguageShown() async {
-     await SharedPref.saveChooseLanguageScreenShown(true);
+    await SharedPref.saveChooseLanguageScreenShown(true);
   }
 
   Future<bool> isChooseLanguageScreenShown() async {
     return await SharedPref.isChooseLanguageScreenShown();
   }
-
-
-
 }

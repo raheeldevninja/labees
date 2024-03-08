@@ -396,13 +396,7 @@ class ProductDetails {
 }
 */
 
-
-
-
-
-
 class ProductDetails {
-
   bool? status;
   Product? product;
   int? productTax;
@@ -410,15 +404,18 @@ class ProductDetails {
   bool? success;
   String? message;
 
-
-  ProductDetails({this.status, this.product, this.productTax, this.success = false,
+  ProductDetails({
+    this.status,
+    this.product,
+    this.productTax,
+    this.success = false,
     this.message,
   });
 
   ProductDetails.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     product =
-    json['product'] != null ? Product.fromJson(json['product']) : null;
+        json['product'] != null ? Product.fromJson(json['product']) : null;
     productTax = json['product_tax'];
   }
 
@@ -509,83 +506,81 @@ class Product {
   Seller? seller;
   Brand? brand;
 
-
   Product(
       {this.id,
-        this.parentId,
-        this.addedBy,
-        this.userId,
-        this.name,
-        this.slug,
-        this.productType,
-        this.categoryIds,
-        this.categories,
-        this.brandId,
-        this.unit,
-        this.minQty,
-        this.refundable,
-        this.digitalProductType,
-        this.digitalFileReady,
-        this.images,
-        this.thumbnail,
-        this.hoverThumbnail,
-        this.featured,
-        this.flashDeal,
-        this.videoProvider,
-        this.videoUrl,
-        this.colors,
-        this.tags,
-        this.similarProducts,
-        this.customersAlsoBoughtProducts,
-        this.variantProduct,
-        this.attributes,
-        this.choiceOptions,
-        this.variation,
-        this.published,
-        this.unitPrice,
-        this.purchasePrice,
-        this.tax,
-        this.taxType,
-        this.discount,
-        this.discountType,
-        this.currentStock,
-        this.minimumOrderQty,
-        this.shortDescription,
-        this.details,
-        this.sizes,
-        this.fabric,
-        this.care,
-        this.freeShipping,
-        this.attachment,
-        this.createdAt,
-        this.updatedAt,
-        this.status,
-        this.featuredStatus,
-        this.metaTitle,
-        this.metaDescription,
-        this.metaImage,
-        this.requestStatus,
-        this.deniedNote,
-        this.shippingCost,
-        this.multiplyQty,
-        this.tempShippingCost,
-        this.isShippingCostUpdated,
-        this.code,
-        this.qualityScore,
-        this.referenceSku,
-        this.childAttributeIds,
-        this.childAttributeValueIds,
-        this.reviewsCount,
-        this.priceRange,
-        this.attributeDetails,
-        this.categoriesDetails,
-        this.tagDetails,
-        this.variantProducts,
-        this.reviewsList,
-        this.averageReview,
-        this.seller,
-        this.brand
-      });
+      this.parentId,
+      this.addedBy,
+      this.userId,
+      this.name,
+      this.slug,
+      this.productType,
+      this.categoryIds,
+      this.categories,
+      this.brandId,
+      this.unit,
+      this.minQty,
+      this.refundable,
+      this.digitalProductType,
+      this.digitalFileReady,
+      this.images,
+      this.thumbnail,
+      this.hoverThumbnail,
+      this.featured,
+      this.flashDeal,
+      this.videoProvider,
+      this.videoUrl,
+      this.colors,
+      this.tags,
+      this.similarProducts,
+      this.customersAlsoBoughtProducts,
+      this.variantProduct,
+      this.attributes,
+      this.choiceOptions,
+      this.variation,
+      this.published,
+      this.unitPrice,
+      this.purchasePrice,
+      this.tax,
+      this.taxType,
+      this.discount,
+      this.discountType,
+      this.currentStock,
+      this.minimumOrderQty,
+      this.shortDescription,
+      this.details,
+      this.sizes,
+      this.fabric,
+      this.care,
+      this.freeShipping,
+      this.attachment,
+      this.createdAt,
+      this.updatedAt,
+      this.status,
+      this.featuredStatus,
+      this.metaTitle,
+      this.metaDescription,
+      this.metaImage,
+      this.requestStatus,
+      this.deniedNote,
+      this.shippingCost,
+      this.multiplyQty,
+      this.tempShippingCost,
+      this.isShippingCostUpdated,
+      this.code,
+      this.qualityScore,
+      this.referenceSku,
+      this.childAttributeIds,
+      this.childAttributeValueIds,
+      this.reviewsCount,
+      this.priceRange,
+      this.attributeDetails,
+      this.categoriesDetails,
+      this.tagDetails,
+      this.variantProducts,
+      this.reviewsList,
+      this.averageReview,
+      this.seller,
+      this.brand});
 
   Product.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -708,7 +703,7 @@ class Product {
     }
     averageReview = json['average_review'];
     seller =
-    json['seller'] != null ? new Seller.fromJson(json['seller']) : null;
+        json['seller'] != null ? new Seller.fromJson(json['seller']) : null;
     brand = json['brand'] != null ? new Brand.fromJson(json['brand']) : null;
   }
 
@@ -841,7 +836,6 @@ class CategoryIds {
   }
 }
 
-
 class CategoriesDetails {
   int? id;
   String? name;
@@ -856,20 +850,20 @@ class CategoriesDetails {
   int? status;
   int? priority;
 
-  CategoriesDetails(
-      {this.id,
-        this.name,
-        this.slug,
-        this.icon,
-        this.parentId,
-        this.position,
-        this.createdAt,
-        this.updatedAt,
-        this.homeStatus,
-        this.topCategory,
-        this.status,
-        this.priority,
-      });
+  CategoriesDetails({
+    this.id,
+    this.name,
+    this.slug,
+    this.icon,
+    this.parentId,
+    this.position,
+    this.createdAt,
+    this.updatedAt,
+    this.homeStatus,
+    this.topCategory,
+    this.status,
+    this.priority,
+  });
 
   CategoriesDetails.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -903,11 +897,3 @@ class CategoriesDetails {
     return data;
   }
 }
-
-
-
-
-
-
-
-

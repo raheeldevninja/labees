@@ -4,7 +4,6 @@ class RegistrationResponse {
   bool? success;
   String? message;
 
-
   RegistrationResponse({this.token, this.success, this.message});
 
   RegistrationResponse.fromJson(Map<String, dynamic> json) {

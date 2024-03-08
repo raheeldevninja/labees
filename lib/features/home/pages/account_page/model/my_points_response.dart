@@ -10,13 +10,12 @@ class MyPointsResponse {
 
   MyPointsResponse(
       {this.limit,
-        this.offset,
-        this.totalLoyaltyPoint,
-        this.totalLoyalty,
-        this.loyaltyPointList,
-        this.status,
-        this.message
-      });
+      this.offset,
+      this.totalLoyaltyPoint,
+      this.totalLoyalty,
+      this.loyaltyPointList,
+      this.status,
+      this.message});
 
   MyPointsResponse.fromJson(Map<String, dynamic> json) {
     limit = json['limit'];
@@ -63,19 +62,19 @@ class LoyaltyPointList {
 
   LoyaltyPointList(
       {this.id,
-        this.userId,
-        this.transactionId,
-        this.credit,
-        this.debit,
-        this.balance,
-        this.reference,
-        this.transactionType,
-        this.usedStatus,
-        this.remaining,
-        this.isExpired,
-        this.createdAt,
-        this.updatedAt,
-        this.expiry});
+      this.userId,
+      this.transactionId,
+      this.credit,
+      this.debit,
+      this.balance,
+      this.reference,
+      this.transactionType,
+      this.usedStatus,
+      this.remaining,
+      this.isExpired,
+      this.createdAt,
+      this.updatedAt,
+      this.expiry});
 
   LoyaltyPointList.fromJson(Map<String, dynamic> json) {
     id = json['id'];

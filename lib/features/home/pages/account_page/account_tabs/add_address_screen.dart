@@ -30,7 +30,6 @@ class AddAddressScreen extends StatefulWidget {
 }
 
 class _AddAddressScreenState extends State<AddAddressScreen> {
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final _contactPersonNameController = TextEditingController();
@@ -45,7 +44,6 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   final _addressFocus = FocusNode();
   final _postalCodeFocus = FocusNode();
 
-
   final _countrySearchController = TextEditingController();
   final _citySearchController = TextEditingController();
 
@@ -56,7 +54,6 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   String? selectedAddressType;
   String? selectedState;
   int? selectedAddressId;
-
 
   String? selectedAddress;
 
@@ -71,7 +68,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   ];
 
   final Completer<GoogleMapController> _controller =
-  Completer<GoogleMapController>();
+      Completer<GoogleMapController>();
 
   static const CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
@@ -89,7 +86,6 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   LatLng? tappedLocation;
   Set<Marker> markers = {};
 
-
   Future<LatLng> getLatLngFromUserInput(String userTextLocation) async {
     final geocoding = GeocodingPlatform.instance;
     final placemarks = await geocoding.locationFromAddress(userTextLocation);
@@ -102,13 +98,11 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   }
 
   void navigateToCity(String userTextLocation) async {
-
     print('userTextLocation: $userTextLocation');
     final latLng = await getLatLngFromUserInput(userTextLocation);
     // Update the GoogleMap widget with the new destination.
 
     print('latLng: ${latLng.longitude}');
-
 
     _controller.future.then((controller) {
       controller.animateCamera(CameraUpdate.newCameraPosition(
@@ -117,15 +111,12 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
     });
   }
 
-
   void navigateToCountry(String userTextLocation) async {
-
     print('userTextLocation: $userTextLocation');
     final latLng = await getLatLngFromUserInput(userTextLocation);
     // Update the GoogleMap widget with the new destination.
 
     print('latLng: $latLng');
-
 
     _controller.future.then((controller) {
       controller.animateCamera(CameraUpdate.newCameraPosition(
@@ -135,8 +126,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   }
 
   Future<String> getAddressFromCoordinates(double lat, double long) async {
-    List<Placemark> placemarks =
-    await placemarkFromCoordinates(lat, long);
+    List<Placemark> placemarks = await placemarkFromCoordinates(lat, long);
 
     if (placemarks.isNotEmpty) {
       Placemark placemark = placemarks.first;
@@ -151,62 +141,57 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-
-      final checkoutProvider = Provider.of<CheckoutProvider>(context, listen: false);
+      final checkoutProvider =
+          Provider.of<CheckoutProvider>(context, listen: false);
 
       isEdit = widget.addressData != null;
 
       if (isEdit!) {
-        _contactPersonNameController.text = widget.addressData!.contactPersonName!;
+        _contactPersonNameController.text =
+            widget.addressData!.contactPersonName!;
         _postalCodeController.text = widget.addressData!.zip!;
         _addressController.text = widget.addressData!.address!;
-        selectedAddressType = widget.addressData!.addressType!.substring(0, 1).toUpperCase() + widget.addressData!.addressType!.substring(1);
+        selectedAddressType =
+            widget.addressData!.addressType!.substring(0, 1).toUpperCase() +
+                widget.addressData!.addressType!.substring(1);
         selectedCountryCode = widget.addressData!.phoneCode!;
         _phoneController.text = widget.addressData!.phone!;
 
-
         selectedAddress = widget.addressData!.address!;
 
-
-        selectedCountry = checkoutProvider.countries.data!.firstWhere((element) => element.id == widget.addressData!.country!);
+        selectedCountry = checkoutProvider.countries.data!.firstWhere(
+            (element) => element.id == widget.addressData!.country!);
 
         await checkoutProvider.getCities(widget.addressData!.country!);
 
-        if(checkoutProvider.cities != null) {
-          selectedCity = checkoutProvider.cities!.data!.firstWhere((element) => element.id == widget.addressData!.city!);
+        if (checkoutProvider.cities != null) {
+          selectedCity = checkoutProvider.cities!.data!
+              .firstWhere((element) => element.id == widget.addressData!.city!);
         }
-
-
-      }
-      else {
-
+      } else {
         //saudia id: 194
         navigateToCountry('Saudi Arabia');
         await checkoutProvider.getCities(194);
 
         selectedAddressType = addressTypes[0];
 
-        selectedCountryCode = checkoutProvider.countriesData.firstWhere((element) => element.id == 194).phoneCode;
-        selectedCountry = checkoutProvider.countriesData.firstWhere((element) => element.id == 194);
-
-
+        selectedCountryCode = checkoutProvider.countriesData
+            .firstWhere((element) => element.id == 194)
+            .phoneCode;
+        selectedCountry = checkoutProvider.countriesData
+            .firstWhere((element) => element.id == 194);
       }
-
-
     });
-
   }
 
   @override
   Widget build(BuildContext context) {
-
     final l10n = AppLocalizations.of(context)!;
     final checkoutProvider = Provider.of<CheckoutProvider>(context);
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-
         backgroundColor: Colors.white,
         leading: IconButton(
           onPressed: () {
@@ -215,7 +200,6 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
           icon: const Icon(Icons.arrow_back, color: Colors.black),
         ),
         centerTitle: true,
-
       ),
       body: SafeArea(
         child: Form(
@@ -224,7 +208,6 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
             padding: const EdgeInsets.all(16),
             child: ListView(
               children: [
-
                 Text(
                   l10n.myAddresses,
                   style: const TextStyle(
@@ -247,7 +230,6 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       _controller.complete(controller);
                     },
                     onTap: (latLng) async {
-
                       setState(() {
                         tappedLocation = latLng;
                         markers.clear(); // Clear existing markers
@@ -260,13 +242,11 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                         );
                       });
 
-                      getAddressFromCoordinates(latLng.latitude, latLng.longitude)
+                      getAddressFromCoordinates(
+                              latLng.latitude, latLng.longitude)
                           .then((address) {
-
                         _addressController.text = address;
-
                       });
-
                     },
                   ),
                 ),
@@ -306,20 +286,25 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       filled: true,
-                      fillColor: _contactPersonNameFocus.hasFocus ? Colors.white : Colors.grey.withOpacity(0.1),
-                      contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+                      fillColor: _contactPersonNameFocus.hasFocus
+                          ? Colors.white
+                          : Colors.grey.withOpacity(0.1),
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 12.0, horizontal: 20.0),
                       hintText: l10n.contactPersonNameHint,
-                      hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+                      hintStyle:
+                          const TextStyle(fontSize: 14, color: Colors.grey),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25.0),
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                        borderSide: BorderSide(
+                            color: Colors.grey.withOpacity(0.1), width: 1.0),
                         borderRadius: BorderRadius.circular(25.0),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide:
-                        const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                        borderSide: const BorderSide(
+                            color: AppColors.primaryColor, width: 1.0),
                         borderRadius: BorderRadius.circular(25.0),
                       ),
                     ),
@@ -344,7 +329,9 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      color: _phoneFocus.hasFocus ? Colors.white : Colors.grey.withOpacity(0.1),
+                      color: _phoneFocus.hasFocus
+                          ? Colors.white
+                          : Colors.grey.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(25.0),
                       border: Border.all(
                         color: Colors.grey.withOpacity(0.1),
@@ -353,12 +340,12 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     ),
                     child: Row(
                       children: [
-
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 16.0),
                           child: InkWell(
                             onTap: () {
-                              _showCountryBottomSheet(context, l10n, showCountryCode: true);
+                              _showCountryBottomSheet(context, l10n,
+                                  showCountryCode: true);
                             },
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
@@ -401,25 +388,23 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                 //countries
                 Row(
                   children: [
-
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-
-                          Widgets.labels('${l10n.countryLabel} ', isRequired: true),
+                          Widgets.labels('${l10n.countryLabel} ',
+                              isRequired: true),
                           const SizedBox(
                             height: 10,
                           ),
-
                           InkWell(
                             borderRadius: BorderRadius.circular(32.0),
                             onTap: () {
-
                               _showCountryBottomSheet(context, l10n);
                             },
                             child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16.0, vertical: 12),
                               decoration: BoxDecoration(
                                 color: Colors.grey.withOpacity(0.1),
                                 borderRadius: BorderRadius.circular(32.0),
@@ -431,14 +416,18 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Expanded(child: Text(selectedCountry?.name ?? l10n.selectCountry, maxLines: 1, overflow: TextOverflow.ellipsis,)),
+                                  Expanded(
+                                      child: Text(
+                                    selectedCountry?.name ?? l10n.selectCountry,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  )),
                                   const SizedBox(width: 8),
                                   const Icon(Icons.arrow_drop_down),
                                 ],
                               ),
                             ),
                           ),
-
                         ],
                       ),
                     ),
@@ -452,35 +441,35 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                 //cities and postal code
                 Row(
                   children: [
-
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-
-                          Widgets.labels('${l10n.cityLabel} ', isRequired: true),
+                          Widgets.labels('${l10n.cityLabel} ',
+                              isRequired: true),
                           const SizedBox(
                             height: 10,
                           ),
-
                           InkWell(
                             borderRadius: BorderRadius.circular(32.0),
                             onTap: () {
-
-                              if(checkoutProvider.cities == null) {
-                                Fluttertoast.showToast(msg: l10n.pleaseSelectCountry);
+                              if (checkoutProvider.cities == null) {
+                                Fluttertoast.showToast(
+                                    msg: l10n.pleaseSelectCountry);
                                 return;
                               }
 
-                              if(checkoutProvider.cities!.data!.isEmpty) {
-                                Fluttertoast.showToast(msg: l10n.citiesNotFound);
+                              if (checkoutProvider.cities!.data!.isEmpty) {
+                                Fluttertoast.showToast(
+                                    msg: l10n.citiesNotFound);
                                 return;
                               }
 
                               _showCityBottomSheet(context, l10n);
                             },
                             child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16.0, vertical: 12),
                               decoration: BoxDecoration(
                                 color: Colors.grey.withOpacity(0.1),
                                 borderRadius: BorderRadius.circular(32.0),
@@ -492,30 +481,31 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Expanded(child: Text(selectedCity?.name ?? l10n.selectCity, maxLines: 1, overflow: TextOverflow.ellipsis,)),
+                                  Expanded(
+                                      child: Text(
+                                    selectedCity?.name ?? l10n.selectCity,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  )),
                                   const SizedBox(width: 8),
                                   const Icon(Icons.arrow_drop_down),
                                 ],
                               ),
                             ),
                           ),
-
                         ],
                       ),
                     ),
-
                     const SizedBox(width: 16),
-
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-
-                          Widgets.labels('${l10n.postalCodeLabel} ', isRequired: true),
+                          Widgets.labels('${l10n.postalCodeLabel} ',
+                              isRequired: true),
                           const SizedBox(
                             height: 10,
                           ),
-
                           Focus(
                             onFocusChange: (hasFocus) {
                               setState(() {});
@@ -527,20 +517,27 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                               maxLines: 1,
                               decoration: InputDecoration(
                                 filled: true,
-                                fillColor: _postalCodeFocus.hasFocus ? Colors.white : Colors.grey.withOpacity(0.1),
-                                contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+                                fillColor: _postalCodeFocus.hasFocus
+                                    ? Colors.white
+                                    : Colors.grey.withOpacity(0.1),
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 12.0, horizontal: 20.0),
                                 hintText: l10n.postalCodeLabel,
-                                hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+                                hintStyle: const TextStyle(
+                                    fontSize: 14, color: Colors.grey),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(25.0),
                                 ),
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                                  borderSide: BorderSide(
+                                      color: Colors.grey.withOpacity(0.1),
+                                      width: 1.0),
                                   borderRadius: BorderRadius.circular(25.0),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderSide:
-                                  const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                                  borderSide: const BorderSide(
+                                      color: AppColors.primaryColor,
+                                      width: 1.0),
                                   borderRadius: BorderRadius.circular(25.0),
                                 ),
                               ),
@@ -552,12 +549,9 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                               },
                             ),
                           ),
-
-
                         ],
                       ),
                     ),
-
                   ],
                 ),
 
@@ -579,13 +573,14 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       vertical: 12,
                       horizontal: 16,
                     ),
-
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0),
-                      borderSide: BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                      borderSide: BorderSide(
+                          color: Colors.grey.withOpacity(0.1), width: 1.0),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                      borderSide: BorderSide(
+                          color: Colors.grey.withOpacity(0.1), width: 1.0),
                       borderRadius: BorderRadius.circular(30.0),
                     ),
                   ),
@@ -600,13 +595,11 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       selectedAddressType = value;
                     });
                   },
-
                 ),
 
                 const SizedBox(
                   height: 20,
                 ),
-
 
                 Widgets.labels('${l10n.address} '),
                 const SizedBox(
@@ -622,20 +615,25 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     maxLines: 1,
                     decoration: InputDecoration(
                       filled: true,
-                      fillColor: _addressFocus.hasFocus ? Colors.white : Colors.grey.withOpacity(0.1),
-                      contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+                      fillColor: _addressFocus.hasFocus
+                          ? Colors.white
+                          : Colors.grey.withOpacity(0.1),
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 12.0, horizontal: 20.0),
                       hintText: l10n.addressHint,
-                      hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+                      hintStyle:
+                          const TextStyle(fontSize: 14, color: Colors.grey),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25.0),
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                        borderSide: BorderSide(
+                            color: Colors.grey.withOpacity(0.1), width: 1.0),
                         borderRadius: BorderRadius.circular(25.0),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide:
-                        const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                        borderSide: const BorderSide(
+                            color: AppColors.primaryColor, width: 1.0),
                         borderRadius: BorderRadius.circular(25.0),
                       ),
                     ),
@@ -647,7 +645,6 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     },
                   ),
                 ),
-
 
                 const SizedBox(
                   height: 20,
@@ -664,20 +661,19 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     text: isEdit! ? l10n.updateAddress : l10n.addAddress,
                     callback: () async {
                       if (_formKey.currentState!.validate()) {
-
-
-                        if(selectedCountry == null) {
+                        if (selectedCountry == null) {
                           Fluttertoast.showToast(msg: l10n.pleaseSelectCountry);
                           return;
                         }
 
-                        if(selectedCity == null) {
+                        if (selectedCity == null) {
                           Fluttertoast.showToast(msg: l10n.pleaseSelectCity);
                           return;
                         }
 
                         AddressModel addressModel = AddressModel(
-                          contactPersonName: _contactPersonNameController.text.trim(),
+                          contactPersonName:
+                              _contactPersonNameController.text.trim(),
                           phone: _phoneController.text,
                           phoneCode: selectedCountry!.phoneCode!,
                           country: selectedCountry!.id!,
@@ -690,33 +686,28 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                           longitude: tappedLocation?.latitude.toString(),
                         );
 
-                        if(isEdit!) {
+                        if (isEdit!) {
                           addressModel.id = widget.addressData!.id;
-                          await checkoutProvider.updateAddress(context, addressModel);
-                        }
-                        else {
-                          await checkoutProvider.addAddress(context, addressModel);
+                          await checkoutProvider.updateAddress(
+                              context, addressModel);
+                        } else {
+                          await checkoutProvider.addAddress(
+                              context, addressModel);
                         }
 
                         await checkoutProvider.getAllAddresses();
 
-                        if(mounted) {
+                        if (mounted) {
                           Navigator.pop(context);
                         }
-
                       }
-
-
                     },
                   ),
-
                 ),
-
 
                 const SizedBox(
                   height: 20,
                 ),
-
               ],
             ),
           ),
@@ -726,14 +717,14 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   }
 
   void _showCityBottomSheet(BuildContext context, AppLocalizations l10n) {
-
     showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20.0),),
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(20.0),
+        ),
       ),
       builder: (BuildContext context) {
-
         final checkoutProvider = context.watch<CheckoutProvider>();
 
         return Container(
@@ -746,8 +737,6 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                 style: const TextStyle(fontSize: 18),
               ),
               const SizedBox(height: 16.0),
-
-
               TextFormField(
                 controller: _citySearchController,
                 decoration: InputDecoration(
@@ -760,12 +749,13 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.grey, width: 1.0),
+                    borderSide:
+                        const BorderSide(color: Colors.grey, width: 1.0),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide:
-                    const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                    borderSide: const BorderSide(
+                        color: AppColors.primaryColor, width: 1.0),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                 ),
@@ -773,9 +763,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                   checkoutProvider.searchCity(value);
                 },
               ),
-
               const SizedBox(height: 16.0),
-
               Expanded(
                 child: ListView.builder(
                   shrinkWrap: true,
@@ -784,14 +772,11 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     return ListTile(
                       title: Text(checkoutProvider.cities!.data![index].name!),
                       onTap: () {
-
                         setState(() {
                           selectedCity = checkoutProvider.cities!.data![index];
                         });
 
-
                         navigateToCity(selectedCity!.name!);
-
 
                         // Handle city selection
                         Navigator.pop(context); // Close the bottom sheet
@@ -800,7 +785,6 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                   },
                 ),
               ),
-
             ],
           ),
         );
@@ -808,22 +792,20 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
     );
   }
 
-  void _showCountryBottomSheet(BuildContext context, AppLocalizations l10n, {bool showCountryCode = false}) {
-
+  void _showCountryBottomSheet(BuildContext context, AppLocalizations l10n,
+      {bool showCountryCode = false}) {
     showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20.0),),
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(20.0),
+        ),
       ),
-
       builder: (BuildContext context) {
-
         final checkoutProvider = context.watch<CheckoutProvider>();
 
         return StatefulBuilder(
-
           builder: (BuildContext context, StateSetter setState) {
-
             return Container(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -834,8 +816,6 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     style: const TextStyle(fontSize: 18),
                   ),
                   const SizedBox(height: 16.0),
-
-
                   TextFormField(
                     controller: _countrySearchController,
                     decoration: InputDecoration(
@@ -843,17 +823,19 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       fillColor: Colors.white,
                       contentPadding: const EdgeInsets.all(12.0),
                       hintText: 'Search for a country',
-                      hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+                      hintStyle:
+                          const TextStyle(fontSize: 14, color: Colors.grey),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25.0),
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.grey, width: 1.0),
+                        borderSide:
+                            const BorderSide(color: Colors.grey, width: 1.0),
                         borderRadius: BorderRadius.circular(25.0),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide:
-                        const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                        borderSide: const BorderSide(
+                            color: AppColors.primaryColor, width: 1.0),
                         borderRadius: BorderRadius.circular(25.0),
                       ),
                     ),
@@ -861,40 +843,39 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       checkoutProvider.searchCountry(value);
                     },
                   ),
-
                   const SizedBox(height: 16.0),
-
                   Expanded(
                     child: ListView.builder(
                       shrinkWrap: true,
                       itemCount: checkoutProvider.countriesData.length,
                       itemBuilder: (BuildContext context, int index) {
                         return ListTile(
-                          title: Text('${showCountryCode ? '${checkoutProvider.countriesData[index].phoneCode} - ' : ''} ${checkoutProvider.countriesData[index].name!}'),
+                          title: Text(
+                              '${showCountryCode ? '${checkoutProvider.countriesData[index].phoneCode} - ' : ''} ${checkoutProvider.countriesData[index].name!}'),
                           onTap: () async {
-
-                            await checkoutProvider.getCities(checkoutProvider.countriesData[index].id!);
+                            await checkoutProvider.getCities(
+                                checkoutProvider.countriesData[index].id!);
 
                             setState(() {
-                              selectedCountry = checkoutProvider.countriesData[index];
-                              selectedCountryCode = checkoutProvider.countriesData[index].phoneCode;
+                              selectedCountry =
+                                  checkoutProvider.countriesData[index];
+                              selectedCountryCode = checkoutProvider
+                                  .countriesData[index].phoneCode;
                               selectedCity = null;
                             });
 
-                            navigateToCountry(checkoutProvider.countriesData[index].name!);
+                            navigateToCountry(
+                                checkoutProvider.countriesData[index].name!);
 
-
-                            if(mounted) {
+                            if (mounted) {
                               // Handle city selection
                               Navigator.pop(context);
                             }
-
                           },
                         );
                       },
                     ),
                   ),
-
                 ],
               ),
             );
@@ -903,7 +884,6 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       },
     );
   }
-
 
   @override
   void dispose() {
@@ -924,5 +904,4 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
     _countrySearchController.dispose();
     _citySearchController.dispose();
   }
-
 }

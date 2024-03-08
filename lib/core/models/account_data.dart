@@ -1,10 +1,8 @@
-
 /*
 *  Date 12 - Now-2023
 *  Author: Raheel Khan- Abaska Technologies
 *  Description: Account Data
 */
-
 
 class AccountData {
   final String firstName;

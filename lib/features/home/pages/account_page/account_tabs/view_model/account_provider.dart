@@ -12,7 +12,6 @@ import 'package:labees/features/home/pages/account_page/model/convert_currency_r
 import 'package:labees/features/home/pages/account_page/model/my_points_response.dart';
 import 'package:labees/features/home/pages/account_page/model/wallet_response.dart';
 
-
 /*
 *  Date 12 - Now-2023
 *  Author: Raheel Khan- Abaska Technologies
@@ -20,7 +19,6 @@ import 'package:labees/features/home/pages/account_page/model/wallet_response.da
 */
 
 class AccountProvider extends ChangeNotifier {
-
   bool isLoading = false;
 
   late UpdateAccountResponse updateAccountResponse;
@@ -32,21 +30,17 @@ class AccountProvider extends ChangeNotifier {
   late ConvertToCurrencyResponse convertToCurrencyResponse;
 
   updateAccount(BuildContext context, AccountData accountData) async {
-
     EasyLoading.show(status: 'loading...');
     showLoading();
 
     updateAccountResponse = await AccountService.updateAccount(accountData);
 
     if (updateAccountResponse.success!) {
-
       ///update user in shared in preferences
       await SharedPref.saveUser(updateAccountResponse.user!);
 
       Utils.toast(updateAccountResponse.message!);
-
-    }
-    else {
+    } else {
       Utils.toast(updateAccountResponse.message!);
     }
 
@@ -56,20 +50,15 @@ class AccountProvider extends ChangeNotifier {
   }
 
   newsLetter(BuildContext context, String email) async {
-
     EasyLoading.show(status: 'loading...');
     showLoading();
 
     newsLetterResponse = await AccountService.newsLetter(email);
 
     if (newsLetterResponse.status!) {
-
-
-    }
-    else {
+    } else {
       Utils.toast(newsLetterResponse.message!);
     }
-
 
     EasyLoading.dismiss();
     hideLoading();
@@ -77,29 +66,22 @@ class AccountProvider extends ChangeNotifier {
   }
 
   Future<void> updateNewsletter(BuildContext context, int status) async {
-
     EasyLoading.show(status: 'loading...');
     showLoading();
 
     updateNewsletterResponse = await AccountService.updateNewsletter(status);
 
     if (updateNewsletterResponse!.status!) {
-
       await SharedPref.saveUser(updateNewsletterResponse!.user!);
-
-    }
-    else {
+    } else {
       Utils.toast(updateNewsletterResponse!.message!);
     }
-
 
     EasyLoading.dismiss();
     hideLoading();
   }
 
-
-  getWalletList(BuildContext context, int limit, int offset)  async {
-
+  getWalletList(BuildContext context, int limit, int offset) async {
     showLoading();
 
     walletResponse = await AccountService.getWalletList(limit, offset);
@@ -107,9 +89,7 @@ class AccountProvider extends ChangeNotifier {
     print('statusss ${walletResponse.status}');
 
     if (walletResponse.status!) {
-
-    }
-    else {
+    } else {
       Utils.toast(walletResponse.message!);
     }
 
@@ -117,15 +97,12 @@ class AccountProvider extends ChangeNotifier {
   }
 
   Future<void> getMyPoints(BuildContext context, int limit, int offset) async {
-
     showLoading();
 
     myPointsResponse = await AccountService.getMyPoints(limit, offset);
 
     if (myPointsResponse!.status!) {
-
-    }
-    else {
+    } else {
       Utils.toast(myPointsResponse!.message!);
     }
 
@@ -133,16 +110,13 @@ class AccountProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getAccountSettings(BuildContext context)  async {
-
+  Future<void> getAccountSettings(BuildContext context) async {
     showLoading();
 
     accountSettingsResponse = await AccountService.getAccountSettings();
 
     if (accountSettingsResponse.status!) {
-
-    }
-    else {
+    } else {
       Utils.toast(accountSettingsResponse.message!);
     }
 
@@ -151,7 +125,6 @@ class AccountProvider extends ChangeNotifier {
   }
 
   convertToCurrency(BuildContext context, int point) async {
-
     EasyLoading.show(status: 'loading...');
     showLoading();
 
@@ -159,11 +132,9 @@ class AccountProvider extends ChangeNotifier {
 
     if (convertToCurrencyResponse.status!) {
       Utils.toast(convertToCurrencyResponse.message!);
-    }
-    else {
+    } else {
       Utils.toast(convertToCurrencyResponse.message!);
     }
-
 
     EasyLoading.dismiss();
     hideLoading();
@@ -181,5 +152,4 @@ class AccountProvider extends ChangeNotifier {
     isLoading = false;
     notifyListeners();
   }
-
 }
