@@ -365,18 +365,16 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                       choiceOptionIndex++) ...[
                                     InkWell(
                                       onTap: () {
+
                                         if (choiceOptions[i].title == 'Color') {
-                                          for (int j = 0;
-                                              j <
-                                                  choiceOptions[i]
-                                                      .options!
-                                                      .length;
-                                              j++) {
+                                          for (int j = 0; j < choiceOptions[i].options!.length; j++) {
+
                                             if (j == choiceOptionIndex) {
                                               choiceOptions[i]
                                                   .options![j]
                                                   .isSelected = true;
-                                            } else {
+                                            }
+                                            else {
                                               choiceOptions[i]
                                                   .options![j]
                                                   .isSelected = false;
@@ -390,8 +388,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
                                           print(
                                               'color: ${homeProvider.getSelectedColor}');
-                                        } else if (choiceOptions[i].title ==
-                                            'Size') {
+
+                                        } else if (choiceOptions[i].title == 'Size') {
+
                                           for (int j = 0;
                                               j <
                                                   choiceOptions[i]
@@ -424,20 +423,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
                                         ///update variant product
 
-                                        for (int j = 0;
-                                            j <
-                                                choiceOptions[i]
-                                                    .options!
-                                                    .length;
-                                            j++) {
-                                          if (choiceOptions[i]
-                                              .options![j]
-                                              .isSelected) {
+                                        for (int j = 0; j < choiceOptions[i].options!.length; j++) {
+
+                                          if (choiceOptions[i].options![j].isSelected) {
+
                                             //add selected choice option id
-                                            selectedAttributes[
-                                                choiceOptions[i].title!] = [
-                                              choiceOptions[i].options![j].id
-                                            ];
+                                            selectedAttributes[choiceOptions[i].title!] = [choiceOptions[i].options![j].id];
+
                                           }
                                         }
 
@@ -509,13 +501,20 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
                                           print('qty : $variationQty');
 
-                                          if (variationQty == 0) {
+                                          print('sel ${selectedAttributes.length}');
+
+                                          selectedAttributes.forEach((key, value) {
+                                            print('key: $key, value: $value');
+                                          });
+
+                                          if (variationQty == 0 && selectedChoicesIds.length > 2) {
                                             //Utils.toast('Out of stock');
                                             Utils.showCustomSnackBar(context, 'Out of stock');
-                                          } else if (variationQty < qty) {
+                                          }
+                                          /*else if (variationQty < qty) {
                                             Utils.showCustomSnackBar(context,
                                                 'Only $variationQty left in stock');
-                                          }
+                                          }*/
                                         }
 
                                         setState(() {});
