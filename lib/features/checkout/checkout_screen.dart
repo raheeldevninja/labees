@@ -8,6 +8,8 @@ import 'package:labees/features/checkout/information.dart';
 import 'package:labees/features/checkout/payment_details.dart';
 import 'package:labees/features/checkout/shipping_address.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:labees/features/checkout/view_model/checkout_provider.dart';
+import 'package:provider/provider.dart';
 
 /*
 *  Date 2 - Dec-2023
@@ -30,6 +32,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   @override
   void initState() {
     super.initState();
+
+
+    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+      context.read<CheckoutProvider>().getAllAddresses();
+
+    });
 
     Utils.pageController.addListener(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {

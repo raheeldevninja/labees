@@ -4,6 +4,7 @@ import 'package:labees/core/ui/widgets.dart';
 import 'package:labees/features/auth/login_register/forgot_password_screen.dart';
 import 'package:labees/features/auth/view_model/auth_provider.dart';
 import 'package:labees/features/checkout/view_model/checkout_provider.dart';
+import 'package:labees/features/home/view_model/home_provider.dart';
 import 'package:labees/features/my_bag/view_model/cart_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -221,6 +222,9 @@ class _LoginWidgetState extends State<LoginWidget> {
               child: ElevatedButton(
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
+
+                    int categoryId = context.read<HomeProvider>().getMainCategoriesList.categories!.first.id!;
+
                     await authProvider.login(
                       context,
                       _emailPhoneController.text,
@@ -234,8 +238,12 @@ class _LoginWidgetState extends State<LoginWidget> {
                           context.read<CartProvider>().getShippingMethods(),
                           context.read<CartProvider>().getCheckoutSettings(),
                           context.read<CheckoutProvider>().getCountries(),
+                          context.read<HomeProvider>().getDashboardData(context, true,
+                              AppLocalizations.of(context)!.localeName, categoryId, 'all'),
                           context.read<CheckoutProvider>().getAllAddresses(),
                         ]);
+
+
                       }
                     }
                   }

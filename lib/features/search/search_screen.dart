@@ -67,6 +67,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     final homeProvider = Provider.of<HomeProvider>(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
@@ -157,14 +158,33 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
             const SizedBox(height: 16),
             */
+
+
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  l10n.poweredByAlgolia,
+                  style: const TextStyle(
+                    fontFamily: 'Libre Baskerville',
+                    fontSize: 12,
+                    color: AppColors.primaryColor,
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 8),
             Expanded(
-              child: GridView.builder(
+              child: homeProvider.getSearchedProducts.isEmpty ? Center(child: Text(l10n.noProducts)) :
+              GridView.builder(
                 shrinkWrap: true,
                 //itemCount: searchedProducts.length,
                 itemCount: homeProvider.getSearchedProducts.length,
                 padding: const EdgeInsets.all(16),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  childAspectRatio: 0.42,
+                  childAspectRatio: 0.5,
                   crossAxisCount: 2,
                   mainAxisSpacing: 10.0,
                   crossAxisSpacing: 10.0,

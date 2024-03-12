@@ -33,6 +33,7 @@ class MostWantedSection extends StatelessWidget {
             fontFamily: 'Libre Baskerville',
             fontSize: 18,
             color: AppColors.primaryColor,
+            fontWeight: FontWeight.w600,
           ),
         ),
         const SizedBox(height: 10),

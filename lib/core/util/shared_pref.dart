@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:labees/core/models/cart_product.dart';
 import 'package:labees/core/models/user.dart';
+import 'package:labees/features/home/models/product.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /*
@@ -15,6 +16,7 @@ class SharedPref {
   static const String tokenKey = 'token';
   static const String cartProductsKey = 'cart_products';
   static const String showChooseLanguage = 'choose_language_screen_shown';
+  static const String wishlistProducts = 'wishlist_products';
 
   static Future<bool> isLoggedIn() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -132,7 +134,7 @@ class SharedPref {
   // Remove a CartProduct from the list and save to shared preferences
   static Future<void> removeCartProduct(String productId) async {
     List<CartProduct> cartProducts = await getCartProducts();
-    cartProducts.removeWhere((element) => element.id == productId);
+    cartProducts.removeWhere((element) => element.id.toString() == productId);
     await saveCartProducts(cartProducts);
   }
 
@@ -140,6 +142,7 @@ class SharedPref {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool(showChooseLanguage, value);
   }
+
 
   static Future<bool> isChooseLanguageScreenShown() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -150,4 +153,65 @@ class SharedPref {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.clear();
   }
+
+  //save wishlist products
+  static Future<void> saveWishlistProducts(List<Products> products) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String encoded = jsonEncode(products);
+    prefs.setString(wishlistProducts, encoded);
+  }
+
+  // Add a CartProduct to the list and save to shared preferences
+  static Future<void> addWishlistProduct(Products product) async {
+    bool isProductExists = false;
+    List<Products> wishlistProducts = await getWishlistProducts();
+
+    for (int i = 0; i < wishlistProducts.length; i++) {
+      if (wishlistProducts[i].id == product.id) {
+        isProductExists = true;
+      }
+    }
+
+    if (!isProductExists) {
+      wishlistProducts.add(product);
+    }
+
+    await saveWishlistProducts(wishlistProducts);
+  }
+
+
+  // Retrieve the list of wishlist products from shared preferences
+  static Future<List<Products>> getWishlistProducts() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? wishlistProductsString = prefs.getString(wishlistProducts);
+
+    if (wishlistProductsString != null) {
+      Iterable decoded = jsonDecode(wishlistProductsString);
+      return decoded.map((e) => Products.fromJson(e)).toList();
+    } else {
+      return [];
+    }
+  }
+
+  //remove wishlist product
+  static Future<void> removeWishlistProduct(String productId) async {
+    List<Products> wishlistProducts = await getWishlistProducts();
+    wishlistProducts.removeWhere((element) => element.id.toString() == productId);
+    await saveWishlistProducts(wishlistProducts);
+  }
+
+
+  //check if product is in wishlist
+  static Future<bool> isProductInWishlist(String productId) async {
+    List<Products> wishlistProducts = await getWishlistProducts();
+    for (int i = 0; i < wishlistProducts.length; i++) {
+      if (wishlistProducts[i].id.toString() == productId) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+
+
 }

@@ -25,7 +25,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final settingsProvider = context.read<SettingsProvider>();
-      await settingsProvider.getFooterSettings();
+      await settingsProvider.getFooterSettings(AppLocalizations.of(context)!.localeName);
     });
   }
 
@@ -277,6 +277,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   void _callApis(BuildContext context, HomeProvider homeProvider,
       LocaleProvider localProvider) async {
+
+    final settingsProvider = context.read<SettingsProvider>();
+
     if (homeProvider.getMainCategoriesList.categories != null) {
       int categoryId = homeProvider.getMainCategoriesList.categories!.first.id!;
 
@@ -291,6 +294,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
         await homeProvider.getMainCategories(
             context, localProvider.appLocale.languageCode);
       }
+
+      await settingsProvider.getFooterSettings(AppLocalizations.of(context)!.localeName);
+
     }
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:labees/core/app/app_colors.dart';
 import 'package:labees/core/util/apis.dart';
+import 'package:labees/core/util/shared_pref.dart';
 import 'package:labees/features/home/models/product.dart';
 import 'package:labees/features/home/view_model/home_provider.dart';
 import 'package:provider/provider.dart';
@@ -34,6 +35,27 @@ class ProductItem extends StatefulWidget {
 }
 
 class _ProductItemState extends State<ProductItem> {
+
+  bool isProductInWishlist = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      print('isProduct in wishlist : $isProductInWishlist');
+      isProductInWishlist = await SharedPref.isProductInWishlist(widget.product.id!.toString());
+    });
+
+  }
+
+  _isProductInWishlist() async {
+    isProductInWishlist = await SharedPref.isProductInWishlist(widget.product.id!.toString());
+    setState(() {
+
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
@@ -42,6 +64,8 @@ class _ProductItemState extends State<ProductItem> {
     final tagName = widget.product.tagDetails!.isNotEmpty
         ? widget.product.tagDetails?.first.name!
         : '';
+
+    _isProductInWishlist();
 
     return Column(
       children: [
@@ -80,11 +104,15 @@ class _ProductItemState extends State<ProductItem> {
                         ? IconButton(
                             onPressed: widget.addRemoveToWishlist,
                             icon: Icon(
-                              widget.product.wishlist != null &&
-                                      widget.product.wishlist!.productId ==
-                                          widget.product.id
-                                  ? Icons.favorite
-                                  : Icons.favorite_border,
+                              // widget.product.wishlist != null &&
+                              //         widget.product.wishlist!.productId ==
+                              //             widget.product.id
+                              //     ? Icons.favorite
+                              //     : Icons.favorite_border,
+
+                              isProductInWishlist ? Icons.favorite
+                              : Icons.favorite_border,
+
                               color: Colors.red,
                               size: 20,
                             ),
@@ -96,7 +124,7 @@ class _ProductItemState extends State<ProductItem> {
                               size: 20,
                             ),
                             onPressed: () async {
-                              await homeProvider
+                              /*await homeProvider
                                   .removeFromWishlist(widget.product.id!);
 
                               if (mounted) {
@@ -113,7 +141,14 @@ class _ProductItemState extends State<ProductItem> {
                                 l10n.localeName,
                                 homeProvider.getMainCategoryId,
                                 'all',
-                              );
+                              );*/
+
+                              //await SharedPref.removeWishlistProduct(widget.product.id!.toString());
+
+
+
+                              widget.addRemoveToWishlist();
+
                             },
                           ),
                   ),

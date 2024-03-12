@@ -5,7 +5,10 @@ import 'package:labees/core/images/images.dart';
 import 'package:labees/core/util/shared_pref.dart';
 import 'package:labees/core/util/utils.dart';
 import 'package:labees/features/auth/view_model/auth_provider.dart';
+import 'package:labees/features/checkout/view_model/checkout_provider.dart';
 import 'package:labees/features/faqs/faqs_screen.dart';
+import 'package:labees/features/home/pages/account_page/account_page.dart';
+import 'package:labees/features/home/view_model/home_provider.dart';
 import 'package:labees/features/my_bag/my_bag_screen.dart';
 import 'package:labees/features/my_bag/view_model/cart_provider.dart';
 import 'package:labees/features/notifications/notifications_screen.dart';
@@ -139,7 +142,14 @@ class AppDrawer extends StatelessWidget {
             l10n.myOrders,
             Images.drawerMyOrders,
             () {
+              
               Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AccountPage(initialIndex: 2),
+                ),
+              );
             },
           ),
 
@@ -239,9 +249,20 @@ class AppDrawer extends StatelessWidget {
                     if (loginStatus) {
                       authProvider.setLoginStatus(false);
                       await authProvider.logout();
-                      await SharedPref.clear();
 
-                      context.read<CartProvider>().getCartProducts();
+
+                      int categoryId = context.read<HomeProvider>().getMainCategoriesList.categories!.first.id!;
+
+                      await Future.wait([
+                        context.read<CartProvider>().getCartProducts(),
+                        context.read<CartProvider>().getShippingMethods(),
+                        context.read<CartProvider>().getCheckoutSettings(),
+                        context.read<CheckoutProvider>().getCountries(),
+                        context.read<HomeProvider>().getDashboardData(context, true,
+                            AppLocalizations.of(context)!.localeName, categoryId, 'all'),
+                      ]);
+
+
                     } else {
                       //navigate to accounts and show login / register screen if user is not logged in
                       Utils.controller.jumpToTab(3);

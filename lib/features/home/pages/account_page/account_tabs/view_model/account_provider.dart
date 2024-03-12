@@ -73,8 +73,9 @@ class AccountProvider extends ChangeNotifier {
 
     if (updateNewsletterResponse!.status!) {
       await SharedPref.saveUser(updateNewsletterResponse!.user!);
+      Utils.showCustomSnackBar(context, updateNewsletterResponse!.message!, isSuccess: true);
     } else {
-      Utils.toast(updateNewsletterResponse!.message!);
+      Utils.showCustomSnackBar(context, updateNewsletterResponse!.message!);
     }
 
     EasyLoading.dismiss();

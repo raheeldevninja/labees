@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:labees/core/app/app_colors.dart';
 import 'package:labees/core/ui/product_item.dart';
-import 'package:labees/features/home/models/get_wishlist.dart';
+import 'package:labees/core/util/shared_pref.dart';
 import 'package:labees/features/home/models/product.dart';
 import 'package:labees/features/home/view_model/home_provider.dart';
 import 'package:labees/features/products/product_details_screen.dart';
-import 'package:labees/features/wishlist/model/wishlist.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -24,16 +23,25 @@ class WishlistScreen extends StatefulWidget {
 }
 
 class _WishlistScreenState extends State<WishlistScreen> {
+
+  List<Products>? wishlistProducts = [];
+
   @override
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context
-          .read<HomeProvider>()
-          .getWishlist(context, AppLocalizations.of(context)!.localeName);
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      // context
+      //     .read<HomeProvider>()
+      //     .getWishlist(context, AppLocalizations.of(context)!.localeName);
+
+      wishlistProducts = await SharedPref.getWishlistProducts();
+
+      setState(() {});
     });
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -50,13 +58,11 @@ class _WishlistScreenState extends State<WishlistScreen> {
           icon: const Icon(Icons.arrow_back, color: Colors.black),
         ),
         centerTitle: true,
-        title: homeProvider.getIsLoading && homeProvider.getWishlistData == null
-            ? const SizedBox()
-            : Text(
-                '${l10n.wishlistTitle} ${homeProvider.getWishlistData?.length ?? 0}',
+        title: Text(
+                '${l10n.wishlistTitle} ${wishlistProducts?.length ?? 0}',
                 style: const TextStyle(color: AppColors.primaryColor)),
       ),
-      body: homeProvider.getIsLoading
+      body: /*homeProvider.getIsLoading
           ? GridView.builder(
               shrinkWrap: true,
               itemCount: 4,
@@ -108,8 +114,9 @@ class _WishlistScreenState extends State<WishlistScreen> {
                 );
               },
             )
-          : GridView.builder(
-              itemCount: homeProvider.getWishlistData?.length ?? 0,
+          :*/
+      GridView.builder(
+              itemCount: wishlistProducts?.length ?? 0,
               padding: const EdgeInsets.all(16),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 childAspectRatio: 0.54,
@@ -118,22 +125,36 @@ class _WishlistScreenState extends State<WishlistScreen> {
                 crossAxisSpacing: 10.0, // Spacing between columns
               ),
               itemBuilder: (BuildContext context, int index) {
+
+                final wishlistProduct = wishlistProducts?[index];
+
                 return InkWell(
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => ProductDetailsScreen(
-                            slug: homeProvider
-                                .newArrivalProducts.products![index].slug!),
+                            slug: wishlistProduct!.slug!),
                       ),
                     );
                   },
                   child: ProductItem(
                     isWishlistProduct: true,
-                    product: homeProvider.getWishlistData?[index].product ??
-                        Products(),
-                    addRemoveToWishlist: () async {},
+                    /*product: homeProvider.getWishlistData?[index].product ??
+                        Products(),*/
+
+                    product: wishlistProduct ?? Products(),
+
+                    addRemoveToWishlist: () async {
+                      print('add remove called');
+
+                      await SharedPref.removeWishlistProduct(wishlistProduct!.id.toString());
+
+                      wishlistProducts = await SharedPref.getWishlistProducts();
+
+                      setState(() {});
+
+                    },
                   ),
                 );
               },

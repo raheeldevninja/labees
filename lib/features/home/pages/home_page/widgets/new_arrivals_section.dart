@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:labees/core/app/app_colors.dart';
 import 'package:labees/core/ui/product_item.dart';
+import 'package:labees/core/util/apis.dart';
+import 'package:labees/core/util/shared_pref.dart';
+import 'package:labees/core/util/utils.dart';
 import 'package:labees/features/home/view_model/home_provider.dart';
 import 'package:labees/features/products/product_details_screen.dart';
 import 'package:provider/provider.dart';
@@ -35,14 +38,13 @@ class _NewArrivalsSectionState extends State<NewArrivalsSection> {
           style: const TextStyle(
             fontFamily: 'Libre Baskerville',
             fontSize: 18,
+            fontWeight: FontWeight.w600,
             color: AppColors.primaryColor,
           ),
         ),
 
-        const SizedBox(height: 10),
-
         ///new arrivals listview
-        const SizedBox(height: 20),
+        const SizedBox(height: 10),
 
         SizedBox(
           height: 290,
@@ -52,8 +54,11 @@ class _NewArrivalsSectionState extends State<NewArrivalsSection> {
             shrinkWrap: true,
             physics: const BouncingScrollPhysics(),
             itemBuilder: (context, index) {
+
               final product =
                   homeProvider.getNewArrivalProducts.products![index];
+
+
 
               return InkWell(
                 onTap: () {
@@ -68,33 +73,41 @@ class _NewArrivalsSectionState extends State<NewArrivalsSection> {
                 child: ProductItem(
                   product: product,
                   addRemoveToWishlist: () async {
+
+
+
                     print('wishlist ${product.wishlist}');
 
-                    if (product.wishlist != null &&
-                        product.wishlist!.productId == product.id) {
-                      ///remove from wishlist
-                      await homeProvider.removeFromWishlist(product.id!);
-                    } else {
-                      print('here');
+                    bool result = await SharedPref.isProductInWishlist(product.id.toString());
 
-                      ///add to wishlist
-                      await homeProvider.addToWishList(
-                          context,
-                          AppLocalizations.of(context)!.localeName,
-                          product.id!);
+                    if (result) {
+
+                      print('remove from wishlist');
+                      await SharedPref.removeWishlistProduct(product.id.toString());
+
+                    }
+                    else {
+
+                      print('add to wishlist');
+                      await SharedPref.addWishlistProduct(product);
+
                     }
 
-                    int categoryId = homeProvider
-                        .getMainCategoriesList.categories!.first.id!;
 
-                    if (mounted) {
-                      await homeProvider.getDashboardData(
-                          context,
-                          false,
-                          AppLocalizations.of(context)!.localeName,
-                          categoryId,
-                          'all');
-                    }
+
+
+                    // if (product.wishlist != null &&
+                    //     product.wishlist!.productId == product.id) {
+                    //
+                    //   await homeProvider.removeFromWishlist(product.id!);
+                    // } else {
+                    //
+                    //   await homeProvider.addToWishList(
+                    //       context,
+                    //       AppLocalizations.of(context)!.localeName,
+                    //       product.id!);
+                    // }
+
                   },
                 ),
               );
@@ -104,4 +117,43 @@ class _NewArrivalsSectionState extends State<NewArrivalsSection> {
       ],
     );
   }
+
+
+  Future<bool?> _showLoginDialog(
+      BuildContext context, AppLocalizations l10n) {
+    return showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Login'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Please login to add product to wishlist'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(l10n.yesBtnText),
+              onPressed: () {
+
+                Utils.controller.jumpToTab(3);
+                Navigator.of(context).pop(true);
+
+              },
+            ),
+            TextButton(
+              child: Text(l10n.noBtnText),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 }

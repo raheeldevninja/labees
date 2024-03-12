@@ -364,7 +364,7 @@ class HomeProvider extends ChangeNotifier {
     addWishListResponse = await HomeService.addToWishlist(lang, productId);
 
     if (addWishListResponse!.success!) {
-      //Utils.toast(addWishListResponse!.message!);
+
     } else {
       Utils.toast(addWishListResponse!.message!);
     }

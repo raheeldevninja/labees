@@ -223,7 +223,7 @@ class CheckoutService {
       var response = await http.get(Uri.parse(url), headers: {
         'Content-type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': 'Bearer ${APIs.token}'
+        //'Authorization': 'Bearer ${APIs.token}'
       });
 
       print('Response status: ${response.statusCode}');

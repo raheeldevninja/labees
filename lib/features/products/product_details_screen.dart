@@ -9,7 +9,7 @@ import 'package:labees/core/models/brand.dart';
 import 'package:labees/core/models/cart_choices.dart';
 import 'package:labees/core/models/cart_product.dart';
 import 'package:labees/core/models/category.dart';
-//import 'package:labees/core/models/product.dart';
+
 import 'package:labees/core/models/product_color.dart';
 import 'package:labees/core/models/product_size.dart';
 import 'package:labees/core/util/apis.dart';
@@ -130,7 +130,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     final isVariantProduct = product?.variantProducts.isNotEmpty ?? false;
 
     //homeProvider.productDetails!.product!.variantProducts!.isNotEmpty ? homeProvider.productDetails!.product!.variantProducts!.first :
-    product = homeProvider.productDetails!.product;
+    product = homeProvider.productDetails?.product;
 
     //variantProduct = isVariantProduct ? product.variantProducts.first : null;
 
@@ -478,7 +478,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
                                             if (variantProduct?.currentStock ==
                                                 0) {
-                                              Utils.toast('Out of stock');
+
+                                              //Utils.toast('Out of stock');
+                                              Utils.showCustomSnackBar(context, 'Out of stock');
+
                                             }
                                           }
                                         });
@@ -507,9 +510,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                           print('qty : $variationQty');
 
                                           if (variationQty == 0) {
-                                            Utils.toast('Out of stock');
+                                            //Utils.toast('Out of stock');
+                                            Utils.showCustomSnackBar(context, 'Out of stock');
                                           } else if (variationQty < qty) {
-                                            Utils.toast(
+                                            Utils.showCustomSnackBar(context,
                                                 'Only $variationQty left in stock');
                                           }
                                         }
@@ -700,7 +704,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                       .join(',');
 
                                   if (isVariantProduct && choiceStr == '') {
-                                    Utils.toast('Please select attributes');
+                                    Utils.showCustomSnackBar(context, 'Please select attributes');
                                     return;
                                   }
 
@@ -734,7 +738,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     print('add to cart qty : $variationQty');
 
                                     if (variationQty == 0) {
-                                      Utils.toast('Out of stock');
+                                      //Utils.toast('Out of stock');
+                                      Utils.showCustomSnackBar(context, 'Out of stock');
                                       return;
                                     } else if (variationQty < qty) {
                                       Utils.toast(
@@ -798,41 +803,43 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 ),
                               ),
                             ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  '${l10n.productCode}: ${isVariantProduct ? variantProduct!.code : product.code}',
-                                  style: const TextStyle(
-                                      fontSize: 12,
-                                      fontFamily: 'Montserrat',
-                                      fontWeight: FontWeight.w300,
-                                      color: AppColors.blackColor),
-                                ),
-                                RichText(
-                                  text: TextSpan(
-                                    text: 'Sold by: ',
+                            const SizedBox(width: 16),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    '${l10n.productCode}: ${isVariantProduct ? variantProduct!.code : product.code}',
                                     style: const TextStyle(
                                         fontSize: 12,
                                         fontFamily: 'Montserrat',
                                         fontWeight: FontWeight.w300,
                                         color: AppColors.blackColor),
-                                    children: [
-                                      TextSpan(
-                                        text:
-                                            '${homeProvider.productDetails!.product!.seller!.fName}',
-                                        style: const TextStyle(
-                                          fontFamily: 'Montserrat',
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500,
-                                          color: AppColors.red,
-                                          decoration: TextDecoration.underline,
-                                        ),
-                                      ),
-                                    ],
                                   ),
-                                ),
-                              ],
+                                  RichText(
+                                    text: TextSpan(
+                                      text: 'Sold by: ',
+                                      style: const TextStyle(
+                                          fontSize: 12,
+                                          fontFamily: 'Montserrat',
+                                          fontWeight: FontWeight.w300,
+                                          color: AppColors.blackColor),
+                                      children: [
+                                        TextSpan(
+                                          text: '${homeProvider.productDetails!.product!.seller!.shop!.name}',
+                                          style: const TextStyle(
+                                            fontFamily: 'Montserrat',
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                            color: AppColors.red,
+                                            decoration: TextDecoration.underline,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),

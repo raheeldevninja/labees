@@ -11,6 +11,7 @@ import 'package:labees/core/models/notifications_response.dart';
 import 'package:labees/core/models/place_order_model.dart';
 import 'package:labees/core/models/place_order_response.dart';
 import 'package:labees/core/models/update_address_response.dart';
+import 'package:labees/core/util/apis.dart';
 import 'package:labees/core/util/utils.dart';
 import 'package:labees/features/checkout/service/checkout_service.dart';
 import 'package:labees/features/home/models/address_data.dart';
@@ -136,6 +137,11 @@ class CheckoutProvider extends ChangeNotifier {
   Future<void> getAllAddresses() async {
     showLoading();
 
+    print('token getAllAddresses(): ${APIs.token}');
+    if(APIs.token == '') {
+      return;
+    }
+
     allAddresses = await CheckoutService.getAllAddresses();
 
     if (allAddresses != null && allAddresses!.success!) {
@@ -144,7 +150,6 @@ class CheckoutProvider extends ChangeNotifier {
       Utils.toast(cities?.message ?? 'Error');
     }
 
-    //EasyLoading.dismiss();
     hideLoading();
     notifyListeners();
   }

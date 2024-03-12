@@ -85,11 +85,11 @@ class SettingsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getFooterSettings() async {
+  Future<void> getFooterSettings(String lang) async {
     EasyLoading.show();
     showLoading();
 
-    footerSettingsResponse = await SettingsService.getFooterSettings();
+    footerSettingsResponse = await SettingsService.getFooterSettings(lang);
 
     if (footerSettingsResponse.success!) {
     } else {
@@ -101,11 +101,11 @@ class SettingsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getPageDetails(String slug) async {
+  Future<void> getPageDetails(String slug, String lang) async {
     EasyLoading.show();
     showLoading();
 
-    pageDetailsResponse = await SettingsService.getPageDetails(slug);
+    pageDetailsResponse = await SettingsService.getPageDetails(slug, lang);
 
     if (pageDetailsResponse!.success!) {
     } else {

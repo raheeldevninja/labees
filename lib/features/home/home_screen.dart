@@ -47,6 +47,10 @@ class _HomeScreenState extends State<HomeScreen> {
           context.read<CheckoutProvider>().getCountries(),
           context.read<CheckoutProvider>().getAllAddresses(),
         ]);
+
+
+
+
       }
     });
   }
@@ -98,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
       const HomePage(),
       const CategoriesPage(),
       const DesignersPage(),
-      const AccountPage(),
+      const AccountPage(initialIndex: 0),
     ];
   }
 

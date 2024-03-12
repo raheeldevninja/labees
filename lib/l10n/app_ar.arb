@@ -287,6 +287,19 @@
     "enterSubject": "الرجاء إدخال الموضوع",
     "enterDescription": "الرجاء إدخال الوصف",
     "supportTicketsTitle": "تذاكر الدعم الفني",
-    "submitTicketBtnText": "إرسال تذكرة جديدة"
+    "submitTicketBtnText": "إرسال تذكرة جديدة",
 
+    "receivedStatus": "تلقى",
+    "assignedStatus": "مُكَلَّف",
+    "cancelledStatus": "ألغيت",
+    "topicLabel": "عنوان",
+    "subscriptionDateLabel": "تاريخ الاشتراك",
+
+    "aboutUs": "معلومات عنا",
+    "termsAndConditions": "البنود و الظروف",
+    "privacyPolicy": "سياسة الخصوصية",
+    "paymentPolicy": "الية الدفع",
+    "returnPolicy": "سياسة العائدات",
+    "exchangePolicy": "سياسة الصرف",
+    "poweredByAlgolia": "مدعوم من ألغوليا"
 }

@@ -39,7 +39,7 @@ class Products {
   List<ChoiceOptions>? choiceOptions;
   List<Variation>? variation;
   int? published;
-  int? unitPrice;
+  double? unitPrice;
   int? purchasePrice;
   int? tax;
   String? taxType;
@@ -190,7 +190,7 @@ class Products {
       });
     }
     published = json['published'];
-    unitPrice = json['unit_price'];
+    unitPrice = json['unit_price'].toDouble();
     purchasePrice = json['purchase_price'];
     tax = json['tax'];
     taxType = json['tax_type'];

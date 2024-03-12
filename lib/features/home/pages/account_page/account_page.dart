@@ -23,7 +23,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 */
 
 class AccountPage extends StatefulWidget {
-  const AccountPage({Key? key}) : super(key: key);
+  const AccountPage({
+    required this.initialIndex,
+    Key? key}) : super(key: key);
+
+  final int initialIndex;
 
   @override
   State<AccountPage> createState() => _AccountPageState();
@@ -42,8 +46,11 @@ class _AccountPageState extends State<AccountPage>
   void initState() {
     super.initState();
 
+
+
     _tabController =
-        TabController(length: 6, vsync: this); // Set the number of tabs
+
+        TabController(initialIndex: widget.initialIndex, length: 6, vsync: this); // Set the number of tabs
   }
 
   @override

@@ -44,8 +44,7 @@ class _MyBagScreenState extends State<MyBagScreen> {
     final authProvider = Provider.of<AuthProvider>(context);
     final cartProvider = Provider.of<CartProvider>(context);
 
-    return authProvider.isLoggedIn
-        ? Scaffold(
+    return Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.white,
               surfaceTintColor: Colors.transparent,
@@ -154,7 +153,8 @@ class _MyBagScreenState extends State<MyBagScreen> {
                             ),
                           );
                         } else {
-                          Utils.toast('No items in cart');
+                          //Utils.toast('No items in cart');
+                          Utils.showCustomSnackBar(context, 'No items in cart');
                         }
                       },
                       style: ElevatedButton.styleFrom(
@@ -173,21 +173,6 @@ class _MyBagScreenState extends State<MyBagScreen> {
                   const SizedBox(height: 16),
                 ],
               ),
-            ),
-          )
-        : Scaffold(
-            appBar: AppBar(
-              backgroundColor: Colors.white,
-              shadowColor: Colors.transparent,
-              leading: IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: const Icon(Icons.arrow_back, color: Colors.black),
-              ),
-            ),
-            body: const SafeArea(
-              child: LoginRegisterWidget(),
             ),
           );
   }

@@ -157,9 +157,11 @@ class _InformationState extends State<Information> {
                   ),
                 ),
               ),
+
               const SizedBox(
                 height: 20,
               ),
+
               Center(
                 child: Text(
                   l10n.orLabel,
@@ -561,6 +563,10 @@ class _InformationState extends State<Information> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30.0),
                   ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.grey, width: 1.0),
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
                 ),
                 items: addressTypes.map((String item) {
                   return DropdownMenuItem<String>(
@@ -573,6 +579,7 @@ class _InformationState extends State<Information> {
                     selectedAddressType = value;
                   });
                 },
+
               ),
 
               const SizedBox(
@@ -662,7 +669,12 @@ class _InformationState extends State<Information> {
                       !checkoutProvider.checkAddressesHaveBillingAddress() ||
                       showAddressForm) {
                     if (selectedCity == null) {
-                      Utils.toast('Please select city');
+                      Utils.showCustomSnackBar(context, 'Please select city');
+                      return;
+                    }
+
+                    if(selectedAddressType == null || selectedAddressType!.isEmpty){
+                      Utils.showCustomSnackBar(context, 'Please select address type');
                       return;
                     }
 
@@ -694,7 +706,7 @@ class _InformationState extends State<Information> {
                     }
                   } else {
                     if (selectedAddress == null) {
-                      Utils.toast('Please select address');
+                      Utils.showCustomSnackBar(context, 'Please select address');
                       return;
                     }
 

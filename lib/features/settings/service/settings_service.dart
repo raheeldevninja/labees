@@ -155,7 +155,7 @@ class SettingsService {
     }
   }
 
-  static Future<FooterSettingsResponse> getFooterSettings() async {
+  static Future<FooterSettingsResponse> getFooterSettings(String lang) async {
     FooterSettingsResponse footerSettingsResponse;
     String url = APIs.baseURL + APIs.footerSettings;
 
@@ -165,6 +165,7 @@ class SettingsService {
       var response = await http.get(Uri.parse(url), headers: {
         'Content-type': 'application/json',
         'Accept': 'application/json',
+        'lang': lang == 'en' ? 'en' : 'sa',
       });
 
       print('Response status: ${response.statusCode}');
@@ -199,7 +200,7 @@ class SettingsService {
     }
   }
 
-  static Future<PageDetailsResponse> getPageDetails(String slug) async {
+  static Future<PageDetailsResponse> getPageDetails(String slug, String lang) async {
     PageDetailsResponse pageDetailsResponse;
     String url = '${APIs.baseURL}${APIs.pageDetails}/$slug';
 
@@ -209,6 +210,7 @@ class SettingsService {
       var response = await http.get(Uri.parse(url), headers: {
         'Content-type': 'application/json',
         'Accept': 'application/json',
+        'lang': lang == 'en' ? 'en' : 'sa',
       });
 
       print('Response status: ${response.statusCode}');

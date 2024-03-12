@@ -289,6 +289,20 @@
     "enterSubject": "Please enter subject",
     "enterDescription": "Please enter description",
     "supportTicketsTitle": "Support Tickets",
-    "submitTicketBtnText": "Submit a new Ticket"
+    "submitTicketBtnText": "Submit a new Ticket",
+
+    "receivedStatus": "Received",
+    "assignedStatus": "Assigned",
+    "cancelledStatus": "Cancelled",
+    "topicLabel": "Topic",
+    "subscriptionDateLabel": "Subscription Date",
+
+    "aboutUs": "About Us",
+    "termsAndConditions": "Terms & Conditions",
+    "privacyPolicy": "Privacy Policy",
+    "paymentPolicy": "Payment Policy",
+    "returnPolicy": "Return Policy",
+    "exchangePolicy": "Exchange Policy",
+    "poweredByAlgolia": "Powered By Algolia"
 
 }

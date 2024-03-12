@@ -1,3 +1,4 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:labees/core/app/app_colors.dart';
@@ -37,9 +38,27 @@ class Utils {
   static MainCategories mainCategories = MainCategories.men;
 
   static void showSnackBar(BuildContext context, String msg) {
-    ScaffoldMessenger.of(context).showSnackBar(
+    /*ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text(msg)),
+    );*/
+
+    final snackBar = SnackBar(
+      /// need to set following properties for best effect of awesome_snackbar_content
+      elevation: 0,
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Colors.transparent,
+      content: AwesomeSnackbarContent(
+        title: 'Labees',
+        message: msg,
+        contentType: ContentType.warning,
+      ),
     );
+
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(snackBar);
+
+
   }
 
   static toast(String message) {
@@ -52,6 +71,30 @@ class Utils {
       textColor: Colors.black,
       fontSize: 16.0,
     );
+
+
+  }
+
+  static void showCustomSnackBar(BuildContext context, String message, {bool isSuccess = false}) {
+
+    final snackBar = SnackBar(
+      /// need to set following properties for best effect of awesome_snackbar_content
+      elevation: 0,
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Colors.transparent,
+      content: AwesomeSnackbarContent(
+        title: 'Labees',
+        message: message,
+        color: AppColors.primaryColor,
+        contentType: isSuccess ? ContentType.success : ContentType.warning,
+      ),
+    );
+
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(snackBar);
+
+
   }
 
   //cancel order dialog

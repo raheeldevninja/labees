@@ -78,11 +78,11 @@ class _TicketSupportListsScreenState extends State<TicketSupportListsScreen> {
                       ticketSupportProvider.ticketSupportLists![index];
 
                   if (ticketSupportItem.status! == '1') {
-                    status = 'Received';
+                    status = l10n.receivedStatus;
                   } else if (ticketSupportItem.status! == '2') {
-                    status = 'Assigned';
+                    status = l10n.assignedStatus;
                   } else if (ticketSupportItem.status! == '5') {
-                    status = 'Cancelled';
+                    status = l10n.cancelledStatus;
                   }
 
                   final date = DateTime.parse(ticketSupportItem.createdAt!);
@@ -100,7 +100,7 @@ class _TicketSupportListsScreenState extends State<TicketSupportListsScreen> {
                         Row(
                           children: [
                             Text(
-                              'Subscription Date: ',
+                              '${l10n.subscriptionDateLabel}: ',
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 14,

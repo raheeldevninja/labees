@@ -81,7 +81,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       tilt: 59.440717697143555,
       zoom: 19.151926040649414);
 
-  bool? isEdit;
+  bool? isEdit = false;
 
   LatLng? tappedLocation;
   Set<Marker> markers = {};

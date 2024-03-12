@@ -6,6 +6,8 @@ import 'package:labees/core/models/product_color.dart';
 import 'package:labees/core/models/product_size.dart';
 import 'package:labees/core/ui/product_item.dart';
 import 'package:labees/core/util/apis.dart';
+import 'package:labees/core/util/shared_pref.dart';
+import 'package:labees/core/util/utils.dart';
 import 'package:labees/features/home/models/attribute_detail.dart';
 import 'package:labees/features/home/models/brand.dart';
 import 'package:labees/features/home/models/product_model.dart';
@@ -568,15 +570,16 @@ class _ProductsScreenState extends State<ProductsScreen> {
                             child: ProductItem(
                               product: product,
                               addRemoveToWishlist: () async {
+
+                                /*
                                 if (product.wishlist != null &&
                                     product.wishlist!.productId == product.id) {
-                                  ///remove from wishlist
+
                                   await homeProvider
                                       .removeFromWishlist(product.id!);
                                 } else {
                                   print('here');
 
-                                  ///add to wishlist
                                   await homeProvider.addToWishList(
                                       context,
                                       AppLocalizations.of(context)!.localeName,
@@ -586,7 +589,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                 String sValue = sortValue
                                     .toLowerCase()
                                     .replaceAll(' ', '_');
-                                print('sort value: $sValue');
 
                                 await homeProvider.getProducts(
                                     context,
@@ -596,6 +598,27 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                     1,
                                     sValue,
                                     showShimmer: false);
+                                */
+
+                                bool result = await SharedPref.isProductInWishlist(product.id.toString());
+
+                                if (result) {
+
+                                  print('remove from wishlist');
+                                  await SharedPref.removeWishlistProduct(product.id.toString());
+
+                                }
+                                else {
+
+                                  print('add to wishlist');
+                                  await SharedPref.addWishlistProduct(product);
+
+                                }
+
+
+
+
+
                               },
                             ),
                           );
@@ -631,6 +654,47 @@ class _ProductsScreenState extends State<ProductsScreen> {
       },
     );
   }
+
+
+
+  Future<bool?> _showLoginDialog(
+      BuildContext context, AppLocalizations l10n) {
+    return showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Login'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Please login to add product to wishlist'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(l10n.yesBtnText),
+              onPressed: () {
+
+                Utils.controller.jumpToTab(3);
+                Navigator.of(context).pop(true);
+
+              },
+            ),
+            TextButton(
+              child: Text(l10n.noBtnText),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
 }
 
 class FilterBottomSheet extends StatefulWidget {

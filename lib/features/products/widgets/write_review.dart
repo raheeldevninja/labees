@@ -33,7 +33,11 @@ class _WriteReviewState extends State<WriteReview> {
       children: [
         Text('Reviews',
             style:
-                const TextStyle(fontSize: 14, color: AppColors.primaryColor)),
+            TextStyle(
+                fontSize: 18,
+                color: AppColors.primaryColor,
+                fontWeight: FontWeight.bold),
+        ),
 
         const SizedBox(
           height: 16,

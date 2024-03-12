@@ -7,7 +7,6 @@ import 'package:labees/core/models/user.dart';
 import 'package:labees/core/util/apis.dart';
 import 'package:labees/core/util/shared_pref.dart';
 import 'package:labees/core/util/utils.dart';
-import 'package:labees/features/auth/login_register/forgot_password_screen.dart';
 import 'package:labees/features/auth/model/forgot_password_response.dart';
 import 'package:labees/features/auth/model/login_response.dart';
 import 'package:labees/features/auth/model/new_password_response.dart';
@@ -103,9 +102,11 @@ class AuthProvider extends ChangeNotifier {
     // Set the login state to false
     isLoggedIn = false;
 
+    APIs.token = '';
+
     await SharedPref.setLoggedIn(false);
     await SharedPref.clearUser();
-    await SharedPref.clearCartProducts();
+    //await SharedPref.clearCartProducts();
     await SharedPref.clearToken();
     await SharedPref.clearShowChooseLanguage();
 

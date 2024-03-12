@@ -65,7 +65,6 @@ class _FAQScreenState extends State<FAQScreen> {
                     itemBuilder: (context, index) {
                       return ExpansionTile(
                         onExpansionChanged: (value) {
-                          print('value: $value');
 
                           settingsProvider.setFAQExpansionTileStatus(
                               index, value);
@@ -73,18 +72,12 @@ class _FAQScreenState extends State<FAQScreen> {
                         expandedAlignment: Alignment.centerLeft,
                         iconColor: AppColors.primaryColor,
                         title: Container(
-                            color: settingsProvider
-                                    .allFAQs.faqsResponse![index].isExpanded!
-                                ? AppColors.primaryColor
-                                : Colors.white,
+                            color: Colors.white,
                             child: Text(
                                 settingsProvider
                                     .allFAQs.faqsResponse![index].question!,
-                                style: TextStyle(
-                                    color: settingsProvider.allFAQs
-                                            .faqsResponse![index].isExpanded!
-                                        ? Colors.white
-                                        : AppColors.primaryColor))),
+                                style: const TextStyle(
+                                    color: AppColors.primaryColor))),
                         children: [
                           Padding(
                               padding:
