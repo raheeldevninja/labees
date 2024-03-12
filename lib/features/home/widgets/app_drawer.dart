@@ -246,10 +246,14 @@ class AppDrawer extends StatelessWidget {
                   onPressed: () async {
                     Navigator.pop(context);
 
+                    final checkoutProvider = context.read<CheckoutProvider>();
+
+
                     if (loginStatus) {
                       authProvider.setLoginStatus(false);
                       await authProvider.logout();
 
+                      checkoutProvider.clearAllAddresses();
 
                       int categoryId = context.read<HomeProvider>().getMainCategoriesList.categories!.first.id!;
 

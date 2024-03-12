@@ -34,7 +34,7 @@ class CheckoutService {
       });
 
       print('Response status: ${response.statusCode}');
-      print('countries response: ${response.body}');
+      //print('countries response: ${response.body}');
 
       var result = jsonDecode(response.body);
 
@@ -223,7 +223,7 @@ class CheckoutService {
       var response = await http.get(Uri.parse(url), headers: {
         'Content-type': 'application/json',
         'Accept': 'application/json',
-        //'Authorization': 'Bearer ${APIs.token}'
+        'Authorization': 'Bearer ${APIs.token}'
       });
 
       print('Response status: ${response.statusCode}');

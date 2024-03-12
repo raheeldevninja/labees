@@ -4,9 +4,12 @@ import 'package:labees/core/app/app_colors.dart';
 import 'package:labees/core/models/cities_data.dart';
 import 'package:labees/core/models/countries_data.dart';
 import 'package:labees/core/ui/widgets.dart';
+import 'package:labees/core/util/apis.dart';
 import 'package:labees/core/util/utils.dart';
+import 'package:labees/features/auth/view_model/auth_provider.dart';
 import 'package:labees/features/checkout/view_model/checkout_provider.dart';
 import 'package:labees/features/home/models/address_data.dart';
+import 'package:labees/features/home/models/registeration_data.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -26,6 +29,12 @@ class Information extends StatefulWidget {
 class _InformationState extends State<Information> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+
+
   final _contactPersonNameController = TextEditingController();
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
@@ -35,11 +44,17 @@ class _InformationState extends State<Information> {
   final _countrySearchController = TextEditingController();
   final _citySearchController = TextEditingController();
 
+  final _firstNameFocus = FocusNode();
+  final _lastNameFocus = FocusNode();
+
   final _contactPersonNameFocus = FocusNode();
   final _emailFocus = FocusNode();
   final _phoneFocus = FocusNode();
   final _addressFocus = FocusNode();
   final _postalCodeFocus = FocusNode();
+  final _passwordFocus = FocusNode();
+  final _confirmPasswordFocus = FocusNode();
+
 
   CountriesData? selectedCountry;
 
@@ -98,6 +113,7 @@ class _InformationState extends State<Information> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final checkoutProvider = context.watch<CheckoutProvider>();
+    final authProvider = context.watch<AuthProvider>();
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -198,13 +214,165 @@ class _InformationState extends State<Information> {
               ),
             ],
 
-            if (checkoutProvider.allAddresses!.addresses == null ||
+            if (checkoutProvider.allAddresses?.addresses == null ||
                 checkoutProvider.allAddresses!.addresses!.isEmpty ||
                 !checkoutProvider.checkAddressesHaveBillingAddress() ||
                 showAddressForm == true) ...[
               const SizedBox(
                 height: 20,
               ),
+
+
+              if(APIs.token.isEmpty) ...[
+
+                Widgets.labels('${l10n.firstNameLabel} '),
+                const SizedBox(
+                  height: 10,
+                ),
+                Focus(
+                  onFocusChange: (hasFocus) {
+                    setState(() {});
+                  },
+                  child: TextFormField(
+                    focusNode: _firstNameFocus,
+                    controller: _firstNameController,
+                    maxLines: 1,
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: _firstNameFocus.hasFocus
+                          ? Colors.white
+                          : Colors.grey.withOpacity(0.1),
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 12.0, horizontal: 20.0),
+                      hintText: l10n.firstNameHint,
+                      hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Colors.grey.withOpacity(0.1), width: 1.0),
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: AppColors.primaryColor, width: 1.0),
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your first name';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+
+                const SizedBox(
+                  height: 20,
+                ),
+
+                Widgets.labels('${l10n.lastNameLabel} '),
+                const SizedBox(
+                  height: 10,
+                ),
+                Focus(
+                  onFocusChange: (hasFocus) {
+                    setState(() {});
+                  },
+                  child: TextFormField(
+                    controller: _lastNameController,
+                    maxLines: 1,
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: _lastNameFocus.hasFocus
+                          ? Colors.white
+                          : Colors.grey.withOpacity(0.1),
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 12.0, horizontal: 20),
+                      hintText: l10n.lastNameHint,
+                      hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Colors.grey.withOpacity(0.1), width: 1.0),
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: AppColors.primaryColor, width: 1.0),
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your last name';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+
+                const SizedBox(
+                  height: 20,
+                ),
+
+
+                Widgets.labels('${l10n.emailLabel} '),
+
+                const SizedBox(
+                  height: 10,
+                ),
+
+                Focus(
+                  onFocusChange: (hasFocus) {
+                    setState(() {});
+                  },
+                  child: TextFormField(
+                    focusNode: _emailFocus,
+                    controller: _emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    maxLines: 1,
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: _emailFocus.hasFocus
+                          ? Colors.white
+                          : Colors.grey.withOpacity(0.1),
+                      contentPadding: const EdgeInsets.all(12.0),
+                      hintText: l10n.emailHint,
+                      hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Colors.grey.withOpacity(0.1), width: 1.0),
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: AppColors.primaryColor, width: 1.0),
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your email';
+                      }
+                      // You can add more sophisticated email validation if needed
+                      if (!RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
+                          .hasMatch(value)) {
+                        return 'Please enter a valid email address';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+
+              ],
 
               Widgets.labels('${l10n.contactPersonName} '),
               const SizedBox(
@@ -630,28 +798,146 @@ class _InformationState extends State<Information> {
                 ),
               ),
 
+
+
+              if(APIs.token.isEmpty) ...[
+
+                const SizedBox(
+                  height: 20,
+                ),
+                Widgets.labels(l10n.createPasswordLabel),
+                const SizedBox(
+                  height: 10,
+                ),
+                Focus(
+                  onFocusChange: (hasFocus) {
+                    setState(() {});
+                  },
+                  child: TextFormField(
+                    focusNode: _passwordFocus,
+                    controller: _passwordController,
+                    maxLines: 1,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: _passwordFocus.hasFocus
+                          ? Colors.white
+                          : Colors.grey.withOpacity(0.1),
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 12.0, horizontal: 20),
+                      hintText: l10n.createPasswordHint,
+                      hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Colors.grey.withOpacity(0.1), width: 1.0),
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: AppColors.primaryColor, width: 1.0),
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your password';
+                      }
+                      if (value.length < 6) {
+                        return 'Password must be at least 6 characters long';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Widgets.labels('${l10n.confirmPassword} '),
+                const SizedBox(
+                  height: 10,
+                ),
+                Focus(
+                  onFocusChange: (hasFocus) {
+                    setState(() {});
+                  },
+                  child: TextFormField(
+                    focusNode: _confirmPasswordFocus,
+                    controller: _confirmPasswordController,
+                    obscureText: true,
+                    maxLines: 1,
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: _confirmPasswordFocus.hasFocus
+                          ? Colors.white
+                          : Colors.grey.withOpacity(0.1),
+                      contentPadding: const EdgeInsets.all(12.0),
+                      hintText: l10n.confirmPasswordHint,
+                      hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Colors.grey.withOpacity(0.1), width: 1.0),
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: AppColors.primaryColor, width: 1.0),
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your password';
+                      }
+                      if (value != _passwordController.text) {
+                        return 'Passwords do not match';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+
+              ],
+
+
+
+
+
+
+
+
+
+
+
+
               ///hide form button
 
-              if (checkoutProvider.allAddresses!.addresses == null ||
-                  checkoutProvider.allAddresses!.addresses!.isEmpty) ...[
-                Row(
-                  mainAxisAlignment: l10n.localeName == 'en'
-                      ? MainAxisAlignment.start
-                      : MainAxisAlignment.end,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        _clearForm();
+              // if (checkoutProvider.allAddresses?.addresses == null ||
+              //     checkoutProvider.allAddresses!.addresses!.isEmpty) ...[
+              //   Row(
+              //     mainAxisAlignment: l10n.localeName == 'en'
+              //         ? MainAxisAlignment.start
+              //         : MainAxisAlignment.end,
+              //     children: [
+              //       TextButton(
+              //         onPressed: () {
+              //           _clearForm();
+              //
+              //           setState(() {
+              //             showAddressForm = false;
+              //           });
+              //         },
+              //         child: const Text('Hide Form'),
+              //       ),
+              //     ],
+              //   ),
+              // ],
 
-                        setState(() {
-                          showAddressForm = false;
-                        });
-                      },
-                      child: const Text('Hide Form'),
-                    ),
-                  ],
-                ),
-              ],
             ],
 
             const SizedBox(
@@ -691,6 +977,16 @@ class _InformationState extends State<Information> {
                         addressType: selectedAddressType!,
                         isBilling: 1,
                       );
+
+                      if(APIs.token.isEmpty){
+                        await authProvider.register(context, RegistrationData(
+                          fName: _firstNameController.text.trim(),
+                          lName: _lastNameController.text.trim(),
+                          email: _emailController.text.trim(),
+                          password: _passwordController.text.trim(),
+                          phone: _phoneController.text.trim(),
+                        ));
+                      }
 
                       await checkoutProvider.addAddress(context, addressModel);
 
@@ -982,6 +1278,9 @@ class _InformationState extends State<Information> {
   void dispose() {
     super.dispose();
 
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+
     _contactPersonNameController.dispose();
     _emailController.dispose();
     _phoneController.dispose();
@@ -996,5 +1295,13 @@ class _InformationState extends State<Information> {
     _phoneFocus.dispose();
     _addressFocus.dispose();
     _postalCodeFocus.dispose();
+
+    _firstNameFocus.dispose();
+    _lastNameFocus.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    _passwordFocus.dispose();
+    _confirmPasswordFocus.dispose();
+
   }
 }

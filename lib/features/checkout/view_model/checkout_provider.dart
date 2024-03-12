@@ -306,6 +306,11 @@ class CheckoutProvider extends ChangeNotifier {
     hideLoading();
   }
 
+  clearAllAddresses() {
+    allAddresses = null;
+    notifyListeners();
+  }
+
   showLoading() {
     isLoading = true;
     notifyListeners();

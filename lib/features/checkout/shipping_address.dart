@@ -117,7 +117,7 @@ class _ShippingAddressState extends State<ShippingAddress> {
               height: 10,
             ),
 
-            if (checkoutProvider.allAddresses!.addresses != null &&
+            if (checkoutProvider.allAddresses?.addresses != null &&
                 checkoutProvider.checkAddressesHaveShippingAddress()) ...[
               Widgets.labels('${l10n.existingAddresses} ', isRequired: true),
               const SizedBox(
@@ -626,7 +626,7 @@ class _ShippingAddressState extends State<ShippingAddress> {
 
               ///hide form button
 
-              if (checkoutProvider.allAddresses!.addresses == null ||
+              if (checkoutProvider.allAddresses?.addresses == null ||
                   checkoutProvider.allAddresses!.addresses!.isEmpty) ...[
                 Row(
                   mainAxisAlignment: l10n.localeName == 'en'

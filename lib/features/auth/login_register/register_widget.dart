@@ -118,9 +118,11 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                 },
               ),
             ),
+
             const SizedBox(
               height: 20,
             ),
+
             Widgets.labels('${l10n.lastNameLabel} '),
             const SizedBox(
               height: 10,
@@ -163,6 +165,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                 },
               ),
             ),
+
             const SizedBox(
               height: 20,
             ),

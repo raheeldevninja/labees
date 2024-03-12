@@ -86,7 +86,7 @@ class HomeService {
       );
 
       print('dashboard data status: ${response.statusCode}');
-      log('dashboard data response: ${response.body}');
+      //log('dashboard data response: ${response.body}');
 
       var result = jsonDecode(response.body);
 

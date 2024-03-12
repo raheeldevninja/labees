@@ -60,6 +60,7 @@ class _AccountPageState extends State<AccountPage>
 
     return Scaffold(
       key: _scaffoldKey,
+
       appBar: AppBar(
         shadowColor: Colors.transparent,
         backgroundColor: AppColors.secondaryColor,
