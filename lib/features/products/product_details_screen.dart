@@ -754,15 +754,21 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
                                   print('new choice str: $choiceStr');
 
+
+                                  final unitPrice = isVariantProduct
+                                      ? variantProduct!.unitPrice
+                                      : product.unitPrice;
+
+
                                   CartProduct cartProduct = CartProduct(
-                                    id: product.id!,
-                                    title: product.name!,
+                                    id: isVariantProduct ? variantProduct!.id : product.id!,
+                                    title: isVariantProduct ? variantProduct!.name : product.name!,
                                     brand: product.brand!.name!,
-                                    image: product.thumbnail!,
-                                    totalPrice: product.unitPrice! * qty,
-                                    unitPrice: product.unitPrice!,
+                                    image: isVariantProduct ? variantProduct!.thumbnail : product.thumbnail!,
+                                    totalPrice: unitPrice * qty,
+                                    unitPrice: unitPrice,
                                     quantity: qty,
-                                    slug: product.slug!,
+                                    slug: isVariantProduct ? variantProduct!.slug : product.slug!,
                                     currentSock: isVariantProduct
                                         ? variantProduct!.currentStock
                                         : product.currentStock!,

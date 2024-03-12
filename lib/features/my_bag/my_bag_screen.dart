@@ -199,6 +199,8 @@ class _MyBagItemState extends State<MyBagItem> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
+    print('cart pro image: ${widget.myBag.productImage}');
+
     return Container(
       decoration: const BoxDecoration(
         color: Colors.white,
@@ -354,6 +356,8 @@ class _CartProductItemState extends State<CartProductItem> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+
+    print('cart pro image: ${APIs.imageBaseURL}${APIs.productThumbnailImages}${widget.cartProduct.image}');
 
     return Container(
       decoration: const BoxDecoration(
