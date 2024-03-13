@@ -302,7 +302,7 @@ class _TicketSupportDetailsScreenState extends State<TicketSupportDetailsScreen>
                                 color: Colors.grey.withOpacity(0.1),
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              child: Text(ticketSupportProvider.ticketSupportDetailsResponse!.conversations![index].adminMessage!,
+                              child: Text(ticketSupportProvider.ticketSupportDetailsResponse!.conversations![index].adminMessage ?? '',
                                   style: const TextStyle(color: Colors.black, fontSize: 16)),
                             ),
                           ],
@@ -363,36 +363,51 @@ class _TicketSupportDetailsScreenState extends State<TicketSupportDetailsScreen>
 
 
             //write message
-            Container(
-              padding: const EdgeInsets.all(10),
-              margin: const EdgeInsets.only(bottom: 10),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey.withOpacity(0.3)),
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: _messageController,
-                      decoration: InputDecoration(
-                        hintText: l10n.writeMessageHint,
-                        hintStyle: const TextStyle(color: Colors.grey),
-                        border: InputBorder.none,
+
+
+            if(ticketSupportDetails?.status != '5') ...[
+
+              Container(
+                padding: const EdgeInsets.all(10),
+                margin: const EdgeInsets.only(bottom: 10),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey.withOpacity(0.3)),
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: _messageController,
+                        decoration: InputDecoration(
+                          hintText: l10n.writeMessageHint,
+                          hintStyle: const TextStyle(color: Colors.grey),
+                          border: InputBorder.none,
+                        ),
                       ),
                     ),
-                  ),
-                  IconButton(
-                    style: IconButton.styleFrom(backgroundColor: AppColors.primaryColor),
-                    onPressed: () async {
-                      _messageController.clear();
-                      //await ticketSupportProvider.getTicketSupportDetails(context, widget.id);
-                    },
-                    icon: //send icon at angle
-                    const Icon(Icons.send, color: Colors.white),
-                  ),
-                ],
+                    IconButton(
+                      style: IconButton.styleFrom(backgroundColor: AppColors.primaryColor),
+                      onPressed: () async {
+
+                        await ticketSupportProvider.sendMessage(context, widget.id, _messageController.text.trim());
+
+                        if(context.mounted) {
+                          await ticketSupportProvider.getTicketSupportDetails(context, widget.id);
+                        }
+
+                        _messageController.clear();
+
+                      },
+                      icon: //send icon at angle
+                      const Icon(Icons.send, color: Colors.white),
+                    ),
+                  ],
+                ),
               ),
-            ),
+
+            ],
+
+
 
           ],
         ),

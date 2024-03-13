@@ -7,11 +7,13 @@ import 'package:labees/core/util/apis.dart';
 import 'package:labees/features/support_ticket/model/close_ticket_support_response.dart';
 import 'package:labees/features/support_ticket/model/create_ticket_response.dart';
 import 'package:labees/features/support_ticket/model/delete_ticket_support_response.dart';
+import 'package:labees/features/support_ticket/model/send_messgae_response.dart';
 import 'package:labees/features/support_ticket/model/ticket_support_data.dart';
 import 'package:labees/features/support_ticket/model/ticket_support_details_response.dart';
 import 'package:labees/features/support_ticket/model/ticket_support_list_response.dart';
 
 class TicketSupportService {
+
   static Future<CreateTicketResponse> createTicketSupport(
       TicketSupportData ticketSupportData) async {
     CreateTicketResponse createTicketResponse;
@@ -265,5 +267,61 @@ class TicketSupportService {
     }
   }
 
+  static Future<SendMessageResponse> sendMessage(int ticketId, String message) async {
+
+    SendMessageResponse sendMessageResponse;
+
+    //String url = APIs.baseURL + APIs.sendMessage;
+    String url = '${APIs.baseURL}${APIs.sendMessage}/$ticketId';
+
+    try {
+      print('create ticket support url: $url');
+      print('body: $ticketId');
+
+      var body = {
+        'message': message,
+      };
+
+      var response = await http.post(Uri.parse(url),
+          body: jsonEncode(body),
+          headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ${APIs.token}',
+          });
+
+      print('Response status: ${response.statusCode}');
+      print('send message response: ${response.body}');
+
+      var result = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+
+        sendMessageResponse = SendMessageResponse.fromJson(result);
+        sendMessageResponse.status = true;
+        sendMessageResponse.message = 'Success';
+
+        return sendMessageResponse;
+      } else if (response.statusCode == 401) {
+        return SendMessageResponse(
+            status: false, message: result['errors'][0]['message']);
+      } else if (response.statusCode == 500) {
+        return SendMessageResponse(status: false, message: 'Server Error');
+      } else {
+        return SendMessageResponse(
+            status: false, message: 'Something went wrong !');
+      }
+    } on SocketException {
+      return SendMessageResponse(
+          status: false, message: 'Not connect to internet !');
+    } on TimeoutException catch (_) {
+      return SendMessageResponse(status: false, message: 'Request timeout');
+    } on FormatException catch (_) {
+      return SendMessageResponse(
+          status: false, message: 'Bad response format');
+    } finally {
+      EasyLoading.dismiss();
+    }
+  }
 
 }

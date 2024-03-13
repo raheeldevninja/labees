@@ -4,6 +4,7 @@ import 'package:labees/core/util/utils.dart';
 import 'package:labees/features/support_ticket/model/close_ticket_support_response.dart';
 import 'package:labees/features/support_ticket/model/create_ticket_response.dart';
 import 'package:labees/features/support_ticket/model/delete_ticket_support_response.dart';
+import 'package:labees/features/support_ticket/model/send_messgae_response.dart';
 import 'package:labees/features/support_ticket/model/ticket_support_data.dart';
 import 'package:labees/features/support_ticket/model/ticket_support_details_response.dart';
 import 'package:labees/features/support_ticket/model/ticket_support_list_response.dart';
@@ -21,6 +22,7 @@ class TicketSupportProvider extends ChangeNotifier {
   DeleteTicketSupportResponse? deleteTicketSupportResponse;
   TicketSupportDetailsResponse? ticketSupportDetailsResponse;
   CloseTicketSupportResponse? closeTicketSupportResponse;
+  SendMessageResponse? sendMessageResponse;
 
   createTicketSupport(
       BuildContext context, TicketSupportData ticketSupportData) async {
@@ -122,6 +124,28 @@ class TicketSupportProvider extends ChangeNotifier {
 
     EasyLoading.dismiss();
     hideLoading();
+  }
+
+  sendMessage(BuildContext context, int ticketId, String message) async {
+
+    EasyLoading.show(status: 'loading...');
+    showLoading();
+
+    sendMessageResponse = await TicketSupportService.sendMessage(ticketId, message);
+
+    if(!context.mounted) {
+      return;
+    }
+
+    if (sendMessageResponse!.status!) {
+
+    } else {
+      Utils.showCustomSnackBar(context, sendMessageResponse!.message!);
+    }
+
+    EasyLoading.dismiss();
+    hideLoading();
+    notifyListeners();
   }
 
   showLoading() {
