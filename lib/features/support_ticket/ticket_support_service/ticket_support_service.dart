@@ -7,6 +7,7 @@ import 'package:labees/core/util/apis.dart';
 import 'package:labees/features/support_ticket/model/create_ticket_response.dart';
 import 'package:labees/features/support_ticket/model/delete_ticket_support_response.dart';
 import 'package:labees/features/support_ticket/model/ticket_support_data.dart';
+import 'package:labees/features/support_ticket/model/ticket_support_details_response.dart';
 import 'package:labees/features/support_ticket/model/ticket_support_list_response.dart';
 
 class TicketSupportService {
@@ -155,6 +156,57 @@ class TicketSupportService {
       return DeleteTicketSupportResponse(success: false, message: 'Request timeout');
     } on FormatException catch (_) {
       return DeleteTicketSupportResponse(
+          success: false, message: 'Bad response format');
+    } finally {
+      EasyLoading.dismiss();
+    }
+  }
+
+
+  static Future<TicketSupportDetailsResponse> getTicketSupportDetails(int id) async {
+
+    TicketSupportDetailsResponse ticketSupportDetailsResponse;
+
+    String url = '${APIs.baseURL}${APIs.ticketSupportDetails}/$id';
+
+    try {
+      print('url: $url');
+
+      var response = await http.get(Uri.parse(url), headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ${APIs.token}'
+      });
+
+      print('Response status: ${response.statusCode}');
+      print('ticket support details response: ${response.body}');
+
+      var result = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+
+        ticketSupportDetailsResponse = TicketSupportDetailsResponse.fromJson(result);
+
+        ticketSupportDetailsResponse.success = true;
+        ticketSupportDetailsResponse.message = 'Success';
+
+        return ticketSupportDetailsResponse;
+      } else if (response.statusCode == 401) {
+        return TicketSupportDetailsResponse(
+            success: false, message: result['errors'][0]['message']);
+      } else if (response.statusCode == 500) {
+        return TicketSupportDetailsResponse(success: false, message: 'Server Error');
+      } else {
+        return TicketSupportDetailsResponse(
+            success: false, message: 'Something went wrong !');
+      }
+    } on SocketException {
+      return TicketSupportDetailsResponse(
+          success: false, message: 'Not connect to internet !');
+    } on TimeoutException catch (_) {
+      return TicketSupportDetailsResponse(success: false, message: 'Request timeout');
+    } on FormatException catch (_) {
+      return TicketSupportDetailsResponse(
           success: false, message: 'Bad response format');
     } finally {
       EasyLoading.dismiss();

@@ -306,6 +306,8 @@
     "poweredByAlgolia": "Powered By Algolia",
 
     "deleteSupportDialogTitle": "Delete Support Ticket",
-    "deleteSupportDialogMsg": "Are you sure you want to delete this support ticket?"
+    "deleteSupportDialogMsg": "Are you sure you want to delete this support ticket?",
+    "supportTicketTitle": "Support Ticket",
+    "closeTicketBtnText": "Close Ticket"
 
 }

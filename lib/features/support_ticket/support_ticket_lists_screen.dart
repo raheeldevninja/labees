@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:labees/core/app/app_colors.dart';
 import 'package:labees/core/ui/simple_button.dart';
 import 'package:labees/core/util/utils.dart';
+import 'package:labees/features/support_ticket/support_ticket_details_screen.dart';
 import 'package:labees/features/support_ticket/support_ticket_screen.dart';
 import 'package:labees/features/support_ticket/view_model/ticket_support_provider.dart';
 import 'package:provider/provider.dart';
@@ -192,6 +193,16 @@ class _TicketSupportListsScreenState extends State<TicketSupportListsScreen> {
                             IconButton(
                               onPressed: () {
                                 //view ticket
+
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => TicketSupportDetailsScreen(
+                                      id: ticketSupportItem.id!,
+                                    ),
+                                  ),
+                                );
+
                               },
                               icon: const Icon(Icons.remove_red_eye,
                                   color: Colors.blue),
