@@ -303,6 +303,9 @@
     "paymentPolicy": "Payment Policy",
     "returnPolicy": "Return Policy",
     "exchangePolicy": "Exchange Policy",
-    "poweredByAlgolia": "Powered By Algolia"
+    "poweredByAlgolia": "Powered By Algolia",
+
+    "deleteSupportDialogTitle": "Delete Support Ticket",
+    "deleteSupportDialogMsg": "Are you sure you want to delete this support ticket?"
 
 }

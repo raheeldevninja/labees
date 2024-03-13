@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:labees/core/app/app_colors.dart';
 import 'package:labees/core/ui/simple_button.dart';
-import 'package:labees/core/ui/widgets.dart';
 import 'package:labees/core/util/utils.dart';
-import 'package:labees/features/support_ticket/model/ticket_support_data.dart';
 import 'package:labees/features/support_ticket/support_ticket_screen.dart';
 import 'package:labees/features/support_ticket/view_model/ticket_support_provider.dart';
 import 'package:provider/provider.dart';
@@ -202,7 +200,9 @@ class _TicketSupportListsScreenState extends State<TicketSupportListsScreen> {
                             //delete icon
                             IconButton(
                               onPressed: () {
-                                //delete ticket
+
+                                _showDeleteConfirmationDialog(context, ticketSupportItem.id!);
+
                               },
                               icon: const Icon(Icons.delete, color: Colors.red),
                             ),
@@ -240,6 +240,46 @@ class _TicketSupportListsScreenState extends State<TicketSupportListsScreen> {
       ),
     );
   }
+
+  //delete confirmation dialog
+  Future<void> _showDeleteConfirmationDialog(
+      BuildContext context, int id) async {
+    final l10n = AppLocalizations.of(context)!;
+
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(l10n.deleteSupportDialogTitle),
+          content: Text(l10n.deleteSupportDialogMsg, style: const TextStyle(fontSize: 16)),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(l10n.noBtnText),
+            ),
+            TextButton(
+              onPressed: () async {
+
+                final ticketSupportProvider = Provider.of<TicketSupportProvider>(context, listen: false);
+
+                await ticketSupportProvider.deleteTicketSupport(id);
+                await ticketSupportProvider.getTicketSupportList();
+
+                if(context.mounted) {
+                  Navigator.of(context).pop();
+                }
+
+              },
+              child: Text(l10n.yesBtnText),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 
   @override
   dispose() {

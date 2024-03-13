@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:labees/core/util/apis.dart';
 import 'package:labees/features/support_ticket/model/create_ticket_response.dart';
+import 'package:labees/features/support_ticket/model/delete_ticket_support_response.dart';
 import 'package:labees/features/support_ticket/model/ticket_support_data.dart';
 import 'package:labees/features/support_ticket/model/ticket_support_list_response.dart';
 
@@ -109,4 +110,56 @@ class TicketSupportService {
       EasyLoading.dismiss();
     }
   }
+
+  static Future<DeleteTicketSupportResponse> deleteTicketSupport(int id) async {
+    DeleteTicketSupportResponse deleteTicketSupportResponse;
+
+    String url = '${APIs.baseURL}${APIs.ticketSupportDelete}?id=$id';
+
+    try {
+      print('url: $url');
+      print('body: ');
+
+      var response = await http.delete(Uri.parse(url), headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ${APIs.token}'
+      });
+
+      print('Response status: ${response.statusCode}');
+      print('delete address response: ${response.body}');
+
+      var result = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        deleteTicketSupportResponse = DeleteTicketSupportResponse.fromJson(result);
+        deleteTicketSupportResponse.success = true;
+
+        return deleteTicketSupportResponse;
+      } else if (response.statusCode == 401) {
+        return DeleteTicketSupportResponse(
+            success: false, message: result['errors'][0]['message']);
+      } else if (response.statusCode == 400) {
+        return DeleteTicketSupportResponse(
+            success: false, message: result['message']);
+      } else if (response.statusCode == 500) {
+        return DeleteTicketSupportResponse(success: false, message: 'Server Error');
+      } else {
+        return DeleteTicketSupportResponse(
+            success: false, message: 'Something went wrong !');
+      }
+    } on SocketException {
+      return DeleteTicketSupportResponse(
+          success: false, message: 'Not connect to internet !');
+    } on TimeoutException catch (_) {
+      return DeleteTicketSupportResponse(success: false, message: 'Request timeout');
+    } on FormatException catch (_) {
+      return DeleteTicketSupportResponse(
+          success: false, message: 'Bad response format');
+    } finally {
+      EasyLoading.dismiss();
+    }
+  }
+
+
 }

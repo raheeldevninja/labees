@@ -53,6 +53,8 @@ class APIs {
   static const String updateDefaultAddress = 'customer/address/change-default';
   static const String createTicketSupport = 'customer/support-ticket/create';
   static const String ticketSupportList = 'customer/support-ticket/get';
+  static const String ticketSupportDelete = 'customer/support-ticket/delete';
+
 
   //images
   //static const String imageBaseURL = 'https://labees.boedelipos.ch/storage/app/public/';

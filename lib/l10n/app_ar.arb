@@ -301,5 +301,8 @@
     "paymentPolicy": "الية الدفع",
     "returnPolicy": "سياسة العائدات",
     "exchangePolicy": "سياسة الصرف",
-    "poweredByAlgolia": "مدعوم من ألغوليا"
+    "poweredByAlgolia": "مدعوم من ألغوليا",
+
+    "deleteSupportDialogTitle": "حذف تذكرة الدعم",
+    "deleteSupportDialogMsg": "هل أنت متأكد أنك تريد حذف تذكرة الدعم هذه؟"
 }
