@@ -55,6 +55,7 @@ class APIs {
   static const String ticketSupportList = 'customer/support-ticket/get';
   static const String ticketSupportDelete = 'customer/support-ticket/delete';
   static const String ticketSupportDetails = 'customer/support-ticket/conv';
+  static const String closeTicketSupport = 'customer/support-ticket/close';
 
 
   //images

@@ -44,17 +44,17 @@ class _TicketSupportDetailsScreenState extends State<TicketSupportDetailsScreen>
 
 
     String status = '';
-    final ticketSupportDetails = ticketSupportProvider.ticketSupportDetailsResponse!.ticket!;
+    final ticketSupportDetails = ticketSupportProvider.ticketSupportDetailsResponse?.ticket!;
 
-    if (ticketSupportDetails.status! == '1') {
+    if (ticketSupportDetails?.status == '1') {
       status = l10n.receivedStatus;
-    } else if (ticketSupportDetails.status! == '2') {
+    } else if (ticketSupportDetails?.status == '2') {
       status = l10n.assignedStatus;
-    } else if (ticketSupportDetails.status! == '5') {
+    } else if (ticketSupportDetails?.status == '5') {
       status = l10n.cancelledStatus;
     }
 
-    final date = DateTime.parse(ticketSupportDetails.createdAt!);
+    final date = DateTime.parse(ticketSupportDetails?.createdAt ?? '2000-00-23T03:26:25.000000Z');
     final formattedDate =
         '${Utils.monthNumToName(date.month)} ${date.day}, ${date.year}';
 
@@ -117,7 +117,7 @@ class _TicketSupportDetailsScreenState extends State<TicketSupportDetailsScreen>
                         textAlign: TextAlign.center,
                       ),
                       Text(
-                        ticketSupportDetails.id.toString(),
+                        ticketSupportDetails!.id.toString(),
                         style: const TextStyle(
                             color: Colors.black, fontSize: 12),
                         textAlign: TextAlign.center,
@@ -137,7 +137,7 @@ class _TicketSupportDetailsScreenState extends State<TicketSupportDetailsScreen>
                           )),
                       Expanded(
                           flex: 3,
-                          child: Text(ticketSupportDetails.subject!,
+                          child: Text(ticketSupportDetails!.subject!,
                               style: const TextStyle(
                                   color: Colors.black, fontSize: 16))),
                     ],
@@ -204,7 +204,10 @@ class _TicketSupportDetailsScreenState extends State<TicketSupportDetailsScreen>
                       //close ticket button
                       if (ticketSupportDetails.status == '1')
                         InkWell(
-                          onTap: () {
+                          onTap: () async {
+
+                            await ticketSupportProvider.closeTicketSupport(context, widget.id);
+                            await ticketSupportProvider.getTicketSupportDetails(context, widget.id);
 
                           },
                           child: Container(

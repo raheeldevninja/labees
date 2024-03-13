@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:labees/core/util/utils.dart';
+import 'package:labees/features/support_ticket/model/close_ticket_support_response.dart';
 import 'package:labees/features/support_ticket/model/create_ticket_response.dart';
 import 'package:labees/features/support_ticket/model/delete_ticket_support_response.dart';
 import 'package:labees/features/support_ticket/model/ticket_support_data.dart';
@@ -19,6 +20,7 @@ class TicketSupportProvider extends ChangeNotifier {
 
   DeleteTicketSupportResponse? deleteTicketSupportResponse;
   TicketSupportDetailsResponse? ticketSupportDetailsResponse;
+  CloseTicketSupportResponse? closeTicketSupportResponse;
 
   createTicketSupport(
       BuildContext context, TicketSupportData ticketSupportData) async {
@@ -94,6 +96,26 @@ class TicketSupportProvider extends ChangeNotifier {
     hideLoading();
   }
 
+
+  Future<void> closeTicketSupport(BuildContext context, int id) async {
+    EasyLoading.show(status: 'loading...');
+    showLoading();
+
+    closeTicketSupportResponse = await TicketSupportService.closeTicketSupport(id);
+
+    if(!context.mounted) {
+      return;
+    }
+
+    if (closeTicketSupportResponse!.success!) {
+      Utils.showCustomSnackBar(context, closeTicketSupportResponse!.message!, isSuccess: true);
+    } else {
+      Utils.showCustomSnackBar(context, closeTicketSupportResponse!.message!);
+    }
+
+    EasyLoading.dismiss();
+    hideLoading();
+  }
 
   showLoading() {
     isLoading = true;

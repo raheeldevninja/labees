@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:labees/core/util/apis.dart';
+import 'package:labees/features/support_ticket/model/close_ticket_support_response.dart';
 import 'package:labees/features/support_ticket/model/create_ticket_response.dart';
 import 'package:labees/features/support_ticket/model/delete_ticket_support_response.dart';
 import 'package:labees/features/support_ticket/model/ticket_support_data.dart';
@@ -207,6 +208,57 @@ class TicketSupportService {
       return TicketSupportDetailsResponse(success: false, message: 'Request timeout');
     } on FormatException catch (_) {
       return TicketSupportDetailsResponse(
+          success: false, message: 'Bad response format');
+    } finally {
+      EasyLoading.dismiss();
+    }
+  }
+
+
+  static Future<CloseTicketSupportResponse> closeTicketSupport(int id) async {
+
+    CloseTicketSupportResponse closeTicketSupportResponse;
+
+    String url = '${APIs.baseURL}${APIs.closeTicketSupport}/$id';
+
+    try {
+      print('url: $url');
+
+      var response = await http.get(Uri.parse(url), headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ${APIs.token}'
+      });
+
+      print('Response status: ${response.statusCode}');
+      print('close ticket support response: ${response.body}');
+
+      var result = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+
+        closeTicketSupportResponse = CloseTicketSupportResponse.fromJson(result);
+
+        closeTicketSupportResponse.success = true;
+        closeTicketSupportResponse.message = 'Success';
+
+        return closeTicketSupportResponse;
+      } else if (response.statusCode == 401) {
+        return CloseTicketSupportResponse(
+            success: false, message: result['errors'][0]['message']);
+      } else if (response.statusCode == 500) {
+        return CloseTicketSupportResponse(success: false, message: 'Server Error');
+      } else {
+        return CloseTicketSupportResponse(
+            success: false, message: 'Something went wrong !');
+      }
+    } on SocketException {
+      return CloseTicketSupportResponse(
+          success: false, message: 'Not connect to internet !');
+    } on TimeoutException catch (_) {
+      return CloseTicketSupportResponse(success: false, message: 'Request timeout');
+    } on FormatException catch (_) {
+      return CloseTicketSupportResponse(
           success: false, message: 'Bad response format');
     } finally {
       EasyLoading.dismiss();
