@@ -306,5 +306,8 @@
     "deleteSupportDialogTitle": "حذف تذكرة الدعم",
     "deleteSupportDialogMsg": "هل أنت متأكد أنك تريد حذف تذكرة الدعم هذه؟",
     "supportTicketTitle": "بطاقة الدعم",
-    "closeTicketBtnText": "إغلاق التذكرة"
+    "closeTicketBtnText": "إغلاق التذكرة",
+    "customerSupportLabel": "دعم العملاء",
+    "writeYourMessageHint": "اكتب رسالتك",
+    "adminLabel": "مسؤل"
 }

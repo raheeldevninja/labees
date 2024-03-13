@@ -308,6 +308,10 @@
     "deleteSupportDialogTitle": "Delete Support Ticket",
     "deleteSupportDialogMsg": "Are you sure you want to delete this support ticket?",
     "supportTicketTitle": "Support Ticket",
-    "closeTicketBtnText": "Close Ticket"
+    "closeTicketBtnText": "Close Ticket",
+    "customerSupportLabel": "Customer Support",
+    "writeYourMessageHint": "Write your message",
+    "adminLabel": "Admin"
+
 
 }

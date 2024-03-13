@@ -24,6 +24,9 @@ class TicketSupportDetailsScreen extends StatefulWidget {
 }
 
 class _TicketSupportDetailsScreenState extends State<TicketSupportDetailsScreen> {
+
+  final _messageController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -233,6 +236,163 @@ class _TicketSupportDetailsScreenState extends State<TicketSupportDetailsScreen>
             ),
 
             const SizedBox(height: 40),
+
+            Container(
+              padding: const EdgeInsets.all(10),
+              margin: const EdgeInsets.only(bottom: 10),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey.withOpacity(0.3)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(l10n.customerSupportLabel,
+                      style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold)),
+
+                  const SizedBox(height: 10),
+
+                  //conversation listview
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: ticketSupportProvider.ticketSupportDetailsResponse!.conversations!.length,
+                    itemBuilder: (context, index) {
+
+                      //if customer message is not null create a bubble on right
+                      //if admin message is not null create a bubble on left
+
+                      if (ticketSupportProvider.ticketSupportDetailsResponse!.conversations![index].customerMessage != null) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.5,
+                              padding: const EdgeInsets.all(10),
+                              margin: const EdgeInsets.only(bottom: 10),
+                              decoration: BoxDecoration(
+                                color: AppColors.primaryColor,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Text(ticketSupportProvider.ticketSupportDetailsResponse!.conversations![index].customerMessage!,
+                                  style: const TextStyle(color: Colors.white, fontSize: 16)),
+                            ),
+                          ],
+                        );
+                      } else {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 10),
+                            Text(l10n.adminLabel,
+                                style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold)),
+
+                            const SizedBox(height: 10),
+
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.5,
+                              padding: const EdgeInsets.all(10),
+                              margin: const EdgeInsets.only(bottom: 10),
+                              decoration: BoxDecoration(
+                                color: Colors.grey.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Text(ticketSupportProvider.ticketSupportDetailsResponse!.conversations![index].adminMessage!,
+                                  style: const TextStyle(color: Colors.black, fontSize: 16)),
+                            ),
+                          ],
+                        );
+                      }
+
+
+                    },
+                  ),
+
+
+
+                  //message from customer bubble
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    margin: const EdgeInsets.only(bottom: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.grey.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Text(ticketSupportDetails.description!,
+                        style: const TextStyle(color: Colors.black, fontSize: 16)),
+                  ),
+
+                  //reply from admin
+                  if (ticketSupportDetails.reply != null)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 10),
+                        Text(l10n.adminLabel,
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold)),
+
+                        const SizedBox(height: 10),
+
+                        Container(
+                          padding: const EdgeInsets.all(10),
+                          margin: const EdgeInsets.only(bottom: 10),
+                          decoration: BoxDecoration(
+                            color: Colors.grey.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Text(ticketSupportDetails.reply!,
+                              style: const TextStyle(color: Colors.black, fontSize: 16)),
+                        ),
+                      ],
+                    ),
+
+
+
+
+                ],
+              ),
+            ),
+
+
+            //write message
+            Container(
+              padding: const EdgeInsets.all(10),
+              margin: const EdgeInsets.only(bottom: 10),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey.withOpacity(0.3)),
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: _messageController,
+                      decoration: InputDecoration(
+                        hintText: l10n.writeMessageHint,
+                        hintStyle: const TextStyle(color: Colors.grey),
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    style: IconButton.styleFrom(backgroundColor: AppColors.primaryColor),
+                    onPressed: () async {
+                      _messageController.clear();
+                      //await ticketSupportProvider.getTicketSupportDetails(context, widget.id);
+                    },
+                    icon: //send icon at angle
+                    const Icon(Icons.send, color: Colors.white),
+                  ),
+                ],
+              ),
+            ),
 
           ],
         ),

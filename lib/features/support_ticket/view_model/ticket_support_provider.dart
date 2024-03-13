@@ -88,6 +88,13 @@ class TicketSupportProvider extends ChangeNotifier {
 
     if (ticketSupportDetailsResponse!.success!) {
 
+      //insert description in the first index of the conversation list
+      ticketSupportDetailsResponse!.conversations!.insert(0, Conversations(
+        id: 0,
+        customerMessage: ticketSupportDetailsResponse!.ticket!.description,
+      ));
+
+
     } else {
       Utils.showCustomSnackBar(context, ticketSupportResponse!.message!);
     }
