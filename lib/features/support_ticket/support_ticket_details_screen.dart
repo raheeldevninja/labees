@@ -49,6 +49,10 @@ class _TicketSupportDetailsScreenState extends State<TicketSupportDetailsScreen>
     String status = '';
     final ticketSupportDetails = ticketSupportProvider.ticketSupportDetailsResponse?.ticket!;
 
+    if(ticketSupportDetails == null) {
+      return Container(color: Colors.white);
+    }
+
     if (ticketSupportDetails?.status == '1') {
       status = l10n.receivedStatus;
     } else if (ticketSupportDetails?.status == '2') {
@@ -120,7 +124,7 @@ class _TicketSupportDetailsScreenState extends State<TicketSupportDetailsScreen>
                         textAlign: TextAlign.center,
                       ),
                       Text(
-                        ticketSupportDetails!.id.toString(),
+                        '${ticketSupportDetails?.id}',
                         style: const TextStyle(
                             color: Colors.black, fontSize: 12),
                         textAlign: TextAlign.center,
@@ -140,7 +144,7 @@ class _TicketSupportDetailsScreenState extends State<TicketSupportDetailsScreen>
                           )),
                       Expanded(
                           flex: 3,
-                          child: Text(ticketSupportDetails!.subject!,
+                          child: Text('${ticketSupportDetails?.subject!}',
                               style: const TextStyle(
                                   color: Colors.black, fontSize: 16))),
                     ],
@@ -156,7 +160,7 @@ class _TicketSupportDetailsScreenState extends State<TicketSupportDetailsScreen>
                                   fontWeight: FontWeight.bold))),
                       Expanded(
                           flex: 3,
-                          child: Text(ticketSupportDetails.type!,
+                          child: Text(ticketSupportDetails!.type!,
                               style: const TextStyle(
                                   color: Colors.black, fontSize: 16))),
                     ],

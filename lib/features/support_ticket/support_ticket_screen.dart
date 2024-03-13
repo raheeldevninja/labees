@@ -272,6 +272,9 @@ class _SupportTicketScreenState extends State<SupportTicketScreen> {
 
                     await ticketSupportProvider.createTicketSupport(
                         context, ticketSupportData);
+
+                    await ticketSupportProvider.getTicketSupportList();
+
                   }
                 },
               ),
