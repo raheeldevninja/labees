@@ -9,8 +9,10 @@ import 'package:labees/core/images/images.dart';
 import 'package:labees/core/models/product.dart';
 import 'package:labees/core/ui/product_item.dart';
 import 'package:labees/core/util/apis.dart';
+import 'package:labees/core/util/shared_pref.dart';
 import 'package:labees/features/home/models/product.dart';
 import 'package:labees/features/home/view_model/home_provider.dart';
+import 'package:labees/features/products/product_details_screen.dart';
 import 'package:labees/features/seller/view_model/seller_registration_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -66,11 +68,12 @@ class _SellerProfileScreenState extends State<SellerProfileScreen> {
   void initState() {
     super.initState();
 
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
 
       final sellerRegistrationProvider = Provider.of<SellerRegistrationProvider>(context, listen: false);
-      sellerRegistrationProvider.getSellerProfile(context, widget.sellerId);
+      await sellerRegistrationProvider.getSellerProfile(context, widget.sellerId);
+
+      await sellerRegistrationProvider.getSellerProducts(context, widget.sellerId, 10, 1, '');
 
     });
 
@@ -266,11 +269,11 @@ class _SellerProfileScreenState extends State<SellerProfileScreen> {
             const SizedBox(height: 16),
 
             Expanded(
-              child: homeProvider.getSearchedProducts.isEmpty ? Center(child: Text(l10n.noProducts)) :
+              //child: homeProvider.getSearchedProducts.isEmpty ? Center(child: Text(l10n.noProducts)) :
+              child: sellerRegistrationProvider.sellerProducts!.isEmpty ? Center(child: Text(l10n.noProducts)) :
               GridView.builder(
                 shrinkWrap: true,
-                //itemCount: searchedProducts.length,
-                itemCount: homeProvider.getSearchedProducts.length,
+                itemCount: sellerRegistrationProvider.sellerProducts!.length,
                 padding: const EdgeInsets.all(16),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   childAspectRatio: 0.5,
@@ -279,41 +282,41 @@ class _SellerProfileScreenState extends State<SellerProfileScreen> {
                   crossAxisSpacing: 10.0,
                 ),
                 itemBuilder: (BuildContext context, int index) {
-                  final product = homeProvider.getSearchedProducts[index];
+                  final product = sellerRegistrationProvider.sellerProducts![index];
                   return InkWell(
                     onTap: () {
-                      /*Navigator.push(
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
                               ProductDetailsScreen(
                                   slug: product.slug!),
                         ),
-                      );*/
+                      );
                     },
                     child: ProductItem(
                       product: product,
-                      isSearchProduct: true,
+                      isSearchProduct: false,
                       addRemoveToWishlist: () async {
-                        print('wishlist ${product.wishlist}');
 
-                        if (product.wishlist != null &&
-                            product.wishlist!.productId == product.id) {
-                          ///remove from wishlist
-                          await homeProvider.removeFromWishlist(product.id!);
-                        } else {
-                          print('here');
 
-                          ///add to wishlist
-                          await homeProvider.addToWishList(
-                              context,
-                              AppLocalizations.of(context)!.localeName,
-                              product.id!);
+                        bool result = await SharedPref.isProductInWishlist(product.id.toString());
+
+                        if (result) {
+
+                          print('remove from wishlist');
+                          await SharedPref.removeWishlistProduct(product.id.toString());
+
+                        }
+                        else {
+
+                          print('add to wishlist');
+                          await SharedPref.addWishlistProduct(product);
+
                         }
 
-                        print('query: ${searchController.text.trim()}');
 
-                        searchAlgolia(searchController.text.trim());
+                        //searchAlgolia(searchController.text.trim());
                       },
                     ),
                   );

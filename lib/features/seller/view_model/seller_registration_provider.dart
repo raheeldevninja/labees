@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:labees/core/util/utils.dart';
+import 'package:labees/features/home/models/product.dart';
+import 'package:labees/features/seller/model/seller_products_response.dart';
 import 'package:labees/features/seller/model/seller_profile_response.dart';
 import 'package:labees/features/seller/model/seller_registration_data.dart';
 import 'package:labees/features/seller/model/seller_registration_response.dart';
@@ -16,6 +18,9 @@ class SellerRegistrationProvider extends ChangeNotifier {
   late SellerRegistrationResponse sellerRegistrationResponse;
 
   SellerProfileResponse? sellerProfileResponse;
+  SellerProductsResponse? sellerProductsResponse;
+
+  List<Products>? sellerProducts = [];
 
   File? crFreelanceDocFile;
   File? logoFile;
@@ -94,6 +99,29 @@ class SellerRegistrationProvider extends ChangeNotifier {
 
     } else {
       Utils.showCustomSnackBar(context, sellerProfileResponse!.message!);
+    }
+
+    EasyLoading.dismiss();
+    hideLoading();
+    notifyListeners();
+  }
+
+
+  Future<void> getSellerProducts(BuildContext context, int sellerId, int limit, int offset, String search) async {
+
+    EasyLoading.show(status: 'loading...');
+    showLoading();
+
+    sellerProductsResponse = await SellerRegistrationService.getSellerProducts(sellerId, limit, offset, search);
+
+    if(!context.mounted) {
+      return;
+    }
+
+    if (sellerProductsResponse!.success!) {
+      sellerProducts = sellerProductsResponse!.products;
+    } else {
+      Utils.showCustomSnackBar(context, sellerProductsResponse!.message!);
     }
 
     EasyLoading.dismiss();
