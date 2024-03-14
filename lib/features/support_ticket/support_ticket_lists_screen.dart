@@ -63,6 +63,31 @@ class _TicketSupportListsScreenState extends State<TicketSupportListsScreen> {
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           children: [
+
+            ///submit new ticket button
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  height: 50,
+                  child: SimpleButton(
+                    text: l10n.submitTicketBtnText,
+                    callback: () async {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SupportTicketScreen(),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 20),
+
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(4),
@@ -228,24 +253,7 @@ class _TicketSupportListsScreenState extends State<TicketSupportListsScreen> {
 
             const SizedBox(height: 40),
 
-            ///submit new ticket button
-            SizedBox(
-              width: double.maxFinite,
-              height: 50,
-              child: SimpleButton(
-                text: l10n.submitTicketBtnText,
-                callback: () async {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SupportTicketScreen(),
-                    ),
-                  );
-                },
-              ),
-            ),
 
-            const SizedBox(height: 40),
           ],
         ),
       ),
