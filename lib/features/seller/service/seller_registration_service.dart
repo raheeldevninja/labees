@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
 import 'package:labees/core/util/apis.dart';
+import 'package:labees/features/seller/model/seller_profile_response.dart';
 import 'package:labees/features/seller/model/seller_registration_data.dart';
 import 'package:labees/features/seller/model/seller_registration_response.dart';
 
@@ -139,4 +140,54 @@ class SellerRegistrationService {
       EasyLoading.dismiss();
     }
   }
+
+
+  static Future<SellerProfileResponse> getSellerProfile(int sellerId) async {
+
+    SellerProfileResponse sellerProfileResponse = SellerProfileResponse();
+    String url = '${APIs.baseURL}${APIs.sellerProfile}?seller_id=$sellerId';
+
+    try {
+      print('url: $url');
+
+      var response = await http.get(Uri.parse(url), headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ${APIs.token}'
+      });
+
+      print('Response status: ${response.statusCode}');
+      print('seller profile response: ${response.body}');
+
+      var result = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+
+        sellerProfileResponse = SellerProfileResponse.fromJson(result);
+
+        sellerProfileResponse.success = true;
+        sellerProfileResponse.message = 'Success';
+
+        return sellerProfileResponse;
+      } else if (response.statusCode == 401) {
+        return SellerProfileResponse(
+            success: false, message: result['errors'][0]['message']);
+      } else if (response.statusCode == 500) {
+        return SellerProfileResponse(success: false, message: 'Server Error');
+      } else {
+        return SellerProfileResponse(success: false, message: 'Something went wrong !');
+      }
+    } on SocketException {
+      return SellerProfileResponse(success: false, message: 'Not connect to internet !');
+    } on TimeoutException catch (_) {
+      return SellerProfileResponse(success: false, message: 'Request timeout');
+    } on FormatException catch (_) {
+      return SellerProfileResponse(success: false, message: 'Bad response format');
+    } finally {
+      EasyLoading.dismiss();
+    }
+  }
+
+
+
 }

@@ -309,5 +309,9 @@
     "closeTicketBtnText": "إغلاق التذكرة",
     "customerSupportLabel": "دعم العملاء",
     "writeYourMessageHint": "اكتب رسالتك",
-    "adminLabel": "مسؤل"
+    "adminLabel": "مسؤل",
+    "sellerProfileTitle": "الملف الشخصي للبائع",
+    "reviewsLabel": "التعليقات",
+    "ordersLabel": "طلبات",
+    "allProductsLabel": "جميع المنتجات"
 }

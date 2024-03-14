@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:labees/core/util/utils.dart';
+import 'package:labees/features/seller/model/seller_profile_response.dart';
 import 'package:labees/features/seller/model/seller_registration_data.dart';
 import 'package:labees/features/seller/model/seller_registration_response.dart';
 import 'package:labees/features/seller/service/seller_registration_service.dart';
@@ -13,6 +14,8 @@ class SellerRegistrationProvider extends ChangeNotifier {
   bool get getIsLoading => isLoading;
 
   late SellerRegistrationResponse sellerRegistrationResponse;
+
+  SellerProfileResponse? sellerProfileResponse;
 
   File? crFreelanceDocFile;
   File? logoFile;
@@ -75,6 +78,29 @@ class SellerRegistrationProvider extends ChangeNotifier {
     hideLoading();
     notifyListeners();
   }
+
+
+  Future<void> getSellerProfile(BuildContext context, int sellerId) async {
+    EasyLoading.show(status: 'loading...');
+    showLoading();
+
+    sellerProfileResponse = await SellerRegistrationService.getSellerProfile(sellerId);
+
+    if(!context.mounted) {
+      return;
+    }
+
+    if (sellerProfileResponse!.success!) {
+
+    } else {
+      Utils.showCustomSnackBar(context, sellerProfileResponse!.message!);
+    }
+
+    EasyLoading.dismiss();
+    hideLoading();
+    notifyListeners();
+  }
+
 
   showLoading() {
     isLoading = true;

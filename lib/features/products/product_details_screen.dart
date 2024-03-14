@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -31,6 +32,7 @@ import 'package:labees/features/products/widgets/shipping_info.dart';
 import 'package:labees/features/products/widgets/similar_products.dart';
 import 'package:labees/features/products/widgets/size_options.dart';
 import 'package:labees/features/products/widgets/write_review.dart';
+import 'package:labees/features/seller/seller_profile_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -78,6 +80,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   List<String> productImagesList = [];
 
   Map<String, List> selectedAttributes = {};
+
+  late TapGestureRecognizer tapGestureRecognizer;
+
 
   @override
   void initState() {
@@ -830,6 +835,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                           fontWeight: FontWeight.w300,
                                           color: AppColors.blackColor),
                                       children: [
+
                                         TextSpan(
                                           text: '${homeProvider.productDetails!.product!.seller!.shop!.name}',
                                           style: const TextStyle(
@@ -839,7 +845,22 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                             color: AppColors.red,
                                             decoration: TextDecoration.underline,
                                           ),
+                                         recognizer: TapGestureRecognizer()..onTap = () {
+
+                                            //navigate to seller profile
+                                           Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => SellerProfileScreen(
+                                                  sellerId: homeProvider.productDetails!.product!.seller!.id!,
+                                                ),
+                                              ),
+                                           );
+
+
+                                         },
                                         ),
+
                                       ],
                                     ),
                                   ),

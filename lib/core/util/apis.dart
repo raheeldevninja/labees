@@ -57,6 +57,7 @@ class APIs {
   static const String ticketSupportDetails = 'customer/support-ticket/conv';
   static const String closeTicketSupport = 'customer/support-ticket/close';
   static const String sendMessage = 'customer/support-ticket/reply';
+  static const String sellerProfile = 'seller';
 
 
   //images

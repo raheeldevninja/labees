@@ -311,7 +311,11 @@
     "closeTicketBtnText": "Close Ticket",
     "customerSupportLabel": "Customer Support",
     "writeYourMessageHint": "Write your message",
-    "adminLabel": "Admin"
+    "adminLabel": "Admin",
+    "sellerProfileTitle": "Seller Profile",
+    "reviewsLabel": "Reviews",
+    "ordersLabel": "Orders",
+    "allProductsLabel": "All Products"
 
 
 }
