@@ -193,14 +193,14 @@ class _SearchScreenState extends State<SearchScreen> {
                   final product = homeProvider.getSearchedProducts[index];
                   return InkWell(
                     onTap: () {
-                      /*Navigator.push(
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
                               ProductDetailsScreen(
                                   slug: product.slug!),
                         ),
-                      );*/
+                      );
                     },
                     child: ProductItem(
                       product: product,

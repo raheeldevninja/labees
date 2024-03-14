@@ -13,6 +13,7 @@ import 'package:labees/core/util/shared_pref.dart';
 import 'package:labees/features/home/models/product.dart';
 import 'package:labees/features/home/view_model/home_provider.dart';
 import 'package:labees/features/products/product_details_screen.dart';
+import 'package:labees/features/seller/model/seller_profile_response.dart';
 import 'package:labees/features/seller/view_model/seller_registration_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -86,12 +87,12 @@ class _SellerProfileScreenState extends State<SellerProfileScreen> {
     final sellerRegistrationProvider = Provider.of<SellerRegistrationProvider>(context);
     final l10n = AppLocalizations.of(context)!;
 
-    if(sellerRegistrationProvider.isLoading) {
+    /*if(sellerRegistrationProvider.isLoading) {
       return Container(color: Colors.white);
-    }
+    }*/
 
-    final sellerResponse = sellerRegistrationProvider.sellerProfileResponse!;
-    final seller = sellerRegistrationProvider.sellerProfileResponse!.seller!;
+    final sellerResponse = sellerRegistrationProvider.sellerProfileResponse ?? SellerProfileResponse(avgRating: 0, totalReview: 0, totalOrder: 0);
+    final seller = sellerRegistrationProvider.sellerProfileResponse?.seller ?? Seller();
 
     return Scaffold(
       appBar: AppBar(
@@ -230,7 +231,9 @@ class _SellerProfileScreenState extends State<SellerProfileScreen> {
                   hintText: 'Search...',
                   hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
                   suffixIcon: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      sellerRegistrationProvider.getSellerProducts(context, widget.sellerId, 10, 1, searchController.text.trim());
+                    },
                     icon: SvgPicture.asset(
                       Images.searchIcon,
                     ),
@@ -249,7 +252,7 @@ class _SellerProfileScreenState extends State<SellerProfileScreen> {
                   ),
                 ),
                 onFieldSubmitted: (value) {
-                  searchAlgolia(value);
+                  sellerRegistrationProvider.getSellerProducts(context, widget.sellerId, 10, 1, value);
                 },
               ),
             ),
@@ -266,10 +269,8 @@ class _SellerProfileScreenState extends State<SellerProfileScreen> {
               ),
             ),
 
-            const SizedBox(height: 16),
 
             Expanded(
-              //child: homeProvider.getSearchedProducts.isEmpty ? Center(child: Text(l10n.noProducts)) :
               child: sellerRegistrationProvider.sellerProducts!.isEmpty ? Center(child: Text(l10n.noProducts)) :
               GridView.builder(
                 shrinkWrap: true,
@@ -334,6 +335,8 @@ class _SellerProfileScreenState extends State<SellerProfileScreen> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
+
+    searchController.dispose();
   }
 
 }
