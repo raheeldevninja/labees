@@ -81,51 +81,59 @@ class CategoryChildren extends StatelessWidget {
       ),
     );*/
 
-    return ExpansionTile(
-      onExpansionChanged: (value) {
-        homeProvider.getCategoryChildren![index] = homeProvider
-            .getCategoryChildren![index]
-            .copyWith(isSelected: value);
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 4),
+      child: ExpansionTile(
+        childrenPadding: const EdgeInsets.symmetric(horizontal: 4),
+        onExpansionChanged: (value) {
+          homeProvider.getCategoryChildren![index] = homeProvider
+              .getCategoryChildren![index]
+              .copyWith(isSelected: value);
 
-        print(
-            'CategoryChildrenSectionBackup: ${homeProvider.getCategoryChildren![index].name} ${homeProvider.getCategoryChildren![index].id!}');
+          print(
+              'CategoryChildrenSectionBackup: ${homeProvider.getCategoryChildren![index].name} ${homeProvider.getCategoryChildren![index].id!}');
 
-        //set sub sub childs
-        homeProvider.setChildList(
-            homeProvider.getCategoryChildren![index].childes!,
-            homeProvider.getCategoryChildren![index].parentId!,
-            homeProvider.getCategoryChildren![index].name!);
+          //set sub sub childs
+          homeProvider.setChildList(
+              homeProvider.getCategoryChildren![index].childes!,
+              homeProvider.getCategoryChildren![index].parentId!,
+              homeProvider.getCategoryChildren![index].name!);
 
-        //homeProvider.setSelectedCategoryIndex(index);
-      },
-      title: Row(
-        children: [
-          Text(
-            categoryChild.name!,
-            style: const TextStyle(
-              fontSize: 12,
-              color: AppColors.primaryColor,
-              fontFamily: 'Montserrat',
+          //homeProvider.setSelectedCategoryIndex(index);
+        },
+        title: Row(
+          children: [
+            Text(
+              categoryChild.name!,
+              style: const TextStyle(
+                fontSize: 18,
+                color: AppColors.primaryColor,
+                fontFamily: 'Montserrat',
+              ),
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
             ),
-            textAlign: TextAlign.center,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
+            const Icon(Icons.keyboard_arrow_down, color: AppColors.lightGrey),
+          ],
+        ),
+        tilePadding: const EdgeInsets.symmetric(horizontal: 0),
+        trailing: ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: CachedNetworkImage(
+            imageUrl:
+                '${APIs.imageBaseURL}${APIs.categoryImages}${categoryChild.icon!}',
+            width: 60,
+            height: 60,
+            fit: BoxFit.cover,
           ),
-          const Icon(Icons.keyboard_arrow_down, color: AppColors.lightGrey),
+        ),
+        children: [
+          categoryChild.isSelected!
+              ? const SubCategoriesSection()
+              : const SizedBox(),
         ],
       ),
-      trailing: CachedNetworkImage(
-        imageUrl:
-            '${APIs.imageBaseURL}${APIs.categoryImages}${categoryChild.icon!}',
-        width: 40,
-        height: 40,
-        fit: BoxFit.cover,
-      ),
-      children: [
-        categoryChild.isSelected!
-            ? const SubCategoriesSection()
-            : const SizedBox(),
-      ],
     );
 
     /*return Container(

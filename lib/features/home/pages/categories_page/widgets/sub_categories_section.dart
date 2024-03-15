@@ -23,16 +23,10 @@ class SubCategoriesSection extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        //color: Colors.white,
         borderRadius: BorderRadius.circular(8),
-        /*border: Border.all(
-          color: AppColors.lightGrey.withOpacity(0.2),
-          width: 1,
-        ),*/
       ),
       child: ListView.builder(
         controller: ScrollController(),
-        //itemCount: subCategories.length,
         itemCount: homeProvider.childsList!.length,
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
@@ -63,13 +57,15 @@ class SubCategoriesSection extends StatelessWidget {
               homeProvider.childsList![index].name!,
               style: TextStyle(
                 fontFamily: 'Montserrat',
-                fontSize: 12,
+                fontSize: 14,
                 color: homeProvider.childsList![index].isSelected
                     ? AppColors.primaryColor
                     : AppColors.lightGrey,
               ),
             ),
             trailing: SvgPicture.network(
+              width: 30,
+                height: 30,
                 '${APIs.imageBaseURL}${APIs.categoryImages}${homeProvider.childsList![index].icon ?? ''}'),
           );
         },

@@ -234,6 +234,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                         child: Text(
                           homeProvider.categories![0].name!,
                           style: TextStyle(
+                            fontSize: 16,
                               color: Utils.mainCategories == MainCategories.men
                                   ? AppColors.primaryColor
                                   : Colors.white),
@@ -272,6 +273,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                         child: Text(
                           homeProvider.categories![1].name!,
                           style: TextStyle(
+                              fontSize: 16,
                               color:
                                   Utils.mainCategories == MainCategories.women
                                       ? AppColors.primaryColor
@@ -312,6 +314,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                         child: Text(
                           homeProvider.categories![2].name!,
                           style: TextStyle(
+                              fontSize: 16,
                               color: Utils.mainCategories == MainCategories.kids
                                   ? AppColors.primaryColor
                                   : Colors.white),

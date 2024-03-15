@@ -26,7 +26,6 @@ class CategoryChildrenSectionBackup extends StatelessWidget {
         child: ListView.builder(
           shrinkWrap: true,
           itemCount: homeProvider.getCategoryChildren!.length,
-          padding: const EdgeInsets.all(4),
           itemBuilder: (context, index) {
             return InkWell(
               onTap: () {

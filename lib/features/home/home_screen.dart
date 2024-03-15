@@ -40,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
       log('token: ${APIs.token}');
 
       if (mounted) {
+
         await Future.wait([
           context.read<CartProvider>().getCartProducts(),
           context.read<CartProvider>().getShippingMethods(),
