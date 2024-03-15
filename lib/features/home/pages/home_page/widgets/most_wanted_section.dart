@@ -37,35 +37,31 @@ class MostWantedSection extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 10),
-        SizedBox(
-          height: 194,
-          child: ListView.builder(
-            itemCount: length,
-            scrollDirection: Axis.horizontal,
-            shrinkWrap: true,
-            physics: const BouncingScrollPhysics(),
-            itemBuilder: (context, index) {
-              return InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ProductsScreen(
-                          id: homeProvider
-                              .dashboardData.mostWantedBanners![index].id!,
-                          title: homeProvider
-                              .dashboardData.mostWantedBanners![index].title!),
-                    ),
-                  );
-                },
-                child: MostWantedBannerItem(
-                  mostWantedBanners:
-                      homeProvider.dashboardData.mostWantedBanners![index],
-                  bgColor: Utils.bannerBgColors[index % length],
-                ),
-              );
-            },
-          ),
+        ListView.builder(
+          itemCount: length,
+          shrinkWrap: true,
+          physics: const BouncingScrollPhysics(),
+          itemBuilder: (context, index) {
+            return InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProductsScreen(
+                        id: homeProvider
+                            .dashboardData.mostWantedBanners![index].id!,
+                        title: homeProvider
+                            .dashboardData.mostWantedBanners![index].title!),
+                  ),
+                );
+              },
+              child: MostWantedBannerItem(
+                mostWantedBanners:
+                    homeProvider.dashboardData.mostWantedBanners![index],
+                bgColor: Utils.bannerBgColors[index % length],
+              ),
+            );
+          },
         ),
       ],
     );
