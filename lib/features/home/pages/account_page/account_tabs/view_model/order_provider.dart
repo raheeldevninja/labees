@@ -47,7 +47,7 @@ class OrderProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  addReview(int productId, String comment, double rating) async {
+  addReview(BuildContext context, int productId, String comment, double rating) async {
     EasyLoading.show(status: 'loading...');
     showLoading();
 
@@ -55,9 +55,9 @@ class OrderProvider extends ChangeNotifier {
         await OrderService.addReview(productId, comment, rating);
 
     if (addReviewResponse.status!) {
-      Utils.toast(addReviewResponse.message!);
+      Utils.showCustomSnackBar(context, addReviewResponse.message!);
     } else {
-      Utils.toast(addReviewResponse.message!);
+      Utils.showCustomSnackBar(context, addReviewResponse.message!);
     }
 
     EasyLoading.dismiss();

@@ -315,7 +315,16 @@
     "sellerProfileTitle": "Seller Profile",
     "reviewsLabel": "Reviews",
     "ordersLabel": "Orders",
-    "allProductsLabel": "All Products"
+    "allProductsLabel": "All Products",
+    "addReviewBtnText": "Add Review",
+    "ratingAndReviewLabel": "Rating and Review",
+
+    "orderShippedLabel": "Order Shipped",
+    "preparingShipmentLabel": "Preparing Shipment",
+    "packingOrderLabel": "Packing Order",
+    "orderPlacedLabel": "Order Placed",
+    "cannotCompleteOrder": "Sorry we can't complete your order",
+    "orderReturned": "Order Successfully Returned"
 
 
 }

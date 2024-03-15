@@ -74,7 +74,7 @@ class OrderItem extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        'Qty ${product.qty}',
+                        '${l10n.quantityLabel} ${product.qty}',
                         style: const TextStyle(
                           fontSize: 10,
                           fontFamily: 'Libre Baskerville',
@@ -150,9 +150,9 @@ class OrderItem extends StatelessWidget {
                 //orderProvider.addReview(productId, comment, rating);
                 _showRatingAndCommentDialog(context);
               },
-              child: const Text(
-                'Add Review',
-                style: TextStyle(
+              child: Text(
+                l10n.addReviewBtnText,
+                style: const TextStyle(
                   fontFamily: 'Montserrat',
                   fontSize: 14,
                   color: Colors.red,
@@ -180,9 +180,9 @@ class OrderItem extends StatelessWidget {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text(
-            'Rating and Review',
-            style: TextStyle(
+          title: Text(
+            l10n.ratingAndReviewLabel,
+            style: const TextStyle(
               fontFamily: 'Montserrat',
               fontSize: 16,
               fontWeight: FontWeight.w600,
@@ -212,7 +212,7 @@ class OrderItem extends StatelessWidget {
                 controller: reviewController,
                 maxLines: 3,
                 decoration: InputDecoration(
-                  hintText: 'Add Review',
+                  hintText: l10n.addReviewBtnText,
                   hintStyle: const TextStyle(
                     fontFamily: 'Montserrat',
                     fontSize: 14,
@@ -260,7 +260,7 @@ class OrderItem extends StatelessWidget {
             ),
             TextButton(
               onPressed: () async {
-                await orderProvider.addReview(
+                await orderProvider.addReview(context,
                     orderData.id!, reviewController.text.trim(), ratingValue);
 
                 if (orderProvider.addReviewResponse.status!) {

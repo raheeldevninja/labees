@@ -313,5 +313,15 @@
     "sellerProfileTitle": "الملف الشخصي للبائع",
     "reviewsLabel": "التعليقات",
     "ordersLabel": "طلبات",
-    "allProductsLabel": "جميع المنتجات"
+    "allProductsLabel": "جميع المنتجات",
+    "addReviewBtnText": "إضافة مراجعة",
+    "ratingAndReviewLabel": "التقييم والمراجعة",
+
+    "orderShippedLabel": "تم شحن الطلب",
+    "preparingShipmentLabel": "إعداد الشحنة",
+    "packingOrderLabel": "ترتيب التعبئة",
+    "orderPlacedLabel": "تم الطلب",
+    "cannotCompleteOrder": "نأسف لعدم تمكننا من إكمال طلبك",
+    "orderReturned": "تم إرجاع الطلب بنجاح"
+
 }

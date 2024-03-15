@@ -4,7 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:labees/core/models/orders_response.dart';
 
 /*
-*  Date 16 - Jan-2024
+*  Date 16 - Mar-2024
 *  Author: Raheel Khan- Abaska Technologies
 *  Description: TrackOrderScreen
 */
@@ -155,10 +155,10 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
           widget.orderData.orderStatus == 'returned'
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     Text(
-                      'Order Successfully Returned',
-                      style: TextStyle(
+                      l10n.orderReturned,
+                      style: const TextStyle(
                           fontSize: 16,
                           color: Colors.black,
                           fontWeight: FontWeight.bold),
@@ -171,10 +171,10 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
           widget.orderData.orderStatus == 'failed'
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     Text(
-                      'Sorry we can\'t complete your order',
-                      style: TextStyle(
+                      l10n.cannotCompleteOrder,
+                      style: const TextStyle(
                           fontSize: 16,
                           color: Colors.black,
                           fontWeight: FontWeight.bold),
@@ -210,9 +210,9 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
                           children: [
                             Text(l10n.firstStep),
                             const SizedBox(height: 8),
-                            const Text(
-                              'Order Placed',
-                              style: TextStyle(
+                            Text(
+                              l10n.orderPlacedLabel,
+                              style: const TextStyle(
                                   fontSize: 16,
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold),
@@ -259,9 +259,9 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
                           children: [
                             Text(l10n.secondStep),
                             const SizedBox(height: 8),
-                            const Text(
-                              'Packing Order',
-                              style: TextStyle(
+                            Text(
+                              l10n.packingOrderLabel,
+                              style: const TextStyle(
                                   fontSize: 16,
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold),
@@ -298,9 +298,9 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
                           children: [
                             Text(l10n.thirdStep),
                             const SizedBox(height: 8),
-                            const Text(
-                              'Preparing Shipment',
-                              style: TextStyle(
+                            Text(
+                              l10n.preparingShipmentLabel,
+                              style: const TextStyle(
                                   fontSize: 16,
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold),
@@ -336,9 +336,9 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
                           children: [
                             Text(l10n.forthStep),
                             const SizedBox(height: 8),
-                            const Text(
-                              'Order Shipped',
-                              style: TextStyle(
+                            Text(
+                              l10n.orderShippedLabel,
+                              style: const TextStyle(
                                   fontSize: 16,
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold),
