@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:labees/core/app/app_colors.dart';
 import 'package:labees/core/models/orders_response.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:labees/core/util/apis.dart';
+import 'package:labees/features/home/pages/account_page/account_tabs/view_model/order_provider.dart';
+import 'package:provider/provider.dart';
 
 /*
 *  Date 29 - Oct-2023
@@ -11,9 +14,10 @@ import 'package:labees/core/util/apis.dart';
 */
 
 class OrderItem extends StatelessWidget {
-  const OrderItem({Key? key, required this.product}) : super(key: key);
+  const OrderItem({Key? key, required this.product, required this.orderData}) : super(key: key);
 
   final Details product;
+  final OrderData orderData;
 
   @override
   Widget build(BuildContext context) {
@@ -135,10 +139,148 @@ class OrderItem extends StatelessWidget {
           ],
         ),
 
-        const Divider(
-          height: 32,
+        ///review
+        Row(
+          children: [
+            //add review button
+            //orderData.orderStatus == 'delivered' && orderData.paymentStatus == 'paid'
+            orderData.paymentStatus == 'paid'
+                ? TextButton(
+              onPressed: () async {
+                //orderProvider.addReview(productId, comment, rating);
+                _showRatingAndCommentDialog(context);
+              },
+              child: const Text(
+                'Add Review',
+                style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontSize: 14,
+                  color: Colors.red,
+                  decoration: TextDecoration.underline,
+                ),
+              ),
+            )
+                : const SizedBox(),
+          ],
         ),
+
       ],
     );
   }
+
+  //rating and comment dialog
+  void _showRatingAndCommentDialog(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final orderProvider = Provider.of<OrderProvider>(context, listen: false);
+
+    double ratingValue = 0.0;
+    final reviewController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text(
+            'Rating and Review',
+            style: TextStyle(
+              fontFamily: 'Montserrat',
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              RatingBar.builder(
+                initialRating: 0,
+                minRating: 1,
+                direction: Axis.horizontal,
+                allowHalfRating: false,
+                itemCount: 5,
+                itemSize: 30,
+                itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                itemBuilder: (context, _) => const Icon(
+                  Icons.star,
+                  color: Colors.amber,
+                ),
+                onRatingUpdate: (rating) {
+                  ratingValue = rating;
+                },
+              ),
+              const SizedBox(height: 16),
+              TextField(
+                controller: reviewController,
+                maxLines: 3,
+                decoration: InputDecoration(
+                  hintText: 'Add Review',
+                  hintStyle: const TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: const BorderSide(
+                      color: Colors.grey,
+                      width: 1,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: const BorderSide(
+                      color: Colors.grey,
+                      width: 1,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: const BorderSide(
+                      color: Colors.grey,
+                      width: 1,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text(
+                l10n.cancelBtnText,
+                style: const TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontSize: 14,
+                  color: Colors.red,
+                  decoration: TextDecoration.underline,
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () async {
+                await orderProvider.addReview(
+                    orderData.id!, reviewController.text.trim(), ratingValue);
+
+                if (orderProvider.addReviewResponse.status!) {
+                  Navigator.pop(context);
+                }
+              },
+              child: Text(
+                l10n.submitBtnText,
+                style: const TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontSize: 14,
+                  color: Colors.red,
+                  decoration: TextDecoration.underline,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 }

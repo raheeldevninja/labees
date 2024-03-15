@@ -219,30 +219,6 @@ class OrderCostDetailsAndStatus extends StatelessWidget {
           ],
         ),
 
-        ///review
-        Row(
-          children: [
-            //add review button
-            //orderData.orderStatus == 'delivered' && orderData.paymentStatus == 'paid'
-            orderData.paymentStatus == 'paid'
-                ? TextButton(
-                    onPressed: () async {
-                      //orderProvider.addReview(productId, comment, rating);
-                      _showRatingAndCommentDialog(context);
-                    },
-                    child: Text(
-                      'Add Review',
-                      style: const TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontSize: 14,
-                        color: Colors.red,
-                        decoration: TextDecoration.underline,
-                      ),
-                    ),
-                  )
-                : const SizedBox(),
-          ],
-        ),
       ],
     );
   }

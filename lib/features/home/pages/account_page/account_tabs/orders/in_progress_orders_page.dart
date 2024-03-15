@@ -80,7 +80,7 @@ class _InProgressOrdersPageState extends State<InProgressOrdersPage> {
                         final product = orderProvider
                             .ordersResponse.data![index].details![productIndex];
 
-                        return OrderItem(product: product);
+                        return OrderItem(product: product, orderData: orderProvider.ordersResponse.data![index]);
                       },
                     ),
                     OrderCostDetailsAndStatus(
