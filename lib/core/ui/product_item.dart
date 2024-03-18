@@ -70,6 +70,14 @@ class _ProductItemState extends State<ProductItem> {
 
     _isProductInWishlist();
 
+    var price = widget.product.unitPrice;
+
+    if(widget.product.taxType == 'percent') {
+      price = widget.product.unitPrice! + (widget.product.unitPrice! * widget.product.tax! / 100);
+    } else {
+      price = widget.product.unitPrice! + widget.product.tax!;
+    }
+
     return Column(
       children: [
         Stack(
@@ -216,7 +224,7 @@ class _ProductItemState extends State<ProductItem> {
           height: 6,
         ),
         Text(
-          '${widget.product.unitPrice} Sar',
+          '$price Sar',
           style: const TextStyle(fontSize: 20, color: AppColors.red),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
