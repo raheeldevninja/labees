@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:labees/core/app/app_colors.dart';
 import 'package:labees/core/ui/product_item.dart';
-import 'package:labees/core/util/apis.dart';
 import 'package:labees/core/util/shared_pref.dart';
 import 'package:labees/core/util/utils.dart';
 import 'package:labees/features/home/view_model/home_provider.dart';
@@ -47,7 +46,7 @@ class _NewArrivalsSectionState extends State<NewArrivalsSection> {
         const SizedBox(height: 10),
 
         SizedBox(
-          height: 290,
+          height: 360,
           child: ListView.builder(
             itemCount: homeProvider.getNewArrivalProducts.products!.length,
             scrollDirection: Axis.horizontal,
@@ -57,8 +56,6 @@ class _NewArrivalsSectionState extends State<NewArrivalsSection> {
 
               final product =
                   homeProvider.getNewArrivalProducts.products![index];
-
-
 
               return InkWell(
                 onTap: () {
@@ -73,8 +70,6 @@ class _NewArrivalsSectionState extends State<NewArrivalsSection> {
                 child: ProductItem(
                   product: product,
                   addRemoveToWishlist: () async {
-
-
 
                     print('wishlist ${product.wishlist}');
 

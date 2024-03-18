@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:labees/core/app/app_colors.dart';
 import 'package:labees/core/util/apis.dart';
 import 'package:labees/core/util/shared_pref.dart';
@@ -45,7 +46,9 @@ class _ProductItemState extends State<ProductItem> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       print('isProduct in wishlist : $isProductInWishlist');
       isProductInWishlist = await SharedPref.isProductInWishlist(widget.product.id!.toString());
+
     });
+
 
   }
 
@@ -221,6 +224,73 @@ class _ProductItemState extends State<ProductItem> {
         const SizedBox(
           height: 10,
         ),
+
+        //choice_options
+
+          for (int i = 0; i < widget.product.choiceOptions!.length; i++) ...[
+
+              Wrap(
+                alignment: WrapAlignment.center,
+                direction: Axis.horizontal,
+                children: [
+                  for (int choiceOptionIndex = 0; choiceOptionIndex < widget.product.choiceOptions![i].options!.length; choiceOptionIndex++) ...[
+                    Container(
+                      width: widget.product.choiceOptions![i].title == 'Color' ? 16 : 24,
+                      height: widget.product.choiceOptions![i].title == 'Color' ? 16 : 24,
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.all(2),
+                      decoration: BoxDecoration(
+                        color: widget.product.choiceOptions![i]
+                            .options![choiceOptionIndex]
+                            .isSelected
+                            ? AppColors.selectedOption
+                            .withOpacity(0.3)
+                            : Colors.white,
+                        shape:
+                        widget.product.choiceOptions![i].title == 'Color'
+                            ? BoxShape.circle
+                            : BoxShape.rectangle,
+                        border: Border.all(
+                          color: widget.product.choiceOptions![i].title == 'Color'
+                              ? Colors.transparent
+                              : AppColors.blackColor,
+                          width: 1,
+                        ),
+                        borderRadius:
+                        widget.product.choiceOptions![i].title == 'Color'
+                            ? null
+                            : BorderRadius.circular(4.0),
+                      ),
+                      child: widget.product.choiceOptions![i].title == 'Color'
+                          ? ClipRRect(
+                        borderRadius:
+                        BorderRadius.circular(30.0),
+                        child: SvgPicture.network(
+                          '${APIs.imageBaseURL}${APIs.attributeValue}${widget.product.choiceOptions![i].options![choiceOptionIndex].image ?? ''}',
+                          width: 16,
+                          height: 16,
+                        ),
+                      )
+                          : Text(
+                        widget.product.choiceOptions![i].options![choiceOptionIndex].name!,
+                        style: const TextStyle(
+                          fontFamily: 'Montserrat',
+                          fontSize: 14,
+                          color:
+                          AppColors.blackColor,
+                        ),
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+
+          ],
+
+
       ],
     );
   }
