@@ -123,7 +123,7 @@ class _SellerProfileScreenState extends State<SellerProfileScreen> {
                   decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
                     border: Border.all(
-                      color: AppColors.lightGrey,
+                      color: AppColors.lightGrey.withOpacity(0.2),
                       width: 1,
                     ),
                     borderRadius: BorderRadius.circular(8),
@@ -131,7 +131,7 @@ class _SellerProfileScreenState extends State<SellerProfileScreen> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: Image.network(
-                      '${APIs.imageBaseURL}${seller.image}',
+                      '${APIs.imageBaseURL}${APIs.shop}${seller.shop?.image}',
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -143,7 +143,7 @@ class _SellerProfileScreenState extends State<SellerProfileScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${seller.fName} ${seller.lName}',
+                      '${seller.shop?.name}',
                       style: const TextStyle(
                         color: AppColors.primaryColor,
                         fontSize: 20,

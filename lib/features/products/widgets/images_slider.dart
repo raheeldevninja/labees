@@ -25,13 +25,16 @@ class ImagesSlider extends StatelessWidget {
     return Stack(
       children: [
         CarouselSlider(
+          key: UniqueKey(),
+          carouselController: _controller,
           items: productImages,
           options: CarouselOptions(
               height: 300,
               enlargeCenterPage: false,
               aspectRatio: 16 / 9,
-              viewportFraction: 1),
-          carouselController: _controller,
+              viewportFraction: 1,
+          ),
+
         ),
         Positioned(
           right: 0,
@@ -59,6 +62,7 @@ class ImagesSlider extends StatelessWidget {
               IconButton(
                 padding: EdgeInsets.zero,
                 onPressed: () {
+
                   _controller.previousPage(
                       duration: const Duration(
                     milliseconds: 200,

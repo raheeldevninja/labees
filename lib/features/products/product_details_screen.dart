@@ -83,6 +83,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   late TapGestureRecognizer tapGestureRecognizer;
 
+  String shortDescription = '';
+  String price = '';
+
+  List<Widget> productImages = [];
+
 
   @override
   void initState() {
@@ -122,6 +127,23 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           selectedAttributes[product!.choiceOptions![i].title!] = [];
         }
       }
+
+      shortDescription = product.shortDescription ?? '';
+
+      if(product.taxType == 'percent') {
+
+        print('highest ${product.priceRange.highestPrice + (product.priceRange.highestPrice * (product.tax / 100))}');
+
+        print('in if');
+        price = 'SAR ${product.priceRange.lowestPrice + (product.priceRange.lowestPrice * product.tax / 100)} - SAR ${product.priceRange.highestPrice + (product.priceRange.highestPrice * (product.tax / 100))}';
+      }
+      else {
+        print('in else');
+        price = 'SAR ${product.priceRange.lowestPrice + product.tax} - SAR ${product.priceRange.highestPrice + product.tax}';
+
+      }
+
+
     });
   }
 
@@ -133,6 +155,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     final cartProvider = Provider.of<CartProvider>(context);
 
     final isVariantProduct = product?.variantProducts.isNotEmpty ?? false;
+
+
 
     //homeProvider.productDetails!.product!.variantProducts!.isNotEmpty ? homeProvider.productDetails!.product!.variantProducts!.first :
     product = homeProvider.productDetails?.product;
@@ -153,7 +177,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       return const ColoredBox(color: AppColors.white);
     }
 
-    final List<Widget> productImages = productImagesList
+
+    productImages = productImagesList
         .map((item) => Stack(
               children: [
                 InkWell(
@@ -190,6 +215,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               ],
             ))
         .toList();
+
+    print('productImages length in build: ${productImages.length}');
 
     if (productInfo == ProductInfo.description) {
       productDetailsWidget = const ProductDescription();
@@ -277,23 +304,34 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           ],
                         ),
 
-                        const SizedBox(
-                          height: 16,
-                        ),
 
-                        product.shortDescription != null
-                            ? Text(
-                                '${isVariantProduct ? variantProduct!.shortDescription : product.shortDescription}',
+                        Text('${product.brand!.name}',
                                 style: const TextStyle(
                                     fontSize: 12,
                                     color: AppColors.blackColor,
                                     height: 1.8),
-                              )
-                            : const SizedBox(),
+                              ),
+
+
+                        if(shortDescription.isNotEmpty) ...[
+                          const SizedBox(
+                            height: 16,
+                          ),
+
+                          Text(shortDescription,
+                            style: const TextStyle(
+                                fontSize: 16,
+                                color: AppColors.blackColor,
+                                height: 1.8),
+                          ),
+
+
+                        ],
 
                         const SizedBox(
                           height: 16,
                         ),
+
 
                         Row(
                           children: [
@@ -325,7 +363,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         ),
 
                         Text(
-                          '${isVariantProduct ? variantProduct!.unitPrice : product.unitPrice} Sar',
+                          //'${isVariantProduct ? variantProduct!.unitPrice : product.unitPrice} Sar',
+                          price,
                           style: const TextStyle(
                               fontSize: 20, color: AppColors.red),
                         ),
@@ -336,7 +375,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
                         Text(
                           l10n.priceIncludingVAT,
-                          style: const TextStyle(fontSize: 10),
+                          style: const TextStyle(fontSize: 12),
                         ),
 
                         const SizedBox(
@@ -459,7 +498,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                               selectedChoicesIds) {
                                             print(
                                                 'variant product found: ${element.name}');
+
                                             setState(() {
+
                                               variantProduct = element;
                                               variantProductImages =
                                                   variantProduct!.images;
@@ -468,6 +509,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                                   isVariantProduct
                                                       ? variantProductImages
                                                       : productMainImages;
+
                                             });
 
                                             print(
@@ -520,6 +562,34 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                             Utils.showCustomSnackBar(context,
                                                 'Only $variationQty left in stock');
                                           }*/
+
+
+
+                                          if(isVariantProduct) {
+                                            shortDescription = variantProduct!.shortDescription ?? '';
+
+                                            if(variantProduct!.taxType == 'percent') {
+                                              price = 'SAR ${variantProduct!.unitPrice! + (variantProduct!.unitPrice! * variantProduct!.tax! / 100)}';
+                                            }
+                                            else {
+                                              price = 'SAR ${variantProduct!.unitPrice! + variantProduct!.tax!}';
+                                            }
+
+                                          }
+                                          else {
+                                            shortDescription = product.shortDescription;
+
+                                            if(product.taxType == 'percent') {
+                                              price = 'SAR ${product.unitPrice + (product.unitPrice * product.tax / 100)}';
+                                            }
+                                            else {
+                                              price = 'SAR ${product.unitPrice + product.tax}';
+                                            }
+
+                                          }
+
+
+
                                         }
 
                                         setState(() {});
@@ -760,9 +830,16 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                   print('new choice str: $choiceStr');
 
 
-                                  final unitPrice = isVariantProduct
+                                  var unitPrice = isVariantProduct
                                       ? variantProduct!.unitPrice
                                       : product.unitPrice;
+
+                                  if(product.taxType == 'percent') {
+                                    unitPrice = unitPrice! + (unitPrice * product.tax / 100);
+                                  }
+                                  else {
+                                    unitPrice = unitPrice! + product.tax;
+                                  }
 
 
                                   CartProduct cartProduct = CartProduct(
@@ -770,8 +847,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     title: isVariantProduct ? variantProduct!.name : product.name!,
                                     brand: product.brand!.name!,
                                     image: isVariantProduct ? variantProduct!.thumbnail : product.thumbnail!,
-                                    totalPrice: unitPrice * qty,
-                                    unitPrice: unitPrice,
+                                    totalPrice: unitPrice.toInt() * qty,
+                                    unitPrice: unitPrice.toInt(),
                                     quantity: qty,
                                     slug: isVariantProduct ? variantProduct!.slug : product.slug!,
                                     currentSock: isVariantProduct

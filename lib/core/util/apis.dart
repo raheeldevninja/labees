@@ -70,4 +70,5 @@ class APIs {
   static const String productImages = 'product/';
   static const String brandImages = 'brand/';
   static const String attributeValue = 'attribute_value/';
+  static const String shop = 'shop/';
 }

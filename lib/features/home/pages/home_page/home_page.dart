@@ -209,9 +209,9 @@ class _HomePageState extends State<HomePage> {
                           padding: const EdgeInsets.all(10.0),
                           children: const [
                             ShopNowBanner(),
-                            SizedBox(height: 20),
+                            SizedBox(height: 16),
                             MostWantedSection(),
-                            SizedBox(height: 20),
+                            SizedBox(height: 10),
                             NewArrivalsSection(),
                           ],
                         ),
