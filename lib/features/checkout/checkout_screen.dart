@@ -9,6 +9,7 @@ import 'package:labees/features/checkout/payment_details.dart';
 import 'package:labees/features/checkout/shipping_address.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:labees/features/checkout/view_model/checkout_provider.dart';
+import 'package:labees/features/home/pages/account_page/account_tabs/view_model/account_provider.dart';
 import 'package:provider/provider.dart';
 
 /*
@@ -34,13 +35,17 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     super.initState();
 
 
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       context.read<CheckoutProvider>().getAllAddresses();
 
     });
 
     Utils.pageController.addListener(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
+
+
+        context.read<AccountProvider>().getWalletList(context, 10, 1);
+
         if (mounted) {
           setState(() {
             Utils.currentPage = Utils.pageController.page!.round();

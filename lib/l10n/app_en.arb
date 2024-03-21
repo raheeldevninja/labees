@@ -324,5 +324,10 @@
     "packingOrderLabel": "Packing Order",
     "orderPlacedLabel": "Order Placed",
     "cannotCompleteOrder": "Sorry we can't complete your order",
-    "orderReturned": "Order Successfully Returned"
+    "orderReturned": "Order Successfully Returned",
+    "enterAmountLabel": "Enter amount",
+    "enterAmountHint": "Please enter amount",
+    "payFullyLabel": "Pay fully",
+    "payPartiallyLabel": "Pay partially",
+    "payRemainingWith": "Pay remaining with"
 }

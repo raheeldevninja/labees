@@ -3,15 +3,17 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:labees/core/app/app_colors.dart';
 import 'package:labees/core/models/cart_product.dart';
 import 'package:labees/core/models/payment_method.dart';
+import 'package:labees/core/ui/widgets.dart';
 import 'package:labees/core/util/shared_pref.dart';
 import 'package:labees/features/checkout/view_model/checkout_provider.dart';
 import 'package:labees/features/home/home_screen.dart';
+import 'package:labees/features/home/pages/account_page/account_tabs/view_model/account_provider.dart';
 import 'package:labees/features/my_bag/view_model/cart_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 /*
-*  Date 24 - Dec-2023
+*  Date 21 - Mar-2024
 *  Author: Raheel Khan- Abaska Technologies
 *  Description: PaymentDetails
 */
@@ -29,24 +31,55 @@ class _PaymentDetailsState extends State<PaymentDetails> {
   final _dateController = TextEditingController();
   final _cvvController = TextEditingController();
 
+  final _amountController = TextEditingController();
+
   bool saveDetails = false;
 
   List<PaymentMethod> paymentMethods = [];
+
+
+
+  PaymentMethod selectedPaymentMethod = PaymentMethod(name: '', image: '');
+  PaymentMethod selectedRemainingPaymentMethod = PaymentMethod(name: '', image: '');
+
+  String? _paymentOption;
+
+  List<PaymentMethod> remainingPaymentMethods = [];
+
+  int isPartiallyPaid = 0;
+
+  List<String> paymentMethodsValues = [
+    'cash_on_delivery ',
+    'pay_by_wallet',
+  ];
+
+  String selectedPaymentMethodValue = 'cash_on_delivery';
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
+    _paymentOption = 'Pay fully';
     _initPaymentMethods();
   }
 
   _initPaymentMethods() {
     paymentMethods.add(PaymentMethod(
+      name: 'Cash on Delivery',
         image:
             'https://labees-website.boedelipos.ch/assets/pay_method6-9a87f6a3.svg',
         isSelected: true));
-    //paymentMethods.add(PaymentMethod(image: 'https://labees-website.boedelipos.ch/assets/pay_method7-e168a6d8.svg'));
+    paymentMethods.add(PaymentMethod(
+        name: 'Wallet',
+        image: 'https://labees-website.boedelipos.ch/assets/pay_method7-e168a6d8.svg'));
+
+    remainingPaymentMethods.add(PaymentMethod(
+        name: 'Cash on Delivery',
+        image:
+        'https://labees-website.boedelipos.ch/assets/pay_method6-9a87f6a3.svg',
+        isSelected: false));
+
   }
 
   @override
@@ -54,6 +87,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
     final l10n = AppLocalizations.of(context)!;
     final checkoutProvider = context.watch<CheckoutProvider>();
     final cartProvider = context.watch<CartProvider>();
+    final accountProvider = context.watch<AccountProvider>();
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -87,6 +121,11 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                         element.isSelected = false;
                       }
                       paymentMethods[index].isSelected = true;
+
+                      selectedPaymentMethod = paymentMethods[index];
+
+                      selectedPaymentMethodValue = paymentMethodsValues[index];
+
                     });
                   },
                   child: Container(
@@ -113,6 +152,151 @@ class _PaymentDetailsState extends State<PaymentDetails> {
               },
             ),
           ),
+
+          const SizedBox(
+            height: 10,
+          ),
+
+          if(selectedPaymentMethod.name == 'Wallet') ...[
+            Text('Your current balance: SAR ${accountProvider.walletResponse.totalWalletBalance}'),
+
+            //pay fully pay partially radio buttons
+            Row(
+              children: [
+                Radio(
+                  fillColor: MaterialStateProperty.all(AppColors.primaryColor),
+                  value: 'Pay fully',
+                  groupValue: _paymentOption,
+                  onChanged: (value) {
+
+                    setState(() {
+                      _paymentOption = value;
+                      isPartiallyPaid = 0;
+                    });
+
+                  },
+                ),
+                Text(l10n.payFullyLabel),
+                const SizedBox(width: 16),
+                Radio(
+                  fillColor: MaterialStateProperty.all(AppColors.primaryColor),
+                  value: 'Pay partially',
+                  groupValue: _paymentOption,
+                  onChanged: (value) {
+                    setState(() {
+                      _paymentOption = value;
+                      isPartiallyPaid = 1;
+                    });
+                  },
+                ),
+                Text(l10n.payPartiallyLabel),
+              ],
+            ),
+
+
+            const SizedBox(
+              height: 20,
+            ),
+
+            if(_paymentOption == 'Pay partially') ...[
+              Widgets.labels('${l10n.enterAmountLabel} '),
+              const SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                controller: _amountController,
+                maxLines: 1,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  contentPadding: const EdgeInsets.all(12.0),
+                  hintText: l10n.enterAmountHint,
+                  hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.grey, width: 1.0),
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide:
+                    const BorderSide(color: AppColors.primaryColor, width: 1.0),
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                ),
+              ),
+
+              const SizedBox(
+                height: 10,
+              ),
+
+              Widgets.labels('${l10n.payRemainingWith} ', isRequired: false),
+
+              const SizedBox(
+                height: 10,
+              ),
+
+
+              ///remaining payment methods
+              SizedBox(
+                height: 70,
+                child: ListView.builder(
+                  itemCount: remainingPaymentMethods.length,
+                  scrollDirection: Axis.horizontal,
+                  physics: const BouncingScrollPhysics(),
+                  itemBuilder: (context, index) {
+
+                    if(remainingPaymentMethods[index].name == 'Wallet') {
+                      return Container();
+                    }
+
+
+                    return InkWell(
+                      borderRadius: BorderRadius.circular(10),
+                      onTap: () {
+                        setState(() {
+                          for (var element in remainingPaymentMethods) {
+                            element.isSelected = false;
+                          }
+                          remainingPaymentMethods[index].isSelected = true;
+                          selectedRemainingPaymentMethod = remainingPaymentMethods[index];
+
+                        });
+                      },
+                      child: Container(
+                        width: 140,
+                        padding: const EdgeInsets.all(8.0),
+                        margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            color: remainingPaymentMethods[index].isSelected
+                                ? AppColors.primaryColor
+                                : AppColors.lightGrey.withOpacity(0.4),
+                            width: 1,
+                          ),
+                        ),
+                        alignment: Alignment.center,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SvgPicture.network(remainingPaymentMethods[index].image),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+
+
+            ],
+
+
+
+
+          ],
+
 
           const SizedBox(
             height: 40,
@@ -312,15 +496,14 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                     (cartProvider.checkoutSettings.productTax! / 100) *
                         cartProvider.calculateSubTotal();
 
-                final placeOrderModel =
-                    checkoutProvider.getPlaceOrderModel.copyWith(
+                final placeOrderModel = checkoutProvider.getPlaceOrderModel.copyWith(
                   billingAddressId: checkoutProvider.getBillingAddressId,
                   addressId: checkoutProvider.getShippingAddressId,
                   cartProducts: cartProducts,
-                  paymentMethod: 'cash_on_delivery',
+                  paymentMethod: selectedPaymentMethodValue,
                   shippingMethod: cartProvider.getSelectedShippingMethod()!.id,
-                  isPartiallyPaid: 0,
-                  partiallyWalletAmount: 0,
+                  isPartiallyPaid: isPartiallyPaid,
+                  partiallyWalletAmount: isPartiallyPaid == 1 ? int.parse(_amountController.text) : 0,
                   vat: cartProvider.checkoutSettings.productTax,
                   vatPrice: vatPer.toInt(),
                 );
@@ -419,6 +602,8 @@ class _PaymentDetailsState extends State<PaymentDetails> {
   @override
   void dispose() {
     super.dispose();
+
+    _amountController.dispose();
 
     _cardHolderNameController.dispose();
     _cardHolderNumberController.dispose();

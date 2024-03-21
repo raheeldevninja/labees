@@ -16,6 +16,8 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import 'pages/account_page/account_tabs/view_model/account_provider.dart';
+
 /*
 *  Date 9 - September-2023
 *  Author: Raheel Khan- Abaska Technologies
@@ -47,6 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
           context.read<CartProvider>().getCheckoutSettings(),
           context.read<CheckoutProvider>().getCountries(),
           context.read<CheckoutProvider>().getAllAddresses(),
+          //context.read<AccountProvider>().getWalletList(context, 10, 1),
         ]);
 
 

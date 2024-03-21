@@ -322,6 +322,11 @@
     "packingOrderLabel": "ترتيب التعبئة",
     "orderPlacedLabel": "تم الطلب",
     "cannotCompleteOrder": "نأسف لعدم تمكننا من إكمال طلبك",
-    "orderReturned": "تم إرجاع الطلب بنجاح"
+    "orderReturned": "تم إرجاع الطلب بنجاح",
+    "enterAmountLabel": "أدخل المبلغ",
+    "enterAmountHint": "الرجاء إدخال المبلغ",
+    "payFullyLabel": "ادفع بالكامل",
+    "payPartiallyLabel": "ادفع جزئيًا",
+    "payRemainingWith": "ادفع المتبقي مع"
 
 }
