@@ -37,6 +37,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       context.read<CheckoutProvider>().getAllAddresses();
+      context.read<AccountProvider>().getWalletList(context, 10, 1);
 
     });
 
@@ -44,7 +45,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
 
 
-        context.read<AccountProvider>().getWalletList(context, 10, 1);
+
 
         if (mounted) {
           setState(() {
