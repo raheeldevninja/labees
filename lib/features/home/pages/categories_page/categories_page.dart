@@ -57,7 +57,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
 
       homeProvider.setChildList(
           homeProvider.getCategoryChildren![0].childes!,
-          homeProvider.getCategoryChildren![0].parentId!,
+          homeProvider.getCategoryChildren![0].id!,
           homeProvider.getCategoryChildren![0].name!);
 
       homeProvider.getCategoryChildren![0] =

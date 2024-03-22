@@ -96,8 +96,9 @@ class CategoryChildren extends StatelessWidget {
           //set sub sub childs
           homeProvider.setChildList(
               homeProvider.getCategoryChildren![index].childes!,
-              homeProvider.getCategoryChildren![index].parentId!,
-              homeProvider.getCategoryChildren![index].name!);
+              homeProvider.getCategoryChildren![index].id!,
+              homeProvider.getCategoryChildren![index].name!,
+          );
 
           //homeProvider.setSelectedCategoryIndex(index);
         },
@@ -130,7 +131,7 @@ class CategoryChildren extends StatelessWidget {
         ),
         children: [
           categoryChild.isSelected!
-              ? const SubCategoriesSection()
+              ? SubCategoriesSection(childsList: homeProvider.getCategoryChildren![index].childes!)
               : const SizedBox(),
         ],
       ),
