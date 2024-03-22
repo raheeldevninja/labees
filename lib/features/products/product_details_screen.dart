@@ -136,11 +136,28 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         //print('highest ${product.priceRange.highestPrice + (product.priceRange.highestPrice * (product.tax / 100))}');
 
         print('in if');
-        price = 'SAR ${product.priceRange.lowestPrice + (product.priceRange.lowestPrice * product.tax / 100)} - SAR ${product.priceRange.highestPrice + (product.priceRange.highestPrice * (product.tax / 100))}';
+
+
+        if(product.priceRange != null) {
+          price = 'SAR ${product.priceRange.lowestPrice + (product.priceRange.lowestPrice * product.tax / 100)} - SAR ${product.priceRange.highestPrice + (product.priceRange.highestPrice * (product.tax / 100))}';
+        }
+        else {
+          price = 'SAR ${product.unitPrice + (product.unitPrice * product.tax / 100)}';
+        }
+
+
       }
       else {
         print('in else');
-        price = 'SAR ${product.priceRange.lowestPrice + product.tax} - SAR ${product.priceRange.highestPrice + product.tax}';
+
+
+        if(product.priceRange != null) {
+          price = 'SAR ${product.priceRange.lowestPrice + product.tax} - SAR ${product.priceRange.highestPrice + product.tax}';
+        }
+        else {
+          price = 'SAR ${product.unitPrice + product.tax}';
+        }
+
       }
 
       isProductInWishlist = await SharedPref.isProductInWishlist(product.id!.toString());
