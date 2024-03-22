@@ -1,16 +1,26 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hyperpay_plugin/flutter_hyperpay.dart';
+import 'package:hyperpay_plugin/model/ready_ui.dart';
 import 'package:labees/core/app/app_colors.dart';
 import 'package:labees/core/models/cart_product.dart';
 import 'package:labees/core/models/payment_method.dart';
 import 'package:labees/core/ui/widgets.dart';
 import 'package:labees/core/util/shared_pref.dart';
+import 'package:labees/core/util/utils.dart';
 import 'package:labees/features/checkout/view_model/checkout_provider.dart';
 import 'package:labees/features/home/home_screen.dart';
 import 'package:labees/features/home/pages/account_page/account_tabs/view_model/account_provider.dart';
 import 'package:labees/features/my_bag/view_model/cart_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'dart:developer' as dev;
 
 /*
 *  Date 21 - Mar-2024
@@ -51,9 +61,18 @@ class _PaymentDetailsState extends State<PaymentDetails> {
   List<String> paymentMethodsValues = [
     'cash_on_delivery ',
     'pay_by_wallet',
+    '',
+    '',
+    '',
   ];
 
   String selectedPaymentMethodValue = 'cash_on_delivery';
+
+
+
+  late FlutterHyperPay flutterHyperPay ;
+
+
 
   @override
   void initState() {
@@ -62,25 +81,135 @@ class _PaymentDetailsState extends State<PaymentDetails> {
 
     _paymentOption = 'Pay fully';
     _initPaymentMethods();
+
+    flutterHyperPay = FlutterHyperPay(
+      shopperResultUrl: InAppPaymentSetting.shopperResultUrl, // return back to app
+      paymentMode:  PaymentMode.test, // test or live
+      lang: InAppPaymentSetting.getLang(),
+    );
+
+
+
   }
 
   _initPaymentMethods() {
+
+    paymentMethods.add(PaymentMethod(
+      name: 'MADA',
+      image:
+      'https://labeesnew-website.boedelipos.ch/assets/pay_method5-5203d942.svg',
+    ));
+
+    paymentMethods.add(PaymentMethod(
+      name: 'MASTER',
+      image:
+      'https://labeesnew-website.boedelipos.ch/assets/pay_method2-d27807ca.svg',
+    ));
+
+    paymentMethods.add(PaymentMethod(
+      name: 'VISA',
+      image:
+      'https://labeesnew-website.boedelipos.ch/assets/pay_method3-64dbd443.svg',
+    ));
+
     paymentMethods.add(PaymentMethod(
       name: 'Cash on Delivery',
         image:
             'https://labees-website.boedelipos.ch/assets/pay_method6-9a87f6a3.svg',
         isSelected: true));
+
     paymentMethods.add(PaymentMethod(
         name: 'Wallet',
         image: 'https://labees-website.boedelipos.ch/assets/pay_method7-e168a6d8.svg'));
 
+
+
+    //remaining payment methods
     remainingPaymentMethods.add(PaymentMethod(
         name: 'Cash on Delivery',
         image:
         'https://labees-website.boedelipos.ch/assets/pay_method6-9a87f6a3.svg',
-        isSelected: false));
+        isSelected: false,
+    ));
 
   }
+
+  getCheckOut(String brandName) async {
+    final url = Uri.parse('https://dev.hyperpay.com/hyperpay-demo/getcheckoutid.php');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+
+      log('checkout response: ${response.body}');
+
+      payRequestNowReadyUI(
+          checkoutId: json.decode(response.body)['id'],
+          //brandsName: [ "VISA" , "MASTER" , "MADA" ,"PAYPAL", "STC_PAY" , "APPLEPAY"]
+          brandsName: [ brandName ]
+      );
+    } else {
+      dev.log(response.body.toString(), name: "STATUS CODE ERROR");
+    }
+  }
+
+
+
+  payRequestNowReadyUI(
+      {required List<String> brandsName, required String checkoutId}) async {
+    PaymentResultData paymentResultData;
+    paymentResultData = await flutterHyperPay.readyUICards(
+      readyUI: ReadyUI(
+          brandsName: brandsName ,
+          checkoutId: checkoutId,
+          merchantIdApplePayIOS: InAppPaymentSetting.merchantId,
+          countryCodeApplePayIOS: InAppPaymentSetting.countryCode,
+          companyNameApplePayIOS: "Test Co",
+          themColorHexIOS: "#000000" ,// FOR IOS ONLY
+          setStorePaymentDetailsMode: true // store payment details for future use
+      ),
+    );
+
+
+    log('paymentResultData: ${paymentResultData.paymentResult}');
+
+    if (paymentResultData.paymentResult == PaymentResult.success ||
+        paymentResultData.paymentResult == PaymentResult.sync) {
+      // do something
+
+      print('success status');
+
+
+
+
+
+    }
+  }
+
+  //disable pay fully pay partially radio buttons if wallet balance is less than total amount
+  bool isWalletBalanceLessThanTotalAmount() {
+    final accountProvider = context.read<AccountProvider>();
+    final cartProvider = context.read<CartProvider>();
+
+    if(accountProvider.walletResponse.totalWalletBalance! < cartProvider.calculateSubTotal()) {
+      return true;
+    }
+
+
+    return false;
+  }
+
+  //check if wallet balance is zero
+  bool isWalletBalanceZero() {
+    final accountProvider = context.read<AccountProvider>();
+
+    if(accountProvider.walletResponse.totalWalletBalance! == 0) {
+      return true;
+    }
+
+    return false;
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -88,6 +217,8 @@ class _PaymentDetailsState extends State<PaymentDetails> {
     final checkoutProvider = context.watch<CheckoutProvider>();
     final cartProvider = context.watch<CartProvider>();
     final accountProvider = context.watch<AccountProvider>();
+
+
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -107,29 +238,37 @@ class _PaymentDetailsState extends State<PaymentDetails> {
 
           //horizontal listview of payment methods
           SizedBox(
-            height: 70,
+            height: 60,
             child: ListView.builder(
               itemCount: paymentMethods.length,
               scrollDirection: Axis.horizontal,
               physics: const BouncingScrollPhysics(),
               itemBuilder: (context, index) {
+
+                print('paymentMethods[index].name: ${paymentMethods[index].image}');
+
                 return InkWell(
                   borderRadius: BorderRadius.circular(10),
-                  onTap: () {
-                    setState(() {
-                      for (var element in paymentMethods) {
-                        element.isSelected = false;
-                      }
-                      paymentMethods[index].isSelected = true;
+                   onTap: () {
 
-                      selectedPaymentMethod = paymentMethods[index];
+                     for (var element in paymentMethods) {
+                       element.isSelected = false;
+                     }
+                     paymentMethods[index].isSelected = true;
 
-                      selectedPaymentMethodValue = paymentMethodsValues[index];
+                     selectedPaymentMethod = paymentMethods[index];
 
-                    });
+                     selectedPaymentMethodValue = paymentMethodsValues[index];
+
+                     setState(() {});
+
+                     if(paymentMethods[index].name != 'Wallet' && paymentMethods[index].name != 'Cash on Delivery') {
+                       getCheckOut(paymentMethods[index].name);
+                     }
+
                   },
                   child: Container(
-                    width: 140,
+                    width: 120,
                     padding: const EdgeInsets.all(8.0),
                     margin: const EdgeInsets.symmetric(horizontal: 8.0),
                     decoration: BoxDecoration(
@@ -143,10 +282,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                       ),
                     ),
                     alignment: Alignment.center,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SvgPicture.network(paymentMethods[index].image),
-                    ),
+                    child: SvgPicture.network(paymentMethods[index].image),
                   ),
                 );
               },
@@ -164,32 +300,32 @@ class _PaymentDetailsState extends State<PaymentDetails> {
             Row(
               children: [
                 Radio(
-                  fillColor: MaterialStateProperty.all(AppColors.primaryColor),
+                  fillColor: isWalletBalanceZero() || isWalletBalanceLessThanTotalAmount() ? MaterialStateProperty.all(Colors.grey) : MaterialStateProperty.all(AppColors.primaryColor),
                   value: 'Pay fully',
                   groupValue: _paymentOption,
-                  onChanged: (value) {
+                  onChanged: isWalletBalanceZero() || isWalletBalanceLessThanTotalAmount() ? null : (value) {
 
                     setState(() {
-                      _paymentOption = value;
+                      _paymentOption = value as String;
                       isPartiallyPaid = 0;
                     });
 
                   },
                 ),
-                Text(l10n.payFullyLabel),
+                Text(l10n.payFullyLabel, style: TextStyle(color: isWalletBalanceZero() || isWalletBalanceLessThanTotalAmount() ? Colors.grey : Colors.black),),
                 const SizedBox(width: 16),
                 Radio(
-                  fillColor: MaterialStateProperty.all(AppColors.primaryColor),
+                  fillColor: isWalletBalanceZero() ? MaterialStateProperty.all(Colors.grey) : MaterialStateProperty.all(AppColors.primaryColor),
                   value: 'Pay partially',
                   groupValue: _paymentOption,
-                  onChanged: (value) {
+                  onChanged: isWalletBalanceZero() ? null : (value) {
                     setState(() {
-                      _paymentOption = value;
+                      _paymentOption = value as String;
                       isPartiallyPaid = 1;
                     });
                   },
                 ),
-                Text(l10n.payPartiallyLabel),
+                Text(l10n.payPartiallyLabel, style: TextStyle(color: isWalletBalanceZero() ? Colors.grey : Colors.black),),
               ],
             ),
 
@@ -609,5 +745,19 @@ class _PaymentDetailsState extends State<PaymentDetails> {
     _cardHolderNumberController.dispose();
     _dateController.dispose();
     _cvvController.dispose();
+  }
+}
+
+
+class InAppPaymentSetting {
+  static const String shopperResultUrl= "com.testpayment.payment";
+  static const String merchantId= "MerchantId";
+  static const String countryCode="SA";
+  static getLang() {
+    if (Platform.isIOS) {
+      return  "en"; // ar
+    } else {
+      return "en_US"; // ar_AR
+    }
   }
 }
