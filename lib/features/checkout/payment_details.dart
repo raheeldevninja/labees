@@ -7,6 +7,7 @@ import 'package:hyperpay_plugin/flutter_hyperpay.dart';
 import 'package:hyperpay_plugin/model/ready_ui.dart';
 import 'package:labees/core/app/app_colors.dart';
 import 'package:labees/core/models/cart_product.dart';
+import 'package:labees/core/models/coupon_data.dart';
 import 'package:labees/core/models/payment_method.dart';
 import 'package:labees/core/ui/widgets.dart';
 import 'package:labees/core/util/shared_pref.dart';
@@ -632,6 +633,9 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                     (cartProvider.checkoutSettings.productTax! / 100) *
                         cartProvider.calculateSubTotal();
 
+
+                CouponData? couponData = await SharedPref.getCouponData();
+
                 final placeOrderModel = checkoutProvider.getPlaceOrderModel.copyWith(
                   billingAddressId: checkoutProvider.getBillingAddressId,
                   addressId: checkoutProvider.getShippingAddressId,
@@ -642,6 +646,8 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                   partiallyWalletAmount: isPartiallyPaid == 1 ? int.parse(_amountController.text) : 0,
                   vat: cartProvider.checkoutSettings.productTax,
                   vatPrice: vatPer.toInt(),
+                  couponCode: couponData?.code ?? '',
+                  couponDiscount: couponData?.discount ?? 0,
                 );
 
                 checkoutProvider.setPlaceOrderModel(placeOrderModel);
@@ -650,8 +656,9 @@ class _PaymentDetailsState extends State<PaymentDetails> {
 
                 if (checkoutProvider.placeOrderResponse!.status == 1) {
                   await SharedPref.clearCartProducts();
+                  await SharedPref.clearCouponData();
 
-                  if (mounted) {
+                  if (context.mounted) {
                     await context.read<CartProvider>().getCartProducts();
                   }
 

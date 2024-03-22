@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:labees/core/models/cart_product.dart';
+import 'package:labees/core/models/coupon_data.dart';
 import 'package:labees/core/models/user.dart';
 import 'package:labees/features/home/models/product.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -210,6 +211,30 @@ class SharedPref {
       }
     }
     return false;
+  }
+
+  //save coupon data
+  static Future<void> saveCouponCode(CouponData couponData) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('coupon_data', json.encode(couponData.toJson()));
+  }
+
+  //get coupon data
+  static Future<CouponData?> getCouponData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? couponDataJson = prefs.getString('coupon_data');
+
+    if (couponDataJson != null && couponDataJson.isNotEmpty) {
+      return CouponData.fromJson(json.decode(couponDataJson));
+    } else {
+      return null;
+    }
+  }
+
+  //clear coupon data
+  static Future<void> clearCouponData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('coupon_data');
   }
 
 

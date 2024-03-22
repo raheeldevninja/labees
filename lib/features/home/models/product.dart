@@ -176,7 +176,7 @@ class Products {
     similarProducts = json['similar_products'];
     customersAlsoBoughtProducts = json['customers_also_bought_products'];
     variantProduct = json['variant_product'];
-    attributes = json['attributes'].cast<int>();
+    attributes = json['attributes']?.cast<int>();
     if (json['choice_options'] != null) {
       choiceOptions = <ChoiceOptions>[];
       json['choice_options'].forEach((v) {

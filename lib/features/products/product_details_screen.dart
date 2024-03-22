@@ -10,16 +10,15 @@ import 'package:labees/core/models/brand.dart';
 import 'package:labees/core/models/cart_choices.dart';
 import 'package:labees/core/models/cart_product.dart';
 import 'package:labees/core/models/category.dart';
-
 import 'package:labees/core/models/product_color.dart';
 import 'package:labees/core/models/product_size.dart';
 import 'package:labees/core/util/apis.dart';
 import 'package:labees/core/util/shared_pref.dart';
 import 'package:labees/core/util/utils.dart';
+import 'package:labees/features/home/models/product.dart';
 import 'package:labees/features/home/view_model/home_provider.dart';
 import 'package:labees/features/my_bag/my_bag_screen.dart';
 import 'package:labees/features/my_bag/view_model/cart_provider.dart';
-import 'package:labees/features/products/model/product_details.dart';
 import 'package:labees/features/products/widgets/description_sizes_reviews_tabs.dart';
 import 'package:labees/features/products/widgets/full_screen_product_images_screen.dart';
 import 'package:labees/features/products/widgets/images_slider.dart';
@@ -88,6 +87,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   List<Widget> productImages = [];
 
+  bool isProductInWishlist = false;
+
 
   @override
   void initState() {
@@ -132,7 +133,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
       if(product.taxType == 'percent') {
 
-        print('highest ${product.priceRange.highestPrice + (product.priceRange.highestPrice * (product.tax / 100))}');
+        //print('highest ${product.priceRange.highestPrice + (product.priceRange.highestPrice * (product.tax / 100))}');
 
         print('in if');
         price = 'SAR ${product.priceRange.lowestPrice + (product.priceRange.lowestPrice * product.tax / 100)} - SAR ${product.priceRange.highestPrice + (product.priceRange.highestPrice * (product.tax / 100))}';
@@ -140,9 +141,17 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       else {
         print('in else');
         price = 'SAR ${product.priceRange.lowestPrice + product.tax} - SAR ${product.priceRange.highestPrice + product.tax}';
-
       }
 
+      isProductInWishlist = await SharedPref.isProductInWishlist(product.id!.toString());
+
+
+    });
+  }
+
+  _isProductInWishlist() async {
+    isProductInWishlist = await SharedPref.isProductInWishlist(product.id!.toString());
+    setState(() {
 
     });
   }
@@ -176,6 +185,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     if (product == null || product.images == null) {
       return const ColoredBox(color: AppColors.white);
     }
+
+    _isProductInWishlist();
 
 
     productImages = productImagesList
@@ -216,7 +227,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             ))
         .toList();
 
-    print('productImages length in build: ${productImages.length}');
+    //print('productImages length in build: ${productImages.length}');
 
     if (productInfo == ProductInfo.description) {
       productDetailsWidget = const ProductDescription();
@@ -252,6 +263,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               '${isVariantProduct ? variantProduct!.name : product.name}',
@@ -261,46 +273,50 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                   fontWeight: FontWeight.bold),
                             ),
 
-                            /*IconButton(
+                            IconButton(
                               onPressed: () async {
 
-                                if (product.wishlist != null &&
-                                    product.wishlist!.productId ==
-                                        product.id) {
 
-                                  ///remove from wishlist
-                                  await homeProvider
-                                      .removeFromWishlist(product.id!);
-                                } else {
-                                  print('here');
+                                bool result = await SharedPref.isProductInWishlist(product.id.toString());
 
-                                  ///add to wishlist
-                                  await homeProvider.addToWishList(
-                                      context, AppLocalizations.of(context)!.localeName, product.id!);
+                                if (result) {
+
+                                  print('remove from wishlist');
+                                  await SharedPref.removeWishlistProduct(product.id.toString());
+
+
                                 }
+                                else {
 
+                                  Products wishListProduct = Products(
+                                    id: product.id,
+                                    name: product.name,
+                                    thumbnail: product.thumbnail,
+                                    unitPrice: product.unitPrice.toDouble(),
+                                    tax: product.tax,
+                                    taxType: product.taxType,
+                                    brand: product.brand,
+                                    slug: product.slug,
+                                    currentStock: product.currentStock,
+                                    images: product.images,
+                                    shortDescription: product.shortDescription,
+                                  );
 
+                                  print('add to wishlist');
+                                  await SharedPref.addWishlistProduct(wishListProduct);
 
-                                int categoryId =
-                                homeProvider.getMainCategoriesList.categories!.first.id!;
-
-                                if(mounted) {
-                                  await homeProvider.getDashboardData(context, false,
-                                      AppLocalizations.of(context)!.localeName, categoryId, 'all');
                                 }
 
 
                               },
                               icon: Icon(
-                                product.wishlist != null &&
-                                    product.wishlist!.productId ==
-                                        product.id
+                                isProductInWishlist
                                     ? Icons.favorite
                                     : Icons.favorite_border,
                                 color: Colors.red,
                                 size: 20,
                               ),
-                            ),*/
+                            ),
                           ],
                         ),
 

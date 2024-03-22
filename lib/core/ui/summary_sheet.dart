@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:labees/core/app/app_colors.dart';
+import 'package:labees/core/models/coupon_data.dart';
 import 'package:labees/core/models/shipping_method.dart';
+import 'package:labees/core/util/shared_pref.dart';
 import 'package:labees/features/my_bag/view_model/cart_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -29,15 +31,26 @@ class _SummarySheetState extends State<SummarySheet> {
   ];
   String? selectedValue;
 
+  CouponData? couponData;
+
   @override
   void initState() {
     super.initState();
     _controller.addListener(_onChanged);
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       final cartProvider = context.read<CartProvider>();
       cartProvider.setSelectShippingMethod(
           context.read<CartProvider>().getShippingMethodsList.first);
+
+
+      couponData = await SharedPref.getCouponData();
+
+      if (couponData != null) {
+        _couponCodeController.text = couponData!.code!;
+      }
+
+
     });
   }
 

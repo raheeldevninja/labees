@@ -3,6 +3,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:labees/core/models/apply_coupon.dart';
 import 'package:labees/core/models/cart_product.dart';
 import 'package:labees/core/models/checkout_settings.dart';
+import 'package:labees/core/models/coupon_data.dart';
 import 'package:labees/core/models/shipping_method.dart';
 import 'package:labees/core/util/shared_pref.dart';
 import 'package:labees/core/util/utils.dart';
@@ -140,6 +141,17 @@ class CartProvider extends ChangeNotifier {
 
     if (applyCouponResponse!.success!) {
       setCouponDiscount();
+
+      //save coupon data to shared pref
+
+      CouponData couponData = CouponData(
+          code: applyCouponResponse!.data!.coupon!.code,
+          discount: applyCouponResponse!.data!.couponDiscount!,
+      );
+
+      await SharedPref.saveCouponCode(couponData);
+
+
     } else {
       couponDiscount = 0.0;
       Utils.toast(applyCouponResponse!.message!);

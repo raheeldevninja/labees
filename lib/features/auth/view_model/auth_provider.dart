@@ -109,7 +109,7 @@ class AuthProvider extends ChangeNotifier {
     //await SharedPref.clearCartProducts();
     await SharedPref.clearToken();
     await SharedPref.clearShowChooseLanguage();
-
+    await SharedPref.clearCouponData();
 
 
 
