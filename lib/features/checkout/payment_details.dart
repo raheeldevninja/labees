@@ -117,7 +117,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
       name: 'Cash on Delivery',
         image:
             'https://labees-website.boedelipos.ch/assets/pay_method6-9a87f6a3.svg',
-        isSelected: true));
+    ));
 
     paymentMethods.add(PaymentMethod(
         name: 'Wallet',
@@ -178,9 +178,6 @@ class _PaymentDetailsState extends State<PaymentDetails> {
       // do something
 
       print('success status');
-
-
-
 
 
     }
@@ -625,6 +622,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
             height: 50,
             child: ElevatedButton(
               onPressed: () async {
+                /*
                 List<CartProduct> cartProducts =
                     await SharedPref.getCartProducts();
 
@@ -648,6 +646,8 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                   vatPrice: vatPer.toInt(),
                   couponCode: couponData?.code ?? '',
                   couponDiscount: couponData?.discount ?? 0,
+                  //transactionId: '',
+                  //lastFourDigits: '',
                 );
 
                 checkoutProvider.setPlaceOrderModel(placeOrderModel);
@@ -664,6 +664,9 @@ class _PaymentDetailsState extends State<PaymentDetails> {
 
                   _showThankYouDialog(l10n);
                 }
+                */
+
+                _placeOrder();
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primaryColor,
@@ -741,6 +744,57 @@ class _PaymentDetailsState extends State<PaymentDetails> {
       ),
     );
   }
+
+  _placeOrder() async {
+
+    final l10n = AppLocalizations.of(context)!;
+    final checkoutProvider = context.read<CheckoutProvider>();
+    final cartProvider = context.read<CartProvider>();
+
+    List<CartProduct> cartProducts =
+        await SharedPref.getCartProducts();
+
+    //set payment method
+    double vatPer =
+        (cartProvider.checkoutSettings.productTax! / 100) *
+            cartProvider.calculateSubTotal();
+
+
+    CouponData? couponData = await SharedPref.getCouponData();
+
+    final placeOrderModel = checkoutProvider.getPlaceOrderModel.copyWith(
+      billingAddressId: checkoutProvider.getBillingAddressId,
+      addressId: checkoutProvider.getShippingAddressId,
+      cartProducts: cartProducts,
+      paymentMethod: selectedPaymentMethodValue,
+      shippingMethod: cartProvider.getSelectedShippingMethod()!.id,
+      isPartiallyPaid: isPartiallyPaid,
+      partiallyWalletAmount: isPartiallyPaid == 1 ? int.parse(_amountController.text) : 0,
+      vat: cartProvider.checkoutSettings.productTax,
+      vatPrice: vatPer.toInt(),
+      couponCode: couponData?.code ?? '',
+      couponDiscount: couponData?.discount ?? 0,
+      //transactionId: '',
+      //lastFourDigits: '',
+    );
+
+    checkoutProvider.setPlaceOrderModel(placeOrderModel);
+
+    await checkoutProvider.placeOrder(placeOrderModel);
+
+    if (checkoutProvider.placeOrderResponse!.status == 1) {
+      await SharedPref.clearCartProducts();
+      await SharedPref.clearCouponData();
+
+      if (context.mounted) {
+        await context.read<CartProvider>().getCartProducts();
+      }
+
+      _showThankYouDialog(l10n);
+    }
+
+  }
+
 
   @override
   void dispose() {

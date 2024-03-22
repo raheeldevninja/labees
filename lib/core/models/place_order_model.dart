@@ -15,6 +15,9 @@ class PlaceOrderModel {
   final int? vat;
   final int? vatPrice;
 
+  final String? transactionId;
+  final String? lastFourDigits;
+
   PlaceOrderModel({
     this.cartProducts,
     this.addressId,
@@ -27,6 +30,8 @@ class PlaceOrderModel {
     this.couponDiscount,
     this.vat,
     this.vatPrice,
+    this.transactionId,
+    this.lastFourDigits,
   });
 
   factory PlaceOrderModel.fromJson(Map<String, dynamic> json) {
@@ -46,6 +51,8 @@ class PlaceOrderModel {
       couponDiscount: json['coupon_discount'],
       vat: json['vat'],
       vatPrice: json['vat_perc'],
+      transactionId: json['transaction_id'],
+      lastFourDigits: json['last_four_digits'],
     );
   }
 
@@ -65,6 +72,8 @@ class PlaceOrderModel {
       'vat': vat,
       'vat_perc': vatPrice,
       'shipping_vat': 2.5,
+      'transaction_id': transactionId,
+      'last_four_digits': lastFourDigits,
     };
   }
 
@@ -80,6 +89,8 @@ class PlaceOrderModel {
     int? couponDiscount,
     int? vat,
     int? vatPrice,
+    String? transactionId,
+    String? lastFourDigits,
   }) {
     return PlaceOrderModel(
       cartProducts: cartProducts ?? cartProducts,
@@ -94,6 +105,8 @@ class PlaceOrderModel {
       couponDiscount: couponDiscount ?? this.couponDiscount,
       vat: vat ?? this.vat,
       vatPrice: vatPrice ?? this.vatPrice,
+      transactionId: transactionId ?? this.transactionId,
+      lastFourDigits: lastFourDigits ?? this.lastFourDigits,
     );
   }
 }
