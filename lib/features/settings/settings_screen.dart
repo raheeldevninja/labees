@@ -200,6 +200,58 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                     ),
                   ),
+
+
+                  const SizedBox(
+                    height: 16,
+                  ),
+
+                  //listview for footer settings
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemCount:
+                        settingsProvider.footerSettingsResponse.pages!.length,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () {
+                          print(
+                              'footer settings: ${settingsProvider.footerSettingsResponse.pages![index].slug}');
+
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => StaticPageDetailsScreen(
+                                  slug: settingsProvider
+                                      .footerSettingsResponse
+                                      .pages![index]
+                                      .slug!),
+                            ),
+                          );
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 12.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                  settingsProvider.footerSettingsResponse
+                                      .pages![index].name!,
+                                  style: const TextStyle(
+                                      color: AppColors.primaryColor,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w500)),
+                              const Icon(
+                                Icons.arrow_forward_ios,
+                                color: AppColors.primaryColor,
+                                size: 18,
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+
                   const SizedBox(
                     height: 24,
                   ),
@@ -217,57 +269,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               fontSize: 14,
                               fontWeight: FontWeight.w300)),
                     ],
-                  ),
-
-                  const SizedBox(
-                    height: 16,
-                  ),
-
-                  //listview for footer settings
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount:
-                          settingsProvider.footerSettingsResponse.pages!.length,
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                          onTap: () {
-                            print(
-                                'footer settings: ${settingsProvider.footerSettingsResponse.pages![index].slug}');
-
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => StaticPageDetailsScreen(
-                                    slug: settingsProvider
-                                        .footerSettingsResponse
-                                        .pages![index]
-                                        .slug!),
-                              ),
-                            );
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 12.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                    settingsProvider.footerSettingsResponse
-                                        .pages![index].name!,
-                                    style: const TextStyle(
-                                        color: AppColors.primaryColor,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w500)),
-                                const Icon(
-                                  Icons.arrow_forward_ios,
-                                  color: AppColors.primaryColor,
-                                  size: 18,
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
                   ),
                 ],
               ),
