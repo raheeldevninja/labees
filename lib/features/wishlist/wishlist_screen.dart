@@ -119,7 +119,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
               itemCount: wishlistProducts?.length ?? 0,
               padding: const EdgeInsets.all(16),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                childAspectRatio: 0.54,
+                childAspectRatio: 0.43,
                 crossAxisCount: 2, // Number of columns
                 mainAxisSpacing: 10.0, // Spacing between rows
                 crossAxisSpacing: 10.0, // Spacing between columns
