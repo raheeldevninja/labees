@@ -41,7 +41,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        shadowColor: Colors.transparent,
+        backgroundColor: AppColors.secondaryColor,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -86,6 +87,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   Radius.circular(30),
                                 ),
                                 onTap: () async {
+
+
                                   setState(() {
                                     _isEnglishLangSelected = true;
                                   });
@@ -96,6 +99,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       .saveChooseLanguageShown();
 
                                   if (mounted) {
+
                                     _callApis(
                                         context, homeProvider, localeProvider);
                                   }
@@ -128,6 +132,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   Radius.circular(30),
                                 ),
                                 onTap: () async {
+
+
+
                                   setState(() {
                                     _isEnglishLangSelected = false;
                                   });
@@ -138,6 +145,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       .saveChooseLanguageShown();
 
                                   if (mounted) {
+
                                     _callApis(
                                         context, homeProvider, localeProvider);
                                   }
@@ -214,8 +222,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     itemBuilder: (context, index) {
                       return InkWell(
                         onTap: () {
-                          print(
-                              'footer settings: ${settingsProvider.footerSettingsResponse.pages![index].slug}');
+
+                          //print('footer settings: ${settingsProvider.footerSettingsResponse.pages![index].slug}');
 
                           Navigator.push(
                             context,

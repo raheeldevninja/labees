@@ -67,7 +67,8 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        shadowColor: Colors.transparent,
+        backgroundColor: AppColors.secondaryColor, 
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
