@@ -60,14 +60,14 @@ class _PaymentDetailsState extends State<PaymentDetails> {
   int isPartiallyPaid = 0;
 
   List<String> paymentMethodsValues = [
-    'cash_on_delivery ',
+    '',
+    '',
+    '',
+    'cash_on_delivery',
     'pay_by_wallet',
-    '',
-    '',
-    '',
   ];
 
-  String selectedPaymentMethodValue = 'cash_on_delivery';
+  String selectedPaymentMethodValue = '';
 
 
 
@@ -216,6 +216,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
     final cartProvider = context.watch<CartProvider>();
     final accountProvider = context.watch<AccountProvider>();
 
+    print('selectedPaymentMethodValue: $selectedPaymentMethodValue');
 
 
     return Padding(
@@ -617,55 +618,14 @@ class _PaymentDetailsState extends State<PaymentDetails> {
           // const SizedBox(
           //   height: 50,
           // ),
+
+
+          selectedPaymentMethodValue.isEmpty ? Container() :
           SizedBox(
             width: double.maxFinite,
             height: 50,
             child: ElevatedButton(
               onPressed: () async {
-                /*
-                List<CartProduct> cartProducts =
-                    await SharedPref.getCartProducts();
-
-                //set payment method
-                double vatPer =
-                    (cartProvider.checkoutSettings.productTax! / 100) *
-                        cartProvider.calculateSubTotal();
-
-
-                CouponData? couponData = await SharedPref.getCouponData();
-
-                final placeOrderModel = checkoutProvider.getPlaceOrderModel.copyWith(
-                  billingAddressId: checkoutProvider.getBillingAddressId,
-                  addressId: checkoutProvider.getShippingAddressId,
-                  cartProducts: cartProducts,
-                  paymentMethod: selectedPaymentMethodValue,
-                  shippingMethod: cartProvider.getSelectedShippingMethod()!.id,
-                  isPartiallyPaid: isPartiallyPaid,
-                  partiallyWalletAmount: isPartiallyPaid == 1 ? int.parse(_amountController.text) : 0,
-                  vat: cartProvider.checkoutSettings.productTax,
-                  vatPrice: vatPer.toInt(),
-                  couponCode: couponData?.code ?? '',
-                  couponDiscount: couponData?.discount ?? 0,
-                  //transactionId: '',
-                  //lastFourDigits: '',
-                );
-
-                checkoutProvider.setPlaceOrderModel(placeOrderModel);
-
-                await checkoutProvider.placeOrder(placeOrderModel);
-
-                if (checkoutProvider.placeOrderResponse!.status == 1) {
-                  await SharedPref.clearCartProducts();
-                  await SharedPref.clearCouponData();
-
-                  if (context.mounted) {
-                    await context.read<CartProvider>().getCartProducts();
-                  }
-
-                  _showThankYouDialog(l10n);
-                }
-                */
-
                 _placeOrder();
               },
               style: ElevatedButton.styleFrom(
