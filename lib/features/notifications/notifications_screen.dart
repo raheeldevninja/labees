@@ -4,7 +4,9 @@ import 'package:labees/core/app/app_colors.dart';
 import 'package:labees/features/checkout/view_model/checkout_provider.dart';
 import 'package:labees/features/notifications/model/notification.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:labees/features/notifications/widgets.dart';
 import 'package:provider/provider.dart';
+
 
 /*
 *  Date 18 - Nov-2023
@@ -54,7 +56,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
             style: const TextStyle(color: AppColors.primaryColor)),
       ),
       body: checkoutProvider.getIsLoading
-          ? const SizedBox()
+          ? const NotificationsShimmer()
           : RefreshIndicator(
               onRefresh: () async {
                 await checkoutProvider.getNotifications(context);
@@ -174,3 +176,4 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     );
   }
 }
+
