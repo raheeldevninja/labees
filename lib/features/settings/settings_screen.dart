@@ -6,7 +6,9 @@ import 'package:labees/features/home/view_model/home_provider.dart';
 import 'package:labees/features/settings/contact_us_screen.dart';
 import 'package:labees/features/settings/static_page_details_screen.dart';
 import 'package:labees/features/settings/view_model/settings_provider.dart';
+import 'package:labees/features/settings/widgets/settings_shimmer.dart';
 import 'package:provider/provider.dart';
+
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -54,7 +56,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             style: const TextStyle(color: AppColors.primaryColor)),
       ),
       body: settingsProvider.getIsLoading
-          ? const SizedBox()
+          ? const SettingsShimmer()
           : Padding(
               padding: const EdgeInsets.all(24.0),
               child: Column(

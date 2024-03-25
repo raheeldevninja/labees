@@ -97,7 +97,6 @@ class SettingsProvider extends ChangeNotifier {
   }
 
   Future<void> getFooterSettings(BuildContext context, String lang) async {
-    EasyLoading.show();
     showLoading();
 
     footerSettingsResponse = await SettingsService.getFooterSettings(lang);
@@ -111,7 +110,6 @@ class SettingsProvider extends ChangeNotifier {
       Utils.showCustomSnackBar(context, footerSettingsResponse.message!, ContentType.failure);
     }
 
-    EasyLoading.dismiss();
     hideLoading();
     notifyListeners();
   }
