@@ -92,7 +92,7 @@ class SellerRegistrationProvider extends ChangeNotifier {
 
 
   Future<void> getSellerProfile(BuildContext context, int sellerId) async {
-    EasyLoading.show(status: 'loading...');
+
     showLoading();
 
     sellerProfileResponse = await SellerRegistrationService.getSellerProfile(sellerId);
@@ -107,7 +107,7 @@ class SellerRegistrationProvider extends ChangeNotifier {
       Utils.showCustomSnackBar(context, sellerProfileResponse!.message!, ContentType.failure);
     }
 
-    EasyLoading.dismiss();
+
     hideLoading();
     notifyListeners();
   }
@@ -115,7 +115,7 @@ class SellerRegistrationProvider extends ChangeNotifier {
 
   Future<void> getSellerProducts(BuildContext context, int sellerId, int limit, int offset, String search) async {
 
-    EasyLoading.show(status: 'loading...');
+
     showLoading();
 
     sellerProductsResponse = await SellerRegistrationService.getSellerProducts(sellerId, limit, offset, search);
@@ -130,7 +130,7 @@ class SellerRegistrationProvider extends ChangeNotifier {
       Utils.showCustomSnackBar(context, sellerProductsResponse!.message!, ContentType.failure);
     }
 
-    EasyLoading.dismiss();
+
     hideLoading();
     notifyListeners();
   }
