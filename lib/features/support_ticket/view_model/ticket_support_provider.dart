@@ -85,7 +85,7 @@ class TicketSupportProvider extends ChangeNotifier {
 
 
   Future<void> getTicketSupportDetails(BuildContext context, int id) async {
-    EasyLoading.show(status: 'loading...');
+
     showLoading();
 
     ticketSupportDetailsResponse = await TicketSupportService.getTicketSupportDetails(id);
@@ -107,7 +107,7 @@ class TicketSupportProvider extends ChangeNotifier {
       Utils.showCustomSnackBar(context, ticketSupportResponse!.message!, ContentType.failure);
     }
 
-    EasyLoading.dismiss();
+
     hideLoading();
   }
 

@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:labees/core/app/app_colors.dart';
 import 'package:labees/core/util/utils.dart';
 import 'package:labees/features/support_ticket/view_model/ticket_support_provider.dart';
+import 'package:labees/features/support_ticket/widgets/ticket_support_details_shimmer.dart';
 import 'package:provider/provider.dart';
 
 /*
@@ -87,7 +88,8 @@ class _TicketSupportDetailsScreenState extends State<TicketSupportDetailsScreen>
 
           ticketSupportProvider.getTicketSupportDetails(context, widget.id);
         },
-        child: ListView(
+        child: ticketSupportProvider.getIsLoading ? const TicketSupportDetailsSimmer() :
+        ListView(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           children: [
             Container(

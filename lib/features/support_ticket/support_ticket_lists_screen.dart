@@ -61,7 +61,7 @@ class _TicketSupportListsScreenState extends State<TicketSupportListsScreen> {
               Provider.of<TicketSupportProvider>(context, listen: false);
           ticketSupportProvider.getTicketSupportList(context);
         },
-        child: ticketSupportProvider.getIsLoading ? const TicketSupportSimmer() :
+        child: ticketSupportProvider.getIsLoading ? const TicketSupportShimmer() :
         ListView(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           children: [
