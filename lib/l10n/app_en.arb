@@ -329,5 +329,10 @@
     "enterAmountHint": "Please enter amount",
     "payFullyLabel": "Pay fully",
     "payPartiallyLabel": "Pay partially",
-    "payRemainingWith": "Pay remaining with"
+    "payRemainingWith": "Pay remaining with",
+
+    "idLabel": "ID: ",
+    "topicLabel": "Topic: ",
+    "typeLabel": "Type: "
+
 }

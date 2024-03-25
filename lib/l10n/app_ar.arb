@@ -327,6 +327,10 @@
     "enterAmountHint": "الرجاء إدخال المبلغ",
     "payFullyLabel": "ادفع بالكامل",
     "payPartiallyLabel": "ادفع جزئيًا",
-    "payRemainingWith": "ادفع المتبقي مع"
+    "payRemainingWith": "ادفع المتبقي مع",
+
+    "idLabel": "بطاقة تعريف: ",
+    "topicLabel": "عنوان: ",
+    "typeLabel": "يكتب: "
 
 }

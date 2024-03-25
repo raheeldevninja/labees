@@ -6,6 +6,7 @@ import 'package:labees/core/util/utils.dart';
 import 'package:labees/features/support_ticket/support_ticket_details_screen.dart';
 import 'package:labees/features/support_ticket/support_ticket_screen.dart';
 import 'package:labees/features/support_ticket/view_model/ticket_support_provider.dart';
+import 'package:labees/features/support_ticket/widgets/ticket_support_shimmer.dart';
 import 'package:provider/provider.dart';
 
 /*
@@ -60,7 +61,8 @@ class _TicketSupportListsScreenState extends State<TicketSupportListsScreen> {
               Provider.of<TicketSupportProvider>(context, listen: false);
           ticketSupportProvider.getTicketSupportList(context);
         },
-        child: ListView(
+        child: ticketSupportProvider.getIsLoading ? const TicketSupportSimmer() :
+        ListView(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           children: [
 
@@ -125,20 +127,20 @@ class _TicketSupportListsScreenState extends State<TicketSupportListsScreen> {
                           children: [
                             Text(
                               '${l10n.subscriptionDateLabel}: ',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 14,
                                   fontWeight: FontWeight.normal),
                               textAlign: TextAlign.center,
                             ),
                             Text(formattedDate,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: Colors.black, fontSize: 14),
                                 textAlign: TextAlign.center),
-                            Spacer(),
+                            const Spacer(),
                             Text(
-                              'ID: ',
-                              style: TextStyle(
+                              '${l10n.idLabel} ',
+                              style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold),
@@ -155,10 +157,10 @@ class _TicketSupportListsScreenState extends State<TicketSupportListsScreen> {
                         const SizedBox(height: 10),
                         Row(
                           children: [
-                            const Expanded(
+                            Expanded(
                                 child: Text(
-                              'Topic: ',
-                              style: TextStyle(
+                              '${l10n.topicLabel} ',
+                              style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold),
@@ -173,9 +175,9 @@ class _TicketSupportListsScreenState extends State<TicketSupportListsScreen> {
                         const SizedBox(height: 10),
                         Row(
                           children: [
-                            const Expanded(
-                                child: Text('Type: ',
-                                    style: TextStyle(
+                            Expanded(
+                                child: Text('${l10n.typeLabel} ',
+                                    style: const TextStyle(
                                         color: Colors.black,
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold))),
