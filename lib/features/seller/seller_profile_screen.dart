@@ -277,7 +277,7 @@ class _SellerProfileScreenState extends State<SellerProfileScreen> {
                 itemCount: sellerRegistrationProvider.sellerProducts!.length,
                 padding: const EdgeInsets.all(16),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  childAspectRatio: 0.5,
+                  childAspectRatio: 0.4,
                   crossAxisCount: 2,
                   mainAxisSpacing: 10.0,
                   crossAxisSpacing: 10.0,
