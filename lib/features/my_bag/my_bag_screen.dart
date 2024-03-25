@@ -1,3 +1,4 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -154,7 +155,7 @@ class _MyBagScreenState extends State<MyBagScreen> {
                           );
                         } else {
                           //Utils.toast('No items in cart');
-                          Utils.showCustomSnackBar(context, 'No items in cart');
+                          Utils.showCustomSnackBar(context, 'No items in cart', ContentType.warning);
                         }
                       },
                       style: ElevatedButton.styleFrom(

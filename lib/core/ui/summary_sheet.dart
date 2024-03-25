@@ -180,6 +180,7 @@ class _SummarySheetState extends State<SummarySheet> {
                                         suffixIcon: InkWell(
                                           onTap: () {
                                             cartProvider.applyCoupon(
+                                                context,
                                                 _couponCodeController.text
                                                     .trim(),
                                                 subTotal.toInt(),

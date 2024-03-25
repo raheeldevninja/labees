@@ -45,10 +45,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
         await Future.wait([
           context.read<CartProvider>().getCartProducts(),
-          context.read<CartProvider>().getShippingMethods(),
-          context.read<CartProvider>().getCheckoutSettings(),
-          context.read<CheckoutProvider>().getCountries(),
-          context.read<CheckoutProvider>().getAllAddresses(),
+          context.read<CartProvider>().getShippingMethods(context),
+          context.read<CartProvider>().getCheckoutSettings(context),
+          context.read<CheckoutProvider>().getCountries(context),
+          context.read<CheckoutProvider>().getAllAddresses(context),
           //context.read<AccountProvider>().getWalletList(context, 10, 1),
         ]);
 

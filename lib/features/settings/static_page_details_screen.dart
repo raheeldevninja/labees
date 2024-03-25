@@ -31,7 +31,7 @@ class _StaticPageDetailsScreenState extends State<StaticPageDetailsScreen> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final settingsProvider = context.read<SettingsProvider>();
-      settingsProvider.getPageDetails(widget.slug, AppLocalizations.of(context)!.localeName);
+      settingsProvider.getPageDetails(context, widget.slug, AppLocalizations.of(context)!.localeName);
     });
   }
 

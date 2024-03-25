@@ -72,10 +72,9 @@ class Utils {
       fontSize: 16.0,
     );
 
-
   }
 
-  static void showCustomSnackBar(BuildContext context, String message, {bool isSuccess = false}) {
+  static void showCustomSnackBar(BuildContext context, String message, ContentType contentType) {
 
     final snackBar = SnackBar(
       /// need to set following properties for best effect of awesome_snackbar_content
@@ -86,7 +85,7 @@ class Utils {
         title: 'Labees',
         message: message,
         color: AppColors.primaryColor,
-        contentType: isSuccess ? ContentType.success : ContentType.warning,
+        contentType: contentType,
       ),
     );
 
@@ -248,7 +247,7 @@ class Utils {
                   print('selectedReason: $selectedReason');
 
                   if (selectedReason.isEmpty) {
-                    Utils.toast(l10n.enterCancellationReason);
+                    Utils.showCustomSnackBar(context, l10n.enterCancellationReason, ContentType.failure);
                     return;
                   }
 

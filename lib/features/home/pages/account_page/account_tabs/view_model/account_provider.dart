@@ -1,3 +1,4 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:labees/core/models/account_data.dart';
@@ -35,13 +36,17 @@ class AccountProvider extends ChangeNotifier {
 
     updateAccountResponse = await AccountService.updateAccount(accountData);
 
+    if(!context.mounted) {
+      return;
+    }
+
     if (updateAccountResponse.success!) {
       ///update user in shared in preferences
       await SharedPref.saveUser(updateAccountResponse.user!);
 
-      Utils.toast(updateAccountResponse.message!);
+      Utils.showCustomSnackBar(context, updateAccountResponse.message!, ContentType.success);
     } else {
-      Utils.toast(updateAccountResponse.message!);
+      Utils.showCustomSnackBar(context, updateAccountResponse.message!, ContentType.failure);
     }
 
     EasyLoading.dismiss();
@@ -55,9 +60,13 @@ class AccountProvider extends ChangeNotifier {
 
     newsLetterResponse = await AccountService.newsLetter(email);
 
+    if(!context.mounted) {
+      return;
+    }
+
     if (newsLetterResponse.status!) {
     } else {
-      Utils.toast(newsLetterResponse.message!);
+      Utils.showCustomSnackBar(context, newsLetterResponse.message!, ContentType.failure);
     }
 
     EasyLoading.dismiss();
@@ -71,11 +80,15 @@ class AccountProvider extends ChangeNotifier {
 
     updateNewsletterResponse = await AccountService.updateNewsletter(status);
 
+    if(!context.mounted) {
+      return;
+    }
+
     if (updateNewsletterResponse!.status!) {
       await SharedPref.saveUser(updateNewsletterResponse!.user!);
-      Utils.showCustomSnackBar(context, updateNewsletterResponse!.message!, isSuccess: true);
+      Utils.showCustomSnackBar(context, updateNewsletterResponse!.message!, ContentType.success);
     } else {
-      Utils.showCustomSnackBar(context, updateNewsletterResponse!.message!);
+      Utils.showCustomSnackBar(context, updateNewsletterResponse!.message!, ContentType.failure);
     }
 
     EasyLoading.dismiss();
@@ -89,9 +102,13 @@ class AccountProvider extends ChangeNotifier {
 
     print('statusss ${walletResponse.status}');
 
+    if(!context.mounted) {
+      return;
+    }
+
     if (walletResponse.status!) {
     } else {
-      Utils.toast(walletResponse.message!);
+      Utils.showCustomSnackBar(context, walletResponse.message!, ContentType.failure);
     }
 
     hideLoading();
@@ -102,9 +119,13 @@ class AccountProvider extends ChangeNotifier {
 
     myPointsResponse = await AccountService.getMyPoints(limit, offset);
 
+    if(!context.mounted) {
+      return;
+    }
+
     if (myPointsResponse!.status!) {
     } else {
-      Utils.toast(myPointsResponse!.message!);
+      Utils.showCustomSnackBar(context, myPointsResponse!.message!, ContentType.failure);
     }
 
     hideLoading();
@@ -116,9 +137,13 @@ class AccountProvider extends ChangeNotifier {
 
     accountSettingsResponse = await AccountService.getAccountSettings();
 
+    if(!context.mounted) {
+      return;
+    }
+
     if (accountSettingsResponse.status!) {
     } else {
-      Utils.toast(accountSettingsResponse.message!);
+      Utils.showCustomSnackBar(context, accountSettingsResponse.message!, ContentType.failure);
     }
 
     hideLoading();
@@ -131,10 +156,14 @@ class AccountProvider extends ChangeNotifier {
 
     convertToCurrencyResponse = await AccountService.convertToCurrency(point);
 
+    if(!context.mounted) {
+      return;
+    }
+
     if (convertToCurrencyResponse.status!) {
-      Utils.toast(convertToCurrencyResponse.message!);
+      Utils.showCustomSnackBar(context, convertToCurrencyResponse.message!, ContentType.success);
     } else {
-      Utils.toast(convertToCurrencyResponse.message!);
+      Utils.showCustomSnackBar(context, convertToCurrencyResponse.message!, ContentType.failure);
     }
 
     EasyLoading.dismiss();

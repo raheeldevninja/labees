@@ -25,7 +25,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final settingsProvider = context.read<SettingsProvider>();
-      await settingsProvider.getFooterSettings(AppLocalizations.of(context)!.localeName);
+      await settingsProvider.getFooterSettings(context, AppLocalizations.of(context)!.localeName);
     });
   }
 
@@ -304,7 +304,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             context, localProvider.appLocale.languageCode);
       }
 
-      await settingsProvider.getFooterSettings(AppLocalizations.of(context)!.localeName);
+      await settingsProvider.getFooterSettings(context, AppLocalizations.of(context)!.localeName);
 
     }
   }

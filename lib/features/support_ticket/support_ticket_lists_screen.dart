@@ -31,7 +31,7 @@ class _TicketSupportListsScreenState extends State<TicketSupportListsScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final ticketSupportProvider =
           Provider.of<TicketSupportProvider>(context, listen: false);
-      ticketSupportProvider.getTicketSupportList();
+      ticketSupportProvider.getTicketSupportList(context);
     });
   }
 
@@ -58,7 +58,7 @@ class _TicketSupportListsScreenState extends State<TicketSupportListsScreen> {
         onRefresh: () async {
           final ticketSupportProvider =
               Provider.of<TicketSupportProvider>(context, listen: false);
-          ticketSupportProvider.getTicketSupportList();
+          ticketSupportProvider.getTicketSupportList(context);
         },
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
@@ -283,8 +283,8 @@ class _TicketSupportListsScreenState extends State<TicketSupportListsScreen> {
 
                 final ticketSupportProvider = Provider.of<TicketSupportProvider>(context, listen: false);
 
-                await ticketSupportProvider.deleteTicketSupport(id);
-                await ticketSupportProvider.getTicketSupportList();
+                await ticketSupportProvider.deleteTicketSupport(context, id);
+                await ticketSupportProvider.getTicketSupportList(context);
 
                 if(context.mounted) {
                   Navigator.of(context).pop();

@@ -566,7 +566,7 @@ class ProductDetails {
   Null? isShippingCostUpdated;
   String? code;
   int? qualityScore;
-  Null? referenceSku;
+  String? referenceSku;
   int? reviewsCount;
   List<Reviews>? reviews;
   List<Null>? colorsFormatted;

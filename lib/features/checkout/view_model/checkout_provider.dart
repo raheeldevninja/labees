@@ -1,3 +1,4 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:labees/core/models/add_address_response.dart';
@@ -67,22 +68,26 @@ class CheckoutProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getCountries() async {
+  Future<void> getCountries(BuildContext context) async {
     showLoading();
 
     countries = await CheckoutService.getCountries();
 
+    if(!context.mounted) {
+      return;
+    }
+
     if (countries.success) {
       countriesData = countries.data!;
     } else {
-      Utils.toast(countries.message!);
+      Utils.showCustomSnackBar(context, countries.message!, ContentType.failure);
     }
 
     hideLoading();
     notifyListeners();
   }
 
-  Future<void> getCities(int countryId) async {
+  Future<void> getCities(BuildContext context, int countryId) async {
     EasyLoading.show(status: 'loading...');
     showLoading();
 
@@ -91,10 +96,14 @@ class CheckoutProvider extends ChangeNotifier {
 
     cities = await CheckoutService.getCities(countryId);
 
+    if(!context.mounted) {
+      return;
+    }
+
     if (cities!.success) {
       citiesData = cities!.data!;
     } else {
-      Utils.toast(cities!.message!);
+      Utils.showCustomSnackBar(context, cities!.message!, ContentType.failure);
     }
 
     EasyLoading.dismiss();
@@ -108,9 +117,13 @@ class CheckoutProvider extends ChangeNotifier {
 
     addAddressResponse = await CheckoutService.addAddress(addressModel);
 
+    if(!context.mounted) {
+      return;
+    }
+
     if (addAddressResponse!.success!) {
     } else {
-      Utils.toast(addAddressResponse!.message!);
+      Utils.showCustomSnackBar(context, addAddressResponse!.message!, ContentType.failure);
     }
 
     EasyLoading.dismiss();
@@ -124,9 +137,13 @@ class CheckoutProvider extends ChangeNotifier {
 
     updateAddressResponse = await CheckoutService.updateAddress(addressModel);
 
+    if(!context.mounted) {
+      return;
+    }
+
     if (updateAddressResponse!.success!) {
     } else {
-      Utils.toast(updateAddressResponse!.message!);
+      Utils.showCustomSnackBar(context, updateAddressResponse!.message!, ContentType.failure);
     }
 
     EasyLoading.dismiss();
@@ -134,7 +151,7 @@ class CheckoutProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getAllAddresses() async {
+  Future<void> getAllAddresses(BuildContext context) async {
     showLoading();
 
     print('token getAllAddresses(): ${APIs.token}');
@@ -144,24 +161,28 @@ class CheckoutProvider extends ChangeNotifier {
 
     allAddresses = await CheckoutService.getAllAddresses();
 
+    if(!context.mounted) {
+      return;
+    }
+
     if (allAddresses != null && allAddresses!.success!) {
       addressData = allAddresses!.addresses!;
     } else {
-      Utils.toast(cities?.message ?? 'Error');
+      Utils.showCustomSnackBar(context, cities?.message ?? 'Error', ContentType.failure);
     }
 
     hideLoading();
     notifyListeners();
   }
 
-  Future<void> updateDefaultAddress(int id) async {
+  Future<void> updateDefaultAddress(BuildContext context, int id) async {
     EasyLoading.show(status: 'loading...');
     showLoading();
     defaultAddressResponse = await CheckoutService.updateDefaultAddress(id);
 
     if (defaultAddressResponse!.status!) {
     } else {
-      Utils.toast(defaultAddressResponse!.message!);
+      Utils.showCustomSnackBar(context, defaultAddressResponse!.message!, ContentType.failure);
     }
 
     EasyLoading.dismiss();
@@ -209,15 +230,19 @@ class CheckoutProvider extends ChangeNotifier {
     return -1;
   }
 
-  Future<void> placeOrder(PlaceOrderModel placeOrderModel) async {
+  Future<void> placeOrder(BuildContext context, PlaceOrderModel placeOrderModel) async {
     EasyLoading.show(status: 'loading...');
     showLoading();
 
     placeOrderResponse = await CheckoutService.placeOrder(placeOrderModel);
 
+    if(!context.mounted) {
+      return;
+    }
+
     if (placeOrderResponse!.status == 1) {
     } else {
-      Utils.toast(placeOrderResponse!.message!);
+      Utils.showCustomSnackBar(context, placeOrderResponse!.message!, ContentType.failure);
     }
 
     EasyLoading.dismiss();
@@ -225,7 +250,7 @@ class CheckoutProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> deleteAddress(int id) async {
+  Future<void> deleteAddress(BuildContext context, int id) async {
     EasyLoading.show(status: 'loading...');
     showLoading();
 
@@ -234,7 +259,7 @@ class CheckoutProvider extends ChangeNotifier {
 
     if (deleteAddressResponse!.success!) {
     } else {
-      Utils.toast(deleteAddressResponse!.message!);
+      Utils.showCustomSnackBar(context, deleteAddressResponse!.message!, ContentType.failure);
     }
 
     EasyLoading.dismiss();
@@ -290,16 +315,20 @@ class CheckoutProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getNotifications() async {
+  Future<void> getNotifications(BuildContext context) async {
     EasyLoading.show(status: 'loading...');
     showLoading();
 
     notificationsResponse = await CheckoutService.getNotifications();
 
+    if(!context.mounted) {
+      return;
+    }
+
     if (notificationsResponse!.success) {
       notifications = notificationsResponse!.notifications!;
     } else {
-      Utils.toast(notificationsResponse!.message!);
+      Utils.showCustomSnackBar(context, notificationsResponse!.message!, ContentType.failure);
     }
 
     EasyLoading.dismiss();

@@ -1,3 +1,4 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:labees/core/util/utils.dart';
@@ -33,10 +34,10 @@ class TicketSupportProvider extends ChangeNotifier {
         await TicketSupportService.createTicketSupport(ticketSupportData);
 
     if (createTicketResponse!.status!) {
-      Utils.toast(createTicketResponse!.message!);
+      Utils.showCustomSnackBar(context, createTicketResponse!.message!, ContentType.success);
       Navigator.pop(context);
     } else {
-      Utils.toast(createTicketResponse!.message!);
+      Utils.showCustomSnackBar(context, createTicketResponse!.message!, ContentType.failure);
     }
 
     EasyLoading.dismiss();
@@ -44,16 +45,20 @@ class TicketSupportProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getTicketSupportList() async {
+  Future<void> getTicketSupportList(BuildContext context) async {
     EasyLoading.show(status: 'loading...');
     showLoading();
 
     ticketSupportResponse = await TicketSupportService.getTicketSupportList();
 
+    if(!context.mounted) {
+      return;
+    }
+
     if (ticketSupportResponse!.success!) {
       ticketSupportLists = ticketSupportResponse!.data!;
     } else {
-      Utils.toast(ticketSupportResponse!.message!);
+      Utils.showCustomSnackBar(context, ticketSupportResponse!.message!, ContentType.failure);
     }
 
     EasyLoading.dismiss();
@@ -61,15 +66,19 @@ class TicketSupportProvider extends ChangeNotifier {
   }
 
 
-  Future<void> deleteTicketSupport(int id) async {
+  Future<void> deleteTicketSupport(BuildContext context, int id) async {
     EasyLoading.show(status: 'loading...');
     showLoading();
 
     deleteTicketSupportResponse = await TicketSupportService.deleteTicketSupport(id);
 
+    if(!context.mounted) {
+      return;
+    }
+
     if (deleteTicketSupportResponse!.success!) {
     } else {
-      Utils.toast(deleteTicketSupportResponse!.message!);
+      Utils.showCustomSnackBar(context, deleteTicketSupportResponse!.message!, ContentType.failure);
     }
 
     EasyLoading.dismiss();
@@ -98,7 +107,7 @@ class TicketSupportProvider extends ChangeNotifier {
 
 
     } else {
-      Utils.showCustomSnackBar(context, ticketSupportResponse!.message!);
+      Utils.showCustomSnackBar(context, ticketSupportResponse!.message!, ContentType.failure);
     }
 
     EasyLoading.dismiss();
@@ -117,9 +126,9 @@ class TicketSupportProvider extends ChangeNotifier {
     }
 
     if (closeTicketSupportResponse!.success!) {
-      Utils.showCustomSnackBar(context, closeTicketSupportResponse!.message!, isSuccess: true);
+      Utils.showCustomSnackBar(context, closeTicketSupportResponse!.message!, ContentType.success);
     } else {
-      Utils.showCustomSnackBar(context, closeTicketSupportResponse!.message!);
+      Utils.showCustomSnackBar(context, closeTicketSupportResponse!.message!, ContentType.failure);
     }
 
     EasyLoading.dismiss();
@@ -140,7 +149,7 @@ class TicketSupportProvider extends ChangeNotifier {
     if (sendMessageResponse!.status!) {
 
     } else {
-      Utils.showCustomSnackBar(context, sendMessageResponse!.message!);
+      Utils.showCustomSnackBar(context, sendMessageResponse!.message!, ContentType.failure);
     }
 
     EasyLoading.dismiss();

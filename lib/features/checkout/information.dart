@@ -1,3 +1,4 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:labees/core/app/app_colors.dart';
@@ -955,12 +956,12 @@ class _InformationState extends State<Information> {
                       !checkoutProvider.checkAddressesHaveBillingAddress() ||
                       showAddressForm) {
                     if (selectedCity == null) {
-                      Utils.showCustomSnackBar(context, 'Please select city');
+                      Utils.showCustomSnackBar(context, 'Please select city', ContentType.failure);
                       return;
                     }
 
                     if(selectedAddressType == null || selectedAddressType!.isEmpty){
-                      Utils.showCustomSnackBar(context, 'Please select address type');
+                      Utils.showCustomSnackBar(context, 'Please select address type', ContentType.failure);
                       return;
                     }
 
@@ -994,7 +995,7 @@ class _InformationState extends State<Information> {
                       checkoutProvider.setBillingAddressId(
                           checkoutProvider.addAddressResponse!.addressId);
 
-                      await checkoutProvider.getAllAddresses();
+                      await checkoutProvider.getAllAddresses(context);
 
                       Utils.pageController.nextPage(
                           duration: const Duration(milliseconds: 400),
@@ -1002,7 +1003,7 @@ class _InformationState extends State<Information> {
                     }
                   } else {
                     if (selectedAddress == null) {
-                      Utils.showCustomSnackBar(context, 'Please select address');
+                      Utils.showCustomSnackBar(context, 'Please select address', ContentType.failure);
                       return;
                     }
 
@@ -1169,6 +1170,7 @@ class _InformationState extends State<Information> {
                           '${showCountryCode ? '${checkoutProvider.countriesData[index].phoneCode} - ' : ''} ${checkoutProvider.countriesData[index].name!}'),
                       onTap: () async {
                         await checkoutProvider.getCities(
+                          context,
                             checkoutProvider.countriesData[index].id!);
 
                         setState(() {

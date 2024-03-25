@@ -30,7 +30,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   }
 
   getNotifications() {
-    Provider.of<CheckoutProvider>(context, listen: false).getNotifications();
+    Provider.of<CheckoutProvider>(context, listen: false).getNotifications(context);
   }
 
   @override
@@ -57,7 +57,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
           ? const SizedBox()
           : RefreshIndicator(
               onRefresh: () async {
-                await checkoutProvider.getNotifications();
+                await checkoutProvider.getNotifications(context);
               },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,

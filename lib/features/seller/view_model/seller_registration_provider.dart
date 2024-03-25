@@ -9,6 +9,8 @@ import 'package:labees/features/seller/model/seller_profile_response.dart';
 import 'package:labees/features/seller/model/seller_registration_data.dart';
 import 'package:labees/features/seller/model/seller_registration_response.dart';
 import 'package:labees/features/seller/service/seller_registration_service.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+
 
 class SellerRegistrationProvider extends ChangeNotifier {
   bool isLoading = false;
@@ -71,12 +73,16 @@ class SellerRegistrationProvider extends ChangeNotifier {
     sellerRegistrationResponse =
         await SellerRegistrationService.sellerRegister(sellerRegistrationData);
 
+    if(!context.mounted) {
+      return;
+    }
+
     if (sellerRegistrationResponse.success!) {
-      Utils.toast(sellerRegistrationResponse.message!);
+      Utils.showCustomSnackBar(context, sellerRegistrationResponse.message!, ContentType.success);
 
       Navigator.pop(context);
     } else {
-      Utils.toast(sellerRegistrationResponse.message!);
+      Utils.showCustomSnackBar(context, sellerRegistrationResponse.message!, ContentType.failure);
     }
 
     EasyLoading.dismiss();
@@ -98,7 +104,7 @@ class SellerRegistrationProvider extends ChangeNotifier {
     if (sellerProfileResponse!.success!) {
 
     } else {
-      Utils.showCustomSnackBar(context, sellerProfileResponse!.message!);
+      Utils.showCustomSnackBar(context, sellerProfileResponse!.message!, ContentType.failure);
     }
 
     EasyLoading.dismiss();
@@ -121,7 +127,7 @@ class SellerRegistrationProvider extends ChangeNotifier {
     if (sellerProductsResponse!.success!) {
       sellerProducts = sellerProductsResponse!.products;
     } else {
-      Utils.showCustomSnackBar(context, sellerProductsResponse!.message!);
+      Utils.showCustomSnackBar(context, sellerProductsResponse!.message!, ContentType.failure);
     }
 
     EasyLoading.dismiss();

@@ -1,3 +1,4 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:labees/core/enums/product_info.dart';
@@ -242,12 +243,16 @@ class HomeProvider extends ChangeNotifier {
 
     mainCategories = await HomeService.getMainCategories(lang);
 
+    if(!context.mounted) {
+      return;
+    }
+
     if (mainCategories.success!) {
       categories = mainCategories.categories;
       categoryChildren = mainCategories.categories!.first.childes;
     } else {
       print('home provider: ${mainCategories.message}');
-      Utils.toast(mainCategories.message!);
+      Utils.showCustomSnackBar(context, mainCategories.message!, ContentType.failure);
     }
 
     //EasyLoading.dismiss();
@@ -268,7 +273,7 @@ class HomeProvider extends ChangeNotifier {
       newArrivalProducts = dashboardData.newArrivalProducts!;
       mostWantedBanners = dashboardData.mostWantedBanners!;
     } else {
-      Utils.toast(dashboardData.message!);
+      Utils.showCustomSnackBar(context, dashboardData.message!, ContentType.failure);
     }
 
     if (showShimmer) {
@@ -325,7 +330,7 @@ class HomeProvider extends ChangeNotifier {
 
       print('tags length: ${tags!.length}');
     } else {
-      Utils.toast(productModel!.message!);
+      Utils.showCustomSnackBar(context, productModel!.message!, ContentType.failure);
     }
 
     if (showShimmer) {
@@ -344,7 +349,7 @@ class HomeProvider extends ChangeNotifier {
 
       if (productDetails!.success!) {
       } else {
-        Utils.toast(productDetails!.message!);
+        Utils.showCustomSnackBar(context, productDetails!.message!, ContentType.failure);
       }
     } catch (e) {
       print('error: $e');
@@ -366,7 +371,7 @@ class HomeProvider extends ChangeNotifier {
     if (addWishListResponse!.success!) {
 
     } else {
-      Utils.toast(addWishListResponse!.message!);
+      Utils.showCustomSnackBar(context, addWishListResponse!.message!, ContentType.failure);
     }
 
     //hideLoading();
@@ -374,16 +379,16 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> removeFromWishlist(int productId) async {
+  Future<void> removeFromWishlist(BuildContext context, int productId) async {
     EasyLoading.show(status: 'loading...');
     //showLoading();
 
     wishListRemoveResponse = await HomeService.removeFromWishlist(productId);
 
     if (wishListRemoveResponse!.success!) {
-      //Utils.toast(wishListRemoveResponse!.message!);
+
     } else {
-      Utils.toast(wishListRemoveResponse!.message!);
+      Utils.showCustomSnackBar(context, wishListRemoveResponse!.message!, ContentType.failure);
     }
 
     EasyLoading.dismiss();
@@ -402,7 +407,7 @@ class HomeProvider extends ChangeNotifier {
       getWishlistData = allWishlistProducts.wishlistProducts!;
       notifyListeners();
     } else {
-      Utils.toast(allWishlistProducts.message!);
+      Utils.showCustomSnackBar(context, allWishlistProducts.message!, ContentType.failure);
       Navigator.pop(context);
     }
 

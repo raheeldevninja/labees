@@ -740,7 +740,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
 
     checkoutProvider.setPlaceOrderModel(placeOrderModel);
 
-    await checkoutProvider.placeOrder(placeOrderModel);
+    await checkoutProvider.placeOrder(context, placeOrderModel);
 
     if (checkoutProvider.placeOrderResponse!.status == 1) {
       await SharedPref.clearCartProducts();

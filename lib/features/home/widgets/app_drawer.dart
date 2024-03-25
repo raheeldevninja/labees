@@ -259,9 +259,9 @@ class AppDrawer extends StatelessWidget {
 
                       await Future.wait([
                         context.read<CartProvider>().getCartProducts(),
-                        context.read<CartProvider>().getShippingMethods(),
-                        context.read<CartProvider>().getCheckoutSettings(),
-                        context.read<CheckoutProvider>().getCountries(),
+                        context.read<CartProvider>().getShippingMethods(context),
+                        context.read<CartProvider>().getCheckoutSettings(context),
+                        context.read<CheckoutProvider>().getCountries(context),
                         context.read<HomeProvider>().getDashboardData(context, true,
                             AppLocalizations.of(context)!.localeName, categoryId, 'all'),
                       ]);

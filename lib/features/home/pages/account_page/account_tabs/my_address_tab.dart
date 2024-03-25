@@ -34,12 +34,12 @@ class _MyAddressTabState extends State<MyAddressTab> {
     final checkoutProvider = Provider.of<CheckoutProvider>(context);
 
     if (checkoutProvider.allAddresses == null) {
-      checkoutProvider.getAllAddresses();
+      checkoutProvider.getAllAddresses(context);
     }
 
     return RefreshIndicator(
       onRefresh: () async {
-        await checkoutProvider.getAllAddresses();
+        await checkoutProvider.getAllAddresses(context);
       },
       child: ListView(
         shrinkWrap: true,

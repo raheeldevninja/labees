@@ -53,7 +53,7 @@ class SimilarProducts extends StatelessWidget {
               if (product.wishlist != null &&
                   product.wishlist!.productId == product.id) {
                 ///remove from wishlist
-                await homeProvider.removeFromWishlist(product.id!);
+                await homeProvider.removeFromWishlist(context, product.id!);
               } else {
                 print('here');
 

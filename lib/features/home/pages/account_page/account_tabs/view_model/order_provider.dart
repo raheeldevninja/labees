@@ -1,3 +1,4 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:labees/core/models/add_review_response.dart';
@@ -23,7 +24,7 @@ class OrderProvider extends ChangeNotifier {
 
     if (ordersResponse.success!) {
     } else {
-      Utils.toast(ordersResponse.message!);
+      Utils.showCustomSnackBar(context, ordersResponse.message!, ContentType.failure);
     }
 
     EasyLoading.dismiss();
@@ -39,7 +40,7 @@ class OrderProvider extends ChangeNotifier {
 
     if (cancelOrderResponse.success!) {
     } else {
-      Utils.toast(cancelOrderResponse.message!);
+      Utils.showCustomSnackBar(context, cancelOrderResponse.message!, ContentType.failure);
     }
 
     //EasyLoading.dismiss();
@@ -55,9 +56,9 @@ class OrderProvider extends ChangeNotifier {
         await OrderService.addReview(productId, comment, rating);
 
     if (addReviewResponse.status!) {
-      Utils.showCustomSnackBar(context, addReviewResponse.message!);
+      Utils.showCustomSnackBar(context, addReviewResponse.message!, ContentType.success);
     } else {
-      Utils.showCustomSnackBar(context, addReviewResponse.message!);
+      Utils.showCustomSnackBar(context, addReviewResponse.message!, ContentType.failure);
     }
 
     EasyLoading.dismiss();

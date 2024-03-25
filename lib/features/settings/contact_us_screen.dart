@@ -55,7 +55,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
     selectedTypesOfInquiry = typesOfInquiry[0];
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<SettingsProvider>().getCompanySettings();
+      context.read<SettingsProvider>().getCompanySettings(context);
     });
   }
 

@@ -1,3 +1,4 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
@@ -552,7 +553,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                                 0) {
 
                                               //Utils.toast('Out of stock');
-                                              Utils.showCustomSnackBar(context, 'Out of stock');
+                                              Utils.showCustomSnackBar(context, 'Out of stock', ContentType.warning);
 
                                             }
                                           }
@@ -589,7 +590,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
                                           if (variationQty == 0 && selectedChoicesIds.length > 2) {
                                             //Utils.toast('Out of stock');
-                                            Utils.showCustomSnackBar(context, 'Out of stock');
+                                            Utils.showCustomSnackBar(context, 'Out of stock', ContentType.warning);
                                           }
                                           /*else if (variationQty < qty) {
                                             Utils.showCustomSnackBar(context,
@@ -811,7 +812,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                       .join(',');
 
                                   if (isVariantProduct && choiceStr == '') {
-                                    Utils.showCustomSnackBar(context, 'Please select attributes');
+                                    Utils.showCustomSnackBar(context, 'Please select attributes', ContentType.warning);
                                     return;
                                   }
 
@@ -846,11 +847,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
                                     if (variationQty == 0) {
                                       //Utils.toast('Out of stock');
-                                      Utils.showCustomSnackBar(context, 'Out of stock');
+                                      Utils.showCustomSnackBar(context, 'Out of stock', ContentType.warning);
                                       return;
                                     } else if (variationQty < qty) {
-                                      Utils.toast(
-                                          'Only $variationQty left in stock');
+                                      Utils.showCustomSnackBar(context,
+                                          'Only $variationQty left in stock', ContentType.warning);
 
                                       setState(() {
                                         qty = variationQty;

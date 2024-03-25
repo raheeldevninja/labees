@@ -162,7 +162,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
         selectedCountry = checkoutProvider.countries.data!.firstWhere(
             (element) => element.id == widget.addressData!.country!);
 
-        await checkoutProvider.getCities(widget.addressData!.country!);
+        await checkoutProvider.getCities(context, widget.addressData!.country!);
 
         if (checkoutProvider.cities != null) {
           selectedCity = checkoutProvider.cities!.data!
@@ -171,7 +171,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       } else {
         //saudia id: 194
         navigateToCountry('Saudi Arabia');
-        await checkoutProvider.getCities(194);
+        await checkoutProvider.getCities(context, 194);
 
         selectedAddressType = addressTypes[0];
 
@@ -695,7 +695,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                               context, addressModel);
                         }
 
-                        await checkoutProvider.getAllAddresses();
+                        await checkoutProvider.getAllAddresses(context);
 
                         if (mounted) {
                           Navigator.pop(context);
@@ -854,6 +854,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                               '${showCountryCode ? '${checkoutProvider.countriesData[index].phoneCode} - ' : ''} ${checkoutProvider.countriesData[index].name!}'),
                           onTap: () async {
                             await checkoutProvider.getCities(
+                              context,
                                 checkoutProvider.countriesData[index].id!);
 
                             setState(() {

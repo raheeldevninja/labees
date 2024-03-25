@@ -1,3 +1,4 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:labees/core/models/apply_coupon.dart';
@@ -78,7 +79,7 @@ class CartProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getShippingMethods() async {
+  Future<void> getShippingMethods(BuildContext context) async {
     //EasyLoading.show(status: 'loading...');
     showLoading();
 
@@ -87,7 +88,7 @@ class CartProvider extends ChangeNotifier {
     if (shippingMethods.success) {
       shippingMethodsList = shippingMethods.data!;
     } else {
-      Utils.toast(shippingMethods.message!);
+      Utils.showCustomSnackBar(context, shippingMethods.message!, ContentType.failure);
     }
 
     //EasyLoading.dismiss();
@@ -110,14 +111,18 @@ class CartProvider extends ChangeNotifier {
     return selectedShippingMethod!;
   }
 
-  Future<void> getCheckoutSettings() async {
+  Future<void> getCheckoutSettings(BuildContext context) async {
     showLoading();
 
     checkoutSettings = await CartService.getCheckoutSettings();
 
+    if(!context.mounted) {
+      return;
+    }
+
     if (checkoutSettings.success!) {
     } else {
-      Utils.toast(checkoutSettings.message!);
+      Utils.showCustomSnackBar(context, checkoutSettings.message!, ContentType.failure);
     }
 
     hideLoading();
@@ -132,7 +137,7 @@ class CartProvider extends ChangeNotifier {
     return subTotal;
   }
 
-  Future<void> applyCoupon(String code, int subTotal, int shippingCost) async {
+  Future<void> applyCoupon(BuildContext context, String code, int subTotal, int shippingCost) async {
     EasyLoading.show(status: 'loading...');
     showLoading();
 
@@ -154,7 +159,7 @@ class CartProvider extends ChangeNotifier {
 
     } else {
       couponDiscount = 0.0;
-      Utils.toast(applyCouponResponse!.message!);
+      Utils.showCustomSnackBar(context, applyCouponResponse!.message!, ContentType.failure);
     }
 
     EasyLoading.dismiss();

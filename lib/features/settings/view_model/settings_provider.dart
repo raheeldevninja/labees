@@ -1,3 +1,4 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:labees/core/util/utils.dart';
@@ -9,7 +10,6 @@ import 'package:labees/features/settings/model/footer_settings_response.dart';
 import 'package:labees/features/settings/model/page_details_response.dart';
 import 'package:labees/features/settings/service/settings_service.dart';
 
-import '../model/faqs_response.dart';
 
 class SettingsProvider extends ChangeNotifier {
   bool isLoading = false;
@@ -28,11 +28,15 @@ class SettingsProvider extends ChangeNotifier {
 
     contactResponse = await SettingsService.contactUs(contactStoreData);
 
+    if(!context.mounted) {
+      return;
+    }
+
     if (contactResponse.success!) {
-      Utils.toast(contactResponse.message!);
+      Utils.showCustomSnackBar(context, contactResponse.message!, ContentType.success);
       Navigator.pop(context);
     } else {
-      Utils.toast(contactResponse.message!);
+      Utils.showCustomSnackBar(context, contactResponse.message!, ContentType.failure);
     }
 
     EasyLoading.dismiss();
@@ -40,15 +44,20 @@ class SettingsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getCompanySettings() async {
+  Future<void> getCompanySettings(BuildContext context) async {
     EasyLoading.show();
     showLoading();
 
     companySettingsResponse = await SettingsService.getCompanySettings();
 
+    if(!context.mounted) {
+      return;
+    }
+
+
     if (companySettingsResponse.success!) {
     } else {
-      Utils.toast(companySettingsResponse.message!);
+      Utils.showCustomSnackBar(context, companySettingsResponse.message!, ContentType.failure);
     }
 
     EasyLoading.dismiss();
@@ -56,15 +65,19 @@ class SettingsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getFAQs(String lang) async {
+  Future<void> getFAQs(BuildContext context, String lang) async {
     EasyLoading.show();
     showLoading();
 
     allFAQs = await SettingsService.getFAQs(lang);
 
+    if(!context.mounted) {
+      return;
+    }
+
     if (allFAQs.success!) {
     } else {
-      Utils.toast(allFAQs.message!);
+      Utils.showCustomSnackBar(context, allFAQs.message!, ContentType.failure);
     }
 
     EasyLoading.dismiss();
@@ -85,15 +98,19 @@ class SettingsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getFooterSettings(String lang) async {
+  Future<void> getFooterSettings(BuildContext context, String lang) async {
     EasyLoading.show();
     showLoading();
 
     footerSettingsResponse = await SettingsService.getFooterSettings(lang);
 
+    if(!context.mounted) {
+      return;
+    }
+
     if (footerSettingsResponse.success!) {
     } else {
-      Utils.toast(footerSettingsResponse.message!);
+      Utils.showCustomSnackBar(context, footerSettingsResponse.message!, ContentType.failure);
     }
 
     EasyLoading.dismiss();
@@ -101,15 +118,19 @@ class SettingsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getPageDetails(String slug, String lang) async {
+  Future<void> getPageDetails(BuildContext context, String slug, String lang) async {
     EasyLoading.show();
     showLoading();
 
     pageDetailsResponse = await SettingsService.getPageDetails(slug, lang);
 
+    if(!context.mounted) {
+      return;
+    }
+
     if (pageDetailsResponse!.success!) {
     } else {
-      Utils.toast(pageDetailsResponse!.message!);
+      Utils.showCustomSnackBar(context, pageDetailsResponse!.message!, ContentType.failure);
     }
 
     EasyLoading.dismiss();

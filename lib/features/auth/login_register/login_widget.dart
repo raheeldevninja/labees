@@ -235,12 +235,12 @@ class _LoginWidgetState extends State<LoginWidget> {
                       if (mounted) {
                         await Future.wait([
                           context.read<CartProvider>().getCartProducts(),
-                          context.read<CartProvider>().getShippingMethods(),
-                          context.read<CartProvider>().getCheckoutSettings(),
-                          context.read<CheckoutProvider>().getCountries(),
+                          context.read<CartProvider>().getShippingMethods(context),
+                          context.read<CartProvider>().getCheckoutSettings(context),
+                          context.read<CheckoutProvider>().getCountries(context),
                           context.read<HomeProvider>().getDashboardData(context, true,
                               AppLocalizations.of(context)!.localeName, categoryId, 'all'),
-                          context.read<CheckoutProvider>().getAllAddresses(),
+                          context.read<CheckoutProvider>().getAllAddresses(context),
                         ]);
 
 

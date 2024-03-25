@@ -175,8 +175,8 @@ class AddressesList extends StatelessWidget {
 
                                   if (res == true) {
                                     await checkoutProvider
-                                        .deleteAddress(myAddresses[index].id!);
-                                    await checkoutProvider.getAllAddresses();
+                                        .deleteAddress(context, myAddresses[index].id!);
+                                    await checkoutProvider.getAllAddresses(context);
                                   }
                                 },
                                 child: Container(
@@ -210,8 +210,8 @@ class AddressesList extends StatelessWidget {
                         ? InkWell(
                             onTap: () async {
                               await checkoutProvider
-                                  .updateDefaultAddress(myAddresses[index].id!);
-                              await checkoutProvider.getAllAddresses();
+                                  .updateDefaultAddress(context, myAddresses[index].id!);
+                              await checkoutProvider.getAllAddresses(context);
                             },
                             child: Container(
                               padding: const EdgeInsets.all(8),

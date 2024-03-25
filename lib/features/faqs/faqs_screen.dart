@@ -30,7 +30,7 @@ class _FAQScreenState extends State<FAQScreen> {
 
   _getFAQs() {
     Provider.of<SettingsProvider>(context, listen: false)
-        .getFAQs(AppLocalizations.of(context)!.localeName);
+        .getFAQs(context, AppLocalizations.of(context)!.localeName);
   }
 
   @override

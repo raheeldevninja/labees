@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:labees/core/models/registration_response.dart';
@@ -46,6 +47,10 @@ class AuthProvider extends ChangeNotifier {
 
     print('login success: ${loginResponse.success}');
 
+    if(!context.mounted) {
+      return;
+    }
+
     if (loginResponse.success!) {
       isLoggedIn = true;
       await SharedPref.setLoggedIn(true);
@@ -60,7 +65,7 @@ class AuthProvider extends ChangeNotifier {
       Utils.controller.jumpToTab(0);
     } else {
       print('auth provider: ${loginResponse.message}');
-      Utils.toast(loginResponse.message!);
+      Utils.showCustomSnackBar(context, loginResponse.message!, ContentType.failure);
 
       isLoggedIn = false;
     }
@@ -88,7 +93,7 @@ class AuthProvider extends ChangeNotifier {
       Utils.controller.jumpToTab(0);
     } else {
       print('auth provider: ${registrationResponse.message}');
-      Utils.toast(registrationResponse.message!);
+      Utils.showCustomSnackBar(context, registrationResponse.message!, ContentType.failure);
 
       isLoggedIn = false;
     }
@@ -118,16 +123,20 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getUserInfo() async {
+  Future<void> getUserInfo(BuildContext context) async {
     EasyLoading.show(status: 'loading...');
     showLoading();
 
     user = await AuthService.getUserInfo();
 
+    if(!context.mounted) {
+      return;
+    }
+
     if (user.success!) {
       await SharedPref.saveUser(user);
     } else {
-      Utils.toast(user.message!);
+      Utils.showCustomSnackBar(context, user.message!, ContentType.failure);
     }
 
     EasyLoading.dismiss();
@@ -166,7 +175,7 @@ class AuthProvider extends ChangeNotifier {
 
     if (forgotPasswordResponse.status!) {
     } else {
-      Utils.toast(forgotPasswordResponse.message!);
+      Utils.showCustomSnackBar(context, forgotPasswordResponse.message!, ContentType.failure);
     }
 
     EasyLoading.dismiss();
@@ -182,7 +191,7 @@ class AuthProvider extends ChangeNotifier {
 
     if (verifyOTPResponse.status!) {
     } else {
-      Utils.toast(verifyOTPResponse.message!);
+      Utils.showCustomSnackBar(context, verifyOTPResponse.message!, ContentType.failure);
     }
 
     EasyLoading.dismiss();
@@ -200,7 +209,7 @@ class AuthProvider extends ChangeNotifier {
 
     if (newPasswordResponse.status!) {
     } else {
-      Utils.toast(newPasswordResponse.message!);
+      Utils.showCustomSnackBar(context, newPasswordResponse.message!, ContentType.failure);
     }
 
     EasyLoading.dismiss();

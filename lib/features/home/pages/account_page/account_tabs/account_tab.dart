@@ -54,7 +54,7 @@ class _AccountTabState extends State<AccountTab> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final authProvider = Provider.of<AuthProvider>(context, listen: false);
-      await authProvider.getUserInfo();
+      await authProvider.getUserInfo(context);
 
       _firstNameController.text = authProvider.getUserData.fName!;
       _lastNameController.text = authProvider.getUserData.lName!;
@@ -94,7 +94,7 @@ class _AccountTabState extends State<AccountTab> {
 
     return RefreshIndicator(
       onRefresh: () async {
-        await Provider.of<AuthProvider>(context, listen: false).getUserInfo();
+        await Provider.of<AuthProvider>(context, listen: false).getUserInfo(context);
       },
       child: ListView(
         padding: const EdgeInsets.all(16),
@@ -481,7 +481,7 @@ class _AccountTabState extends State<AccountTab> {
                 );
 
                 await accountProvider.updateAccount(context, accountData);
-                await authProvider.getUserInfo();
+                await authProvider.getUserInfo(context);
               },
             ),
           ),
