@@ -88,7 +88,7 @@ class _SearchScreenState extends State<SearchScreen> {
               filled: true,
               fillColor: Colors.white,
               contentPadding: const EdgeInsets.all(12.0),
-              hintText: 'Search...',
+              hintText: l10n.searchHint,
               hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
               suffixIcon: IconButton(
                 onPressed: () {},

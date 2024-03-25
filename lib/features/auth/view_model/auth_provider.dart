@@ -124,7 +124,7 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> getUserInfo(BuildContext context) async {
-    EasyLoading.show(status: 'loading...');
+
     showLoading();
 
     user = await AuthService.getUserInfo();
@@ -139,7 +139,6 @@ class AuthProvider extends ChangeNotifier {
       Utils.showCustomSnackBar(context, user.message!, ContentType.failure);
     }
 
-    EasyLoading.dismiss();
     hideLoading();
     notifyListeners();
   }

@@ -8,6 +8,7 @@ import 'package:labees/core/ui/simple_button.dart';
 import 'package:labees/core/ui/widgets.dart';
 import 'package:labees/features/auth/view_model/auth_provider.dart';
 import 'package:labees/features/home/pages/account_page/account_tabs/view_model/account_provider.dart';
+import 'package:labees/features/home/pages/account_page/widgets/account_page_shimmer.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -92,11 +93,13 @@ class _AccountTabState extends State<AccountTab> {
     final l10n = AppLocalizations.of(context)!;
     final accountProvider = Provider.of<AccountProvider>(context);
 
+    final authProvider = Provider.of<AuthProvider>(context);
+
     return RefreshIndicator(
       onRefresh: () async {
         await Provider.of<AuthProvider>(context, listen: false).getUserInfo(context);
       },
-      child: ListView(
+      child: authProvider.isLoading ? const AccountPageShimmer() : ListView(
         padding: const EdgeInsets.all(16),
         children: [
           //my account and edit button
