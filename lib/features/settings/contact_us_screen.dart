@@ -7,6 +7,7 @@ import 'package:labees/core/ui/widgets.dart';
 import 'package:labees/features/checkout/view_model/checkout_provider.dart';
 import 'package:labees/features/settings/model/contact_store_data.dart';
 import 'package:labees/features/settings/view_model/settings_provider.dart';
+import 'package:labees/features/settings/widgets/contact_us_shimmer.dart';
 import 'package:provider/provider.dart';
 
 class ContactUsScreen extends StatefulWidget {
@@ -80,7 +81,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
             style: const TextStyle(color: AppColors.primaryColor)),
       ),
       body: settingsProvider.getIsLoading
-          ? const SizedBox()
+          ? const ContactUsShimmer()
           : Form(
               key: _formKey,
               child: ListView(

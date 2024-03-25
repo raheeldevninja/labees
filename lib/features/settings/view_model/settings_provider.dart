@@ -45,7 +45,7 @@ class SettingsProvider extends ChangeNotifier {
   }
 
   Future<void> getCompanySettings(BuildContext context) async {
-    EasyLoading.show();
+
     showLoading();
 
     companySettingsResponse = await SettingsService.getCompanySettings();
@@ -60,7 +60,7 @@ class SettingsProvider extends ChangeNotifier {
       Utils.showCustomSnackBar(context, companySettingsResponse.message!, ContentType.failure);
     }
 
-    EasyLoading.dismiss();
+
     hideLoading();
     notifyListeners();
   }
