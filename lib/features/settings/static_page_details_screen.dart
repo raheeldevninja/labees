@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:labees/core/app/app_colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:labees/features/settings/view_model/settings_provider.dart';
+import 'package:labees/features/settings/widgets/static_page_shimmer.dart';
 import 'package:provider/provider.dart';
 import 'package:html/parser.dart' as htmlParser;
 import 'package:html/dom.dart' as htmlDom;
@@ -63,7 +64,7 @@ class _StaticPageDetailsScreenState extends State<StaticPageDetailsScreen> {
             style: const TextStyle(color: AppColors.primaryColor)),
       ),
       body: settingsProvider.getIsLoading
-          ? const SizedBox()
+          ? const StaticPageShimmer()
           : Padding(
               padding: const EdgeInsets.all(24.0),
               child: Column(

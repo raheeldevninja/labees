@@ -115,7 +115,7 @@ class SettingsProvider extends ChangeNotifier {
   }
 
   Future<void> getPageDetails(BuildContext context, String slug, String lang) async {
-    EasyLoading.show();
+
     showLoading();
 
     pageDetailsResponse = await SettingsService.getPageDetails(slug, lang);
@@ -129,7 +129,7 @@ class SettingsProvider extends ChangeNotifier {
       Utils.showCustomSnackBar(context, pageDetailsResponse!.message!, ContentType.failure);
     }
 
-    EasyLoading.dismiss();
+
     hideLoading();
     notifyListeners();
   }
