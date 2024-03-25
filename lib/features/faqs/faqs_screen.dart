@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:labees/core/app/app_colors.dart';
+import 'package:labees/features/faqs/widgets/faq_shimmer.dart';
 import 'package:labees/features/settings/view_model/settings_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -51,46 +52,51 @@ class _FAQScreenState extends State<FAQScreen> {
         title: Text(l10n.faq,
             style: const TextStyle(color: AppColors.primaryColor)),
       ),
-      body: settingsProvider.getIsLoading
-          ? const SizedBox()
-          : Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                //expansion tile
+      body: RefreshIndicator(
+        onRefresh: () async {
+          _getFAQs();
+        },
+        child: settingsProvider.getIsLoading
+            ? const FAQShimmer()
+            : Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            //expansion tile
 
-                Expanded(
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: settingsProvider.allFAQs.faqsResponse!.length,
-                    itemBuilder: (context, index) {
-                      return ExpansionTile(
-                        onExpansionChanged: (value) {
+            Expanded(
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: settingsProvider.allFAQs.faqsResponse!.length,
+                itemBuilder: (context, index) {
+                  return ExpansionTile(
+                    onExpansionChanged: (value) {
 
-                          settingsProvider.setFAQExpansionTileStatus(
-                              index, value);
-                        },
-                        expandedAlignment: Alignment.centerLeft,
-                        iconColor: AppColors.primaryColor,
-                        title: Container(
-                            color: Colors.white,
-                            child: Text(
-                                settingsProvider
-                                    .allFAQs.faqsResponse![index].question!,
-                                style: const TextStyle(
-                                    color: AppColors.primaryColor))),
-                        children: [
-                          Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16.0),
-                              child: Text(settingsProvider
-                                  .allFAQs.faqsResponse![index].answer!)),
-                        ],
-                      );
+                      settingsProvider.setFAQExpansionTileStatus(
+                          index, value);
                     },
-                  ),
-                ),
-              ],
+                    expandedAlignment: Alignment.centerLeft,
+                    iconColor: AppColors.primaryColor,
+                    title: Container(
+                        color: Colors.white,
+                        child: Text(
+                            settingsProvider
+                                .allFAQs.faqsResponse![index].question!,
+                            style: const TextStyle(
+                                color: AppColors.primaryColor))),
+                    children: [
+                      Padding(
+                          padding:
+                          const EdgeInsets.symmetric(horizontal: 16.0),
+                          child: Text(settingsProvider
+                              .allFAQs.faqsResponse![index].answer!)),
+                    ],
+                  );
+                },
+              ),
             ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -66,7 +66,6 @@ class SettingsProvider extends ChangeNotifier {
   }
 
   Future<void> getFAQs(BuildContext context, String lang) async {
-    EasyLoading.show();
     showLoading();
 
     allFAQs = await SettingsService.getFAQs(lang);
@@ -80,7 +79,6 @@ class SettingsProvider extends ChangeNotifier {
       Utils.showCustomSnackBar(context, allFAQs.message!, ContentType.failure);
     }
 
-    EasyLoading.dismiss();
     hideLoading();
     notifyListeners();
   }
